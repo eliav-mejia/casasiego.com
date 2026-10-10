@@ -4,3 +4,7 @@
 # Full-size camera originals: only exported web copies are published
 images/og/*
 !images/og/share.jpg
+images/synodos/_DSC*
+images/synodos/Antes_*
+images/synodos/Después_*
+images/synodos/Gemini_*

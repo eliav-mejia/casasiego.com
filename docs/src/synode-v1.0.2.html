@@ -50,7 +50,7 @@
   <div>
     <p class="eyebrow" style="color:var(--gold)">Documentation &middot; v1.0.2</p>
     <h1>Synode</h1>
-    <p class="greek" lang="el">Σύνοδος</p>
+    <p class="greek" lang="el">Συνέδριον</p>
     <p class="lede">Design system, CSS architecture, elegance review, image catalogue, image protection and intellectual-property guide for the synode.space parallax photography landing page.</p>
   </div>
   <div>
@@ -69,10 +69,10 @@
   <tr><th>#</th><th>Section</th><th>Technique</th><th>Class</th></tr>
   <tr><td>I</td><td>Hero — title inscription over a full-bleed plate</td><td>Two-layer parallax: plate 0.35 down, inscription 0.12 up</td><td><code>.hero</code></td></tr>
   <tr><td>II</td><td>Prologue — wide-margin text with drop cap</td><td>Asymmetric folio grid, reveal on enter</td><td><code>.folio</code></td></tr>
-  <tr><td>III</td><td>Chapter I · Aegean</td><td>Sticky caption column + plates drifting at ±0.05–0.08</td><td><code>.chapter</code></td></tr>
+  <tr><td>III</td><td>Chapter I · Coffee Space</td><td>Sticky caption column + plates drifting at ±0.05–0.08</td><td><code>.chapter</code></td></tr>
   <tr><td>IV</td><td>Interlude — inscription band</td><td>Full-bleed parallax background, 0.2</td><td><code>.interlude</code></td></tr>
-  <tr><td>V</td><td>Chapter II · Terracotta</td><td>CSS sticky stacked leaves, offset like folio pages</td><td><code>.stack</code></td></tr>
-  <tr><td>VI</td><td>Chapter III · Laurel</td><td>Asymmetric 12-column contact sheet</td><td><code>.gallery</code></td></tr>
+  <tr><td>V</td><td>Chapter II · Reino Fiel</td><td>CSS sticky stacked leaves, offset like folio pages</td><td><code>.stack</code></td></tr>
+  <tr><td>VI</td><td>Chapter III · Toriku Films</td><td>Asymmetric 12-column contact sheet</td><td><code>.gallery</code></td></tr>
   <tr><td>VII</td><td>Colophon — contact, copyright, terms link</td><td>Static dark ground</td><td><code>.colophon</code></td></tr>
 </table>
 
@@ -177,7 +177,7 @@ docs/synode-v1.0.2.pdf  this document (v1.0.1 kept for history)</pre>
   <li><b>&ldquo;Thick, high-contrast&rdquo; headers.</b> Cinzel is an inscriptional face with low stroke contrast; the high contrast lives in Bodoni Moda. The guide's wording conflates the two. Consider Cinzel 700 instead of 900 for the hero: at 72px with +0.15em tracking, 900 starts to look heavy beside fine photography.</li>
   <li><b>Didone tracking.</b> +0.05em suits all-caps, but loosens lowercase Bodoni. For title-case H2s, +0.01–0.02em keeps the hairlines crisp. (This document already uses +0.02em for its H2s for comparison.)</li>
   <li><b>Thera White vs parchment.</b> Pure #FFF next to #F7F4EE can read slightly cool. Keep it for the stacked leaves, where the lift is intentional, but don't spread it to other surfaces.</li>
-  <li><b>GFS Didot</b> should stay for Greek text only (as in the hero's Σύνοδος). For Latin H2s, Bodoni Moda has the better Latin glyphs and optical sizes.</li>
+  <li><b>GFS Didot</b> should stay for Greek text only (as in the hero's Συνέδριον). For Latin H2s, Bodoni Moda has the better Latin glyphs and optical sizes.</li>
   <li><b>Rust on ink</b> (3.01:1) works for the colophon button, where white text sits on a rust fill, but never set rust text directly on ink below 24px.</li>
 </ol>
 
@@ -187,14 +187,14 @@ docs/synode-v1.0.2.pdf  this document (v1.0.1 kept for history)</pre>
   <colgroup><col style="width:23%"><col style="width:16%"><col style="width:7%"><col style="width:12%"><col style="width:8%"><col style="width:7%"><col></colgroup>
   <tr><th>File (images/…)</th><th>Placement</th><th>Ratio</th><th>Export px</th><th>Motion</th><th>Line</th><th>Caption · alt text to rewrite</th></tr>
   <tr><td><code>plates/hero.jpg</code></td><td>Opening screen</td><td>3:2</td><td>2400×1600</td><td>0.35</td><td>l. 36</td><td>Decorative (alt left empty). Title sits on the centre: choose a frame with a quiet middle.</td></tr>
-  <tr><td><code>plates/plate-01.jpg</code></td><td>Ch. I Aegean, 1st</td><td>5:7</td><td>1000×1400</td><td>0.08</td><td>l. 80</td><td>01 Indigo column dress · &ldquo;Model in an indigo linen column dress…&rdquo;</td></tr>
-  <tr><td><code>plates/plate-02.jpg</code></td><td>Ch. I Aegean, 2nd</td><td>5:6</td><td>1000×1200</td><td>−0.06</td><td>l. 84</td><td>02 Salt-white tunic · &ldquo;Draped white cotton tunic…&rdquo;</td></tr>
-  <tr><td><code>plates/plate-03.jpg</code></td><td>Ch. I Aegean, 3rd</td><td>3:2</td><td>1500×1000</td><td>0.05</td><td>l. 88</td><td>03 Blue-hour layers · &ldquo;Two figures in layered blue silk…&rdquo;</td></tr>
+  <tr><td><code>plates/plate-01.jpg</code></td><td>Ch. I Coffee Space, 1st</td><td>5:7</td><td>1000×1400</td><td>0.08</td><td>l. 80</td><td>01 Indigo column dress · &ldquo;Model in an indigo linen column dress…&rdquo;</td></tr>
+  <tr><td><code>plates/plate-02.jpg</code></td><td>Ch. I Coffee Space, 2nd</td><td>5:6</td><td>1000×1200</td><td>−0.06</td><td>l. 84</td><td>02 Salt-white tunic · &ldquo;Draped white cotton tunic…&rdquo;</td></tr>
+  <tr><td><code>plates/plate-03.jpg</code></td><td>Ch. I Coffee Space, 3rd</td><td>3:2</td><td>1500×1000</td><td>0.05</td><td>l. 88</td><td>03 Blue-hour layers · &ldquo;Two figures in layered blue silk…&rdquo;</td></tr>
   <tr><td><code>plates/interlude.jpg</code></td><td>Quote band</td><td>3:2</td><td>2400×1600</td><td>0.2</td><td>l. 97</td><td>Decorative. Darkened 62% under the quote.</td></tr>
   <tr><td><code>plates/plate-04.jpg</code></td><td>Ch. II leaf IV</td><td>7:5</td><td>1400×1000</td><td>sticky</td><td>l. 118</td><td>Amphora coat · &ldquo;Rust wool coat…&rdquo;</td></tr>
   <tr><td><code>plates/plate-05.jpg</code></td><td>Ch. II leaf V</td><td>7:5</td><td>1400×1000</td><td>sticky</td><td>l. 129</td><td>Ochre pleat · &ldquo;Ochre pleated skirt in motion…&rdquo;</td></tr>
   <tr><td><code>plates/plate-06.jpg</code></td><td>Ch. II leaf VI</td><td>7:5</td><td>1400×1000</td><td>sticky</td><td>l. 140</td><td>Kiln shirt · &ldquo;Clay-coloured silk shirt…&rdquo;</td></tr>
-  <tr><td><code>plates/plate-07.jpg</code></td><td>Ch. III Laurel, top left</td><td>3:4</td><td>1200×1600</td><td>0.06</td><td>l. 159</td><td>07 Olive knit · &ldquo;Olive knit dress in an olive grove&rdquo;</td></tr>
+  <tr><td><code>plates/plate-07.jpg</code></td><td>Ch. III Toriku Films, top left</td><td>3:4</td><td>1200×1600</td><td>0.06</td><td>l. 159</td><td>07 Olive knit · &ldquo;Olive knit dress in an olive grove&rdquo;</td></tr>
   <tr><td><code>plates/plate-08.jpg</code></td><td>Ch. III, top right</td><td>9:7</td><td>1260×980</td><td>−0.04</td><td>l. 160</td><td>08 Gilt cuff, detail · &ldquo;Detail of a laurel-green sleeve…&rdquo;</td></tr>
   <tr><td><code>plates/plate-09.jpg</code></td><td>Ch. III, right</td><td>9:13</td><td>1080×1560</td><td>0.1</td><td>l. 161</td><td>09 Sage overcoat · &ldquo;Long sage overcoat on a stone stairway&rdquo;</td></tr>
   <tr><td><code>plates/plate-10.jpg</code></td><td>Ch. III, bottom left</td><td>3:2</td><td>1500×1000</td><td>−0.02</td><td>l. 162</td><td>10 The gathering, Delos · &ldquo;Group portrait in muted green tailoring…&rdquo;</td></tr>

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Synode — layout.css  (v1.0.2)
+   Synode — layout.css  (v1.0.5)
    Page structure, sticky sections and parallax layers.
    Depends on tokens declared in site.css.
    ========================================================================== */
@@ -247,13 +247,13 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 .g--c .plate__frame { aspect-ratio: 9 / 13; }
 .g--d .plate__frame { aspect-ratio: 3 / 2; }
 
-/* 7b. Houses — the brands, each card in its own register ------------------- */
+/* 7b. Houses — the marcas, three white cards ------------------- */
 .houses { padding: 0 10% var(--space-6) 5%; }
 .houses__head { max-width: 40rem; margin: 0 0 var(--space-5) calc(9rem + clamp(2rem, 4vw, 4rem)); }
 
 .houses__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 3rem);
   align-items: stretch;
 }
@@ -276,69 +276,9 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 }
 .house__name { margin: 0 0 var(--space-2); font-weight: 400; line-height: 1.05; }
 
-/* Toriku Films — sumi ink on washi: vertical script, hairlines, vermilion seal */
-.house--toriku {
-  --sumi:      #16130F;
-  --washi:     #EFE8DA;
-  --shu:       #C2402A;
-  flex-direction: row;
-  background:
-    linear-gradient(90deg, transparent calc(100% - 1px), color-mix(in srgb, var(--washi) 8%, transparent) 0) 0 0 / 3.5rem 100%,
-    var(--sumi);
-  color: var(--washi);
-  overflow: hidden;
-}
-.house--toriku .house__body { justify-content: flex-end; padding-left: 0; }
-.house__vertical {
-  margin: 0;
-  padding: clamp(1.5rem, 3vw, 2.75rem) clamp(1.25rem, 2.5vw, 2.25rem);
-  writing-mode: vertical-rl;
-  font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
-  font-weight: 500;
-  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  letter-spacing: 0.5em;
-  color: color-mix(in srgb, var(--washi) 82%, transparent);
-  border-right: 1px solid color-mix(in srgb, var(--washi) 18%, transparent);
-}
-.house--toriku .house__no { color: var(--shu); }
-.house--toriku .house__name {
-  font-family: "Shippori Mincho", var(--font-section);
-  font-weight: 800;
-  font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem);
-  letter-spacing: 0.04em;
-}
-.house--toriku .house__name span { display: block; font-weight: 500; font-size: 0.42em; letter-spacing: 0.6em; text-transform: uppercase; color: color-mix(in srgb, var(--washi) 70%, transparent); }
-.house--toriku .house__lede { color: color-mix(in srgb, var(--washi) 78%, transparent); }
-.house__rule { width: 2.5rem; margin: var(--space-2) 0; border: 0; border-top: 2px solid var(--shu); }
-.house__meta {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.6875rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--washi) 60%, transparent);
-}
-.house__seal {
-  position: absolute;
-  top: clamp(1.5rem, 3vw, 2.75rem);
-  right: clamp(1.5rem, 3vw, 2.75rem);
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  aspect-ratio: 1;
-  background: var(--shu);
-  color: var(--washi);
-  border-radius: 6px;
-  font-family: "Shippori Mincho", serif;
-  font-weight: 800;
-  font-size: 1.75rem;
-  line-height: 1;
-  transform: rotate(-4deg);
-  box-shadow: inset 0 0 0 3px var(--shu), inset 0 0 0 4px color-mix(in srgb, var(--washi) 55%, transparent);
-}
-
-/* Reino Fiel — friendly elegance: warm surface, soft corners, the portrait first */
-.house--reino {
+/* Every marca shares one white card: warm surface, soft corners, the photograph first.
+   The whole card is the link to the marca's page. */
+.house {
   background: var(--thera-white);
   border: 1px solid color-mix(in srgb, var(--hellenic-gold) 40%, transparent);
   border-radius: 1.25rem;
@@ -346,11 +286,19 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   box-shadow: 0 30px 60px -40px color-mix(in srgb, var(--aegean-ink) 35%, transparent);
   transition: transform 400ms var(--ease-silk), box-shadow 400ms var(--ease-silk);
 }
-.house--reino:hover { color: inherit; transform: translateY(-4px); box-shadow: 0 40px 70px -40px color-mix(in srgb, var(--aegean-ink) 45%, transparent); }
-.house--reino .house__image { aspect-ratio: 16 / 9; }
-.house--reino .house__no { color: var(--amphora-rust); }
-.house--reino .house__name { font-family: var(--font-section); font-weight: 600; font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem); color: var(--aegean-ink); }
-.house--reino .house__lede { color: var(--laurel-leaf); }
+.house:hover { color: inherit; transform: translateY(-4px); box-shadow: 0 40px 70px -40px color-mix(in srgb, var(--aegean-ink) 45%, transparent); }
+.house__image { aspect-ratio: 16 / 9; }
+.house__no { color: var(--amphora-rust); }
+.house__name { font-family: var(--font-section); font-weight: 600; font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem); color: var(--aegean-ink); }
+.house__name span { display: block; margin-top: 0.35em; font-family: var(--font-display); font-weight: 400; font-size: 0.6875rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--laurel-leaf); }
+.house__lede { color: var(--laurel-leaf); }
+.house__for {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: var(--step-meta);
+  color: var(--laurel-leaf);
+}
 .house__cta {
   margin-top: auto;
   align-self: flex-start;
@@ -362,7 +310,116 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
+
+/* 7c. Hero actions & leaf links ------------------------------------------- */
+.hero__sub {
+  max-width: 44ch;
+  margin: var(--space-2) auto 0;
+  opacity: 0.8;
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.leaf__text .eyebrow { margin-bottom: var(--space-1); }
+.leaf__link {
+  display: inline-block;
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amphora-rust);
+  text-decoration: none;
+}
+.leaf__link:hover { text-decoration: underline; }
+.chapter__sticky .button { margin-top: var(--space-3); }
+.chapter__sticky .club__list { margin: var(--space-1) 0 0; font-size: 0.95em; }  /* cross-sell list on the light page */
+
+/* 7d. Before / after — js/compare.js moves --pos; without JS it rests at 50% */
+.compare__frame { aspect-ratio: 3 / 2; }
+.compare__frame img,
+.compare:hover .compare__frame img { transform: none; filter: none; }   /* the edit is the point: no toning */
+.compare__before {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+.compare__before img { width: 100%; height: 100%; object-fit: cover; }
+.compare__frame::before {               /* the divider */
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  z-index: 2;
+  width: 2px;
+  translate: -1px 0;
+  background: var(--parchment-marble);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--aegean-ink) 25%, transparent);
+  pointer-events: none;
+}
+.compare__tag {
+  position: absolute;
+  bottom: var(--space-2);
+  z-index: 2;
+  padding: 0.35em 0.8em;
+  background: color-mix(in srgb, var(--aegean-ink) 70%, transparent);
+  color: var(--parchment-marble);
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.compare__tag--before { left: var(--space-2); }
+.compare__tag--after  { right: var(--space-2); }
+.compare__range {                       /* invisible slider over the whole plate, above the protection shield */
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+.compare__frame:has(.compare__range:focus-visible) { outline: 1px solid var(--amphora-rust); outline-offset: 4px; }
+
+/* 7e. Club & events — ink band with two columns ---------------------------- */
+.club {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(2.5rem, 6vw, 7rem);
+  margin-bottom: var(--space-6);
+  padding: var(--space-6) 10% var(--space-6) calc(5% + 9rem + clamp(2rem, 4vw, 4rem));
+  background: var(--aegean-ink);
+  color: var(--parchment-marble);
+}
+.club p { color: color-mix(in srgb, var(--parchment-marble) 82%, transparent); }
+.club__list {
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+  max-width: 34rem;
+}
+.club__list li {
+  padding: 0.75em 0;
+  border-top: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent);
+}
+.club__list li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent); }
+.club__list li::before { content: "—"; margin-right: 0.75em; color: var(--hellenic-gold); }
+.club__col--events {
+  align-self: end;
+  padding-top: var(--space-3);
+  border-top: 1px solid color-mix(in srgb, var(--hellenic-gold) 40%, transparent);
+}
+.club__col--events .button { margin-top: var(--space-2); }
 
 /* 8. Colophon -------------------------------------------------------------- */
 .colophon {
@@ -384,6 +441,14 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 .colophon .rule { margin: var(--space-4) auto var(--space-2); }
 
 /* 9. Responsive ------------------------------------------------------------ */
+@media (max-width: 1200px) {
+  .houses__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .house:last-child { grid-column: 1 / -1; flex-direction: row; }   /* the odd card lies on its side */
+  .house:last-child { min-height: 20rem; }
+  .house:last-child .house__image { position: relative; flex: 0 0 50%; aspect-ratio: auto; }
+  .house:last-child .house__image img { position: absolute; inset: 0; }
+}
+
 @media (max-width: 960px) {
   .folio,
   .chapter,
@@ -400,6 +465,11 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   .houses { padding-inline: max(16px, 6%); }
   .houses__head { margin-left: 0; }
   .houses__grid { grid-template-columns: 1fr; max-width: 40rem; }
+  .house:last-child { grid-column: auto; flex-direction: column; }
+  .house:last-child .house__image { flex: none; aspect-ratio: 16 / 9; }
+  .house:last-child .house__image img { position: static; }
+
+  .club { grid-template-columns: 1fr; padding-inline: max(16px, 6%); }
   .house { min-height: 24rem; }
 }
 

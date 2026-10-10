@@ -1,4 +1,4 @@
-# Synodé · catálogos de imágenes (v1.0.4)
+# Synodé · catálogos de imágenes (v1.0.5)
 
 Cada página tiene su propia carpeta de imágenes y su propio catálogo. Sustituye los archivos usando **exactamente** el nombre del catálogo:
 las páginas los recogen sin cambiar código.

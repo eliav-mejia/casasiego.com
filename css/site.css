@@ -230,6 +230,16 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   background: transparent;
   color: var(--parchment-marble);
 }
+/* Secondary action on ink: gold hairline that fills on hover */
+.button--ghost {
+  border-color: color-mix(in srgb, var(--hellenic-gold) 70%, transparent);
+  background: transparent;
+  color: var(--parchment-marble);
+}
+.button--ghost:hover { background: var(--hellenic-gold); color: var(--aegean-ink); }
+/* Compact action on parchment: hover keeps the text readable on a light ground */
+.button--small { padding: 0.8em 1.6em; font-size: 0.75rem; }
+.button--small:hover { color: var(--amphora-rust); }
 
 /* 6. Reveal (paired with js/parallax.js) ----------------------------------- */
 .js [data-reveal] {

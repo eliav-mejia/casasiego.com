@@ -4,14 +4,17 @@ Volumen fotográfico de Synodé y sus marcas. Sitio estático (GitHub Pages), si
 
 ```
 synode.space/
-├── index.html                    portada Synodé (imágenes: images/synodos/)
+├── index.html                    portada Synodé (venta cruzada): Cap. I coworking (Coffee Space), Cap. II fotografía (Reino Fiel), Cap. III trajes (Toriku Films)
 ├── terms.html                    términos de uso y derechos
 ├── css/
 │   ├── site.css                  tokens, tipografía y componentes base
 │   ├── layout.css                estructura, secciones sticky y parallax
 │   └── brand.css                 componentes de marca: sesiones, precios, extras, locaciones, descargas
-├── js/parallax.js · js/protect.js
+├── js/parallax.js · js/compare.js · js/protect.js
 ├── brands/
+│   ├── fiel/index.html           marca nº 1 · Fiel by Synodé, estudio fotográfico
+│   ├── justo/index.html          marca nº 2 · Justo by Synodé, sastrería
+│   ├── libre/index.html          marca nº 3 · Libre by Synodé, coworking y café
 │   └── reino_fiel/               marca nº 1 · fotografía de mascotas (español, precios en MXN)
 │       ├── index.html
 │       └── descargas/reino-fiel-guia-de-sesiones.pdf
@@ -24,6 +27,7 @@ synode.space/
     └── src/
         ├── build-pdf.sh          sh docs/src/build-pdf.sh reino-fiel-sesiones  → guía PDF de la marca
         ├── make-placeholders.py  marcadores para los huecos vacíos de todos los catálogos
+        ├── export-portada-servicios.py  recortes web de la portada desde images/og/ (+ og/share.jpg)
         └── reino-fiel-sesiones.html  fuente de la guía PDF
 ```
 

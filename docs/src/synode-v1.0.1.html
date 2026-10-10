@@ -46,7 +46,7 @@
   <div>
     <p class="eyebrow" style="color:var(--gold)">Documentation &middot; v1.0.1</p>
     <h1>Synode</h1>
-    <p class="greek" lang="el">Σύνοδος</p>
+    <p class="greek" lang="el">Συνέδριον</p>
     <p class="lede">Design system, CSS architecture and elegance review for the synode.space parallax photography landing page.</p>
   </div>
   <div>
@@ -65,10 +65,10 @@
   <tr><th>#</th><th>Section</th><th>Technique</th><th>Class</th></tr>
   <tr><td>I</td><td>Hero — title inscription over a full-bleed plate</td><td>Two-layer parallax: plate 0.35 down, inscription 0.12 up</td><td><code>.hero</code></td></tr>
   <tr><td>II</td><td>Prologue — wide-margin text with drop cap</td><td>Asymmetric folio grid, reveal on enter</td><td><code>.folio</code></td></tr>
-  <tr><td>III</td><td>Chapter I · Aegean</td><td>Sticky caption column + plates drifting at ±0.05–0.08</td><td><code>.chapter</code></td></tr>
+  <tr><td>III</td><td>Chapter I · Coffee Space</td><td>Sticky caption column + plates drifting at ±0.05–0.08</td><td><code>.chapter</code></td></tr>
   <tr><td>IV</td><td>Interlude — inscription band</td><td>Full-bleed parallax background, 0.2</td><td><code>.interlude</code></td></tr>
-  <tr><td>V</td><td>Chapter II · Terracotta</td><td>CSS sticky stacked leaves, offset like folio pages</td><td><code>.stack</code></td></tr>
-  <tr><td>VI</td><td>Chapter III · Laurel</td><td>Asymmetric 12-column contact sheet</td><td><code>.gallery</code></td></tr>
+  <tr><td>V</td><td>Chapter II · Reino Fiel</td><td>CSS sticky stacked leaves, offset like folio pages</td><td><code>.stack</code></td></tr>
+  <tr><td>VI</td><td>Chapter III · Toriku Films</td><td>Asymmetric 12-column contact sheet</td><td><code>.gallery</code></td></tr>
   <tr><td>VII</td><td>Colophon — contact, return to top</td><td>Static dark ground</td><td><code>.colophon</code></td></tr>
 </table>
 
@@ -165,7 +165,7 @@ docs/synode-v1.0.1.pdf  this document</pre>
   <li><b>&ldquo;Thick, high-contrast&rdquo; headers.</b> Cinzel is an inscriptional face with low stroke contrast; the high contrast lives in Bodoni Moda. The guide's wording conflates the two. Consider Cinzel 700 instead of 900 for the hero: at 72px with +0.15em tracking, 900 starts to look heavy beside fine photography.</li>
   <li><b>Didone tracking.</b> +0.05em suits all-caps, but loosens lowercase Bodoni. For title-case H2s, +0.01–0.02em keeps the hairlines crisp. (This document already uses +0.02em for its H2s for comparison.)</li>
   <li><b>Thera White vs parchment.</b> Pure #FFF next to #F7F4EE can read slightly cool. Keep it for the stacked leaves, where the lift is intentional, but don't spread it to other surfaces.</li>
-  <li><b>GFS Didot</b> should stay for Greek text only (as in the hero's Σύνοδος). For Latin H2s, Bodoni Moda has the better Latin glyphs and optical sizes.</li>
+  <li><b>GFS Didot</b> should stay for Greek text only (as in the hero's Συνέδριον). For Latin H2s, Bodoni Moda has the better Latin glyphs and optical sizes.</li>
   <li><b>Rust on ink</b> (3.01:1) works for the colophon button, where white text sits on a rust fill, but never set rust text directly on ink below 24px.</li>
 </ol>
 
