@@ -79,12 +79,13 @@ html.acceso-pendiente body > :not(.acceso) { visibility: hidden; }
   background: var(--thera-white);
   color: var(--aegean-ink);
   display: grid; place-items: center; align-content: center; gap: 1.25rem;
+  padding: clamp(2.75rem, 2rem + 3.5vw, 4rem) clamp(2.25rem, 1.6rem + 3.5vw, 3.75rem);
   text-align: center;
 }
 .acceso__message {
   margin: 0;
-  font-family: "Pinyon Script", "Great Vibes", "Snell Roundhand", "Apple Chancery", cursive;
-  font-weight: 400; font-size: clamp(2rem, 1.5rem + 2.4vw, 2.75rem); line-height: 1.25;
+  font-family: "Parisienne", "Snell Roundhand", "Apple Chancery", cursive;
+  font-weight: 400; font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.1rem); line-height: 1.4;
 }
 .acceso__sign { margin: 0; font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--hellenic-gold); }
 .acceso__back .rule { margin: 0; }
