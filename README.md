@@ -6,11 +6,13 @@ Volumen fotográfico de Synodé y sus marcas. Sitio estático (GitHub Pages), si
 synode.space/
 ├── index.html                    portada Synodé (venta cruzada): Cap. I coworking (Coffee Space), Cap. II fotografía (Reino Fiel), Cap. III trajes (Toriku Films)
 ├── terms.html                    términos de uso y derechos
+├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── css/
 │   ├── site.css                  tokens, tipografía y componentes base
 │   ├── layout.css                estructura, secciones sticky y parallax
 │   └── brand.css                 componentes de marca: sesiones, precios, extras, locaciones, descargas
 ├── js/parallax.js · js/compare.js · js/protect.js
+├── js/acceso.js · js/acceso-config.js · css/acceso.css   pop-up de acceso de la portada (Supabase Auth, sin registro)
 ├── brands/
 │   ├── fiel/index.html           marca nº 1 · Fiel by Synodé, estudio fotográfico
 │   ├── justo/index.html          marca nº 2 · Justo by Synodé, sastrería
@@ -49,3 +51,10 @@ y `docs/src/reino-fiel-sesiones.html`. Tras cambiarlos, vuelve a generar el PDF.
 Servir desde la raíz del sitio (`py -m http.server 8130` → http://localhost:8130/brands/justo/tienda/): la tienda lee
 `db/*.json` con `fetch`, así que abrir el HTML con doble clic no funciona. Sacos, precios, medidas y existencias:
 `brands/justo/tienda/db/`. Detalle, decisiones y pendientes: `_interno/tienda-justo.md` (solo local).
+
+## Acceso a la portada
+
+`index.html` abre con un pop-up de inicio de sesión (Supabase Auth, sin registro). Éxito: la tarjeta gira a «Encantados de
+volvernos a encontrar» y abre la portada. Error: gira a «Esperamos tener el honor de conocerte pronto» y redirige a
+`brands/fiel/`. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
+tienda y `404.html` no tienen pop-up. Es una barrera visual, no protección real del HTML: ver `_interno/acceso-synode.md`.

@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Synode — acceso.css
+   Sign-in gate of the home page: veil, login card and the flip to a white message card.
+   Only index.html loads it. While <html> has .acceso-pendiente the page behind stays hidden.
+   ========================================================================== */
+
+html.acceso-pendiente,
+html.acceso-pendiente body { overflow: hidden; }
+html.acceso-pendiente body > :not(.acceso) { visibility: hidden; }
+
+.acceso {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-items: center;
+  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(12, 24, 33, 0.78), rgba(12, 24, 33, 0.94)),
+    url("../images/synodos/portada.jpg?v=1.0.6") center / cover no-repeat;
+  opacity: 0; animation: acceso-in 900ms var(--ease-silk) 80ms forwards;
+}
+.acceso.is-leaving { animation: acceso-out 900ms var(--ease-silk) forwards; }
+
+@keyframes acceso-in  { to { opacity: 1; } }
+@keyframes acceso-out { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+
+/* The card: two faces in the same grid cell so both take the height of the taller one. */
+.acceso__card {
+  width: min(26rem, 100%);
+  perspective: 1600px;
+  transform: translateY(14px); animation: acceso-rise 1100ms var(--ease-silk) 200ms forwards;
+}
+@keyframes acceso-rise { to { transform: none; } }
+
+.acceso__inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.acceso.is-flipped .acceso__inner { transform: rotateY(180deg); }
+
+.acceso__face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  padding: clamp(2rem, 1.4rem + 3vw, 3rem) clamp(1.5rem, 1rem + 3vw, 2.75rem);
+}
+
+/* Front: parchment card with gold frame */
+.acceso__front {
+  background: var(--parchment-marble);
+  color: var(--aegean-ink);
+  border: 1px solid rgba(194, 155, 56, 0.55);
+  outline: 1px solid rgba(194, 155, 56, 0.35); outline-offset: -8px;
+  text-align: center;
+}
+.acceso__title {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2rem, 1.6rem + 1.8vw, 2.6rem); letter-spacing: var(--track-display);
+  text-transform: uppercase;
+}
+.acceso__greek { margin: 0.1rem 0 0; font-family: var(--font-greek); color: var(--hellenic-gold); font-size: 1.05rem; letter-spacing: 0.08em; }
+.acceso__lede  { margin: 1.1rem auto 1.6rem; max-width: 22rem; font-family: var(--font-meta); font-style: italic; color: var(--laurel-leaf); font-size: var(--step-meta); line-height: 1.55; }
+
+.acceso__form { display: grid; gap: 1.1rem; text-align: left; }
+.acceso__field { display: grid; gap: 0.3rem; }
+.acceso__label { font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--laurel-leaf); }
+.acceso__input {
+  width: 100%; padding: 0.55rem 0; border: 0; border-bottom: 1px solid var(--aegean-ink); border-radius: 0;
+  background: transparent; color: var(--aegean-ink); font: inherit; font-size: 1.05rem;
+}
+.acceso__input:focus { outline: none; border-bottom: 2px solid var(--amphora-rust); padding-bottom: calc(0.55rem - 1px); }
+.acceso__submit { margin-top: 0.6rem; width: 100%; cursor: pointer; }
+.acceso__submit[disabled] { opacity: 0.6; cursor: progress; }
+.acceso__fine { margin: 1.4rem 0 0; font-family: var(--font-meta); font-style: italic; font-size: 0.8125rem; color: var(--laurel-leaf); }
+
+/* Back: plain white card, the message in script */
+.acceso__back {
+  transform: rotateY(180deg);
+  pointer-events: none;
+  background: var(--thera-white);
+  color: var(--aegean-ink);
+  display: grid; place-items: center; align-content: center; gap: 1.25rem;
+  text-align: center;
+}
+.acceso__message {
+  margin: 0;
+  font-family: "Pinyon Script", "Great Vibes", "Snell Roundhand", "Apple Chancery", cursive;
+  font-weight: 400; font-size: clamp(2rem, 1.5rem + 2.4vw, 2.75rem); line-height: 1.25;
+}
+.acceso__sign { margin: 0; font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--hellenic-gold); }
+.acceso__back .rule { margin: 0; }
+
+/* Reduced motion: no flip or rise, faces swap with a fade */
+@media (prefers-reduced-motion: reduce) {
+  .acceso, .acceso.is-leaving, .acceso__card { animation-duration: 1ms; animation-delay: 0ms; }
+  .acceso__inner { transition: none; }
+  .acceso.is-flipped .acceso__inner { transform: none; }
+  .acceso__back { transform: none; opacity: 0; transition: opacity 400ms ease; }
+  .acceso__front { transition: opacity 400ms ease; }
+  .acceso.is-flipped .acceso__back { opacity: 1; }
+  .acceso.is-flipped .acceso__front { opacity: 0; }
+}

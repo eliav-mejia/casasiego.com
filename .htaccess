@@ -26,3 +26,7 @@
 
 # 4. No directory listings (stops browsing /images/plates/ as a file index)
 Options -Indexes
+
+# 5. Missing pages and folders without index → Synodé 404 (403 from -Indexes and docs/ too, so nothing hints it exists)
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
