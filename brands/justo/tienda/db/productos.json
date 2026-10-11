@@ -1,0 +1,119 @@
+{
+  "_schema": "products: id, slug, sku, name, short, description, price_mxn, cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n}, specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], monogram, active, featured",
+  "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Synodé. Precios con IVA, medidas y existencias: confirmar con el taller. Los tres comparten foto (traje-01.jpg): focus/zoom encuadran cada saco.",
+  "updated_at": "2026-10-10",
+  "products": [
+    {
+      "id": "ju-001",
+      "slug": "saco-clasico-azul-marino",
+      "sku": "JUS-SAC-01",
+      "name": "Saco Clásico Azul Marino",
+      "short": "Lana Super 110s, dos botones, solapa de muesca.",
+      "description": "El saco que va con todo: azul marino profundo en lana merino Super 110s, dos botones, solapa de muesca de 8 cm y hombro natural con hombrera ligera. Corte regular que deja moverse sin perder la línea; se lleva con traje, con jeans o sobre un suéter delgado.",
+      "price_mxn": 6900,
+      "cut": "Regular",
+      "image": "images/synodos/traje-01.jpg",
+      "focus": "16% 60%",
+      "zoom": 3.1,
+      "sizes": ["CH", "M", "G", "XG"],
+      "stock": { "CH": 3, "M": 5, "G": 4, "XG": 2 },
+      "specs": {
+        "CH": { "chest": 102, "waist": 92,  "shoulder": 44.0, "sleeve": 62.0, "length": 73, "hem": 104, "lapel": 8, "drop": 6 },
+        "M":  { "chest": 108, "waist": 98,  "shoulder": 45.5, "sleeve": 63.5, "length": 75, "hem": 110, "lapel": 8, "drop": 6 },
+        "G":  { "chest": 116, "waist": 106, "shoulder": 47.0, "sleeve": 65.0, "length": 77, "hem": 118, "lapel": 8, "drop": 6 },
+        "XG": { "chest": 126, "waist": 116, "shoulder": 48.5, "sleeve": 66.0, "length": 79, "hem": 128, "lapel": 8, "drop": 6 }
+      },
+      "fabric": "100 % lana merino Super 110s, sarga, 260 g/m², tejida en Biella (Italia)",
+      "lining": "Forro de cupro (Bemberg) azul marino, respirable y antiestático; mangas con forro rayado",
+      "construction": "Semientretelado (half-canvas) de crin de caballo en pecho y solapa; resto termofijado",
+      "buttons": "2 botones frontales de corozo · 4 en cada manga, ojales funcionales",
+      "pockets": "2 bolsas con cartera · bolsillo de pecho de parche curvo · 3 bolsillos interiores (uno para pluma)",
+      "vents": "Doble abertura trasera de 22 cm",
+      "care": "Solo tintorería en seco, como máximo 2 veces por temporada. Cepillar tras cada uso y colgar en gancho ancho de madera; vaporizar en lugar de planchar.",
+      "features": [
+        "Ojales de manga funcionales (se abren)",
+        "Solapa con ojal Milanés hecho a mano",
+        "Cuello con fieltro italiano que no se despega",
+        "Margen de costura para ajustar 4 cm de cintura"
+      ],
+      "monogram": true,
+      "active": true,
+      "featured": true
+    },
+    {
+      "id": "ju-002",
+      "slug": "saco-tweed-espiga",
+      "sku": "JUS-SAC-02",
+      "name": "Saco de Tweed Espiga Gris",
+      "short": "Tweed de lana en espiga, el Tailor's Blend de la casa.",
+      "description": "Tweed gris carbón en espiga (herringbone), con la etiqueta Tailor's Blend de la casa. Tres botones con solapa enrollada al segundo, hombro suave sin hombrera y bolsillos de parche: un saco de otoño e invierno para el fin de semana o la oficina sin corbata.",
+      "price_mxn": 7800,
+      "cut": "Regular holgado",
+      "image": "images/synodos/traje-01.jpg",
+      "focus": "46% 58%",
+      "zoom": 3.1,
+      "detail_image": "images/synodos/traje-02.jpg",
+      "sizes": ["CH", "M", "G", "XG"],
+      "stock": { "CH": 2, "M": 4, "G": 3, "XG": 0 },
+      "specs": {
+        "CH": { "chest": 104, "waist": 96,  "shoulder": 44.5, "sleeve": 62.5, "length": 74, "hem": 108, "lapel": 8.5, "drop": 5 },
+        "M":  { "chest": 110, "waist": 102, "shoulder": 46.0, "sleeve": 64.0, "length": 76, "hem": 114, "lapel": 8.5, "drop": 5 },
+        "G":  { "chest": 118, "waist": 110, "shoulder": 47.5, "sleeve": 65.5, "length": 78, "hem": 122, "lapel": 8.5, "drop": 5 },
+        "XG": { "chest": 128, "waist": 120, "shoulder": 49.0, "sleeve": 66.5, "length": 80, "hem": 132, "lapel": 8.5, "drop": 5 }
+      },
+      "fabric": "Tweed 100 % lana virgen en espiga, 420 g/m², tejido en Escocia",
+      "lining": "Medio forro de viscosa gris humo (espalda libre para que respire); mangas forradas",
+      "construction": "Entretelado completo (full canvas) de crin de caballo; hombro napolitano sin hombrera",
+      "buttons": "3 botones de cuerno, solapa enrollada al segundo · 4 en cada manga, ojales funcionales",
+      "pockets": "2 bolsillos de parche con cartera · bolsillo de pecho de parche · 2 bolsillos interiores",
+      "vents": "Abertura central de 24 cm",
+      "care": "Solo tintorería en seco. Cepillar en el sentido del tejido; guardar con cedro o lavanda. El tweed recupera su forma colgado una noche.",
+      "features": [
+        "Etiqueta interior Tailor's Blend",
+        "Coderas de gamuza opcionales sin costo (pídelas en las notas)",
+        "Full canvas: la solapa toma la forma de tu pecho con el uso",
+        "Repelente natural al agua por la lanolina del tweed"
+      ],
+      "monogram": true,
+      "active": true,
+      "featured": true
+    },
+    {
+      "id": "ju-003",
+      "slug": "saco-cruzado-medianoche",
+      "sku": "JUS-SAC-03",
+      "name": "Saco Cruzado Azul Medianoche",
+      "short": "Doble botonadura 6×2, solapa de pico, corte entallado.",
+      "description": "Para la noche, la boda y el escenario: azul medianoche, que con luz artificial se ve más negro que el negro. Doble botonadura 6×2, solapa de pico ancha de 10 cm y corte entallado con cintura marcada. Se abotona siempre; por eso el entalle es más justo que el de un saco recto.",
+      "price_mxn": 8900,
+      "cut": "Entallado",
+      "image": "images/synodos/traje-01.jpg",
+      "focus": "68% 58%",
+      "zoom": 2.4,
+      "sizes": ["CH", "M", "G", "XG"],
+      "stock": { "CH": 1, "M": 3, "G": 2, "XG": 1 },
+      "specs": {
+        "CH": { "chest": 100, "waist": 88,  "shoulder": 43.5, "sleeve": 62.0, "length": 72, "hem": 100, "lapel": 10, "drop": 7 },
+        "M":  { "chest": 106, "waist": 94,  "shoulder": 45.0, "sleeve": 63.5, "length": 74, "hem": 106, "lapel": 10, "drop": 7 },
+        "G":  { "chest": 114, "waist": 102, "shoulder": 46.5, "sleeve": 65.0, "length": 76, "hem": 114, "lapel": 10, "drop": 7 },
+        "XG": { "chest": 124, "waist": 112, "shoulder": 48.0, "sleeve": 66.0, "length": 78, "hem": 124, "lapel": 10, "drop": 7 }
+      },
+      "fabric": "Lana fría 98 % / elastano 2 %, Super 120s, 240 g/m², con caída y recuperación",
+      "lining": "Forro completo de cupro (Bemberg) azul noche con vivos en satén",
+      "construction": "Semientretelado (half-canvas) con hombrera media para una línea de hombro definida",
+      "buttons": "6×2 botones de corozo azul (2 abotonan) · botón interior de anclaje · 4 en cada manga",
+      "pockets": "2 bolsas de vivo sin cartera · bolsillo de pecho de vivo · 3 bolsillos interiores",
+      "vents": "Doble abertura trasera de 20 cm",
+      "care": "Solo tintorería en seco. El elastano no tolera plancha directa: vaporizar a 15 cm y dejar secar colgado.",
+      "features": [
+        "Solapa de pico de 10 cm, para corbata de moño o corbata ancha",
+        "Botón de anclaje interior: no se abre el cruce al sentarse",
+        "2 % elastano: se mueve contigo sin arrugar",
+        "Cuello y solapa planchados a mano"
+      ],
+      "monogram": true,
+      "active": true,
+      "featured": true
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+/* Justo by Synodé · tienda (variante C/D). Everything else is Tailwind classes (theme in ../js/tailwind.config.js).
+   Same identity as /css/site.css without loading it (its base styles would fight Tailwind's reset):
+   parchment #F7F4EE · ink #0C1821 · rust #A34828 (actions) · gold #C29B38 (ornaments) · laurel #516053 (secondary)
+   Cinzel (logo, labels) · Bodoni Moda (headings) · EB Garamond (text) · Spectral italic (notes). Square corners, no shadows. */
+:root {
+    --parchment: #F7F4EE;
+    --ink: #0C1821;
+    --rust: #A34828;
+    --gold: #C29B38;
+    --laurel: #516053;
+    --line: #ddd5c5;
+    color-scheme: light;
+}
+
+html { background: var(--parchment); scroll-behavior: smooth; }
+body {
+    font-family: 'EB Garamond', Garamond, Georgia, serif;
+    font-size: 17px; line-height: 1.6;
+    background: var(--parchment); color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: lining-nums;
+}
+h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; font-weight: 600; line-height: 1.08; }
+::selection { background: var(--ink); color: var(--parchment); }
+:focus-visible { outline: 1px solid var(--rust); outline-offset: 3px; }
+
+/* Small Cinzel capitals: nav, prices, captions, buttons */
+.label { font-family: Cinzel, Georgia, serif; font-size: 11px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
+.label-strong { font-family: Cinzel, Georgia, serif; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.note { font-family: Spectral, 'EB Garamond', Georgia, serif; font-style: italic; }
+
+.link { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .35s ease; padding-bottom: 1px; }
+.link:hover, .link[aria-current="page"] { background-size: 100% 1px; }
+
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+    min-height: 46px; padding: 0 1.75rem; border-radius: 0;
+    font-family: Cinzel, Georgia, serif; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    transition: background-color .2s, color .2s, border-color .2s; cursor: pointer;
+}
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+.btn-rust { background: var(--rust); color: var(--parchment); border: 1px solid var(--rust); }
+.btn-rust:hover:not(:disabled) { background: #86391f; border-color: #86391f; }
+.btn-line { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+.btn-line:hover:not(:disabled) { background: var(--ink); color: var(--parchment); }
+.btn-light { background: transparent; color: var(--parchment); border: 1px solid rgba(247,244,238,.8); }
+.btn-light:hover:not(:disabled) { background: var(--parchment); color: var(--ink); }
+
+.field {
+    width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0;
+    padding: .7rem 0; font-size: 17px; color: var(--ink);
+}
+.field::placeholder { color: var(--laurel); font-family: Cinzel, Georgia, serif; text-transform: uppercase; font-size: 11px; letter-spacing: .14em; }
+.field:focus { outline: none; border-bottom: 2px solid var(--rust); padding-bottom: calc(.7rem - 1px); }
+
+/* Size chips: letter on top, size name below */
+.chip { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 64px; min-height: 56px; padding: .35rem .6rem;
+        border: 1px solid var(--line); background: transparent; transition: border-color .15s, background-color .15s, color .15s; }
+.chip:hover { border-color: var(--ink); }
+.chip[aria-checked="true"] { background: var(--ink); border-color: var(--ink); color: var(--parchment); }
+.chip[data-out="true"]:not([aria-checked="true"]) { color: var(--laurel); border-style: dashed; }
+
+/* Spec table: the selected size column is shaded */
+.spec { width: 100%; border-collapse: collapse; font-size: 15px; }
+.spec th, .spec td { padding: .5rem .4rem; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
+.spec th:first-child, .spec td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.spec thead th { font-family: Cinzel, Georgia, serif; font-size: 11px; letter-spacing: .14em; font-weight: 700; }
+.spec .is-sel { background: rgba(194,155,56,.16); }
+.spec tr.group td { font-family: Cinzel, Georgia, serif; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--laurel); padding-top: 1.1rem; border-bottom-color: var(--ink); }
+
+/* Product crop: the three jackets share one photo; --focus and --zoom frame each one (from productos.json). */
+.crop { position: relative; overflow: hidden; background: #e6dfd1; }
+.crop > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+              object-position: var(--focus, 50% 50%); transform: scale(var(--zoom, 1)); transform-origin: var(--focus, 50% 50%);
+              transition: transform 1.2s cubic-bezier(.22,.61,.36,1); }
+.group:hover .crop > img { transform: scale(calc(var(--zoom, 1) * 1.04)); }
+
+.rule-gold { border: 0; height: 1px; background: var(--gold); opacity: .6; }
+
+.reveal { opacity: 0; transform: translateY(10px); transition: opacity .9s ease, transform .9s ease; }
+.reveal.is-in { opacity: 1; transform: none; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in { from { transform: translateX(100%); } to { transform: none; } }
+.animate-fade-in { animation: fade-in .4s ease both; }
+.animate-slide-in { animation: slide-in .4s cubic-bezier(.2,.8,.2,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+}

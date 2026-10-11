@@ -14,6 +14,15 @@ synode.space/
 ├── brands/
 │   ├── fiel/index.html           marca nº 1 · Fiel by Synodé, estudio fotográfico
 │   ├── justo/index.html          marca nº 2 · Justo by Synodé, sastrería
+│   ├── justo/tienda/             TIENDA EN LÍNEA de Justo (variante C/D: React + Tailwind por CDN, sin build)
+│   │   ├── index.html            catálogo: 3 sacos, tallas CH · M · G · XG, calculadora de talla
+│   │   ├── <slug>/index.html     ficha de cada saco (especificaciones por talla, monograma, añadir a la bolsa)
+│   │   ├── bolsa/                bolsa + entrega + pago + datos → pedido por correo (noindex)
+│   │   ├── guia-de-tallas/       tallas del cuerpo, cómo medirse, medidas de cada saco
+│   │   ├── db/                   datos simulados: productos.json · tallas.json · tienda.json (envíos, pagos, descuentos)
+│   │   ├── js/tienda.jsx         capa db, bolsa (localStorage), priceBag, componentes · js/tailwind.config.js
+│   │   ├── css/tienda.css        identidad Synodé para Tailwind
+│   │   └── supabase/             esquema Etapa 2 (no se ejecuta aún)
 │   ├── libre/index.html          marca nº 3 · Libre by Synodé, coworking y café
 │   └── reino_fiel/               marca nº 1 · fotografía de mascotas (español, precios en MXN)
 │       ├── index.html
@@ -23,6 +32,7 @@ synode.space/
 │   ├── synodos/                  catálogo base de la portada (README.md)
 │   ├── brands/reino_fiel/        catálogo de la marca nº 1 (README.md)
 │   └── og/share.jpg              tarjeta para compartir la portada
+├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna de la tienda
 └── docs/                         documentación privada (bloqueada en .htaccess y robots.txt)
     └── src/
         ├── build-pdf.sh          sh docs/src/build-pdf.sh reino-fiel-sesiones  → guía PDF de la marca
@@ -33,3 +43,9 @@ synode.space/
 
 Los precios de Reino Fiel están en dos lugares que deben coincidir: la sección «Sesiones» de `brands/reino_fiel/index.html`
 y `docs/src/reino-fiel-sesiones.html`. Tras cambiarlos, vuelve a generar el PDF.
+
+## Tienda Justo (`brands/justo/tienda/`)
+
+Servir desde la raíz del sitio (`py -m http.server 8130` → http://localhost:8130/brands/justo/tienda/): la tienda lee
+`db/*.json` con `fetch`, así que abrir el HTML con doble clic no funciona. Sacos, precios, medidas y existencias:
+`brands/justo/tienda/db/`. Detalle, decisiones y pendientes: `_interno/tienda-justo.md` (solo local).

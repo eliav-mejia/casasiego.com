@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tienda Justo · Sacos · Synodé</title>
+  <meta name="description" content="Tienda en línea de Justo, la sastrería de Synodé: tres sacos de la casa en tallas Chico, Mediano, Grande y Extra grande, con medidas completas por talla.">
+  <link rel="canonical" href="https://synode.space/brands/justo/tienda/">
+  <meta property="og:title" content="Tienda Justo · Sacos · Synodé">
+  <meta property="og:description" content="Tienda en línea de Justo, la sastrería de Synodé: tres sacos de la casa en tallas Chico, Mediano, Grande y Extra grande, con medidas completas por talla.">
+  <meta property="og:url" content="https://synode.space/brands/justo/tienda/">
+  <meta property="og:locale" content="es_MX">
+  <meta property="og:image" content="https://synode.space/images/synodos/traje-01.jpg">
+  <meta name="theme-color" content="#0C1821">
+  <meta property="og:type" content="website">
+  <!-- Derechos: aviso de copyright y exclusión de minería de textos y datos / entrenamiento de IA -->
+  <meta name="copyright" content="© 2026 Synodé. Todos los derechos reservados.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="tdm-reservation" content="1">
+  <meta name="tdm-policy" content="https://synode.space/terms.html">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../brands/justo/tienda/js/tailwind.config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:ital@1&display=swap">
+  <link rel="stylesheet" href="../../../brands/justo/tienda/css/tienda.css?v=1.0.0">
+
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+</head>
+<body data-root="../../../">
+
+  <div id="root"></div>
+  <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:studio@synode.space">studio@synode.space</a> para hacer tu pedido.</p></noscript>
+
+  <script type="text/babel" src="../../../brands/justo/tienda/js/tienda.jsx?v=1.0.0"></script>
+  <script type="text/babel">
+    const Catalogue = () => {
+        const catalog = useCatalog();
+        useReveal([catalog.status]);
+        return (
+            <>
+                <section className="relative bg-ink text-parchment overflow-hidden">
+                    <img src={asset('images/synodos/traje-01.jpg')} alt="" className="absolute inset-0 w-full h-full object-cover opacity-45" style={{ objectPosition: '50% 45%' }} draggable="false" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+                    <div className="relative max-w-[1400px] mx-auto px-4 md:px-10 pt-32 pb-16 md:pt-48 md:pb-24 animate-fade-in">
+                        <p className="label text-gold">Justo by Synodé &middot; Tienda</p>
+                        <h1 className="font-display font-bold tracking-display text-5xl md:text-7xl mt-4">Sacos</h1>
+                        <p className="text-lg md:text-xl max-w-xl mt-5 text-parchment/90">Tres sacos de la casa, listos para llevar en tallas Chico, Mediano, Grande y Extra grande. Cada uno con su tabla de medidas y el ajuste final hecho en el taller.</p>
+                        <div className="flex flex-wrap gap-2 mt-8">
+                            <a href="#sacos" className="btn btn-rust">Ver los sacos</a>
+                            <a href={`${SHOP}/guia-de-tallas/`} className="btn btn-light">¿Qué talla soy?</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="sacos" className="max-w-[1400px] mx-auto px-4 md:px-10 pt-16 md:pt-24 scroll-mt-24">
+                    <div className="flex flex-wrap justify-between items-end gap-4 mb-10">
+                        <div>
+                            <p className="label text-gold">Capítulo I</p>
+                            <h2 className="text-3xl md:text-4xl mt-2">La colección</h2>
+                        </div>
+                        <p className="note text-ink-500 max-w-sm">Las tallas en gris claro se confeccionan sobre pedido. Ninguna talla se agota: solo tarda más.</p>
+                    </div>
+                    {catalog.status === 'loading' && <Skeleton />}
+                    {catalog.status === 'error' && <LoadError />}
+                    {catalog.status === 'ready' && <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{catalog.products.map(p => <ProductCard key={p.id} product={p} catalog={catalog} />)}</div>}
+                </section>
+
+                {catalog.status === 'ready' && (
+                    <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-16">
+                        <hr className="rule-gold mb-12" />
+                        <div className="grid md:grid-cols-2 gap-12 items-start">
+                            <div className="reveal">
+                                <p className="label text-gold">Capítulo II</p>
+                                <h2 className="text-3xl md:text-4xl mt-2">Cuatro tallas, medidas completas</h2>
+                                <p className="text-ink-700 mt-5 max-w-lg">Cada ficha muestra, para CH, M, G y XG, a quién le queda (pecho, cintura, estatura, peso y cuello) y cuánto mide el saco (pecho, cintura, hombro, manga, largo, bajo y solapa). Elige por pecho y hombro; mangas y cintura las ajustamos nosotros.</p>
+                                <ul className="mt-6 space-y-2 text-ink-700">
+                                    {catalog.sizes.map(s => <li key={s.id} className="flex gap-4 border-b border-line pb-2"><span className="label-strong w-8">{s.id}</span><span className="flex-1">{s.label}</span><span className="text-ink-500">pecho {s.body.chest_cm.join('–')} cm · MX {s.mx}</span></li>)}
+                                </ul>
+                            </div>
+                            <div className="reveal"><SizeFinder catalog={catalog} /></div>
+                        </div>
+                    </section>
+                )}
+
+                {catalog.status === 'ready' && (
+                    <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20 grid md:grid-cols-3 gap-8">
+                        {[
+                            ['Ajuste incluido', catalog.tolerances.note],
+                            ['Para cortejos y equipos', catalog.rules.volume.map(v => v.label).join(' · ') + '. El descuento se aplica solo en la bolsa.'],
+                            ['La entrega', 'Recoge en Casa Synodé con prueba final y retrato en Fiel, o recíbelo en casa en funda con gancho de madera.'],
+                        ].map(([t, d]) => <div key={t} className="reveal border-t border-ink pt-5"><p className="label-strong">{t}</p><p className="text-ink-700 mt-3">{d}</p></div>)}
+                    </section>
+                )}
+            </>
+        );
+    };
+    renderPage(Catalogue, { current: 'sacos' });
+  </script>
+</body>
+</html>

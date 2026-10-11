@@ -8,3 +8,6 @@ images/synodos/_DSC*
 images/synodos/Antes_*
 images/synodos/Después_*
 images/synodos/Gemini_*
+
+# Documentación interna (tienda Justo, decisiones, riesgos): nunca en el repositorio ni en el sitio
+_interno/

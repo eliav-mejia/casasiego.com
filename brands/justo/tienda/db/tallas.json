@@ -1,0 +1,24 @@
+{
+  "_schema": "sizes[{ id, label, mx, eu, us, body{ chest_cm, waist_cm, height_cm, weight_kg, neck_cm } }] · how_to_measure[{ id, label, detail }] · tolerances",
+  "_note": "Tallas corporales de ejemplo (Etapa 1): confirmar con el taller de Justo. Medidas del CUERPO, no de la prenda; las de cada saco están en productos.json (specs).",
+  "updated_at": "2026-10-10",
+  "sizes": [
+    { "id": "CH", "label": "Chico",        "mx": "36–38", "eu": "46–48", "us": "36–38R", "body": { "chest_cm": [88, 94],   "waist_cm": [74, 80],  "height_cm": [165, 172], "weight_kg": [58, 68],  "neck_cm": [37, 38] } },
+    { "id": "M",  "label": "Mediano",      "mx": "40",    "eu": "50",    "us": "40R",    "body": { "chest_cm": [95, 101],  "waist_cm": [81, 87],  "height_cm": [170, 178], "weight_kg": [68, 78],  "neck_cm": [39, 40] } },
+    { "id": "G",  "label": "Grande",       "mx": "42–44", "eu": "52–54", "us": "42–44R", "body": { "chest_cm": [102, 109], "waist_cm": [88, 96],  "height_cm": [174, 182], "weight_kg": [78, 90],  "neck_cm": [41, 42] } },
+    { "id": "XG", "label": "Extra grande", "mx": "46–48", "eu": "56–58", "us": "46–48R", "body": { "chest_cm": [110, 118], "waist_cm": [97, 106], "height_cm": [176, 186], "weight_kg": [90, 105], "neck_cm": [43, 44] } }
+  ],
+  "how_to_measure": [
+    { "id": "chest",  "label": "Pecho",            "detail": "Con camisa, rodea la parte más ancha del pecho, por debajo de las axilas y sobre los omóplatos. La cinta horizontal y sin apretar." },
+    { "id": "waist",  "label": "Cintura",          "detail": "A la altura del ombligo, relajado. Es la cintura del saco, no la del pantalón." },
+    { "id": "shoulder", "label": "Hombro",         "detail": "Por la espalda, de la punta de un hombro a la otra, siguiendo la curva. Pide ayuda: medirse solo falla por 2–3 cm." },
+    { "id": "sleeve", "label": "Largo de manga",   "detail": "Desde la punta del hombro hasta el hueso de la muñeca, con el brazo relajado y ligeramente doblado." },
+    { "id": "length", "label": "Largo de espalda", "detail": "Desde la base del cuello (donde se apoya el cuello de la camisa) hasta donde quieras que termine el saco. Clásico: cubre el asiento." },
+    { "id": "height", "label": "Estatura",         "detail": "Descalzo. Define el largo del saco; si estás entre dos tallas por estatura, elige por pecho y ajustamos mangas." }
+  ],
+  "tolerances": {
+    "sleeve_cm": 3,
+    "waist_cm": 4,
+    "note": "Incluido en la compra: el taller acorta o alarga mangas hasta 3 cm y entalla o suelta cintura hasta 4 cm. El hombro y el largo de espalda no se ajustan: elige la talla por pecho y hombro."
+  }
+}
