@@ -8,6 +8,8 @@ images/synodos/_DSC*
 images/synodos/Antes_*
 images/synodos/Después_*
 images/synodos/Gemini_*
+images/brands/fiel.esmx/*
+!images/brands/fiel.esmx/web/
 
 # Documentación interna (tienda Justo, decisiones, riesgos): nunca en el repositorio ni en el sitio
 _interno/
