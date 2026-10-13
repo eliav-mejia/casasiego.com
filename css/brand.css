@@ -39,7 +39,9 @@
 }
 .session--featured { border-top: 3px solid var(--amphora-rust); }
 .session .plate__frame { aspect-ratio: 4 / 3; }
-.sessions--portrait .session .plate__frame { aspect-ratio: 2 / 3; }
+.sessions--portrait .session .plate__frame { aspect-ratio: 3 / 4; }
+/* A taller photo shows whole: full height, margins at the sides. */
+.session .plate__frame--whole img { object-fit: contain; transform: none; }
 .session__body {
   display: flex;
   flex: 1;
