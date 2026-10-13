@@ -39,8 +39,10 @@
 }
 .session--featured { border-top: 3px solid var(--amphora-rust); }
 .session .plate__frame { aspect-ratio: 4 / 3; }
-.sessions--portrait .session .plate__frame { aspect-ratio: 3 / 4; }
-/* A taller photo shows whole: full height, margins at the sides. */
+/* Portrait sessions: cards narrowed to 3/4 so the frame keeps its height
+   and matches the 9:16 photographs exactly. */
+.sessions--portrait .sessions__grid { width: calc(75% + 0.5 * clamp(1rem, 2.5vw, 2.5rem)); }
+.sessions--portrait .session .plate__frame { aspect-ratio: 9 / 16; }
 .session .plate__frame--whole img { object-fit: contain; transform: none; }
 .session__body {
   display: flex;
@@ -145,6 +147,7 @@
   .sessions, .ledger, .download { padding-inline: max(16px, 6%); }
   .sessions__head, .download__inner { margin-left: 0; }
   .sessions__grid { grid-template-columns: 1fr; max-width: 34rem; }
+  .sessions--portrait .sessions__grid { width: auto; max-width: 25.5rem; }
   .ledger, .download__inner { grid-template-columns: 1fr; }
 }
 
