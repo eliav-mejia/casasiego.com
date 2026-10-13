@@ -91,7 +91,7 @@
                     <hr className="rule-gold mb-12" />
                     <p className="label text-gold">Medidas de cada saco</p>
                     <h2 className="text-3xl md:text-4xl mt-2">El mismo M no mide igual en los tres cortes</h2>
-                    <p className="text-ink-700 mt-4 max-w-2xl">El cruzado es entallado porque siempre va abotonado; el tweed es más holgado para llevar suéter debajo. Compara la prenda, no solo la letra.</p>
+                    <p className="text-ink-700 mt-4 max-w-2xl">El negro es entallado, con cintura marcada; el gris carbón deja más holgura para llevar suéter debajo. Compara la prenda, no solo la letra.</p>
                     <div className="flex flex-wrap gap-1 mt-8" role="tablist" aria-label="Saco">
                         {catalog.products.map((p, i) => <button key={p.id} role="tab" aria-selected={tab === i} className={`btn ${tab === i ? 'btn-rust' : 'btn-line'}`} onClick={() => setTab(i)}>{p.name.replace('Saco ', '')}</button>)}
                     </div>
