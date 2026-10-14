@@ -12,6 +12,7 @@ synode.space/
 │   ├── layout.css                estructura, secciones sticky y parallax
 │   └── brand.css                 componentes de marca: sesiones, precios, extras, locaciones, descargas
 ├── js/parallax.js · js/compare.js · js/protect.js
+├── js/region.js                  bandera México / España (todas las páginas): por IP cambia CDMX → Madrid y las locaciones de Fiel
 ├── js/acceso.js · js/acceso-config.js · css/acceso.css   pop-up de acceso de la portada (Supabase Auth, sin registro)
 ├── brands/
 │   ├── fiel/index.html           marca nº 1 · Fiel by Synodé, estudio fotográfico

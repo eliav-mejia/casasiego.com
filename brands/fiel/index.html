@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="../../css/brand.css?v=1.0.11">
   <script src="../../js/parallax.js" defer></script>
   <script src="../../js/protect.js" defer></script>
+  <script src="../../js/region.js?v=1.0.0" defer></script>
 </head>
 <body>
 
@@ -93,7 +94,8 @@
             <p class="eyebrow">Al aire libre</p>
             <h3 class="subhead">Tu mascota, tal como es</h3>
             <p>Sesiones con luz natural en los parques de la ciudad, con el bienestar de tu mascota primero. A la altura de sus ojos: el que vigila, el que juega, el que descansa.</p>
-            <p class="caption">Bosque de Chapultepec &middot; Parque México &middot; a domicilio</p>
+            <p class="caption" data-region="mx">Bosque de Chapultepec &middot; Parque México</p>
+            <p class="caption" data-region="es" hidden>Parque Ríos Rosas &middot; Parque de Santander</p>
             <a class="leaf__link" href="#sesiones">Ver las sesiones &rarr;</a>
           </div>
         </div>
@@ -106,7 +108,7 @@
             <p class="eyebrow">Familia</p>
             <h3 class="subhead">Con quienes los quieren</h3>
             <p>Retratos de tu mascota junto a su familia, o de varias mascotas juntas, en el parque o en su casa, en su jardín o en su sillón favorito.</p>
-            <p class="caption">1 mascota &middot; sesión a domicilio en CDMX</p>
+            <p class="caption">Hasta 3 mascotas con Legado &middot; cualquier locación en CDMX</p>
             <a class="leaf__link" href="#sesiones">Ver las sesiones &rarr;</a>
           </div>
         </div>
@@ -131,7 +133,7 @@
             <p class="meta session__terms">IVA incluido · anticipo de $135</p>
             <ul class="session__list">
               <li><b>Mascotas</b> 1</li>
-              <li><b>Locación</b> 1 · parque o a domicilio</li>
+              <li><b>Locación</b> 1 predefinida</li>
               <li><b>Entrega</b> 3 fotografías editadas</li>
               <li><b>Galería</b> privada en línea, 10 días hábiles</li>
             </ul>
@@ -149,7 +151,7 @@
             <ul class="session__list">
               <li><b>Duración</b> 30 minutos</li>
               <li><b>Mascotas</b> 1</li>
-              <li><b>Locación</b> 1 · parque o a domicilio</li>
+              <li><b>Locación</b> 1 predefinida</li>
               <li><b>Entrega</b> 7 fotografías editadas</li>
               <li><b>Galería</b> privada en línea, 10 días hábiles</li>
             </ul>
@@ -166,9 +168,10 @@
             <p class="meta session__terms">IVA incluido · anticipo de $415</p>
             <ul class="session__list">
               <li><b>Duración</b> 45 minutos</li>
-              <li><b>Mascotas</b> 1</li>
-              <li><b>Locación</b> 1 · parque o a domicilio</li>
-              <li><b>Entrega</b> 15 fotografías editadas</li>
+              <li><b>Mascotas</b> hasta 3</li>
+              <li><b>Locación</b> cualquiera en CDMX</li>
+              <li><b>Entrega</b> 11 fotografías editadas</li>
+              <li><b>Material</b> original en crudo incluido</li>
               <li><b>Galería</b> privada en línea, 15 días hábiles</li>
             </ul>
             <a class="button" href="mailto:studio@synode.space?subject=Fiel%20%C2%B7%20Sesi%C3%B3n%20Legado">Reservar</a>
@@ -193,9 +196,10 @@
       <div class="ledger__col">
         <h3 class="subhead">Locaciones</h3>
         <ul class="ledger__rows ledger__rows--places">
-          <li><strong>Bosque de Chapultepec</strong><span class="caption">Primera sección. Árboles altos y luz filtrada; mascota siempre con correa.</span></li>
-          <li><strong>Parque México, Condesa</strong><span class="caption">Senderos y arcos art déco, a primera hora de la mañana.</span></li>
-          <li><strong>A domicilio</strong><span class="caption">Su casa, su jardín, su sillón favorito.</span></li>
+          <li data-region="mx"><strong>Bosque de Chapultepec</strong><span class="caption">Primera sección. Árboles altos y luz filtrada; mascota siempre con correa.</span></li>
+          <li data-region="mx"><strong>Parque México, Condesa</strong><span class="caption">Senderos y arcos art déco, a primera hora de la mañana.</span></li>
+          <li data-region="es" hidden><strong>Parque Ríos Rosas</strong><span class="caption">A primera hora de la mañana; mascota siempre con correa.</span></li>
+          <li data-region="es" hidden><strong>Parque de Santander</strong><span class="caption">Árboles y luz filtrada, a primera hora de la mañana.</span></li>
         </ul>
         <p class="caption">Horarios: 8:00 – 11:00 y 16:00 – 19:00, según la luz. Sujeto al reglamento de cada parque.</p>
       </div>
