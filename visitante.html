@@ -37,46 +37,7 @@
 </head>
 <body>
 
-  <!-- I. Hero — no navigation; the page is read top to bottom like a scroll -->
-  <header class="hero" id="top">
-    <div class="hero__plate" data-speed="0.35" aria-hidden="true">
-      <img draggable="false" src="images/synodos/portada.jpg?v=1.0.6" alt="" fetchpriority="high">
-    </div>
-    <div class="hero__veil" aria-hidden="true"></div>
-
-    <div class="hero__inscription" data-speed="-0.12">
-      <p class="eyebrow eyebrow--gold">Coworking &middot; Fotografía &middot; Sastrería</p>
-      <h1 class="display">Synodé</h1>
-      <p class="hero__greek" lang="el">Συνέδριον</p>
-      <p class="hero__lede">Un lugar, tres servicios, todo lo demás a un paso.</p>
-      <p class="hero__sub">Coworking con café de especialidad, estudio fotográfico y trajes a medida bajo un mismo techo de madera y concreto. Entra por uno y suma los que necesites.</p>
-      <div class="hero__actions">
-        <a class="button" href="mailto:studio@synode.space?subject=Cotizaci%C3%B3n%20de%20servicios">Cotizar un servicio</a>
-        <a class="button button--ghost" href="#servicios">Ver los servicios</a>
-      </div>
-    </div>
-
-    <a class="scroll-cue" href="#prologo" aria-label="Comenzar a leer">
-      <span class="scroll-cue__label">Descender</span>
-      <span class="scroll-cue__line" aria-hidden="true"></span>
-    </a>
-  </header>
-
-  <main>
-
-    <!-- II. Prólogo — the cross-selling idea, wide-margin manuscript column -->
-    <section class="prologue folio" id="prologo" aria-labelledby="prologue-title">
-      <div class="folio__margin">
-        <p class="meta">Prólogo</p>
-        <p class="meta meta--muted">Madera, concreto y luz natural &middot; Ciudad de México</p>
-      </div>
-      <div class="folio__text">
-        <h2 class="section-title" id="prologue-title">Entra por un servicio, sal con lo que necesitas</h2>
-        <p class="dropcap">Synodé es la palabra antigua para un encuentro. Aquí nombra el lugar donde coinciden tres servicios: un coworking para trabajar, un estudio para retratarse y un taller para vestirse a la medida. Cada uno se contrata por separado, y cada uno abre la puerta a los otros dos.</p>
-        <p>Quien renta un escritorio sube al estudio por su retrato de perfil. Quien encarga un traje lo estrena frente a la cámara. Quien viene a una sesión espera su selección con un café en la barra. Una sola cuenta, un solo equipo y ningún traslado.</p>
-        <hr class="rule">
-      </div>
-    </section>
+  <main id="top">
 
     <!-- III. Capítulo I · Coworking — sticky caption beside drifting plates -->
     <section class="chapter" id="servicios" aria-labelledby="cowork-title">
@@ -90,7 +51,6 @@
           <li>Ajuste de saco antes de una junta</li>
           <li>Café y barra para tus reuniones</li>
         </ul>
-        <a class="button button--small" href="mailto:studio@synode.space?subject=Coworking">Reservar un escritorio</a>
       </div>
 
       <div class="chapter__plates">
@@ -105,86 +65,7 @@
       </div>
     </section>
 
-    <!-- IV. Capítulo II · Fotografía — the studio's services as stacked leaves -->
-    <section class="stack" aria-labelledby="photo-title">
-      <header class="stack__head folio">
-        <div class="folio__margin"><p class="eyebrow">Capítulo II &middot; Reino Fiel</p></div>
-        <div class="folio__text">
-          <h2 class="section-title" id="photo-title">Servicios de fotografía</h2>
-          <p>Retrato, producto, mascotas y locación. Cada sesión incluye la edición y puede sumar los otros servicios de la casa.</p>
-        </div>
-      </header>
-
-      <article class="stack__leaf">
-        <div class="leaf">
-          <div class="leaf__image"><img draggable="false" src="images/synodos/foto-estudio.jpg?v=1.0.6" alt="Estudio con ciclorama blanco, luces de caja suave y un fotógrafo preparando una sesión" loading="lazy"></div>
-          <div class="leaf__text">
-            <p class="leaf__no">I</p>
-            <p class="eyebrow">En estudio</p>
-            <h3 class="subhead">Retrato, lookbook y renta del estudio</h3>
-            <p>Retrato de negocios listo para LinkedIn, lookbook de marca y foto de producto. El ciclorama y la iluminación también se rentan por hora o por día a creadores y fotógrafos.</p>
-            <p class="caption">Suma: styling con prendas de Toriku Films &middot; escritorio para revisar la selección</p>
-            <a class="leaf__link" href="mailto:studio@synode.space?subject=Sesi%C3%B3n%20en%20estudio">Agendar una sesión &rarr;</a>
-          </div>
-        </div>
-      </article>
-      <article class="stack__leaf">
-        <div class="leaf leaf--reverse">
-          <div class="leaf__image"><img draggable="false" src="images/synodos/foto-mascotas.jpg?v=1.0.6" alt="Perro de pelo dorado recostado bajo un árbol, sonriendo a la cámara" loading="lazy"></div>
-          <div class="leaf__text">
-            <p class="leaf__no">II</p>
-            <p class="eyebrow">Mascotas</p>
-            <h3 class="subhead">Retratos de quienes nos son fieles</h3>
-            <p>Las sesiones de Reino Fiel retratan a los perros con luz natural, sin prisa y con su bienestar primero. Pueden ser solo ellos o junto a su familia.</p>
-            <p class="caption">Suma: retrato familiar en estudio &middot; café mientras eliges tus fotos</p>
-            <a class="leaf__link" href="brands/reino_fiel/">Ver sesiones y precios &rarr;</a>
-          </div>
-        </div>
-      </article>
-      <article class="stack__leaf">
-        <div class="leaf">
-          <div class="leaf__image"><img draggable="false" src="images/synodos/foto-locacion.jpg?v=1.0.6" alt="Perro moteado blanco y negro de pie en un parque, junto a una pelota naranja" loading="lazy"></div>
-          <div class="leaf__text">
-            <p class="leaf__no">III</p>
-            <p class="eyebrow">Locación</p>
-            <h3 class="subhead">Fuera del estudio</h3>
-            <p>Llevamos la sesión a parques, oficinas o eventos de la ciudad. Cada entrega incluye el retoque de las fotografías seleccionadas.</p>
-            <p class="caption">Suma: sesión de equipo para tu empresa &middot; sala de juntas para la entrega</p>
-            <a class="leaf__link" href="mailto:studio@synode.space?subject=Sesi%C3%B3n%20en%20locaci%C3%B3n">Cotizar una locación &rarr;</a>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- V. Interlude — full-bleed parallax band with an inscription -->
-    <section class="interlude" aria-label="Interludio">
-      <div class="interlude__plate" data-speed="0.2" aria-hidden="true">
-        <img draggable="false" src="images/synodos/interlude-servicios.jpg?v=1.0.6" alt="" loading="lazy">
-      </div>
-      <div class="interlude__veil" aria-hidden="true"></div>
-      <blockquote class="inscription">
-        <p>“Vienes por un traje. Te llevas el retrato, el escritorio y el café.”</p>
-        <cite class="meta meta--gold">Dicho de la casa, Synodé</cite>
-      </blockquote>
-    </section>
-
-    <!-- VI. Capítulo III · Trajes a medida — asymmetric contact sheet -->
-    <section class="gallery" aria-labelledby="suits-title">
-      <header class="gallery__head">
-        <p class="eyebrow">Capítulo III &middot; Toriku Films</p>
-        <h2 class="section-title" id="suits-title">Trajes a medida</h2>
-        <p>Trajes completos, sacos estructurados, camisería y corbatas con un patrón por cliente. También ajustamos y damos mantenimiento a las prendas que ya tienes. Cada traje se entrega con un retrato en el estudio.</p>
-        <hr class="rule rule--short">
-        <a class="button button--small" href="mailto:studio@synode.space?subject=Cita%20de%20sastrer%C3%ADa">Agendar una prueba</a>
-      </header>
-      <div class="gallery__grid">
-        <figure class="g g--a" data-speed="0.06"><div class="plate__frame"><img draggable="false" src="images/synodos/traje-01.jpg?v=1.0.6" alt="Sacos azul marino en maniquíes junto a un rack de trajes a medida" loading="lazy"></div><figcaption class="caption"><span class="caption__no">01</span> La prueba: medir, cortar, ajustar.</figcaption></figure>
-        <figure class="g g--b" data-speed="-0.04"><div class="plate__frame"><img draggable="false" src="images/synodos/traje-02.jpg?v=1.0.6" alt="Detalle del forro de un saco de tweed gris con etiqueta Tailor's Blend" loading="lazy"></div><figcaption class="caption"><span class="caption__no">02</span> Tela, forro y botón, a elegir.</figcaption></figure>
-        <figure class="g g--d" data-speed="-0.02"><div class="plate__frame"><img draggable="false" src="images/synodos/traje-03.jpg?v=1.0.6" alt="Anaquel de madera con bolsas de café Tailor's Blend junto a la máquina de espresso" loading="lazy"></div><figcaption class="caption"><span class="caption__no">Suma</span> Tailor&rsquo;s Blend, la mezcla de la casa, para la espera de la prueba.</figcaption></figure>
-      </div>
-    </section>
-
-    <!-- VII. Club y eventos — the bundle across the three services, plus private evenings -->
+    <!-- VII. Club — the bundle across the three services -->
     <section class="club" aria-labelledby="club-title">
       <div class="club__col">
         <p class="eyebrow eyebrow--gold">Membresía</p>
@@ -198,12 +79,6 @@
           <li>Reserva prioritaria del estudio y la sala de juntas</li>
         </ul>
         <a class="button" href="mailto:studio@synode.space?subject=Membres%C3%ADa%20Club%20Synod%C3%A9">Solicitar membresía</a>
-      </div>
-      <div class="club__col club__col--events">
-        <p class="eyebrow eyebrow--gold">Empresas y eventos</p>
-        <h3 class="subhead">Para tu equipo</h3>
-        <p>Retratos corporativos de todo el equipo en un día, uniformes y trajes a medida, y el espacio fuera de horario para lanzamientos, talleres y catas privadas de café.</p>
-        <a class="button button--ghost" href="mailto:studio@synode.space?subject=Empresas%20y%20eventos">Cotizar para empresas</a>
       </div>
     </section>
 
@@ -256,7 +131,6 @@
     <div class="colophon__inner">
       <p class="eyebrow eyebrow--gold">Colofón</p>
       <p class="colophon__title">Coworking, sesiones, trajes y membresías</p>
-      <a class="button" href="mailto:studio@synode.space">studio@synode.space</a>
       <hr class="rule rule--short rule--gold">
       <p class="meta meta--gold">Compuesto en Cinzel, Bodoni Moda y EB Garamond. Impreso en luz.</p>
       <p class="meta meta--gold">Todas las fotografías &copy; 2026 Synodé. Todos los derechos reservados. Prohibida su descarga, reproducción o uso para entrenar IA sin licencia escrita.</p>
