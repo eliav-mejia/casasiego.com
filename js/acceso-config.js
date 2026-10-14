@@ -7,6 +7,7 @@ window.SYNODE_ACCESO = {
   publishableKey: '',              // sb_publishable_…
   supabaseJs: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js',
   redirectOnError: 'brands/fiel/', // relative to the home page; Fiel has no gate
+  redirectOnSkip: 'visitante.html', // «Omitir»: copy of the home page without the gate (v1.0.0 Unrecognized visitor)
   messageMs: 3200,                 // how long the white message card stays before redirecting / opening
   timeoutMs: 10000                 // give up on Supabase after this and treat it as an error
 };

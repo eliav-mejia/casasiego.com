@@ -6,7 +6,8 @@
         error   → «Esperamos tener el honor de conocerte pronto» → redirect to brands/fiel/
       Any failure counts as an error: wrong credentials, Supabase not configured, network, timeout.
    3. A valid Supabase session skips the gate on later visits.
-   4. «Omitir», in light grey under the login, closes the gate and opens the page (this visit only).
+   4. «Omitir», in light grey under the login, goes to visitante.html (copy of the home page without the gate,
+      version 1.0.0 «Unrecognized visitor»).
    Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso-synode.md. */
 (function () {
   'use strict';
@@ -140,7 +141,7 @@
     skip.addEventListener('click', function () {
       if (busy) return;
       busy = true;
-      openPage(gate);
+      window.location.assign(CFG.redirectOnSkip || 'visitante.html');
     });
 
     form.addEventListener('submit', function (e) {
