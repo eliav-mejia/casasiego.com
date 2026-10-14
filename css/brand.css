@@ -41,7 +41,7 @@
 .session .plate__frame { aspect-ratio: 4 / 3; }
 /* Portrait sessions: cards narrowed to 3/4 so the frame keeps its height
    and matches the 9:16 photographs exactly. */
-.sessions--portrait .sessions__grid { width: calc(75% + 0.5 * clamp(1rem, 2.5vw, 2.5rem)); }
+.sessions--portrait .sessions__grid { width: calc(75% + 0.5 * clamp(1rem, 2.5vw, 2.5rem)); margin-inline: auto; }
 .sessions--portrait .session .plate__frame { aspect-ratio: 9 / 16; }
 .session .plate__frame--whole img { object-fit: contain; transform: none; }
 .session__body {
