@@ -2,6 +2,7 @@
 # Builds docs/synode-vX.pdf from docs/src/synode-vX.html (or a brand PDF, see below) with headless Chrome or Edge.
 # Run from the project root:  sh docs/src/build-pdf.sh 1.0.2
 # Brand downloads:            sh docs/src/build-pdf.sh reino-fiel-sesiones
+# Fiel price study:           python3 docs/src/ajustes-fiel.py && sh docs/src/build-pdf.sh ajustes-fiel
 #   -> brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf (public download, unlike docs/)
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -10,6 +11,9 @@ case "$VERSION" in
   reino-fiel-sesiones)
     SRC="$HERE/reino-fiel-sesiones.html"
     OUT="$HERE/../../brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf" ;;
+  ajustes-fiel)
+    SRC="$HERE/ajustes-fiel-2026-10.html"
+    OUT="$HERE/../ajustes-fiel-2026-10.pdf" ;;
   *)
     SRC="$HERE/synode-v$VERSION.html"
     OUT="$HERE/../synode-v$VERSION.pdf" ;;

@@ -13,3 +13,7 @@ images/brands/fiel.esmx/*
 
 # Documentación interna (tienda Justo, decisiones, riesgos): nunca en el repositorio ni en el sitio
 _interno/
+
+# Estudios internos de precios de Fiel (PDF, HTML y generador): solo locales, nunca en el sitio
+docs/ajustes-fiel-*
+docs/src/ajustes-fiel*
