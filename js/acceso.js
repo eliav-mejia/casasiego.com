@@ -6,6 +6,7 @@
         error   → «Esperamos tener el honor de conocerte pronto» → redirect to brands/fiel/
       Any failure counts as an error: wrong credentials, Supabase not configured, network, timeout.
    3. A valid Supabase session skips the gate on later visits.
+   4. «Omitir», in light grey under the login, closes the gate and opens the page (this visit only).
    Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso-synode.md. */
 (function () {
   'use strict';
@@ -77,6 +78,7 @@
               '<input class="acceso__input" type="password" name="password" autocomplete="current-password" required></label>' +
             '<button class="button acceso__submit" type="submit">Entrar</button>' +
           '</form>' +
+          '<button class="acceso__skip" type="button">Omitir</button>' +
           '<p class="acceso__fine">Las cuentas las crea la Casa. Si eres miembro y no tienes acceso, escribe a studio@synode.space.</p>' +
         '</section>' +
         '<section class="acceso__face acceso__back" aria-live="assertive">' +
@@ -121,6 +123,7 @@
     var front = gate.querySelector('.acceso__front');
     var back = gate.querySelector('.acceso__back');
     var message = gate.querySelector('.acceso__message');
+    var skip = gate.querySelector('.acceso__skip');
     var busy = false;
 
     setTimeout(function () { form.email.focus({ preventScroll: true }); }, 400);
@@ -133,6 +136,12 @@
       gate.classList.add('is-flipped');
       setTimeout(then, (CFG.messageMs || 3200) + 1100);   // flip time + reading time
     }
+
+    skip.addEventListener('click', function () {
+      if (busy) return;
+      busy = true;
+      openPage(gate);
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();

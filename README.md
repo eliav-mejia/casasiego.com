@@ -57,5 +57,5 @@ Servir desde la raíz del sitio (`py -m http.server 8130` → http://localhost:8
 
 `index.html` abre con un pop-up de inicio de sesión (Supabase Auth, sin registro). Éxito: la tarjeta gira a «Encantados de
 volvernos a encontrar» y abre la portada. Error: gira a «Esperamos tener el honor de conocerte pronto» y redirige a
-`brands/fiel/`. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
+`brands/fiel/`. «Omitir», en gris claro bajo el botón Entrar, cierra el pop-up y muestra la portada en esa visita. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
 tienda y `404.html` no tienen pop-up. Es una barrera visual, no protección real del HTML: ver `_interno/acceso-synode.md`.
