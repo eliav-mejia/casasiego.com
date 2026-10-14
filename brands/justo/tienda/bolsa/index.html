@@ -29,14 +29,14 @@
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-  <script src="../../../../js/region.js?v=1.0.0" defer></script>
+  <script src="../../../../js/region.js?v=1.1.0" defer></script>
 </head>
 <body data-root="../../../../">
 
   <div id="root"></div>
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:studio@synode.space">studio@synode.space</a> para hacer tu pedido.</p></noscript>
 
-  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.0.0"></script>
+  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.1.0"></script>
   <script type="text/babel">
     // Etapa 1 checkout: the order is saved in this browser (db.createOrder) and sent by email; Justo replies with the card
     // payment link or the SPEI details. Etapa 2: db.createOrder → Edge Function (re-prices) → Stripe / Mercado Pago.
@@ -90,12 +90,12 @@
             const text = [
                 `Hola Justo, quiero confirmar mi pedido ${order.id}:`,
                 '',
-                ...priced.lines.map(l => `• ${l.qty} × ${l.product.name} (${l.product.sku}) talla ${l.size} · ${catalog.size[l.size].label}${l.monogram ? `, monograma «${l.monogram}»` : ''}${l.madeToOrder ? ' [sobre pedido]' : ''} — ${formatMXN(l.qty * l.product.price_mxn)}`),
+                ...priced.lines.map(l => `• ${l.qty} × ${l.product.name} (${l.product.sku}) talla ${l.size} · ${catalog.size[l.size].label}${l.monogram ? `, monograma «${l.monogram}»` : ''}${l.madeToOrder ? ' [sobre pedido]' : ''} — ${formatPrice(l.qty * l.product.price_mxn)}`),
                 '',
-                priced.discount > 0 && `Descuento (${priced.tier.pct} %): −${formatMXN(priced.discount)}`,
-                priced.monogram > 0 && `Monograma (${priced.monoPieces}): ${formatMXN(priced.monogram)}`,
-                `${priced.method.label}: ${priced.shipping ? formatMXN(priced.shipping) : 'sin costo'}`,
-                `Total (IVA incluido): ${formatMXN(priced.total)}`,
+                priced.discount > 0 && `Descuento (${priced.tier.pct} %): −${formatPrice(priced.discount)}`,
+                priced.monogram > 0 && `Monograma (${priced.monoPieces}): ${formatPrice(priced.monogram)}`,
+                `${priced.method.label}: ${priced.shipping ? formatPrice(priced.shipping) : 'sin costo'}`,
+                `Total (IVA incluido): ${formatPrice(priced.total)}`,
                 `Pago: ${paymentLabel}`,
                 '',
                 `${form.name} · ${form.email} · ${form.phone}`,
@@ -123,7 +123,7 @@
                                     <li key={l.key} className="py-5 flex gap-4">
                                         <a href={`${SHOP}/${l.product.slug}/`} className="shrink-0"><Photo product={l.product} className="w-24 md:w-32 aspect-[3/4]" /></a>
                                         <div className="flex-1 min-w-0 space-y-1">
-                                            <p className="flex justify-between gap-3"><span className="font-section font-semibold">{l.product.name}</span><span className="label whitespace-nowrap">{formatMXN(l.qty * l.product.price_mxn)}</span></p>
+                                            <p className="flex justify-between gap-3"><span className="font-section font-semibold">{l.product.name}</span><span className="label whitespace-nowrap">{formatPrice(l.qty * l.product.price_mxn)}</span></p>
                                             <p className="text-ink-700">Talla {l.size} · {catalog.size[l.size].label} <span className="text-ink-500">(MX {catalog.size[l.size].mx})</span>{l.monogram ? ` · Monograma ${l.monogram}` : ''}</p>
                                             <p className="text-[14px] text-ink-500">Pecho {cm(spec.chest)} · hombro {cm(spec.shoulder)} · manga {cm(spec.sleeve)} · largo {cm(spec.length)}</p>
                                             <p className={`label ${l.madeToOrder ? 'text-rust' : 'text-ink-500'}`}>{stockText(l.product, l.size, rules)}</p>
@@ -144,7 +144,7 @@
                         <fieldset>
                             <legend className="label-strong mb-4">Entrega</legend>
                             {rules.shipping.map(s => <Option key={s.id} name="shipping" value={s.id} checked={shippingId === s.id} onChange={() => setShippingId(s.id)}
-                                title={s.label} detail={s.detail} right={s.cost_mxn ? <>{formatMXN(s.cost_mxn)}<br />gratis desde {formatMXN(s.free_from_mxn)}</> : 'Sin costo'} />)}
+                                title={s.label} detail={s.detail} right={s.cost_mxn ? <>{formatPrice(s.cost_mxn)}<br />gratis desde {formatPrice(s.free_from_mxn)}</> : 'Sin costo'} />)}
                         </fieldset>
 
                         <fieldset>
@@ -173,15 +173,15 @@
 
                     <aside className="lg:col-span-4 lg:col-start-9 lg:sticky lg:top-28 self-start border-t border-ink pt-6">
                         <dl className="space-y-3">
-                            <div className="flex justify-between"><dt>Sacos ({priced.pieces})</dt><dd>{formatMXN(priced.subtotal)}</dd></div>
-                            {priced.discount > 0 && <div className="flex justify-between text-rust"><dt>Descuento {priced.tier.pct} %</dt><dd>−{formatMXN(priced.discount)}</dd></div>}
-                            {priced.monogram > 0 && <div className="flex justify-between"><dt>Monograma ({priced.monoPieces})</dt><dd>{formatMXN(priced.monogram)}</dd></div>}
-                            <div className="flex justify-between"><dt>{priced.method.label}</dt><dd>{priced.shipping ? formatMXN(priced.shipping) : 'Sin costo'}</dd></div>
-                            <div className="flex justify-between text-xl font-section font-semibold pt-4 border-t border-line"><dt>Total</dt><dd>{formatMXN(priced.total)}</dd></div>
+                            <div className="flex justify-between"><dt>Sacos ({priced.pieces})</dt><dd>{formatPrice(priced.subtotal)}</dd></div>
+                            {priced.discount > 0 && <div className="flex justify-between text-rust"><dt>Descuento {priced.tier.pct} %</dt><dd>−{formatPrice(priced.discount)}</dd></div>}
+                            {priced.monogram > 0 && <div className="flex justify-between"><dt>Monograma ({priced.monoPieces})</dt><dd>{formatPrice(priced.monogram)}</dd></div>}
+                            <div className="flex justify-between"><dt>{priced.method.label}</dt><dd>{priced.shipping ? formatPrice(priced.shipping) : 'Sin costo'}</dd></div>
+                            <div className="flex justify-between text-xl font-section font-semibold pt-4 border-t border-line"><dt>Total</dt><dd>{formatPrice(priced.total)}</dd></div>
                         </dl>
                         <p className="label text-ink-500 mt-2">IVA incluido · Pago: {paymentLabel}</p>
                         {nextTier && <p className="note text-ink-700 mt-4">Añade {nextTier.min_qty - priced.pieces} {nextTier.min_qty - priced.pieces === 1 ? 'saco' : 'sacos'} más y obtén {nextTier.pct} % de descuento.</p>}
-                        {delivery && priced.shipping > 0 && <p className="note text-ink-700 mt-2">Te faltan {formatMXN(priced.method.free_from_mxn - (priced.subtotal - priced.discount))} para el envío sin costo.</p>}
+                        {delivery && priced.shipping > 0 && <p className="note text-ink-700 mt-2">Te faltan {formatPrice(priced.method.free_from_mxn - (priced.subtotal - priced.discount))} para el envío sin costo.</p>}
                         {madeToOrder && <p className="note text-rust mt-2">Hay tallas sobre pedido: tu pedido sale completo en {rules.made_to_order_days} días.</p>}
                         <label className="flex gap-3 text-[15px] text-ink-700 mt-8">
                             <input type="checkbox" required checked={form.consent} onChange={e => setForm({ ...form, consent: e.target.checked })} className="mt-1 accent-[#A34828]" />

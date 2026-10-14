@@ -20,7 +20,12 @@ const BRAND = {
     hours: 'Martes a sábado, 10:00–19:00 [verificar]',
 };
 
-const formatMXN = (n) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n);
+// Prices are stored in MXN. With the España flag (js/region.js) the catalogue is converted to EUR on load,
+// so every amount below is already in the visitor's currency; formatPrice only formats it.
+const region = () => window.SynodeRegion || null;
+const currency = () => region()?.currency || 'MXN';
+const formatPrice = (n) => region() ? region().format(n)
+    : new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n);
 const cm = (n) => `${String(n).replace('.', ',')} cm`;
 const range = ([a, b], unit) => `${a}–${b} ${unit}`;
 
@@ -68,11 +73,23 @@ const jsonCache = {};
 const loadJson = (name) => jsonCache[name] || (jsonCache[name] =
     fetch(`${SHOP}/db/${name}.json`, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(`${name}: ${r.status}`); return r.json(); }));
 
+// Converts every *_mxn amount to the visitor's currency (unchanged in México). Fields keep their names.
+const localPrices = (products, rules) => {
+    const price = region() ? region().price : (n) => n;
+    return {
+        products: products.map(x => ({ ...x, price_mxn: price(x.price_mxn) })),
+        rules: {
+            ...rules,
+            monogram_mxn: price(rules.monogram_mxn),
+            shipping: rules.shipping.map(s => ({ ...s, cost_mxn: price(s.cost_mxn), free_from_mxn: price(s.free_from_mxn) })),
+        },
+    };
+};
+
 const db = {
     catalog: () => Promise.all([loadJson('productos'), loadJson('tallas'), loadJson('tienda')]).then(([p, t, rules]) => ({
-        products: p.products.filter(x => x.active !== false),
+        ...localPrices(p.products.filter(x => x.active !== false), rules),
         sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances,
-        rules,
     })),
 
     // Etapa 1: saved in this browser and sent by email; Justo replies with the payment link or the SPEI details.
@@ -81,6 +98,7 @@ const db = {
         const order = {
             id: `JU-${Date.now().toString(36).toUpperCase()}`,
             created_at: new Date().toISOString(),
+            currency: currency(),
             status: 'por-pagar',
             customer, shipping_id: shippingId, payment_id: paymentId,
             lines: priced.lines.map(l => ({ sku: l.product.sku, name: l.product.name, size: l.size, monogram: l.monogram || null, qty: l.qty, unit_mxn: l.product.price_mxn, made_to_order: l.madeToOrder })),
@@ -91,15 +109,27 @@ const db = {
     },
 };
 
+// Re-renders when the flag changes currency (js/region.js fires "synode:region").
+const useCurrency = () => {
+    const [code, setCode] = useState(currency);
+    useEffect(() => {
+        const sync = () => setCode(currency());
+        window.addEventListener('synode:region', sync);
+        return () => window.removeEventListener('synode:region', sync);
+    }, []);
+    return code;
+};
+
 const useCatalog = () => {
     const [state, setState] = useState({ status: 'loading', products: [], sizes: [], howToMeasure: [], tolerances: null, rules: null });
+    const regionKey = useCurrency();
     useEffect(() => {
         let alive = true;
         db.catalog()
             .then(d => alive && setState({ status: 'ready', ...d }))
             .catch(err => { console.error('[tienda] No se pudo cargar el catálogo:', err); alive && setState(s => ({ ...s, status: 'error' })); });
         return () => { alive = false; };
-    }, []);
+    }, [regionKey]);
     return useMemo(() => ({
         ...state,
         byId: Object.fromEntries(state.products.map(p => [p.id, p])),
@@ -185,31 +215,34 @@ const Header = ({ current }) => {
     );
 };
 
-const Footer = () => (
-    <footer className="bg-ink text-parchment mt-24">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16 grid gap-10 md:grid-cols-3">
-            <div>
-                <p className="font-display font-bold text-2xl tracking-display">JUSTO</p>
-                <p className="label text-gold mt-2">Sastrería &middot; Marca nº 2 de Synodé</p>
-                <p className="note text-parchment/70 mt-4 max-w-xs">«La compostura empieza en los hombros.»</p>
+const Footer = () => {
+    const code = useCurrency();
+    return (
+        <footer className="bg-ink text-parchment mt-24">
+            <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16 grid gap-10 md:grid-cols-3">
+                <div>
+                    <p className="font-display font-bold text-2xl tracking-display">JUSTO</p>
+                    <p className="label text-gold mt-2">Sastrería &middot; Marca nº 2 de Synodé</p>
+                    <p className="note text-parchment/70 mt-4 max-w-xs">«La compostura empieza en los hombros.»</p>
+                </div>
+                <div className="space-y-2">
+                    <p className="label text-gold">La Casa</p>
+                    <p>{BRAND.address}</p>
+                    <p>{BRAND.hours}</p>
+                    <a className="link" href={`mailto:${BRAND.email}?subject=Justo%20%C2%B7%20Tienda`}>{BRAND.email}</a>
+                </div>
+                <div className="space-y-2">
+                    <p className="label text-gold">Tienda</p>
+                    <p><a className="link" href={`${SHOP}/`}>Sacos</a></p>
+                    <p><a className="link" href={`${SHOP}/guia-de-tallas/`}>Guía de tallas</a></p>
+                    <p><a className="link" href={`${SHOP}/bolsa/`}>Bolsa</a></p>
+                    <p><a className="link" href={`${ROOT}terms.html`}>Términos de uso</a></p>
+                </div>
             </div>
-            <div className="space-y-2">
-                <p className="label text-gold">La Casa</p>
-                <p>{BRAND.address}</p>
-                <p>{BRAND.hours}</p>
-                <a className="link" href={`mailto:${BRAND.email}?subject=Justo%20%C2%B7%20Tienda`}>{BRAND.email}</a>
-            </div>
-            <div className="space-y-2">
-                <p className="label text-gold">Tienda</p>
-                <p><a className="link" href={`${SHOP}/`}>Sacos</a></p>
-                <p><a className="link" href={`${SHOP}/guia-de-tallas/`}>Guía de tallas</a></p>
-                <p><a className="link" href={`${SHOP}/bolsa/`}>Bolsa</a></p>
-                <p><a className="link" href={`${ROOT}terms.html`}>Términos de uso</a></p>
-            </div>
-        </div>
-        <p className="label text-parchment/50 text-center pb-8 px-4">&copy; 2026 Synodé. Precios en MXN con IVA incluido. Fotografías protegidas: prohibido su uso para entrenar IA.</p>
-    </footer>
-);
+            <p className="label text-parchment/50 text-center pb-8 px-4">&copy; 2026 Synodé. Precios en {code} con IVA incluido. Fotografías protegidas: prohibido su uso para entrenar IA.</p>
+        </footer>
+    );
+};
 
 const PageHero = ({ kicker, title, intro, children }) => (
     <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-16 md:pt-24 pb-10 animate-fade-in">
@@ -233,7 +266,7 @@ const ProductCard = ({ product, catalog }) => (
             <div className="pt-4 pb-8">
                 <div className="flex justify-between items-baseline gap-3">
                     <h3 className="text-xl">{product.name}</h3>
-                    <p className="label whitespace-nowrap">{formatMXN(product.price_mxn)}</p>
+                    <p className="label whitespace-nowrap">{formatPrice(product.price_mxn)}</p>
                 </div>
                 <p className="text-ink-700 mt-1">{product.short}</p>
                 <p className="label text-ink-500 mt-3">
@@ -381,7 +414,7 @@ const ProductPage = () => {
                     </nav>
                     <h1 className="text-3xl md:text-5xl">{product.name}</h1>
                     <p className="label text-ink-500 mt-3">Corte {product.cut.toLowerCase()} &middot; {product.sku}</p>
-                    <p className="text-2xl mt-6">{formatMXN(product.price_mxn)} <span className="label text-ink-500">IVA incluido</span></p>
+                    <p className="text-2xl mt-6">{formatPrice(product.price_mxn)} <span className="label text-ink-500">IVA incluido</span></p>
                     <p className="text-ink-700 mt-6 max-w-md">{product.description}</p>
 
                     <div className="mt-10">
@@ -398,7 +431,7 @@ const ProductPage = () => {
                         <div className="mt-8 max-w-md">
                             <label className="flex gap-3 items-center cursor-pointer">
                                 <input type="checkbox" checked={withMono} onChange={e => setWithMono(e.target.checked)} className="accent-[#A34828] w-4 h-4" />
-                                <span>Monograma bordado en el forro &middot; +{formatMXN(rules.monogram_mxn)}</span>
+                                <span>Monograma bordado en el forro &middot; +{formatPrice(rules.monogram_mxn)}</span>
                             </label>
                             {withMono && <input className="field mt-3" placeholder={`Iniciales (máx. ${rules.monogram_max} letras)`} maxLength={rules.monogram_max}
                                 value={mono} onChange={e => setMono(e.target.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, ''))} aria-label="Iniciales del monograma" />}
@@ -435,7 +468,7 @@ const ProductPage = () => {
                         <Disclosure title="Ajustes incluidos"><p>{tolerances.note}</p></Disclosure>
                         <Disclosure title="Cuidados"><p>{product.care}</p></Disclosure>
                         <Disclosure title="Entrega y pago">
-                            {rules.shipping.map(s => <p key={s.id} className="mb-2"><strong className="font-semibold text-ink">{s.label}.</strong> {s.detail} {s.cost_mxn ? `${formatMXN(s.cost_mxn)}, gratis desde ${formatMXN(s.free_from_mxn)}.` : 'Sin costo.'}</p>)}
+                            {rules.shipping.map(s => <p key={s.id} className="mb-2"><strong className="font-semibold text-ink">{s.label}.</strong> {s.detail} {s.cost_mxn ? `${formatPrice(s.cost_mxn)}, gratis desde ${formatPrice(s.free_from_mxn)}.` : 'Sin costo.'}</p>)}
                             <p>{rules.payments.map(p => p.label).join(' · ')}.</p>
                         </Disclosure>
                     </div>
@@ -486,12 +519,12 @@ const BagDrawer = () => {
                             <p className="text-ink-500">Talla {added.size} · {catalog.size[added.size]?.label}</p>
                             {added.monogram && <p className="text-ink-500">Monograma: {added.monogram}</p>}
                             <p className={`label ${added.madeToOrder ? 'text-rust' : 'text-ink-500'}`}>{stockText(added.product, added.size, catalog.rules)}</p>
-                            <p>{added.qty} × {formatMXN(added.product.price_mxn)}</p>
+                            <p>{added.qty} × {formatPrice(added.product.price_mxn)}</p>
                         </div>
                     </div>
                 )}
                 <div className="mt-auto p-6 border-t border-line grid gap-2">
-                    <p className="label flex justify-between mb-3"><span>{priced.pieces} {priced.pieces === 1 ? 'saco' : 'sacos'}</span><span>{formatMXN(priced.subtotal - priced.discount + priced.monogram)}</span></p>
+                    <p className="label flex justify-between mb-3"><span>{priced.pieces} {priced.pieces === 1 ? 'saco' : 'sacos'}</span><span>{formatPrice(priced.subtotal - priced.discount + priced.monogram)}</span></p>
                     <a href={`${SHOP}/bolsa/`} className="btn btn-rust">Ver bolsa</a>
                     <button className="btn btn-line" onClick={() => setOpenKey(null)}>Seguir comprando</button>
                 </div>

@@ -1,7 +1,13 @@
-/* Synode — region.js (v1.0.0)
+/* Synode — region.js (v1.1.0)
    Small flag in the bottom-left corner: México or España.
    España swaps every "Ciudad de México" / "CDMX" for "Madrid" and shows the
    elements marked data-region="es" instead of data-region="mx".
+
+   Prices: España shows euros at 180 % of the peso price, converted at a fixed
+   20 MXN = 1 EUR and rounded to whole euros (see price()). Static pages opt in
+   with data-prices on the section that holds "$270 MXN"-style prices; the
+   Justo shop calls window.SynodeRegion.price() / .format() itself and listens
+   for the "synode:region" event.
 
    Detection, once per browser and only when the visitor has not chosen:
    1. The visitor's own choice (click on the flag) always wins.
@@ -20,6 +26,8 @@
     es: '<svg viewBox="0 0 21 14" aria-hidden="true"><rect width="21" height="14" fill="#aa151b"/><rect y="3.5" width="21" height="7" fill="#f1bf00"/></svg>'
   };
   var NAMES = { mx: 'México', es: 'España' };
+  var MXN_PER_EUR = 20;                 // fixed rate, update by hand
+  var ES_MARKUP = 1.8;                  // España pays 180 % of the converted price
 
   // Longest phrases first, so "de la Ciudad de México" reads "de Madrid".
   var SWAPS = [
@@ -42,9 +50,33 @@
     catch (e) { return null; }
   }
 
-  function swap(text) {
+  function price(mxn) { return region === 'es' ? Math.round(mxn / MXN_PER_EUR * ES_MARKUP) : mxn; }
+  function format(amount) {
+    return region === 'es'
+      ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(amount)
+      : new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(amount);
+  }
+
+  var PRICE_TEST = /\$\s?\d|MXN|pesos mexicanos/;
+  function inPrices(node) { var el = node.parentNode; return !!(el && el.closest && el.closest('[data-prices]')); }
+
+  // "$230 MXN" → "21 €"; "$270 " before <small>MXN</small> → "24 " (the small becomes "€").
+  function prices(text, node) {
+    text = text.replace(/\$\s?(\d[\d,]*)(\s*MXN)?/g, function (m, n, mx) {
+      var eur = String(price(Number(n.replace(/,/g, ''))));
+      var next = node.nextSibling;
+      if (!mx && next && next.nodeType === 1 && next.textContent.trim() === 'MXN') return eur;
+      return eur + '\u00a0€';
+    });
+    text = text.replace(/pesos mexicanos \(MXN\)/g, 'euros (EUR)').replace(/pesos mexicanos/g, 'euros');
+    return text.trim() === 'MXN' ? text.replace('MXN', '€') : text.replace(/\bMXN\b/g, 'EUR');
+  }
+
+  function needs(text, node) { return TEST.test(text) || (PRICE_TEST.test(text) && inPrices(node)); }
+
+  function swap(text, node) {
     for (var i = 0; i < SWAPS.length; i++) text = text.replace(SWAPS[i][0], SWAPS[i][1]);
-    return text;
+    return node && inPrices(node) ? prices(text, node) : text;
   }
 
   function skipped(node) {
@@ -56,8 +88,8 @@
 
   function textNode(node) {
     if (region === 'es') {
-      if (!TEST.test(node.nodeValue) || skipped(node)) return;
-      var shown = swap(node.nodeValue);
+      if (!needs(node.nodeValue, node) || skipped(node)) return;
+      var shown = swap(node.nodeValue, node);
       originals.set(node, { text: node.nodeValue, shown: shown });
       node.nodeValue = shown;
     } else if (originals.has(node)) {
@@ -120,7 +152,15 @@
     }
     blocks();
     if (button) paint();
+    window.dispatchEvent(new CustomEvent('synode:region', { detail: { region: region } }));
   }
+
+  window.SynodeRegion = {
+    get region() { return region; },
+    get currency() { return region === 'es' ? 'EUR' : 'MXN'; },
+    price: function (mxn) { return price(mxn); },
+    format: function (amount) { return format(amount); }
+  };
 
   // Pages that render later (the Justo shop) get the same swap as they change.
   function observe() {
