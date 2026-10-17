@@ -1,15 +1,15 @@
 // Tailwind (CDN) theme for the Justo shop. Load right after https://cdn.tailwindcss.com.
-// Synodé palette ("Hellenic Manuscript"): parchment page, Aegean ink, rust for actions, gold for ornaments.
+// Casa Siego palette: white/beige page, wine ink, wine for actions, brass for ornaments (names kept from v1).
 // Mirrors :root in ../css/tienda.css and the tokens of /css/site.css.
 tailwind.config = {
     theme: {
         extend: {
             colors: {
-                ink: { DEFAULT: '#0C1821', 700: '#2a3640', 500: '#516053', 400: '#7c857d', 300: '#b3b6ad' },
-                parchment: { DEFAULT: '#F7F4EE', 100: '#efeae0', 200: '#e6dfd1' },
-                rust: { DEFAULT: '#A34828', 700: '#86391f' },
-                gold: { DEFAULT: '#C29B38', 300: '#dcc488' },
-                line: '#ddd5c5',
+                ink: { DEFAULT: '#3B1A1F', 700: '#4A1621', 500: '#6F5E57', 400: '#8E7F77', 300: '#C2B6AC' },
+                parchment: { DEFAULT: '#F7F2EA', 100: '#EEE4D3', 200: '#E3D5BD' },
+                rust: { DEFAULT: '#6B1E2C', 700: '#4A1621' },
+                gold: { DEFAULT: '#B0905E', 300: '#D3BC93' },
+                line: '#E3D5BD',
             },
             fontFamily: {
                 display: ['Cinzel', '"Trajan Pro"', 'Georgia', 'serif'],

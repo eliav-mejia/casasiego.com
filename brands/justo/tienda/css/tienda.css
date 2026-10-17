@@ -1,14 +1,14 @@
-/* Justo by Synodé · tienda (variante C/D). Everything else is Tailwind classes (theme in ../js/tailwind.config.js).
+/* Justo by Casa Siego · tienda (variante C/D). Everything else is Tailwind classes (theme in ../js/tailwind.config.js).
    Same identity as /css/site.css without loading it (its base styles would fight Tailwind's reset):
-   parchment #F7F4EE · ink #0C1821 · rust #A34828 (actions) · gold #C29B38 (ornaments) · laurel #516053 (secondary)
+   Casa Siego: beige #F7F2EA · wine ink #3B1A1F · wine #6B1E2C (actions) · brass #B0905E (ornaments) · taupe #6F5E57 (secondary)
    Cinzel (logo, labels) · Bodoni Moda (headings) · EB Garamond (text) · Spectral italic (notes). Square corners, no shadows. */
 :root {
-    --parchment: #F7F4EE;
-    --ink: #0C1821;
-    --rust: #A34828;
-    --gold: #C29B38;
-    --laurel: #516053;
-    --line: #ddd5c5;
+    --parchment: #F7F2EA;
+    --ink: #3B1A1F;
+    --rust: #6B1E2C;
+    --gold: #B0905E;
+    --laurel: #6F5E57;
+    --line: #E3D5BD;
     color-scheme: light;
 }
 
@@ -41,10 +41,10 @@ h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; fon
 }
 .btn:disabled { opacity: .35; cursor: not-allowed; }
 .btn-rust { background: var(--rust); color: var(--parchment); border: 1px solid var(--rust); }
-.btn-rust:hover:not(:disabled) { background: #86391f; border-color: #86391f; }
+.btn-rust:hover:not(:disabled) { background: #4A1621; border-color: #4A1621; }
 .btn-line { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
 .btn-line:hover:not(:disabled) { background: var(--ink); color: var(--parchment); }
-.btn-light { background: transparent; color: var(--parchment); border: 1px solid rgba(247,244,238,.8); }
+.btn-light { background: transparent; color: var(--parchment); border: 1px solid rgba(247,242,234,.8); }
 .btn-light:hover:not(:disabled) { background: var(--parchment); color: var(--ink); }
 
 .field {
@@ -66,11 +66,11 @@ h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; fon
 .spec th, .spec td { padding: .5rem .4rem; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
 .spec th:first-child, .spec td:first-child { text-align: left; white-space: normal; padding-left: 0; }
 .spec thead th { font-family: Cinzel, Georgia, serif; font-size: 11px; letter-spacing: .14em; font-weight: 700; }
-.spec .is-sel { background: rgba(194,155,56,.16); }
+.spec .is-sel { background: rgba(176,144,94,.16); }
 .spec tr.group td { font-family: Cinzel, Georgia, serif; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--laurel); padding-top: 1.1rem; border-bottom-color: var(--ink); }
 
 /* Product crop: --focus and --zoom frame each jacket's photo (from productos.json). */
-.crop { position: relative; overflow: hidden; background: #e6dfd1; }
+.crop { position: relative; overflow: hidden; background: #EEE4D3; }
 .crop > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
               object-position: var(--focus, 50% 50%); transform: scale(var(--zoom, 1)); transform-origin: var(--focus, 50% 50%);
               transition: transform 1.2s cubic-bezier(.22,.61,.36,1); }

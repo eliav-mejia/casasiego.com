@@ -1,22 +1,45 @@
 /* ==========================================================================
-   Synode — site.css  (v1.0.2)
+   Casa Siego — site.css  (v1.1.0)
    Brand tokens, typography and small components.
    Layout, sticky sections and parallax live in layout.css.
-   Style guide: "Hellenic Manuscript & Classical Serif"
+   Style guide: "Casa Siego" — white pages, vintage beige and wine; wordmark CASA (Palacio) + Siego (Ledger).
+   Legacy token names (--aegean-ink, --parchment-marble…) are kept so every page and brand keeps working.
    ========================================================================== */
+
+/* 0. Palacio — licensed font files in /fonts (not on Google Fonts). Until they are there, Cinzel stands in. */
+@font-face {
+  font-family: "Palacio";
+  src: url("../fonts/Palacio.woff2") format("woff2"),
+       url("../fonts/Palacio.woff") format("woff"),
+       url("../fonts/Palacio.otf") format("opentype"),
+       url("../fonts/Palacio.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* 1. Tokens ---------------------------------------------------------------- */
 :root {
-  /* Palette */
-  --aegean-ink:       #0C1821;  /* 30% — type, dark sections            */
-  --parchment-marble: #F7F4EE;  /* 60% — page canvas                    */
-  --amphora-rust:     #A34828;  /* 10% — drop caps, buttons, active     */
-  --hellenic-gold:    #C29B38;  /* 10% — rules, ornaments, meta on ink  */
-  --laurel-leaf:      #516053;  /* captions, secondary copy             */
-  --thera-white:      #FFFFFF;  /* cards, highlights                    */
+  /* Palette — Casa Siego */
+  --wine:        #6B1E2C;  /* acciones, capitulares, acentos            */
+  --wine-deep:   #4A1621;  /* bandas oscuras, menú lateral              */
+  --wine-ink:    #3B1A1F;  /* texto                                      */
+  --beige:       #EEE4D3;  /* beige antiguo: bandas claras               */
+  --beige-soft:  #F7F2EA;  /* superficies sobre blanco                   */
+  --brass:       #B0905E;  /* filetes y adornos                          */
+  --brass-light: #D6C09A;  /* texto dorado sobre vino y fotografías      */
+  --taupe:       #6F5E57;  /* pies de foto, texto secundario             */
 
-  /* Semantic roles */
-  --color-bg:        var(--parchment-marble);
+  /* Legacy names → Casa Siego values */
+  --aegean-ink:       var(--wine-ink);
+  --parchment-marble: var(--beige-soft);
+  --amphora-rust:     var(--wine);
+  --hellenic-gold:    var(--brass);
+  --laurel-leaf:      var(--taupe);
+  --thera-white:      #FFFFFF;
+
+  /* Semantic roles — mostly white pages; beige and wine bands set the rhythm */
+  --color-bg:        var(--thera-white);
   --color-text:      var(--aegean-ink);
   --color-muted:     var(--laurel-leaf);
   --color-accent:    var(--amphora-rust);
@@ -25,6 +48,8 @@
   --rule-opacity:    0.4;
 
   /* Font stacks */
+  --font-casa:       "Palacio", "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-siego:      "Ledger", "EB Garamond", Georgia, serif;
   --font-display:    "Cinzel", "Trajan Pro", "Cormorant SC", Georgia, serif;
   --font-decorative: "Cinzel Decorative", "Cinzel", Georgia, serif;
   --font-section:    "Bodoni Moda", "GFS Didot", "Didot", "Bodoni 72", Georgia, serif;
@@ -57,6 +82,7 @@
 
   /* Motion */
   --ease-silk: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-slow:  900ms;
 }
 
@@ -71,7 +97,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background: var(--tone, var(--color-bg));   /* js/casa.js eases --tone between white and beige by section */
+  transition: background-color 900ms var(--ease-silk);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--step-body);
@@ -103,7 +130,7 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   outline-offset: 4px;
 }
 
-::selection { background: var(--amphora-rust); color: var(--thera-white); }
+::selection { background: var(--wine); color: var(--thera-white); }
 
 /* 3. Typography ------------------------------------------------------------ */
 
@@ -153,7 +180,7 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   text-transform: uppercase;
   color: var(--color-accent);
 }
-.eyebrow--gold { color: var(--color-ornament); }
+.eyebrow--gold { color: var(--brass-light); }
 
 /* Captions & meta — Spectral italic */
 .caption,
@@ -168,7 +195,7 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 }
 .meta--muted { color: var(--color-muted); }
 /* Gold text passes contrast only on Aegean Ink (6.9:1), never on parchment (2.4:1). */
-.meta--gold  { color: var(--color-ornament); }
+.meta--gold  { color: var(--brass-light); }
 
 .caption { margin-top: var(--space-2); }
 .caption__no {
@@ -226,9 +253,17 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   text-decoration: none;
   transition: background-color 350ms var(--ease-silk), color 350ms var(--ease-silk);
 }
+.button {
+  background-image: linear-gradient(var(--wine-deep), var(--wine-deep));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 500ms var(--ease-out-expo), color 350ms var(--ease-silk), border-color 350ms var(--ease-silk), transform 350ms var(--ease-silk);
+}
 .button:hover {
-  background: transparent;
-  color: var(--parchment-marble);
+  background-size: 100% 100%;
+  border-color: var(--wine-deep);
+  color: var(--thera-white);
+  transform: translateY(-1px);
 }
 /* Secondary action on ink: gold hairline that fills on hover */
 .button--ghost {
@@ -236,23 +271,32 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   background: transparent;
   color: var(--parchment-marble);
 }
-.button--ghost:hover { background: var(--hellenic-gold); color: var(--aegean-ink); }
+.button--ghost { background-image: linear-gradient(var(--beige), var(--beige)); background-repeat: no-repeat; background-size: 0% 100%; }
+.button--ghost:hover { border-color: var(--beige); color: var(--wine-ink); }
 /* Compact action on parchment: hover keeps the text readable on a light ground */
 .button--small { padding: 0.8em 1.6em; font-size: 0.75rem; }
-.button--small:hover { color: var(--amphora-rust); }
+.button--small:hover { color: var(--thera-white); }
 
 /* 6. Reveal (paired with js/parallax.js) ----------------------------------- */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(1.5rem);
-  transition: opacity var(--dur-slow) var(--ease-silk),
-              transform var(--dur-slow) var(--ease-silk);
+  transform: translateY(2rem);
+  filter: blur(6px);
+  transition: opacity 1100ms var(--ease-out-expo),
+              transform 1100ms var(--ease-out-expo),
+              filter 1100ms var(--ease-out-expo);
 }
-.js [data-reveal].is-visible { opacity: 1; transform: none; }
+.js [data-reveal].is-visible { opacity: 1; transform: none; filter: none; }
+/* Photographs open like a curtain instead of sliding */
+.js .plate__frame[data-reveal],
+.js .leaf__image[data-reveal] { transform: none; filter: none; opacity: 1; clip-path: inset(14% 8% 14% 8%); transition: clip-path 1500ms var(--ease-out-expo); }
+.js .plate__frame[data-reveal].is-visible,
+.js .leaf__image[data-reveal].is-visible { clip-path: inset(0); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js [data-reveal] { opacity: 1; transform: none; filter: none; clip-path: none !important; transition: none; }
+  body { transition: none; }
 }
 
 /* Footer links: a real list (nav + ul) that still reads as one line separated by middots */
@@ -260,3 +304,213 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 .inline-list li { display: inline; }
 .inline-list li + li::before { content: "\00B7\00A0"; }
 .colophon__nav { display: grid; justify-items: center; gap: var(--space-2); }
+
+/* 7. Wordmark — CASA in Palacio, Siego in Ledger regular, ® as registro de marca ------ */
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: none;
+  letter-spacing: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.wordmark__casa { font-family: var(--font-casa); font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; margin-right: -0.08em; }
+.wordmark__siego { font-family: var(--font-siego); font-weight: 400; letter-spacing: 0.01em; }
+.wordmark__r { align-self: flex-start; margin-left: -0.18em; font-family: var(--font-body); font-size: 0.32em; line-height: 1; letter-spacing: 0; }
+.display.wordmark { margin-right: 0; font-weight: 400; letter-spacing: 0; }
+.wordmark--hero { font-size: clamp(3.1rem, 1.6rem + 6.5vw, 6.25rem); }
+.wordmark--colophon { font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem); margin-bottom: var(--space-2); }
+
+/* Hero entrance: CASA closes its tracking, Siego comes into focus, ® arrives last */
+.js .wordmark--hero .wordmark__casa { animation: casa-track 1800ms var(--ease-out-expo) both; }
+.js .wordmark--hero .wordmark__siego { animation: casa-focus 1600ms var(--ease-out-expo) 350ms both; }
+.js .wordmark--hero .wordmark__r { animation: casa-fade 900ms var(--ease-silk) 1200ms both; }
+.js .hero__inscription > :not(.wordmark) { animation: casa-rise 1200ms var(--ease-out-expo) both; }
+.js .hero__inscription > :nth-child(1) { animation-delay: 150ms; }
+.js .hero__inscription > :nth-child(3) { animation-delay: 700ms; }
+.js .hero__inscription > :nth-child(4) { animation-delay: 850ms; }
+.js .hero__inscription > :nth-child(5) { animation-delay: 1000ms; }
+.js .hero__inscription > :nth-child(6) { animation-delay: 1150ms; }
+@keyframes casa-track { from { opacity: 0; letter-spacing: 0.7em; } to { opacity: 1; letter-spacing: 0.2em; } }
+@keyframes casa-focus { from { opacity: 0; filter: blur(14px); transform: translateY(0.12em); } to { opacity: 1; filter: none; transform: none; } }
+@keyframes casa-fade  { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+@keyframes casa-rise  { from { opacity: 0; transform: translateY(1.25rem); } to { opacity: 1; transform: none; } }
+
+/* ® after a brand name inside a heading or sentence */
+.reg { font-family: var(--font-body); font-size: 0.42em; font-weight: 400; vertical-align: super; line-height: 0; margin-left: 0.05em; }
+
+/* 8. Site header (js/casa.js): transparent over a dark hero, white once you scroll --- */
+.site-head {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.15rem clamp(1rem, 4vw, 3rem);
+  color: var(--beige-soft);
+  transition: background-color 500ms var(--ease-silk), color 500ms var(--ease-silk),
+              padding 500ms var(--ease-silk), box-shadow 500ms var(--ease-silk), transform 500ms var(--ease-silk);
+}
+.site-head.is-solid {
+  padding-block: 0.7rem;
+  background: color-mix(in srgb, var(--thera-white) 90%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  color: var(--wine-ink);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--brass) 35%, transparent);
+}
+.site-head.is-hidden { transform: translateY(-100%); }
+.site-head__mark { font-size: 1.3rem; }
+.site-head__mark:hover { color: inherit; }
+.site-nav ul { display: flex; gap: clamp(1rem, 2.2vw, 2.25rem); margin: 0; padding: 0; list-style: none; }
+.site-nav a {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0.24em;
+  bottom: -0.45em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 450ms var(--ease-out-expo);
+}
+.site-nav a:hover::after,
+.site-nav a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+.site-nav a:hover { color: inherit; }
+
+.site-burger {
+  display: none;
+  position: relative;
+  z-index: 70;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: -0.6rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.site-burger span { position: absolute; left: 0.7rem; right: 0.7rem; height: 1px; background: currentColor; transition: transform 500ms var(--ease-out-expo), top 500ms var(--ease-out-expo), width 500ms var(--ease-out-expo); }
+.site-burger span:nth-child(1) { top: 1.1rem; }
+.site-burger span:nth-child(2) { top: 1.6rem; right: 1.15rem; }
+.menu-open .site-burger { color: var(--beige-soft); }
+.menu-open .site-burger span:nth-child(1) { top: 1.35rem; transform: rotate(45deg); }
+.menu-open .site-burger span:nth-child(2) { top: 1.35rem; right: 0.7rem; transform: rotate(-45deg); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.site-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 41;
+  height: 2px;
+  background: var(--wine);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* 9. Mobile sidebar: opens as a circle from the menu button; its colour eases from the
+      tone of the section you were reading into wine, and shifts to each link's tone. --- */
+.site-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--wine-ink) 40%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 500ms var(--ease-silk), visibility 0s linear 500ms;
+}
+.site-drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: min(88vw, 25rem);
+  height: 100vh;
+  height: 100dvh;
+  padding: 5.5rem 2rem 2rem;
+  overflow-y: auto;
+  background: var(--drawer-from, var(--beige));
+  color: var(--wine-ink);
+  clip-path: circle(0% at calc(100% - 2.4rem) 2.4rem);
+  visibility: hidden;
+  transition: clip-path 800ms var(--ease-out-expo), background-color 1100ms var(--ease-silk), color 700ms var(--ease-silk), visibility 0s linear 800ms;
+}
+.menu-open .site-scrim { opacity: 1; visibility: visible; transition-delay: 0s; }
+.menu-open .site-drawer {
+  clip-path: circle(150% at calc(100% - 2.4rem) 2.4rem);
+  visibility: visible;
+  background: var(--drawer-to, var(--wine-deep));
+  color: var(--beige-soft);
+  transition-delay: 0s, 150ms, 150ms, 0s;
+}
+.site-drawer__mark { font-size: 1.6rem; margin-bottom: 2.5rem; }
+.site-drawer ol { margin: 0; padding: 0; list-style: none; counter-reset: casa; }
+.site-drawer li {
+  counter-increment: casa;
+  opacity: 0;
+  transform: translateX(2.5rem);
+  transition: opacity 600ms var(--ease-out-expo), transform 600ms var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 70ms + 200ms);
+}
+.menu-open .site-drawer li { opacity: 1; transform: none; }
+.site-drawer li a {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  font-family: var(--font-siego);
+  font-size: 1.75rem;
+  line-height: 1.15;
+  text-decoration: none;
+  color: inherit;
+}
+.site-drawer li a::before {
+  content: counter(casa, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  color: var(--brass);
+}
+.site-drawer li a span { margin-left: auto; font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; opacity: 0.7; }
+.site-drawer__foot { margin-top: auto; padding-top: 2rem; font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; opacity: 0; transition: opacity 600ms var(--ease-silk) 600ms; }
+.menu-open .site-drawer__foot { opacity: 0.85; }
+.site-drawer__foot a { color: inherit; }
+.menu-open { overflow: hidden; }
+.has-site-head .brand-return { display: none; }
+
+@media (max-width: 900px) {
+  .site-nav { display: none; }
+  .site-burger { display: block; }
+  .site-head__mark { font-size: 1.15rem; }
+}
+@media (min-width: 901px) {
+  .site-drawer, .site-scrim { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .wordmark--hero *, .js .hero__inscription > * { animation: none !important; }
+  .site-drawer, .site-drawer li, .site-scrim, .site-head { transition: none !important; }
+  .site-drawer { clip-path: none; }
+  .site-drawer:not(.menu-open .site-drawer) { visibility: hidden; }
+}

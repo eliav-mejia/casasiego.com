@@ -1,4 +1,4 @@
--- Justo by Synodé · tienda de sacos · esquema Etapa 2 (Supabase / PostgreSQL). NO se ejecuta en la Etapa 1.
+-- Justo by Casa Siego · tienda de sacos · esquema Etapa 2 (Supabase / PostgreSQL). NO se ejecuta en la Etapa 1.
 -- Mismo contrato que db/*.json: al migrar, db.catalog() lee estas tablas y db.createOrder() llama a una Edge Function
 -- que vuelve a calcular precios aquí (nunca se confía en el total del navegador).
 

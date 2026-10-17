@@ -1,11 +1,11 @@
-# Synodé · catálogos de imágenes (v1.0.5)
+# Casa Siego · catálogos de imágenes (v1.0.5)
 
 Cada página tiene su propia carpeta de imágenes y su propio catálogo. Sustituye los archivos usando **exactamente** el nombre del catálogo:
 las páginas los recogen sin cambiar código.
 
 | Carpeta | Página | Catálogo |
 |---|---|---|
-| `images/synodos/` | Portada, `index.html` (catálogo base Synodé) | [`synodos/README.md`](synodos/README.md) |
+| `images/casa/` | Portada, `index.html` (catálogo base Casa Siego) | [`casa/README.md`](casa/README.md) |
 | `images/brands/reino_fiel/` | Marca nº 1 · Reino Fiel, `brands/reino_fiel/index.html` | [`brands/reino_fiel/README.md`](brands/reino_fiel/README.md) |
 | `images/og/share.jpg` | Tarjeta al compartir la portada (1200 × 630) | — |
 

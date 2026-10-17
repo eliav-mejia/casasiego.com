@@ -4,10 +4,10 @@
 # Full-size camera originals: only exported web copies are published
 images/og/*
 !images/og/share.jpg
-images/synodos/_DSC*
-images/synodos/Antes_*
-images/synodos/Después_*
-images/synodos/Gemini_*
+images/casa/_DSC*
+images/casa/Antes_*
+images/casa/Después_*
+images/casa/Gemini_*
 images/brands/fiel.esmx/*
 !images/brands/fiel.esmx/web/
 
@@ -17,3 +17,10 @@ _interno/
 # Estudios internos de precios de Fiel (PDF, HTML y generador): solo locales, nunca en el sitio
 docs/ajustes-fiel-*
 docs/src/ajustes-fiel*
+
+# Ruta común de Lameyer: el documento interno nunca va al repositorio ni al sitio (el de _clientes/ es público)
+brands/builds/sites/_plataforma/
+
+# Estrategia SEO de Justo (trajes a la medida, club de membresía): PDF y fuente solo locales, nunca en el sitio
+docs/seo-justo-*
+docs/src/seo-justo-*

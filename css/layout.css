@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Synode — layout.css  (v1.0.5)
+   Casa Siego — layout.css  (v1.1.0)
    Page structure, sticky sections and parallax layers.
    Depends on tokens declared in site.css.
    ========================================================================== */
@@ -43,7 +43,7 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  background: var(--aegean-ink);
+  background: var(--wine-deep);
   color: var(--parchment-marble);
   text-align: center;
 }
@@ -57,8 +57,8 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse at 50% 45%, transparent 0%, color-mix(in srgb, var(--aegean-ink) 55%, transparent) 70%),
-    linear-gradient(to bottom, color-mix(in srgb, var(--aegean-ink) 35%, transparent), color-mix(in srgb, var(--aegean-ink) 85%, transparent));
+    radial-gradient(ellipse at 50% 45%, transparent 0%, color-mix(in srgb, var(--wine-deep) 55%, transparent) 70%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--wine-ink) 40%, transparent), color-mix(in srgb, var(--wine-deep) 88%, transparent));
 }
 .hero__inscription { padding-inline: 16px; }
 .hero__greek {
@@ -160,7 +160,7 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   min-height: 90svh;
   overflow: hidden;
   isolation: isolate;
-  background: var(--aegean-ink);
+  background: var(--wine-deep);
   color: var(--parchment-marble);
 }
 .interlude__plate { position: absolute; inset: -25% 0; z-index: -2; }
@@ -168,7 +168,7 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: color-mix(in srgb, var(--aegean-ink) 62%, transparent);
+  background: color-mix(in srgb, var(--wine-deep) 64%, transparent);
 }
 .inscription {
   margin: 0;
@@ -398,7 +398,7 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   gap: clamp(2.5rem, 6vw, 7rem);
   margin-bottom: var(--space-6);
   padding: var(--space-6) 10% var(--space-6) calc(5% + 9rem + clamp(2rem, 4vw, 4rem));
-  background: var(--aegean-ink);
+  background: linear-gradient(135deg, var(--wine-deep), var(--wine) 140%);
   color: var(--parchment-marble);
 }
 .club p { color: color-mix(in srgb, var(--parchment-marble) 82%, transparent); }
@@ -423,7 +423,7 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 
 /* 8. Colophon -------------------------------------------------------------- */
 .colophon {
-  background: var(--aegean-ink);
+  background: var(--wine-deep);
   color: var(--parchment-marble);
   padding: var(--space-6) 16px;
   text-align: center;
@@ -513,9 +513,10 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 /* Photographs are not printed; a rights notice prints in their place. */
 @media print {
   .hero__plate, .interlude__plate, .plate__frame, .leaf__image { visibility: hidden; }
-  .colophon { background: none; color: var(--aegean-ink); }
+  .colophon { background: none; color: var(--wine-ink); }
+  .site-head, .site-drawer, .site-scrim, .site-progress { display: none; }
   body::after {
-    content: "Photographs © 2026 Synode. All rights reserved. Not licensed for print reproduction.";
+    content: "Photographs © 2026 Casa Siego®. All rights reserved. Not licensed for print reproduction.";
     display: block;
     padding: 2rem 0;
     font-style: italic;
@@ -525,8 +526,8 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 
 /* 11. Terms page ----------------------------------------------------------- */
 .terms-head {
-  padding: var(--space-6) 16px var(--space-5);
-  background: var(--aegean-ink);
+  padding: calc(var(--space-6) + 3rem) 16px var(--space-5);
+  background: var(--wine-deep);
   color: var(--parchment-marble);
   text-align: center;
 }
@@ -543,6 +544,12 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   text-decoration: underline dashed 1px;
   text-underline-offset: 0.2em;
 }
+
+/* 11b. Pages that open on a light section sit below the fixed header (js/casa.js) */
+.head-offset main:first-of-type { padding-top: 4.5rem; }
+.house__image { overflow: hidden; }
+.house__image img { transition: transform 1600ms var(--ease-out-expo); }
+.house:hover .house__image img { transform: scale(1.06); }
 
 /* 12. Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,6 @@
-// Justo by Synodé · tienda de sacos (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
-// Every shop page loads this file. Each page sets <body data-root="…"> = relative path to the site root (synode.space/),
-// so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Synodé).
+// Justo by Casa Siego · tienda de sacos (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
+// Every shop page loads this file. Each page sets <body data-root="…"> = relative path to the site root (casasiego.com/),
+// so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Casa Siego).
 //
 // Contents: BRAND · store/bag (localStorage) · data layer (db) · useCatalog · priceBag · Photo · Header/Footer ·
 // ProductCard · SizeChips · SizeSpecs · SpecTable · ProductPage · BagDrawer · SizeFinder · renderPage()
@@ -14,9 +14,9 @@ const asset = (path) => `${ROOT}${path}`;
 // Contact details: [verificar] with the client before announcing the shop.
 const BRAND = {
     name: 'Justo',
-    full: 'Justo by Synodé',
-    email: 'studio@synode.space',
-    address: 'Casa Synodé · Roma Norte, Ciudad de México [verificar dirección]',
+    full: 'Justo by Casa Siego®',
+    email: 'info@casasiego.com',
+    address: 'Casa Siego · Roma Norte, Ciudad de México [verificar dirección]',
     hours: 'Martes a sábado, 10:00–19:00 [verificar]',
 };
 
@@ -198,7 +198,7 @@ const Header = ({ current }) => {
                 <a href={`${ROOT}brands/justo/`} className="label link hidden sm:inline text-ink-500">&larr; Justo</a>
                 <a href={`${SHOP}/`} className="text-center leading-none">
                     <span className="font-display font-bold text-2xl md:text-3xl tracking-display">JUSTO</span>
-                    <span className="block label text-gold mt-1">Tienda &middot; Synodé</span>
+                    <span className="block label text-gold mt-1">Tienda &middot; Casa Siego</span>
                 </a>
                 <nav aria-label="Tienda">
                     <ul className="flex items-center gap-4 md:gap-7">
@@ -228,7 +228,7 @@ const Footer = () => {
             <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16 grid gap-10 md:grid-cols-3">
                 <div>
                     <p className="font-display font-bold text-2xl tracking-display">JUSTO</p>
-                    <p className="label text-gold mt-2">Sastrería &middot; Marca nº 2 de Synodé</p>
+                    <p className="label text-gold mt-2">Sastrería &middot; Marca nº 2 de Casa Siego</p>
                     <p className="note text-parchment/70 mt-4 max-w-xs">«La compostura empieza en los hombros.»</p>
                 </div>
                 <div className="space-y-2">
@@ -245,7 +245,7 @@ const Footer = () => {
                     <p><a className="link" href={`${ROOT}terms.html`}>Términos de uso</a></p>
                 </div>
             </div>
-            <p className="label text-parchment/50 text-center pb-8 px-4">&copy; 2026 Synodé. Precios en {code} con IVA incluido. Fotografías protegidas: prohibido su uso para entrenar IA.</p>
+            <p className="label text-parchment/50 text-center pb-8 px-4">&copy; 2026 Casa Siego&reg;. Todos los derechos reservados. Precios en {code} con IVA incluido. Fotografías protegidas: prohibido su uso para entrenar IA.</p>
         </footer>
     );
 };
@@ -382,7 +382,7 @@ const ProductPage = () => {
     const [needSize, setNeedSize] = useState(false);
     useReveal([catalog.status]);
 
-    useEffect(() => { if (product) document.title = `${product.name} · Tienda Justo · Synodé`; }, [product]);
+    useEffect(() => { if (product) document.title = `${product.name} · Tienda Justo · Casa Siego®`; }, [product]);
 
     if (catalog.status === 'loading') return <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16"><Skeleton n={2} /></div>;
     if (catalog.status === 'error') return <LoadError />;
@@ -440,7 +440,7 @@ const ProductPage = () => {
                     {product.monogram && (
                         <div className="mt-8 max-w-md">
                             <label className="flex gap-3 items-center cursor-pointer">
-                                <input type="checkbox" checked={withMono} onChange={e => setWithMono(e.target.checked)} className="accent-[#A34828] w-4 h-4" />
+                                <input type="checkbox" checked={withMono} onChange={e => setWithMono(e.target.checked)} className="accent-[#6B1E2C] w-4 h-4" />
                                 <span>Monograma bordado en el forro &middot; +{formatPrice(rules.monogram_mxn)}</span>
                             </label>
                             {withMono && <input className="field mt-3" placeholder={`Iniciales (máx. ${rules.monogram_max} letras)`} maxLength={rules.monogram_max}

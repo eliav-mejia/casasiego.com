@@ -1,6 +1,6 @@
-/* Synode — acceso.js
+/* Casa Siego — acceso.js
    Sign-in gate of the home page (index.html only; brand pages, terms and the shop have no gate).
-   1. A login card covers the page (no sign-up: accounts are created by Synodé in Supabase).
+   1. A login card covers the page (no sign-up: accounts are created by Casa Siego in Supabase).
    2. On submit the card flips to a white card with a script message:
         success → «Encantados de volvernos a encontrar» → the card fades out and the page opens
         error   → «Esperamos tener el honor de conocerte pronto» → redirect to brands/fiel/
@@ -68,9 +68,8 @@
     '<div class="acceso__card">' +
       '<div class="acceso__inner">' +
         '<section class="acceso__face acceso__front" aria-labelledby="acceso-titulo">' +
-          '<p class="eyebrow eyebrow--gold">Casa Synodé &middot; Acceso</p>' +
-          '<h2 class="acceso__title" id="acceso-titulo">Synodé</h2>' +
-          '<p class="acceso__greek" lang="el">Συνέδριον</p>' +
+          '<p class="eyebrow eyebrow--gold">Acceso de miembros</p>' +
+          '<h2 class="acceso__title wordmark" id="acceso-titulo"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></h2>' +
           '<p class="acceso__lede">Un lugar reservado para nuestros miembros. Inicia sesión para entrar.</p>' +
           '<form class="acceso__form" novalidate>' +
             '<label class="acceso__field"><span class="acceso__label">Usuario (correo)</span>' +
@@ -80,12 +79,12 @@
             '<button class="button acceso__submit" type="submit">Entrar</button>' +
           '</form>' +
           '<button class="acceso__skip" type="button">Omitir</button>' +
-          '<p class="acceso__fine">Las cuentas las crea la Casa. Si eres miembro y no tienes acceso, escribe a studio@synode.space.</p>' +
+          '<p class="acceso__fine">Las cuentas las crea la Casa. Si eres miembro y no tienes acceso, escribe a info@casasiego.com.</p>' +
         '</section>' +
         '<section class="acceso__face acceso__back" aria-live="assertive">' +
           '<hr class="rule rule--short rule--gold">' +
           '<p class="acceso__message"></p>' +
-          '<p class="acceso__sign">Synodé</p>' +
+          '<p class="acceso__sign wordmark"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>' +
         '</section>' +
       '</div>' +
     '</div>';

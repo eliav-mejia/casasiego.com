@@ -6,16 +6,16 @@
    formulario lleva a su etapa y cada campo tiene su recuadro de detalle (FOCUS) en la esquina de la vista.
    Invitados (sin sesión de miembro en Supabase, ver js/acceso-config.js): solo los tres trajes de la casa (SUITS)
    de «Clásico de negocios» y «Napolitano relajado»; el resto de campos queda bloqueado con un candado que abre
-   el aviso «Toma de medidas / Membresía Synodé». */
+   el aviso «Toma de medidas / Membresía Casa Siego». */
 (function () {
   'use strict';
 
   var CONFIG = {
     // Destino del botón «Enviar a la sastrería» (mailto con la ficha completa).
-    contactEmail: 'studio@synode.space',
+    contactEmail: 'info@casasiego.com',
     subject: 'Justo · Traje a medida',
     measureSubject: 'Justo · Toma de medidas',
-    membershipSubject: 'Membresía Club Synodé',
+    membershipSubject: 'Membresía Club Casa Siego',
     signIn: '../../../',                       // portada con el acceso de miembros
     photos: '../../../images/brands/justo.esmx/'
   };
@@ -767,7 +767,7 @@
     o += '<path d="M178 56Q200 46 222 56L219 75Q200 66 181 75Z" fill="' + c.felt + '" stroke="' + mix(c.felt, '#000000', 0.35) + '" stroke-width="1"/>';
     o += line('M193 64Q200 70 207 64', '#8B8378', 1);
     o += '<rect x="182" y="82" width="36" height="13" fill="#F3EFE6" stroke="#CFC8BB" stroke-width=".5"/>' +
-      '<text x="200" y="91" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="6" letter-spacing="1.4" fill="#0C1821">JUSTO</text>';
+      '<text x="200" y="91" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="6" letter-spacing="1.4" fill="#3B1A1F">JUSTO</text>';
 
     // Pretina del pantalón (interior), para el monograma
     var py = 432;
@@ -994,7 +994,7 @@
 
   function summaryText() {
     var suit = suitById(ui.suit);
-    var out = ['JUSTO by Synodé · Traje a medida', 'Ficha generada el ' + new Date().toLocaleDateString('es-MX'), ''];
+    var out = ['JUSTO by Casa Siego® · Traje a medida', 'Ficha generada el ' + new Date().toLocaleDateString('es-MX'), ''];
     if (suit) out.push('Traje de la casa: ' + suit[1] + (access.member ? '' : ' (pedido de invitado)'), '');
     summaryData().forEach(function (sec) {
       out.push(sec.num + ' · ' + sec.title.toUpperCase());
@@ -1156,8 +1156,8 @@
       '<div class="am-modal__options">' +
         '<a class="am-option" href="' + mailto(CONFIG.measureSubject, ctx + '\n\nMe gustaría agendar una toma de medidas.') + '">' +
           '<strong>Toma de medidas</strong><span>Una sesión con el sastre: medidas, caída y cada detalle del traje.</span></a>' +
-        '<a class="am-option" href="' + mailto(CONFIG.membershipSubject, ctx + '\n\nMe gustaría conocer la Membresía Synodé.') + '">' +
-          '<strong>Membresía Synodé</strong><span>El constructor completo: todos los estilos, tejidos y acabados.</span></a>' +
+        '<a class="am-option" href="' + mailto(CONFIG.membershipSubject, ctx + '\n\nMe gustaría conocer la Membresía Casa Siego.') + '">' +
+          '<strong>Membresía Casa Siego</strong><span>El constructor completo: todos los estilos, tejidos y acabados.</span></a>' +
       '</div>' +
       '<p class="am-modal__fine">¿Ya eres miembro? <a href="' + CONFIG.signIn + '">Inicia sesión</a> y vuelve a esta página.</p>');
   }

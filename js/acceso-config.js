@@ -1,4 +1,4 @@
-/* Synodé — acceso-config.js
+/* Casa Siego — acceso-config.js
    Public values only: the publishable key is meant for the browser; access is enforced by Supabase Auth and RLS.
    Empty supabaseUrl / publishableKey = Supabase not configured yet: every sign-in attempt fails and is redirected.
    Auth settings (no sign-up, PKCE, 15-min JWT, Turnstile): _interno/acceso/config.toml.ejemplo (local, not published). */

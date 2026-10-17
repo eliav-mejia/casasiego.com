@@ -1,6 +1,6 @@
 {
   "_schema": "products: id, slug, sku, name, short, description, price_mxn, cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n}, specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], monogram, active, featured",
-  "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Synodé. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/brands/justo.esmx/.",
+  "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/brands/justo.esmx/.",
   "updated_at": "2026-10-12",
   "products": [
     {

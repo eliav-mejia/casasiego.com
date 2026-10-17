@@ -1,4 +1,4 @@
-/* Synode — region.js (v1.1.0)
+/* Casa Siego — region.js (v1.1.0)
    Small flag in the bottom-left corner: México or España.
    España swaps every "Ciudad de México" / "CDMX" for "Madrid" and shows the
    elements marked data-region="es" instead of data-region="mx".

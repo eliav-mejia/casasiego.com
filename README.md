@@ -1,10 +1,10 @@
-# synode.space
+# casasiego.com
 
-Volumen fotográfico de Synodé y sus marcas. Sitio estático (GitHub Pages), sin paso de build.
+Volumen fotográfico de Casa Siego y sus marcas. Sitio estático (GitHub Pages), sin paso de build.
 
 ```
-synode.space/
-├── index.html                    portada Synodé (venta cruzada): Cap. I coworking (Coffee Space), Cap. II fotografía (Reino Fiel), Cap. III trajes (Toriku Films)
+casasiego.com/
+├── index.html                    portada Casa Siego (venta cruzada): Cap. I coworking (Coffee Space), Cap. II fotografía (Reino Fiel), Cap. III trajes (Toriku Films)
 ├── visitante.html                copia de la portada sin pop-up, destino de «Omitir» (v1.0.0 «Unrecognized visitor»)
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
@@ -16,8 +16,8 @@ synode.space/
 ├── js/region.js                  bandera México / España (todas las páginas): por IP cambia CDMX → Madrid, las locaciones de Fiel y los precios a euros (MXN ÷ 20 × 1.8)
 ├── js/acceso.js · js/acceso-config.js · css/acceso.css   pop-up de acceso de la portada (Supabase Auth, sin registro)
 ├── brands/
-│   ├── fiel/index.html           marca nº 1 · Fiel by Synodé, estudio fotográfico
-│   ├── justo/index.html          marca nº 2 · Justo by Synodé, sastrería
+│   ├── fiel/index.html           marca nº 1 · Fiel by Casa Siego, estudio fotográfico
+│   ├── justo/index.html          marca nº 2 · Justo by Casa Siego, sastrería
 │   ├── justo/tienda/             TIENDA EN LÍNEA de Justo (variante C/D: React + Tailwind por CDN, sin build)
 │   │   ├── index.html            catálogo: 3 sacos, tallas CH · M · G · XG, calculadora de talla
 │   │   ├── <slug>/index.html     ficha de cada saco (especificaciones por talla, monograma, añadir a la bolsa)
@@ -25,15 +25,15 @@ synode.space/
 │   │   ├── guia-de-tallas/       tallas del cuerpo, cómo medirse, medidas de cada saco
 │   │   ├── db/                   datos simulados: productos.json · tallas.json · tienda.json (envíos, pagos, descuentos)
 │   │   ├── js/tienda.jsx         capa db, bolsa (localStorage), priceBag, componentes · js/tailwind.config.js
-│   │   ├── css/tienda.css        identidad Synodé para Tailwind
+│   │   ├── css/tienda.css        identidad Casa Siego para Tailwind
 │   │   └── supabase/             esquema Etapa 2 (no se ejecuta aún)
-│   ├── libre/index.html          marca nº 3 · Libre by Synodé, coworking y café
+│   ├── libre/index.html          marca nº 3 · Libre by Casa Siego, coworking y café
 │   └── reino_fiel/               marca nº 1 · fotografía de mascotas (español, precios en MXN)
 │       ├── index.html
 │       └── descargas/reino-fiel-guia-de-sesiones.pdf
 ├── images/
 │   ├── README.md                 índice de catálogos
-│   ├── synodos/                  catálogo base de la portada (README.md)
+│   ├── casa/                     catálogo base de la portada (README.md)
 │   ├── brands/reino_fiel/        catálogo de la marca nº 1 (README.md)
 │   └── og/share.jpg              tarjeta para compartir la portada
 ├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna de la tienda

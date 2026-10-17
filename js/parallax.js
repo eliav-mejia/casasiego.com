@@ -1,4 +1,4 @@
-/* Synode — parallax.js (v1.0.2)
+/* Casa Siego — parallax.js (v1.1.0)
    Writes a --py offset on each [data-speed] element while it is on screen,
    and adds .is-visible to [data-reveal] elements as they enter.
    No scroll-jacking: native scrolling is never intercepted. */
@@ -12,7 +12,8 @@
 
   /* Reveal: tag editorial blocks, then fade them in once. */
   var revealTargets = document.querySelectorAll(
-    '.folio__text, .folio__margin, .chapter__sticky, .caption, .leaf__text, .gallery__head, .colophon__inner'
+    '.folio__text, .folio__margin, .chapter__sticky, .caption, .leaf__text, .gallery__head, .colophon__inner, ' +
+    '.plate__frame, .leaf__image, .house, .houses__head, .stack__head, .session, .sessions__head, .club__col'
   );
   revealTargets.forEach(function (el) { el.setAttribute('data-reveal', ''); });
 

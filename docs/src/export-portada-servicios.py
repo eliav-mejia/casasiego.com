@@ -7,7 +7,7 @@ Keeps copyright/artist, drops everything else (GPS included), per images/README.
 from PIL import Image, ImageOps
 
 OG = "images/og/"
-OUT = "images/synodos/"
+OUT = "images/casa/"
 # output file, source, crop box, max width
 JOBS = [
     ("portada.jpg",          "1000028264.jpg",        (128, 0, 1280, 768),      2400),  # 3:2 hero
@@ -35,7 +35,7 @@ def export(out, src, box, maxw, keep=(0x013B, 0x8298)):
         if exif.get(tag):
             clean[tag] = exif[tag]
     if not clean.get(0x8298):
-        clean[0x8298] = "(c) 2026 Synode. Todos los derechos reservados."
+        clean[0x8298] = "(c) 2026 Casa Siego. Todos los derechos reservados."
     im.save(out, "JPEG", quality=80, optimize=True, progressive=True, exif=clean.tobytes())
     print(f"{out}  {im.width} x {im.height}")
 
