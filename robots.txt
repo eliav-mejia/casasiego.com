@@ -26,3 +26,5 @@ Disallow: /
 User-agent: *
 Disallow: /docs/
 Allow: /
+
+Sitemap: https://synode.space/sitemap.xml

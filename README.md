@@ -5,6 +5,7 @@ Volumen fotográfico de Synodé y sus marcas. Sitio estático (GitHub Pages), si
 ```
 synode.space/
 ├── index.html                    portada Synodé (venta cruzada): Cap. I coworking (Coffee Space), Cap. II fotografía (Reino Fiel), Cap. III trajes (Toriku Films)
+├── visitante.html                copia de la portada sin pop-up, destino de «Omitir» (v1.0.0 «Unrecognized visitor»)
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── css/
@@ -57,5 +58,5 @@ Servir desde la raíz del sitio (`py -m http.server 8130` → http://localhost:8
 
 `index.html` abre con un pop-up de inicio de sesión (Supabase Auth, sin registro). Éxito: la tarjeta gira a «Encantados de
 volvernos a encontrar» y abre la portada. Error: gira a «Esperamos tener el honor de conocerte pronto» y redirige a
-`brands/fiel/`. «Omitir», en gris claro bajo el botón Entrar, cierra el pop-up y muestra la portada en esa visita. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
+`brands/fiel/`. «Omitir», en gris claro bajo el botón Entrar, lleva a `visitante.html`: copia de la portada sin pop-up (versión 1.0.0 «Unrecognized visitor», noindex). Los cambios a `index.html` deben copiarse ahí. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
 tienda y `404.html` no tienen pop-up. Es una barrera visual, no protección real del HTML: ver `_interno/acceso-synode.md`.

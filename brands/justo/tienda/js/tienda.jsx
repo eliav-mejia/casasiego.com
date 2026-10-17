@@ -200,16 +200,22 @@ const Header = ({ current }) => {
                     <span className="font-display font-bold text-2xl md:text-3xl tracking-display">JUSTO</span>
                     <span className="block label text-gold mt-1">Tienda &middot; Synodé</span>
                 </a>
-                <nav className="flex items-center gap-4 md:gap-7" aria-label="Tienda">
-                    {nav.map(([id, label, href]) => <a key={id} href={href} className={`label link hidden md:inline ${current === id ? 'text-rust' : ''}`} aria-current={current === id ? 'page' : undefined}>{label}</a>)}
-                    <a href={`${SHOP}/bolsa/`} className="label flex items-center gap-1.5" aria-label={`Bolsa, ${count} ${count === 1 ? 'saco' : 'sacos'}`}>
-                        <Icon.bag className="w-5 h-5" /><span>({count})</span>
-                    </a>
+                <nav aria-label="Tienda">
+                    <ul className="flex items-center gap-4 md:gap-7">
+                        {nav.map(([id, label, href]) => <li key={id} className="hidden md:block"><a href={href} className={`label link ${current === id ? 'text-rust' : ''}`} aria-current={current === id ? 'page' : undefined}>{label}</a></li>)}
+                        <li>
+                            <a href={`${SHOP}/bolsa/`} className="label flex items-center gap-1.5" aria-label={`Bolsa, ${count} ${count === 1 ? 'saco' : 'sacos'}`}>
+                                <Icon.bag className="w-5 h-5" /><span>({count})</span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
-            <nav className="md:hidden flex justify-center gap-6 pb-3 -mt-1" aria-label="Tienda (móvil)">
-                {nav.map(([id, label, href]) => <a key={id} href={href} className={`label ${current === id ? 'text-rust' : ''}`}>{label}</a>)}
-                <a href={`${ROOT}brands/justo/`} className="label sm:hidden text-ink-500">Justo</a>
+            <nav className="md:hidden pb-3 -mt-1" aria-label="Tienda (móvil)">
+                <ul className="flex justify-center gap-6">
+                    {nav.map(([id, label, href]) => <li key={id}><a href={href} className={`label ${current === id ? 'text-rust' : ''}`} aria-current={current === id ? 'page' : undefined}>{label}</a></li>)}
+                    <li className="sm:hidden"><a href={`${ROOT}brands/justo/`} className="label text-ink-500">Justo</a></li>
+                </ul>
             </nav>
         </header>
     );
@@ -410,7 +416,11 @@ const ProductPage = () => {
 
                 <div className="md:col-span-5 md:sticky md:top-28 px-4 md:px-0 pb-10 animate-fade-in">
                     <nav className="label text-ink-500 mb-6" aria-label="Ruta">
-                        <a href={`${ROOT}brands/justo/`} className="link">Justo</a> / <a href={`${SHOP}/`} className="link">Sacos</a>
+                        <ol className="flex flex-wrap gap-1.5">
+                            <li><a href={`${ROOT}brands/justo/`} className="link">Justo</a></li>
+                            <li aria-hidden="true">/</li>
+                            <li><a href={`${SHOP}/`} className="link">Sacos</a></li>
+                        </ol>
                     </nav>
                     <h1 className="text-3xl md:text-5xl">{product.name}</h1>
                     <p className="label text-ink-500 mt-3">Corte {product.cut.toLowerCase()} &middot; {product.sku}</p>
@@ -477,7 +487,7 @@ const ProductPage = () => {
 
             {related.length > 0 && (
                 <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20">
-                    <p className="label text-gold mb-6">Los otros sacos de la casa</p>
+                    <h2 className="label text-gold mb-6">Los otros sacos de la casa</h2>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{related.map(p => <ProductCard key={p.id} product={p} catalog={catalog} />)}</div>
                 </section>
             )}
