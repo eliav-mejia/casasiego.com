@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=GFS+Didot&family=Spectral:ital@1&family=Parisienne&display=swap">
 
-  <link rel="stylesheet" href="css/site.css?v=1.0.7">
+  <link rel="stylesheet" href="css/site.css?v=1.0.8">
   <link rel="stylesheet" href="css/layout.css?v=1.0.7">
   <script src="js/parallax.js" defer></script>
   <script src="js/protect.js" defer></script>
@@ -55,11 +55,11 @@
 
       <div class="chapter__plates">
         <figure class="plate plate--tall" data-speed="0.08">
-          <div class="plate__frame"><img draggable="false" src="images/synodos/cowork-01.jpg?v=1.0.6" alt="Barista sirviendo un capuchino en la barra de madera de Coffee Space" loading="lazy"></div>
+          <div class="plate__frame"><img draggable="false" width="548" height="767" src="images/synodos/cowork-01.jpg?v=1.0.6" alt="Barista sirviendo un capuchino en la barra de madera de Coffee Space" loading="lazy"></div>
           <figcaption class="caption"><span class="caption__no">01</span> La barra: el café va incluido con el escritorio.</figcaption>
         </figure>
         <figure class="plate plate--wide" data-speed="0.05">
-          <div class="plate__frame"><img draggable="false" src="images/synodos/cowork-02.jpg?v=1.0.6" alt="Barra de concreto con bancos de madera y, al fondo, el estudio fotográfico con su ciclorama blanco" loading="lazy"></div>
+          <div class="plate__frame"><img draggable="false" width="848" height="565" src="images/synodos/cowork-02.jpg?v=1.0.6" alt="Barra de concreto con bancos de madera y, al fondo, el estudio fotográfico con su ciclorama blanco" loading="lazy"></div>
           <figcaption class="caption"><span class="caption__no">02</span> Del escritorio al estudio hay veinte pasos.</figcaption>
         </figure>
       </div>
@@ -93,7 +93,7 @@
 
       <div class="houses__grid">
         <a class="house" href="brands/fiel/" aria-labelledby="fiel-title">
-          <div class="house__image plate__frame"><img draggable="false" src="images/synodos/casa-reino-fiel.jpg?v=1.0.7" alt="" loading="lazy"></div>
+          <div class="house__image plate__frame"><img draggable="false" width="1600" height="900" src="images/synodos/casa-reino-fiel.jpg?v=1.0.7" alt="" loading="lazy"></div>
           <div class="house__body">
             <p class="house__no">Marca nº 1</p>
             <h3 class="house__name" id="fiel-title">Fiel <span>Estudio fotográfico</span></h3>
@@ -103,7 +103,7 @@
         </a>
 
         <a class="house" href="brands/justo/" aria-labelledby="justo-title">
-          <div class="house__image plate__frame"><img draggable="false" src="images/synodos/traje-01.jpg?v=1.0.7" alt="" loading="lazy"></div>
+          <div class="house__image plate__frame"><img draggable="false" width="576" height="768" src="images/synodos/traje-01.jpg?v=1.0.7" alt="" loading="lazy"></div>
           <div class="house__body">
             <p class="house__no">Marca nº 2</p>
             <h3 class="house__name" id="justo-title">Justo <span>Sastrería</span></h3>
@@ -113,7 +113,7 @@
         </a>
 
         <a class="house" href="brands/libre/" aria-labelledby="libre-title">
-          <div class="house__image plate__frame"><img draggable="false" src="images/synodos/cowork-02.jpg?v=1.0.7" alt="" loading="lazy"></div>
+          <div class="house__image plate__frame"><img draggable="false" width="848" height="565" src="images/synodos/cowork-02.jpg?v=1.0.7" alt="" loading="lazy"></div>
           <div class="house__body">
             <p class="house__no">Marca nº 3</p>
             <h3 class="house__name" id="libre-title">Libre <span>Coworking &amp; Café</span></h3>
@@ -134,8 +134,17 @@
       <hr class="rule rule--short rule--gold">
       <p class="meta meta--gold">Compuesto en Cinzel, Bodoni Moda y EB Garamond. Impreso en luz.</p>
       <p class="meta meta--gold">Todas las fotografías &copy; 2026 Synodé. Todos los derechos reservados. Prohibida su descarga, reproducción o uso para entrenar IA sin licencia escrita.</p>
-      <p class="meta meta--gold">Marca nº 1 &middot; <a href="brands/fiel/">Fiel</a>, estudio fotográfico &middot; Marca nº 2 &middot; <a href="brands/justo/">Justo</a>, sastrería &middot; Marca nº 3 &middot; <a href="brands/libre/">Libre</a>, coworking y café</p>
-      <p class="meta meta--gold"><a href="terms.html">Términos de uso</a> &middot; <a href="#top">Volver al inicio</a></p>
+      <nav class="colophon__nav" aria-label="Synodé">
+        <ul class="meta meta--gold inline-list">
+          <li>Marca nº 1 &middot; <a href="brands/fiel/">Fiel</a>, estudio fotográfico</li>
+          <li>Marca nº 2 &middot; <a href="brands/justo/">Justo</a>, sastrería</li>
+          <li>Marca nº 3 &middot; <a href="brands/libre/">Libre</a>, coworking y café</li>
+        </ul>
+        <ul class="meta meta--gold inline-list">
+          <li><a href="terms.html">Términos de uso</a></li>
+          <li><a href="#top">Volver al inicio</a></li>
+        </ul>
+      </nav>
     </div>
   </footer>
 

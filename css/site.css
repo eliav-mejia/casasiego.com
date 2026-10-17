@@ -254,3 +254,9 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   html { scroll-behavior: auto; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
+
+/* Footer links: a real list (nav + ul) that still reads as one line separated by middots */
+.inline-list { list-style: none; padding: 0; }
+.inline-list li { display: inline; }
+.inline-list li + li::before { content: "\00B7\00A0"; }
+.colophon__nav { display: grid; justify-items: center; gap: var(--space-2); }
