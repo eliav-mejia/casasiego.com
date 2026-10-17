@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traje a medida — Justo by Synodé</title>
+  <meta name="description" content="Diseña tu traje a medida con Justo, la sastrería de Synodé: tejido, saco, pantalón, medidas y acabados, con vista previa en tiempo real.">
+  <link rel="canonical" href="https://synode.space/brands/justo/a-medida/">
+  <meta property="og:site_name" content="Synodé">
+  <meta property="og:title" content="Traje a medida — Justo by Synodé">
+  <meta property="og:description" content="Elige tejido, corte y acabados y mira tu traje tomar forma en tiempo real.">
+  <meta property="og:url" content="https://synode.space/brands/justo/a-medida/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+  <meta property="og:image" content="https://synode.space/images/synodos/traje-02.jpg">
+  <meta name="theme-color" content="#0C1821">
+
+  <!-- Derechos: aviso de copyright y exclusión de minería de textos y datos / entrenamiento de IA -->
+  <meta name="copyright" content="© 2026 Synodé. Todos los derechos reservados.">
+  <meta name="robots" content="noai, noimageai">
+  <meta name="tdm-reservation" content="1">
+  <meta name="tdm-policy" content="https://synode.space/terms.html">
+  <link rel="license" href="../../../terms.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Spectral:ital@1&display=swap">
+
+  <link rel="stylesheet" href="../../../css/site.css?v=1.0.8">
+  <link rel="stylesheet" href="css/a-medida.css?v=1.1.0">
+  <!-- Sesión de miembro (Supabase, la misma de la portada): sin ella el constructor queda en modo invitado -->
+  <script src="../../../js/acceso-config.js?v=1.0.1" defer></script>
+  <script src="js/a-medida.js?v=1.1.0" defer></script>
+</head>
+<body>
+
+  <header class="am-top">
+    <a class="am-top__back" href="../">&larr; Justo</a>
+    <p class="am-top__brand">Justo <span>by Synodé</span></p>
+    <p class="am-top__tag">Sastrería a medida</p>
+  </header>
+
+  <main class="am" id="constructor">
+
+    <!-- Columna de opciones -->
+    <section class="am-panel" aria-labelledby="am-titulo">
+      <div class="am-intro">
+        <p class="eyebrow">Constructor de traje</p>
+        <h1 class="am-intro__title" id="am-titulo">Diseña tu traje</h1>
+        <p class="am-intro__lede">Responde unas preguntas sencillas y mira cómo toma forma. En la prueba con el sastre afinamos medidas, caída y cada detalle.</p>
+        <label class="am-field am-field--preset">
+          <span class="am-field__label">Punto de partida</span>
+          <select id="am-preset" aria-describedby="am-preset-hint"></select>
+          <span class="am-field__hint" id="am-preset-hint">Carga un estilo completo y ajústalo a tu gusto.</span>
+        </label>
+      </div>
+
+      <form id="am-form" class="am-form" autocomplete="off" novalidate></form>
+    </section>
+
+    <!-- Vista previa + ficha -->
+    <aside class="am-side" aria-label="Vista previa y ficha técnica">
+      <section class="am-stage" aria-label="Vista previa">
+        <div class="am-stages" role="tablist" aria-label="Etapa">
+          <button type="button" role="tab" data-stage="traje" aria-selected="true">Traje</button>
+          <button type="button" role="tab" data-stage="saco" aria-selected="false">Saco</button>
+          <button type="button" role="tab" data-stage="pantalon" aria-selected="false">Pantalón</button>
+        </div>
+        <div class="am-views" role="tablist" aria-label="Vista">
+          <button type="button" role="tab" data-view="front" aria-selected="true">Frente</button>
+          <button type="button" role="tab" data-view="back" aria-selected="false">Espalda</button>
+          <button type="button" role="tab" data-view="inside" aria-selected="false">Interior</button>
+        </div>
+        <div class="am-canvas">
+          <svg id="am-suit" viewBox="40 30 320 736" role="img" aria-labelledby="am-caption"></svg>
+          <figure class="am-detail" aria-hidden="true">
+            <svg id="am-detail-svg" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice"></svg>
+            <figcaption id="am-detail-cap">Detalle</figcaption>
+          </figure>
+          <button type="button" class="am-photo" id="am-photo" hidden>
+            <img src="" alt="" width="922" height="1152" loading="lazy">
+            <span>Foto</span>
+          </button>
+        </div>
+        <div class="am-stage__foot">
+          <p class="am-caption" id="am-caption">Vista frontal</p>
+          <label class="am-toggle"><input type="checkbox" id="am-hide-jacket"> <span>Ver pantalón sin saco</span></label>
+        </div>
+      </section>
+
+      <section class="am-sheet" aria-labelledby="am-ficha-titulo">
+        <h2 class="am-sheet__title" id="am-ficha-titulo">Ficha técnica</h2>
+        <div id="am-notes" class="am-notes" aria-live="polite"></div>
+        <div id="am-summary" class="am-summary"></div>
+        <div class="am-actions">
+          <a class="am-btn am-btn--primary" id="am-send" href="#">Enviar a la sastrería</a>
+          <button type="button" class="am-btn" id="am-copy">Copiar ficha</button>
+          <button type="button" class="am-btn" id="am-share">Copiar enlace</button>
+          <button type="button" class="am-btn" id="am-download">Descargar .txt</button>
+          <button type="button" class="am-btn am-btn--quiet" id="am-reset">Reiniciar</button>
+        </div>
+        <p class="am-sheet__fine">La vista previa es ilustrativa. Tejidos, tonos y proporciones finales se confirman en la sesión de sastrería.</p>
+      </section>
+    </aside>
+  </main>
+
+  <div class="am-toast" id="am-toast" role="status" aria-live="polite"></div>
+
+  <div class="am-modal" id="am-modal" role="dialog" aria-modal="true" aria-labelledby="am-modal-title" hidden>
+    <div class="am-modal__card">
+      <button type="button" class="am-modal__close" aria-label="Cerrar">&times;</button>
+      <div id="am-modal-body"></div>
+    </div>
+  </div>
+
+  <noscript><p class="am-noscript">El constructor necesita JavaScript. Escríbenos a <a href="mailto:studio@synode.space?subject=Justo%20%C2%B7%20Traje%20a%20medida">studio@synode.space</a> y lo diseñamos contigo.</p></noscript>
+</body>
+</html>
