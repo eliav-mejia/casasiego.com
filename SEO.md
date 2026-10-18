@@ -23,6 +23,11 @@ Estado al 2026-10-17 (detalle en `docs/casasiego-v1.1.0.pdf` §5):
 5. Search Console: verificar casasiego.com, enviar el sitemap y usar **Cambio de dirección** desde synode.space
    (requiere la redirección 301 del punto 4).
 
+## Prioridad de servicios (v1.1.1, 2026-10-17)
+
+La portada destaca, en este orden: **fotografía de retrato** (Estudio Fiel), **trajes a medida** (Justo) y **fotografía de
+mascotas** (Reino Fiel). El concepto Libre (coworking y café) queda oculto: sin tarjeta, sin menú, sin menciones en la portada.
+
 ## Estrategia
 
 Casa Siego es una casa en Roma Norte, Ciudad de México, con tres marcas. Cada marca tiene su página y posiciona por su
@@ -30,10 +35,10 @@ servicio; la portada vende el conjunto.
 
 | Sección | Público | Búsquedas objetivo |
 |---|---|---|
-| Portada `/` | CDMX: freelancers, parejas, empresas | coworking con café, estudio fotográfico, trajes a medida CDMX |
+| Portada `/` | CDMX: profesionales, parejas, empresas, dueños de mascotas | fotografía de retrato, retrato de negocios, trajes a medida, fotografía de mascotas CDMX |
 | `/brands/fiel/`, `/brands/reino_fiel/` | Dueños de mascotas | fotografía de mascotas CDMX, sesión con luz natural |
 | `/brands/justo/` y `/tienda/` | Hombres que buscan traje | sastrería a medida Roma Norte, sacos, guía de tallas |
-| `/brands/libre/` | Freelancers y equipos | coworking Roma Norte, café de especialidad |
+| `/brands/libre/` | **Oculta desde v1.1.1** (noindex, fuera del sitemap, sin enlaces) | — |
 | `/brands/fiel/blog/` | Clientes de Fiel | cómo organizar una sesión de fotos |
 
 Las fotografías son el contenido principal: `alt` descriptivo en cada una. El sitio pide no usarlas para entrenar IA
@@ -58,7 +63,7 @@ Las fotografías son el contenido principal: `alt` descriptivo en cada una. El s
 | Tipo de página | og:type | twitter:card | JSON-LD |
 |---|---|---|---|
 | Portada | website | summary_large_image | `Organization` (dirección CDMX, email, marcas) + `WebSite` |
-| Marcas Fiel, Justo, Libre | website | summary_large_image | `Organization` con `parentOrganization` Casa Siego + `BreadcrumbList` |
+| Marcas Fiel y Justo (Libre oculta) | website | summary_large_image | `Organization` con `parentOrganization` Casa Siego + `BreadcrumbList` |
 | Reino Fiel, términos, tienda, guía de tallas | website | summary_large_image | `BreadcrumbList` |
 | Blog de Fiel | article | summary_large_image | `BreadcrumbList` |
 | Saco (ficha) | product | summary_large_image | `Product` (ya existente) |
