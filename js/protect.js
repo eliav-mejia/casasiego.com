@@ -1,4 +1,4 @@
-/* Synode — protect.js (v1.0.2)
+/* Casa Siego — protect.js (v1.0.2)
    Deterrent only: discourages casual saving of photographs.
    It cannot stop screenshots or a determined visitor; see docs §5.
    Scoped to photographs so text stays selectable and the page stays accessible. */

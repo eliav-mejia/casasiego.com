@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Casa Siego® v1.1.0 — Rebranding, Domain &amp; DNS Documentation</title>
+<!-- Source of docs/casasiego-v1.1.0.pdf. Build from the project root: sh docs/src/build-pdf.sh 1.1.0 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:ital@1&display=block">
+<style>
+  @font-face { font-family: "Palacio"; src: url("../../fonts/Palacio.woff2") format("woff2"), url("../../fonts/Palacio.woff") format("woff"), url("../../fonts/Palacio.otf") format("opentype"), url("../../fonts/Palacio.ttf") format("truetype"); }
+  @page { size: A4; margin: 20mm 22mm 22mm 28mm; }
+  @page :first { margin: 0; }
+  :root { --ink:#3B1A1F; --wine:#6B1E2C; --wine-deep:#4A1621; --beige:#EEE4D3; --beige-soft:#F7F2EA; --brass:#B0905E; --brass-light:#D6C09A; --taupe:#6F5E57; --white:#FFFFFF; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin:0; background:var(--white); color:var(--ink); font:11pt/1.6 "EB Garamond", Georgia, serif; font-feature-settings:"onum" 1; }
+  h1,h2,h3 { break-after: avoid; }
+  h2 { font:600 20pt/1.2 "Bodoni Moda", serif; letter-spacing:.02em; margin:28pt 0 8pt; padding-top:10pt; border-top:1px solid rgba(176,144,94,.45); }
+  h3 { font:400 11pt/1.3 "Cinzel", serif; letter-spacing:.2em; text-transform:uppercase; margin:16pt 0 6pt; }
+  p { margin:0 0 8pt; }
+  .meta { font:italic 9.5pt/1.5 "Spectral", serif; color:var(--taupe); }
+  .eyebrow { font:400 8pt "Cinzel", serif; letter-spacing:.3em; text-transform:uppercase; color:var(--wine); margin-bottom:8pt; }
+  code, pre { font-family: "Cascadia Mono", Consolas, monospace; font-size: 8.5pt; }
+  pre { background:var(--beige-soft); border:1px solid rgba(176,144,94,.45); padding:8pt 10pt; white-space:pre-wrap; break-inside:avoid; }
+  table { width:100%; border-collapse:collapse; margin:6pt 0 12pt; font-size:9.5pt; break-inside:avoid; }
+  th { font:400 7.5pt "Cinzel", serif; letter-spacing:.18em; text-transform:uppercase; text-align:left; color:var(--taupe); border-bottom:1px solid var(--brass); padding:4pt 6pt; }
+  td { border-bottom:1px solid rgba(176,144,94,.3); padding:4pt 6pt; vertical-align:top; }
+  .sw { display:inline-block; width:10pt; height:10pt; vertical-align:-1pt; margin-right:5pt; border:1px solid rgba(59,26,31,.2); }
+  .ok { color:#2f6b3a; font-weight:600; } .todo { color:var(--wine); font-weight:600; } .urgent { color:#fff; background:var(--wine); padding:0 4pt; font-weight:600; }
+  .note { border-left:2px solid var(--wine); padding:4pt 0 4pt 10pt; margin:8pt 0 12pt; background:var(--beige-soft); break-inside:avoid; }
+  ul, ol { margin:0 0 10pt; padding-left:16pt; } li { margin-bottom:3pt; }
+  .dropcap::first-letter { float:left; font:400 40pt/0.8 "Ledger", serif; color:var(--wine); padding:4pt 6pt 0 0; }
+
+  .wordmark { display:inline-flex; align-items:baseline; gap:.3em; line-height:1; white-space:nowrap; }
+  .wordmark .casa { font-family:"Palacio","Cinzel",serif; letter-spacing:.2em; margin-right:-.08em; }
+  .wordmark .siego { font-family:"Ledger",serif; }
+  .wordmark sup { align-self:flex-start; margin-left:-.18em; font:.32em "EB Garamond", serif; }
+
+  .cover { height:297mm; display:flex; flex-direction:column; justify-content:space-between; background:var(--wine-deep); color:var(--beige-soft); margin:0; padding:40mm 22mm 30mm 28mm; break-after:page; overflow:hidden; }
+  .cover .wordmark { font-size:44pt; }
+  .cover .lede { font:italic 14pt "Spectral", serif; margin-top:18pt; opacity:.9; max-width:140mm; }
+  .cover .meta { color:var(--brass-light); }
+  .cover hr { width:60pt; border:0; border-top:1px solid var(--brass-light); margin:18pt 0; opacity:.7; }
+  table.log { table-layout:fixed; font-size:8.8pt; break-inside:auto; }
+  table.log tr { break-inside:avoid; }
+  table.dns { font-size:8.8pt; }
+  table.dns code { font-size:7.8pt; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <p class="eyebrow" style="color:var(--brass-light)">Documentation &middot; v1.1.0</p>
+    <p class="wordmark"><span class="casa">CASA</span> <span class="siego">Siego</span><sup>&reg;</sup></p>
+    <p class="lede">Rebranding from Synodé to Casa Siego®: identity, every change made to the site, the move from synode.space to casasiego.com, the DNS configuration and the go-live checklist.</p>
+  </div>
+  <div>
+    <hr>
+    <p class="meta">Repository: github.com/eliav-mejia/casasiego.com (formerly eliav-mejia/synode.space)</p>
+    <p class="meta">Supersedes v1.0.3 for identity, domain and shared chrome; v1.0.3 remains the reference for the shop, the suit builder, the sign-in gate and the region switch, which work as before under the new name.</p>
+    <p class="meta">17 October 2026</p>
+  </div>
+</section>
+
+<p class="eyebrow">1 &middot; Overview</p>
+<p class="dropcap">Version 1.1.0 renames the house. Synodé becomes <b>Casa Siego®</b>, a registered trademark, and the site moves from synode.space to <b>casasiego.com</b>. The three brands keep their names (<b>Fiel</b>, <b>Justo</b>, <b>Libre</b>), now signed &laquo;by Casa Siego®&raquo;. The visual system changes with the name: the parchment-and-ink Hellenic manuscript gives way to mostly white pages with vintage beige and wine bands, a two-typeface wordmark, a shared header with an animated mobile sidebar, and softer entrance animations on top of the existing parallax.</p>
+
+<table>
+  <tr><th>Area</th><th>Change</th><th>Files</th></tr>
+  <tr><td>Name</td><td>Synodé &rarr; Casa Siego® in every title, heading, footer, sub-brand and SEO tag</td><td>all public pages, shop, builder</td></tr>
+  <tr><td>Wordmark</td><td>CASA (Palacio) + Siego (Ledger Regular) + ®</td><td><code>css/site.css &sect;0, &sect;7</code></td></tr>
+  <tr><td>Palette</td><td>White pages, vintage beige and wine bands; legacy token names kept</td><td><code>css/site.css &sect;1</code>, <code>layout.css</code>, <code>brand.css</code>, shop CSS</td></tr>
+  <tr><td>Chrome</td><td>Header, mobile sidebar, section tones, progress line</td><td><code>js/casa.js</code> (new), <code>site.css &sect;8&ndash;9</code></td></tr>
+  <tr><td>Motion</td><td>Hero wordmark entrance, blur reveals, curtain reveal on photographs</td><td><code>site.css &sect;6&ndash;7</code>, <code>js/parallax.js</code></td></tr>
+  <tr><td>Domain</td><td>casasiego.com; <code>CNAME</code>; canonical, Open Graph, JSON-LD, sitemap, robots</td><td><code>CNAME</code>, every <code>&lt;head&gt;</code>, <code>sitemap.xml</code>, <code>robots.txt</code></td></tr>
+  <tr><td>Contact</td><td><code>studio@synode.space</code> &rarr; <code>info@casasiego.com</code></td><td>every <code>mailto:</code>, shop, builder</td></tr>
+  <tr><td>Documents</td><td>Public prelaunch note; Reino Fiel guide rebuilt; this documentation</td><td><code>docs/</code>, <code>brands/reino_fiel/descargas/</code></td></tr>
+</table>
+
+<h2>2 &middot; Identity</h2>
+<h3>Wordmark</h3>
+<p><b>CASA</b> is set in <b>Palacio</b>, tracked at 0.2em in capitals; <b>Siego</b> in <b>Ledger Regular</b>; the <b>®</b> sits small and high after Siego as the registration mark. Palacio is a licensed font that is not on Google Fonts: the site expects <code>fonts/Palacio.woff2</code> (or <code>.woff</code>, <code>.otf</code>, <code>.ttf</code>) and falls back to Cinzel until the files are added. Ledger loads from Google Fonts on every page.</p>
+<pre>&lt;p class="wordmark"&gt;&lt;span class="wordmark__casa"&gt;CASA&lt;/span&gt; &lt;span class="wordmark__siego"&gt;Siego&lt;/span&gt;&lt;sup class="wordmark__r"&gt;&amp;reg;&lt;/sup&gt;&lt;/p&gt;</pre>
+<p>Modifiers: <code>.wordmark--hero</code> (home), <code>.wordmark--colophon</code> (footers, terms). A ® after the name inside a heading uses <code>&lt;sup class="reg"&gt;</code> so it does not render full size in Bodoni.</p>
+
+<h3>Palette</h3>
+<table>
+  <tr><th>Token</th><th>Value</th><th>Role</th><th>Legacy name pointing to it</th></tr>
+  <tr><td><span class="sw" style="background:#FFFFFF"></span><code>--thera-white</code></td><td>#FFFFFF</td><td>Page canvas (<code>--color-bg</code>)</td><td>&mdash;</td></tr>
+  <tr><td><span class="sw" style="background:#EEE4D3"></span><code>--beige</code></td><td>#EEE4D3</td><td>Vintage beige bands, sidebar start tone</td><td>&mdash;</td></tr>
+  <tr><td><span class="sw" style="background:#F7F2EA"></span><code>--beige-soft</code></td><td>#F7F2EA</td><td>Surfaces, light text on wine</td><td><code>--parchment-marble</code></td></tr>
+  <tr><td><span class="sw" style="background:#6B1E2C"></span><code>--wine</code></td><td>#6B1E2C</td><td>Buttons, drop caps, accents</td><td><code>--amphora-rust</code></td></tr>
+  <tr><td><span class="sw" style="background:#4A1621"></span><code>--wine-deep</code></td><td>#4A1621</td><td>Hero, club, colophon, sidebar, theme-color</td><td>&mdash;</td></tr>
+  <tr><td><span class="sw" style="background:#3B1A1F"></span><code>--wine-ink</code></td><td>#3B1A1F</td><td>Body text</td><td><code>--aegean-ink</code></td></tr>
+  <tr><td><span class="sw" style="background:#B0905E"></span><code>--brass</code></td><td>#B0905E</td><td>Hairlines and ornaments</td><td><code>--hellenic-gold</code></td></tr>
+  <tr><td><span class="sw" style="background:#D6C09A"></span><code>--brass-light</code></td><td>#D6C09A</td><td>Gold text on wine and photographs</td><td>&mdash;</td></tr>
+  <tr><td><span class="sw" style="background:#6F5E57"></span><code>--taupe</code></td><td>#6F5E57</td><td>Captions, secondary copy</td><td><code>--laurel-leaf</code></td></tr>
+</table>
+<p class="meta">Keeping the v1.0 token names means brand pages, the shop and the suit builder pick up the new colours without changes. The shop mirrors the same values in <code>tienda/js/tailwind.config.js</code> and <code>tienda/css/tienda.css</code>.</p>
+
+<h2>3 &middot; Rebranding actions</h2>
+<p>Everything done for v1.1.0, in the order it was done. Branch <code>casa-siego</code>, commit <code>544f548</code> and the follow-up commit that adds this document.</p>
+<table class="log">
+  <tr><th style="width:4%">#</th><th style="width:30%">Action</th><th>Detail</th></tr>
+  <tr><td>1</td><td>Branch</td><td><code>casa-siego</code> from <code>seo-estructura</code>, kept off <code>main</code> until the domain is ready.</td></tr>
+  <tr><td>2</td><td>Name replaced in all text files</td><td>Synodé / Synode &rarr; Casa Siego; Casa Synodé &rarr; Casa Siego; URL-encoded subjects; © lines gain ®. Historical docs <code>synode-v1.0.x</code> left as they were.</td></tr>
+  <tr><td>3</td><td>Domain and e-mail</td><td><code>https://synode.space</code> &rarr; <code>https://casasiego.com</code> (canonical, og:url, og:image, JSON-LD, sitemap, robots, <code>.htaccess</code>, <code>.well-known/tdmrep.json</code>); <code>studio@synode.space</code> &rarr; <code>info@casasiego.com</code>.</td></tr>
+  <tr><td>4</td><td>Image folder</td><td><code>images/synodos/</code> &rarr; <code>images/casa/</code> (git rename; paths, <code>.gitignore</code> and scripts updated).</td></tr>
+  <tr><td>5</td><td>Titles and ®</td><td>Every <code>&lt;title&gt;</code> carries &laquo;Casa Siego®&raquo;; <code>og:site_name</code> and JSON-LD <code>name</code> stay plain &laquo;Casa Siego&raquo; for entity matching; home JSON-LD adds <code>"alternateName": "Synodé"</code>.</td></tr>
+  <tr><td>6</td><td>Copy rewritten</td><td>&laquo;Synodé es la palabra antigua para un encuentro&raquo; &rarr; &laquo;Casa Siego es una casa con tres puertas&raquo;; houses heading &laquo;Las marcas de Casa Siego®&raquo;; Greek Συνέδριον removed (home, sign-in card, 404). Brand mottos in Greek kept.</td></tr>
+  <tr><td>7</td><td>Footers</td><td>Wordmark added to every colophon; &laquo;© 2026 Casa Siego®. Todos los derechos reservados.&raquo; on every page, the shop and the sidebar; type credit &laquo;Compuesto en Palacio, Ledger y EB Garamond&raquo;.</td></tr>
+  <tr><td>8</td><td>Identity CSS</td><td><code>site.css</code> 1.1.0: palette, Palacio <code>@font-face</code>, wordmark, buttons that fill on hover, blur and curtain reveals; <code>layout.css</code> / <code>brand.css</code> 1.1.0: wine bands; sign-in card, 404, shop and builder recoloured.</td></tr>
+  <tr><td>9</td><td>Shared chrome</td><td><code>js/casa.js</code> on the nine public pages (not the shop or builder, which have their own headers). <code>parallax.js</code> 1.1.0 reveals photographs, cards and section heads.</td></tr>
+  <tr><td>10</td><td>Fonts</td><td>Ledger added to every Google Fonts link; <code>fonts/README.md</code> lists the Palacio file names.</td></tr>
+  <tr><td>11</td><td>Domain file</td><td><code>CNAME</code> = <code>casasiego.com</code>.</td></tr>
+  <tr><td>12</td><td>Documents</td><td><code>docs/casa-siego-prelanzamiento.pdf</code> (public, unlinked); Reino Fiel guide PDF rebuilt; <code>SEO.md</code> and <code>README.md</code> updated.</td></tr>
+  <tr><td>13</td><td>Repository</td><td>Renamed on GitHub to <code>eliav-mejia/casasiego.com</code>; local <code>origin</code> updated. GitHub redirects the old URL.</td></tr>
+  <tr><td>14</td><td>Script identifiers</td><td><code>SYNODE_ACCESO</code> &rarr; <code>CASASIEGO_ACCESO</code>, <code>SynodeRegion</code> &rarr; <code>CasaSiegoRegion</code>, event <code>synode:region</code> &rarr; <code>casasiego:region</code>, storage key <code>synode-region</code> &rarr; <code>casasiego-region</code> (visitors' saved México / España choice resets once). Internal note renamed <code>_interno/acceso-casasiego.md</code>.</td></tr>
+  <tr><td>15</td><td>Local folder</td><td><code>Meyer/sites/synode.space</code> &rarr; <code>Meyer/sites/casasiego.com</code>: <span class="todo">pending</span>, Windows refused while VS Code had the folder open. Planning documents already use the new path.</td></tr>
+</table>
+
+<h2>4 &middot; Shared chrome: <code>js/casa.js</code></h2>
+<ul>
+  <li><b>Header.</b> Wordmark on the left, links on the right (Inicio, Fiel, Justo, Libre, Membresía, Contacto). Transparent over a dark hero, frosted white once the page scrolls, hidden while scrolling down and back on the way up. Pages that open on a light section get <code>.head-offset</code> so content sits below it. Links are built from the script's own URL, so one file serves every folder depth.</li>
+  <li><b>Mobile sidebar (&le; 900 px).</b> Opens as a circle from the menu button. Its background starts at the colour of the section being read and eases into wine; touching or hovering a link tints it to that link's tone. Links slide in one after another; Esc, the scrim or a link closes it; focus moves in and back.</li>
+  <li><b>Section tones.</b> As sections cross the middle of the screen the page background eases between white and beige (<code>--tone</code> on <code>body</code>).</li>
+  <li><b>Progress line.</b> A 2 px wine line at the top tracks reading progress.</li>
+  <li><b>Reduced motion.</b> All of the above falls back to static states under <code>prefers-reduced-motion</code>.</li>
+</ul>
+
+<h2>5 &middot; Domain and DNS configuration</h2>
+<p>DNS is hosted at Namecheap (<code>dns1.registrar-servers.com</code>, <code>dns2.registrar-servers.com</code>), Advanced DNS tab. GitHub Pages serves the site from the repository through the Actions workflow <code>.github/workflows/jekyll-gh-pages.yml</code> on pushes to <code>main</code>. Records below were verified on 17 October 2026.</p>
+
+<h3>5.1 casasiego.com</h3>
+<table class="dns">
+  <tr><th>Host</th><th>Type</th><th>Value</th><th>Status</th></tr>
+  <tr><td><code>@</code></td><td>A</td><td><code>185.199.108.153</code> &middot; <code>185.199.109.153</code> &middot; <code>185.199.110.153</code> &middot; <code>185.199.111.153</code></td><td class="ok">In place</td></tr>
+  <tr><td><code>www</code></td><td>CNAME</td><td><code>eliav-mejia.github.io.</code></td><td class="ok">In place; 301 to casasiego.com</td></tr>
+  <tr><td><code>@</code></td><td>AAAA</td><td><code>2606:50c0:8000::153</code> &middot; <code>2606:50c0:8001::153</code> &middot; <code>2606:50c0:8002::153</code> &middot; <code>2606:50c0:8003::153</code></td><td class="todo">To add (IPv6)</td></tr>
+  <tr><td><code>_github-pages-challenge-eliav-mejia</code></td><td>TXT</td><td>Code from GitHub &rarr; Settings (account) &rarr; Pages &rarr; Add a verified domain</td><td class="todo">To add</td></tr>
+  <tr><td><code>@</code></td><td>MX</td><td><code>eforward1&ndash;5.registrar-servers.com</code> (Namecheap e-mail forwarding)</td><td class="ok">In place</td></tr>
+  <tr><td><code>@</code></td><td>TXT</td><td><code>v=spf1 include:spf.efwd.registrar-servers.com ~all</code></td><td class="ok">In place</td></tr>
+  <tr><td><code>_dmarc</code></td><td>TXT</td><td><code>v=DMARC1; p=none; rua=mailto:info@casasiego.com</code></td><td class="todo">Recommended</td></tr>
+</table>
+<div class="note"><b>E-mail.</b> The MX records forward mail; they do not create a mailbox. Create the alias in Namecheap &rarr; Domain List &rarr; casasiego.com &rarr; Redirect Email: <code>info</code> &rarr; the inbox that should receive it. Until then every contact link on the site bounces. If a real mailbox is chosen later (Google Workspace, Zoho, Namecheap Private Email), replace the MX and SPF records with that provider's.</div>
+
+<h3>5.2 GitHub Pages settings</h3>
+<table>
+  <tr><th>Setting</th><th>Value</th><th>Status</th></tr>
+  <tr><td>Repository &rarr; Settings &rarr; Pages &rarr; Source</td><td>GitHub Actions</td><td class="ok">In place</td></tr>
+  <tr><td>Custom domain</td><td><code>casasiego.com</code></td><td class="ok">In place (eliav-mejia.github.io/casasiego.com redirects to it; certificate valid)</td></tr>
+  <tr><td>Enforce HTTPS</td><td>On</td><td class="todo">To turn on (http:// is not redirected yet)</td></tr>
+  <tr><td>Repository website field</td><td><code>https://casasiego.com</code></td><td class="todo">Shows http:// today</td></tr>
+  <tr><td><code>CNAME</code> file</td><td><code>casasiego.com</code></td><td class="ok">On branch casa-siego</td></tr>
+</table>
+<p class="meta">With an Actions deployment the custom domain lives in the Pages settings; the <code>CNAME</code> file is kept so the domain is recorded in the repository and survives a switch back to branch deployment.</p>
+
+<h3>5.3 synode.space</h3>
+<p><span class="urgent">Urgent</span> synode.space still points at GitHub Pages (same four A records, <code>www</code> CNAME), but since the repository's custom domain became casasiego.com no repository claims it: <b>synode.space and www.synode.space answer GitHub's &laquo;Site not found&raquo; 404</b>. Old links, bookmarks and search results are broken until a redirect is in place. GitHub Pages cannot serve two domains from one repository, so the redirect must come from somewhere else:</p>
+<table>
+  <tr><th>Option</th><th>How</th><th>Trade-off</th></tr>
+  <tr><td><b>A &middot; Cloudflare</b> (recommended)</td><td>Move synode.space's nameservers to Cloudflare (free); keep a proxied record; add a Redirect Rule: <code>https://casasiego.com${http.request.uri.path}</code>, status 301, preserve query string.</td><td>True 301 on http and https, per path. Nameserver change takes up to 24 h.</td></tr>
+  <tr><td><b>B &middot; Namecheap URL Redirect</b></td><td>Advanced DNS: delete the A and www CNAME records; add URL Redirect Record <code>@</code> and <code>www</code> &rarr; <code>https://casasiego.com</code>, Permanent (301).</td><td>Simplest. Check that https://synode.space redirects without a certificate warning, and whether paths are preserved.</td></tr>
+  <tr><td><b>C &middot; Redirect repository</b></td><td>New repository (e.g. <code>synode-redirect</code>) with GitHub Pages, custom domain <code>synode.space</code>, and an <code>index.html</code> + <code>404.html</code> that send every path to the same path on casasiego.com.</td><td>Stays on GitHub with HTTPS, but the redirect is a page redirect, not an HTTP 301.</td></tr>
+</table>
+<p>Keep synode.space registered and redirecting for at least a year so search engines and old links follow the move.</p>
+
+<h3>5.4 Search Console</h3>
+<ol>
+  <li>Add and verify <code>casasiego.com</code> (Domain property, DNS TXT record).</li>
+  <li>Submit <code>https://casasiego.com/sitemap.xml</code>.</li>
+  <li>Once synode.space returns 301 (&sect;5.3), open the synode.space property &rarr; Settings &rarr; <b>Change of address</b> &rarr; casasiego.com.</li>
+</ol>
+
+<h2>6 &middot; Go-live checklist</h2>
+<table>
+  <tr><th>Step</th><th>Status</th></tr>
+  <tr><td>DNS for casasiego.com (A, www CNAME)</td><td class="ok">Done</td></tr>
+  <tr><td>GitHub repository renamed; custom domain casasiego.com in Pages; certificate issued</td><td class="ok">Done</td></tr>
+  <tr><td>Merge <code>casa-siego</code> into <code>main</code> (casasiego.com still serves the Synodé-named site)</td><td class="todo">Pending</td></tr>
+  <tr><td>Redirect synode.space &rarr; casasiego.com (&sect;5.3)</td><td class="todo">Pending &middot; urgent</td></tr>
+  <tr><td>Enforce HTTPS; AAAA records; domain verification TXT</td><td class="todo">Pending</td></tr>
+  <tr><td>Create <code>info@casasiego.com</code> forwarding</td><td class="todo">Pending</td></tr>
+  <tr><td>Add Palacio font files to <code>fonts/</code> (check web-embedding licence)</td><td class="todo">Pending</td></tr>
+  <tr><td>Search Console: verify, sitemap, change of address</td><td class="todo">Pending</td></tr>
+  <tr><td>Rename local folder to <code>Meyer/sites/casasiego.com</code></td><td class="todo">Pending (close VS Code first)</td></tr>
+</table>
+
+<h2>7 &middot; Production notes</h2>
+<h3>Cache versions</h3>
+<p>site.css 1.1.0 &middot; layout.css 1.1.0 &middot; brand.css 1.1.0 &middot; parallax.js 1.1.0 &middot; casa.js 1.1.0 &middot; a-medida.js 1.1.1 · region.js 1.1.1 · acceso.js 1.0.3 · acceso-config.js 1.0.2 · tienda.jsx 1.1.2 (renamed identifiers); bump the <code>?v=</code> query on every page that loads a file you change.</p>
+<h3>Rebuilding the PDFs</h3>
+<pre>sh docs/src/build-pdf.sh 1.1.0                 # this document → docs/casasiego-v1.1.0.pdf
+sh docs/src/build-pdf.sh reino-fiel-sesiones   # Reino Fiel guide (public download)
+chrome --headless=new --no-pdf-header-footer --print-to-pdf=docs/casa-siego-prelanzamiento.pdf \
+  docs/src/casa-siego-prelanzamiento.html      # prelaunch note</pre>
+<h3>Left unchanged on purpose</h3>
+<ul>
+  <li><code>docs/synode-v1.0.x</code>: historical documentation under the old name.</li>
+  <li>Greek mottos of the brands (Δίκαιος, Ἐλεύθερος…).</li>
+  <li>Copyright metadata embedded in the photographs still reads &laquo;Synode&raquo;; re-export or rewrite EXIF when the photographs are next updated.</li>
+</ul>
+
+<h3>Changelog</h3>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Summary</th></tr>
+  <tr><td>1.1.0</td><td>17 Oct 2026</td><td>Rebranding to Casa Siego®; casasiego.com; new identity, header and mobile sidebar; DNS documentation.</td></tr>
+  <tr><td>1.0.3</td><td>16 Oct 2026</td><td>Brand pages, Justo shop and suit builder, sign-in gate, region switch, SEO structure (Synodé).</td></tr>
+  <tr><td>1.0.2</td><td>6 Oct 2026</td><td>Image catalogue, upload guide, image protection (Synodé).</td></tr>
+  <tr><td>1.0.1</td><td>6 Oct 2026</td><td>First design and CSS documentation (Synodé).</td></tr>
+</table>
+
+</body>
+</html>

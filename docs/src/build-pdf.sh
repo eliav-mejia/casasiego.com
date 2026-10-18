@@ -1,12 +1,14 @@
 #!/bin/sh
-# Builds docs/synode-vX.pdf from docs/src/synode-vX.html (or a brand PDF, see below) with headless Chrome or Edge.
-# Run from the project root:  sh docs/src/build-pdf.sh 1.0.2
+# Builds docs/casasiego-vX.pdf from docs/src/casasiego-vX.html (synode-vX for versions before 1.1.0, or a brand PDF, see below)
+# with headless Chrome or Edge.
+# Run from the project root:  sh docs/src/build-pdf.sh 1.1.0
 # Brand downloads:            sh docs/src/build-pdf.sh reino-fiel-sesiones
 # Fiel price study:           python3 docs/src/ajustes-fiel.py && sh docs/src/build-pdf.sh ajustes-fiel
 #   -> brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf (public download, unlike docs/)
+# Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal, in .gitignore)
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
-VERSION="${1:-1.0.2}"
+VERSION="${1:-1.1.0}"
 case "$VERSION" in
   reino-fiel-sesiones)
     SRC="$HERE/reino-fiel-sesiones.html"
@@ -14,9 +16,13 @@ case "$VERSION" in
   ajustes-fiel)
     SRC="$HERE/ajustes-fiel-2026-10.html"
     OUT="$HERE/../ajustes-fiel-2026-10.pdf" ;;
+  seo-justo)
+    SRC="$HERE/seo-justo-trajes.html"
+    OUT="$HERE/../seo-justo-trajes-2026-10.pdf" ;;
   *)
-    SRC="$HERE/synode-v$VERSION.html"
-    OUT="$HERE/../synode-v$VERSION.pdf" ;;
+    NAME="casasiego"; [ -f "$HERE/casasiego-v$VERSION.html" ] || NAME="synode"   # renamed at 1.1.0
+    SRC="$HERE/$NAME-v$VERSION.html"
+    OUT="$HERE/../$NAME-v$VERSION.pdf" ;;
 esac
 
 for b in "$CHROME" \

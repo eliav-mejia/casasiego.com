@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Casa Siego® — Prelanzamiento</title>
+<!-- Fuente de docs/casa-siego-prelanzamiento.pdf (público, sin enlaces desde el sitio).
+     Construir desde la raíz del proyecto con Chrome o Edge:
+       chrome --headless=new --no-pdf-header-footer --virtual-time-budget=10000 \
+         --print-to-pdf=docs/casa-siego-prelanzamiento.pdf docs/src/casa-siego-prelanzamiento.html
+     CASA va en Palacio (../../fonts/, con Cinzel de respaldo) y Siego en Ledger. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Cinzel:wght@400&family=EB+Garamond:ital,wght@0,400;1,400&family=Spectral:ital@1&display=swap">
+<style>
+  @font-face { font-family: "Palacio"; src: url("../../fonts/Palacio.woff2") format("woff2"), url("../../fonts/Palacio.woff") format("woff"), url("../../fonts/Palacio.otf") format("opentype"), url("../../fonts/Palacio.ttf") format("truetype"); }
+  @page { size: A4; margin: 0; }
+  :root { --wine: #6B1E2C; --wine-deep: #4A1621; --ink: #3B1A1F; --beige: #EEE4D3; --beige-soft: #F7F2EA; --brass: #B0905E; --taupe: #6F5E57;
+          --casa: "Palacio", "Cinzel", Georgia, serif; --siego: "Ledger", Georgia, serif; --body: "EB Garamond", Georgia, serif; --meta: "Spectral", Georgia, serif; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); font: 11pt/1.6 var(--body); }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; break-after: page; }
+  .page:last-child { break-after: auto; }
+
+  .wordmark { display: inline-flex; align-items: baseline; gap: .3em; line-height: 1; white-space: nowrap; }
+  .wordmark .casa { font-family: var(--casa); letter-spacing: .2em; margin-right: -.08em; }
+  .wordmark .siego { font-family: var(--siego); }
+  .wordmark sup { align-self: flex-start; margin-left: -.18em; font: .32em var(--body); }
+
+  /* Portada: blanca, con un filete vino y la marca al centro */
+  .cover { background: #fff; display: grid; place-items: center; text-align: center; }
+  .cover .frame { position: absolute; inset: 14mm; border: .6pt solid color-mix(in srgb, var(--brass) 70%, transparent); }
+  .cover .band { position: absolute; left: 0; right: 0; bottom: 0; height: 9mm; background: var(--wine-deep); }
+  .cover .wordmark { font-size: 46pt; color: var(--ink); }
+  .cover .rule { width: 16mm; margin: 9mm auto; border-top: .6pt solid var(--wine); }
+  .eyebrow { font: 7.5pt var(--meta); font-style: normal; font-family: "Cinzel", Georgia, serif; letter-spacing: .32em; text-transform: uppercase; color: var(--wine); margin: 0; }
+  .cover .lede { margin: 0; font: italic 13pt var(--meta); color: var(--taupe); }
+  .cover .date { position: absolute; bottom: 22mm; left: 0; right: 0; text-align: center; }
+
+  /* Nota */
+  .note { background: var(--beige-soft); padding: 26mm 26mm 22mm; }
+  .note .head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 5mm; border-bottom: .6pt solid color-mix(in srgb, var(--brass) 60%, transparent); }
+  .note .head .wordmark { font-size: 15pt; }
+  h1 { font: 400 24pt/1.2 var(--siego); margin: 16mm 0 6mm; }
+  p { margin: 0 0 4mm; max-width: 135mm; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin: 10mm 0 0; }
+  .card { background: #fff; padding: 7mm 8mm; border-top: 2pt solid var(--wine); }
+  .card h2 { font: 7.5pt "Cinzel", Georgia, serif; letter-spacing: .28em; text-transform: uppercase; color: var(--wine); margin: 0 0 4mm; }
+  .card dl { margin: 0; display: grid; grid-template-columns: 24mm 1fr; gap: 2.4mm 4mm; font-size: 10pt; }
+  .card dt { font: italic 9pt var(--meta); color: var(--taupe); }
+  .card dd { margin: 0; }
+  .card ul { margin: 0; padding: 0; list-style: none; font-size: 10pt; }
+  .card li { padding: 1.6mm 0; border-bottom: .5pt solid var(--beige); }
+  .card li:last-child { border-bottom: 0; }
+  .card li span { font: italic 9pt var(--meta); color: var(--taupe); }
+  .sign { margin-top: 14mm; font: italic 11pt var(--meta); color: var(--taupe); }
+  .legal { position: absolute; left: 26mm; right: 26mm; bottom: 16mm; padding-top: 4mm; border-top: .6pt solid color-mix(in srgb, var(--brass) 60%, transparent);
+           font: italic 8pt/1.5 var(--meta); color: var(--taupe); display: flex; justify-content: space-between; gap: 8mm; }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="frame"></div>
+  <div>
+    <p class="eyebrow">Prelanzamiento</p>
+    <div class="rule"></div>
+    <p class="wordmark"><span class="casa">CASA</span> <span class="siego">Siego</span><sup>&reg;</sup></p>
+    <div class="rule"></div>
+    <p class="lede">Una casa con nuevo nombre.</p>
+  </div>
+  <p class="eyebrow date">Ciudad de México &middot; Otoño 2026</p>
+  <div class="band"></div>
+</section>
+
+<section class="page note">
+  <div class="head">
+    <p class="wordmark"><span class="casa">CASA</span> <span class="siego">Siego</span><sup>&reg;</sup></p>
+    <p class="eyebrow">casasiego.com</p>
+  </div>
+
+  <h1>Synodé ahora es Casa Siego<sup style="font-size:.4em;vertical-align:super;line-height:0">&reg;</sup></h1>
+  <p>Cambiamos de nombre, no de casa. El mismo lugar, el mismo equipo y los mismos servicios: el estudio, la sastrería y el coworking siguen abiertos bajo un mismo techo en Roma Norte.</p>
+  <p>Tus reservas, pedidos y membresías continúan sin cambios. No necesitas hacer nada.</p>
+
+  <div class="cols">
+    <div class="card">
+      <h2>Lo que cambia</h2>
+      <dl>
+        <dt>Nombre</dt><dd>Casa Siego&reg;</dd>
+        <dt>Sitio</dt><dd>casasiego.com</dd>
+        <dt>Correo</dt><dd>info@casasiego.com</dd>
+        <dt>Imagen</dt><dd>Blanco, beige antiguo y vino</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h2>Lo que se queda</h2>
+      <ul>
+        <li>Fiel <span>&middot; estudio fotográfico</span></li>
+        <li>Justo <span>&middot; sastrería a medida</span></li>
+        <li>Libre <span>&middot; coworking y café</span></li>
+        <li>Membresía <span>&middot; ahora Club Casa Siego</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="sign">Gracias por acompañarnos. Nos vemos en casa.</p>
+
+  <div class="legal">
+    <span>&copy; 2026 Casa Siego&reg;. Todos los derechos reservados. Casa Siego&reg; es una marca registrada.</span>
+    <span>info@casasiego.com</span>
+  </div>
+</section>
+
+</body>
+</html>

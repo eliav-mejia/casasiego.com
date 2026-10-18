@@ -1,4 +1,4 @@
-# Synode v1.0.2 — https://synode.space/robots.txt
+# Casa Siego v1.0.2 — https://casasiego.com/robots.txt
 # Search engines may index the page. AI-training and dataset crawlers may not.
 # robots.txt is a request, not a lock: well-behaved crawlers obey it; scrapers may not.
 
@@ -27,4 +27,4 @@ User-agent: *
 Disallow: /docs/
 Allow: /
 
-Sitemap: https://synode.space/sitemap.xml
+Sitemap: https://casasiego.com/sitemap.xml

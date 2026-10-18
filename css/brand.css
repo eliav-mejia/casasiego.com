@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Synode — brand.css  (v1.0.4)
+   Casa Siego — brand.css  (v1.1.0)
    Components for brand pages (brands/<brand>/index.html): return link,
    session cards with prices, extras, locations and the PDF download band.
    Loaded after site.css and layout.css; uses their tokens only.
    ========================================================================== */
 
-/* 1. Return link to the Synodé volume -------------------------------------- */
+/* 1. Return link to the Casa Siego volume -------------------------------------- */
 .brand-return {
   position: absolute;
   top: clamp(1rem, 3vh, 2rem);
@@ -114,7 +114,7 @@
 
 /* 4. Download band ---------------------------------------------------------- */
 .download {
-  background: var(--aegean-ink);
+  background: var(--wine-deep);
   color: var(--parchment-marble);
   padding: var(--space-6) 10% var(--space-6) 5%;
 }

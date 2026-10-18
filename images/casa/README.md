@@ -1,4 +1,4 @@
-# Catálogo base · Synodé (portada)
+# Catálogo base · Casa Siego (portada)
 
 Imágenes de `index.html`. Estado a 2026-10-10: **foto** = fotografía definitiva, **marcador** = imagen provisional generada.
 

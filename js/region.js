@@ -1,4 +1,4 @@
-/* Synode — region.js (v1.1.0)
+/* Casa Siego — region.js (v1.1.0)
    Small flag in the bottom-left corner: México or España.
    España swaps every "Ciudad de México" / "CDMX" for "Madrid" and shows the
    elements marked data-region="es" instead of data-region="mx".
@@ -6,8 +6,8 @@
    Prices: España shows euros at 180 % of the peso price, converted at a fixed
    20 MXN = 1 EUR and rounded to whole euros (see price()). Static pages opt in
    with data-prices on the section that holds "$270 MXN"-style prices; the
-   Justo shop calls window.SynodeRegion.price() / .format() itself and listens
-   for the "synode:region" event.
+   Justo shop calls window.CasaSiegoRegion.price() / .format() itself and listens
+   for the "casasiego:region" event.
 
    Detection, once per browser and only when the visitor has not chosen:
    1. The visitor's own choice (click on the flag) always wins.
@@ -18,7 +18,7 @@
 (function () {
   'use strict';
 
-  var KEY = 'synode-region';            // 'mx' | 'es', chosen or detected
+  var KEY = 'casasiego-region';            // 'mx' | 'es', chosen or detected
   var GEO = 'https://get.geojs.io/v1/ip/country';
 
   var FLAGS = {
@@ -152,10 +152,10 @@
     }
     blocks();
     if (button) paint();
-    window.dispatchEvent(new CustomEvent('synode:region', { detail: { region: region } }));
+    window.dispatchEvent(new CustomEvent('casasiego:region', { detail: { region: region } }));
   }
 
-  window.SynodeRegion = {
+  window.CasaSiegoRegion = {
     get region() { return region; },
     get currency() { return region === 'es' ? 'EUR' : 'MXN'; },
     price: function (mxn) { return price(mxn); },

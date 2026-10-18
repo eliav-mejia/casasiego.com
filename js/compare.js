@@ -1,4 +1,4 @@
-/* Synode — compare.js (v1.0.5)
+/* Casa Siego — compare.js (v1.0.5)
    Before/after plates: the range input sets --pos on its frame.
    Without JS the frame rests at 50%, so both halves stay visible. */
 (function () {

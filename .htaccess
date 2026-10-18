@@ -1,10 +1,10 @@
-# Synode v1.0.2 — Apache rules (ignored by other servers; see docs §5 for nginx / Cloudflare)
+# Casa Siego v1.0.2 — Apache rules (ignored by other servers; see docs §5 for nginx / Cloudflare)
 
-# 1. Hotlink protection: images load only on synode.space (and blank referrers, e.g. direct visits)
+# 1. Hotlink protection: images load only on casasiego.com (and blank referrers, e.g. direct visits)
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{HTTP_REFERER} !^$
-  RewriteCond %{HTTP_REFERER} !^https?://(www\.)?synode\.space/ [NC]
+  RewriteCond %{HTTP_REFERER} !^https?://(www\.)?casasiego\.com/ [NC]
   RewriteRule \.(jpe?g|png|webp|avif)$ - [F,NC,L]
 </IfModule>
 
@@ -13,7 +13,7 @@
   <FilesMatch "\.(jpe?g|png|webp|avif)$">
     Header set X-Robots-Tag "noai, noimageai"
     Header set tdm-reservation "1"
-    Header set tdm-policy "https://synode.space/terms.html"
+    Header set tdm-policy "https://casasiego.com/terms.html"
   </FilesMatch>
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
@@ -27,6 +27,6 @@
 # 4. No directory listings (stops browsing /images/plates/ as a file index)
 Options -Indexes
 
-# 5. Missing pages and folders without index → Synodé 404 (403 from -Indexes and docs/ too, so nothing hints it exists)
+# 5. Missing pages and folders without index → Casa Siego 404 (403 from -Indexes and docs/ too, so nothing hints it exists)
 ErrorDocument 404 /404.html
 ErrorDocument 403 /404.html
