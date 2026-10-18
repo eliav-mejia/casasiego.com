@@ -1,6 +1,6 @@
 # casasiego.com
 
-Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel, Justo y Libre. Sitio estático en GitHub Pages, sin paso de build.
+Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato), Justo (sastrería) y Reino Fiel (mascotas). Sitio estático en GitHub Pages, sin paso de build.
 
 - Repositorio: <https://github.com/eliav-mejia/casasiego.com> (antes `eliav-mejia/synode.space`; GitHub redirige el nombre viejo)
 - Dominio: <https://casasiego.com> (`CNAME`), `www` redirige al dominio raíz · correo público: `info@casasiego.com`
@@ -9,7 +9,7 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel, Justo y Libre. Sit
 
 ```
 casasiego.com/
-├── index.html                    portada Casa Siego (venta cruzada): Cap. I coworking (Coffee Space), Cap. II fotografía (Reino Fiel), Cap. III trajes (Toriku Films)
+├── index.html                    portada Casa Siego (venta cruzada): Cap. I retrato (Estudio Fiel), Cap. II trajes (Justo), Cap. III mascotas (Reino Fiel)
 ├── visitante.html                copia de la portada sin pop-up, destino de «Omitir» (v1.0.0 «Unrecognized visitor»)
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
@@ -35,7 +35,7 @@ casasiego.com/
 │   │   ├── js/tienda.jsx         capa db, bolsa (localStorage), priceBag, componentes · js/tailwind.config.js
 │   │   ├── css/tienda.css        identidad Casa Siego para Tailwind
 │   │   └── supabase/             esquema Etapa 2 (no se ejecuta aún)
-│   ├── libre/index.html          marca nº 3 · Libre by Casa Siego, coworking y café
+│   ├── libre/index.html          OCULTA desde v1.1.1: coworking y café; sin enlaces ni menú, fuera del sitemap, noindex
 │   └── reino_fiel/               marca nº 1 · fotografía de mascotas (español, precios en MXN)
 │       ├── index.html
 │       └── descargas/reino-fiel-guia-de-sesiones.pdf

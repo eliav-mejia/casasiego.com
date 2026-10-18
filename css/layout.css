@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — layout.css  (v1.1.0)
+   Casa Siego — layout.css  (v1.1.1)
    Page structure, sticky sections and parallax layers.
    Depends on tokens declared in site.css.
    ========================================================================== */
@@ -543,6 +543,16 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   color: var(--amphora-rust);
   text-decoration: underline dashed 1px;
   text-underline-offset: 0.2em;
+}
+
+/* 11a. Two brands: two equal cards at every width (Libre is hidden since v1.1.1) */
+.houses__grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 64rem; }
+.houses__grid--two .house:last-child { grid-column: auto; flex-direction: column; min-height: 30rem; }
+.houses__grid--two .house:last-child .house__image { position: static; flex: none; aspect-ratio: 16 / 9; }
+.houses__grid--two .house:last-child .house__image img { position: static; }
+@media (max-width: 960px) {
+  .houses__grid--two { grid-template-columns: 1fr; max-width: 40rem; }
+  .houses__grid--two .house:last-child { min-height: 24rem; }
 }
 
 /* 11b. Pages that open on a light section sit below the fixed header (js/casa.js) */
