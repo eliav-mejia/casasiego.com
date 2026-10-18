@@ -8,11 +8,11 @@
    3. A valid Supabase session skips the gate on later visits.
    4. «Omitir», in light grey under the login, goes to visitante.html (copy of the home page without the gate,
       version 1.0.0 «Unrecognized visitor»).
-   Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso-synode.md. */
+   Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso-casasiego.md. */
 (function () {
   'use strict';
 
-  var CFG = window.SYNODE_ACCESO || {};
+  var CFG = window.CASASIEGO_ACCESO || {};
   var MSG_OK = 'Encantados de volvernos a encontrar';
   var MSG_ERROR = 'Esperamos tener el honor de conocerte pronto';
   var root = document.documentElement;

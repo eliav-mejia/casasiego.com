@@ -22,7 +22,7 @@ const BRAND = {
 
 // Prices are stored in MXN. With the España flag (js/region.js) the catalogue is converted to EUR on load,
 // so every amount below is already in the visitor's currency; formatPrice only formats it.
-const region = () => window.SynodeRegion || null;
+const region = () => window.CasaSiegoRegion || null;
 const currency = () => region()?.currency || 'MXN';
 const formatPrice = (n) => region() ? region().format(n)
     : new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n);
@@ -109,13 +109,13 @@ const db = {
     },
 };
 
-// Re-renders when the flag changes currency (js/region.js fires "synode:region").
+// Re-renders when the flag changes currency (js/region.js fires "casasiego:region").
 const useCurrency = () => {
     const [code, setCode] = useState(currency);
     useEffect(() => {
         const sync = () => setCode(currency());
-        window.addEventListener('synode:region', sync);
-        return () => window.removeEventListener('synode:region', sync);
+        window.addEventListener('casasiego:region', sync);
+        return () => window.removeEventListener('casasiego:region', sync);
     }, []);
     return code;
 };

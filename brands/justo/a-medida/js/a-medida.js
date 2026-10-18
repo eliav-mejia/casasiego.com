@@ -1170,7 +1170,7 @@
 
   // Miembro = sesión válida de Supabase (la misma de la portada; js/acceso-config.js). Sin configurar: invitado.
   function checkMember() {
-    var cfg = window.SYNODE_ACCESO || {};
+    var cfg = window.CASASIEGO_ACCESO || {};
     if (!cfg.supabaseUrl || !cfg.publishableKey) return;
     var s = document.createElement('script');
     s.src = cfg.supabaseJs; s.async = true; s.crossOrigin = 'anonymous';

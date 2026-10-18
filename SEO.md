@@ -12,12 +12,16 @@ Este documento resume cómo se aplica en casasiego.com. Actualizado 2026-10-17 (
 - Correo público: `info@casasiego.com`.
 - Nota pública discreta del cambio: `docs/casa-siego-prelanzamiento.pdf` (sin enlaces; `/docs/` está bloqueado en robots).
 
-Al publicar:
-1. DNS de casasiego.com hacia GitHub Pages (A/AAAA del apex y `www` CNAME) y **Custom domain** en Settings → Pages
-   (con el despliegue por Actions, el archivo `CNAME` no basta por sí solo).
-2. synode.space: redirección **301** de cada ruta a la misma ruta en casasiego.com (Cloudflare Redirect Rule o el registrador);
-   GitHub Pages no puede servir dos dominios.
-3. Search Console: verificar casasiego.com, enviar el sitemap y usar **Cambio de dirección** desde synode.space.
+Estado al 2026-10-17 (detalle en `docs/casasiego-v1.1.0.pdf` §5):
+1. Hecho: DNS de casasiego.com hacia GitHub Pages (4 registros A, `www` CNAME) y dominio personalizado en Settings → Pages;
+   repositorio renombrado a `eliav-mejia/casasiego.com`. casasiego.com sirve `main` con HTTPS válido.
+2. Pendiente: fusionar la rama `casa-siego` en `main` (hoy casasiego.com todavía muestra el sitio con el nombre Synodé).
+3. Pendiente: **Enforce HTTPS**, registros AAAA y TXT de verificación de dominio de GitHub.
+4. Pendiente y urgente para SEO: synode.space responde **404** desde que el dominio pasó a casasiego.com. Debe redirigir con
+   **301** cada ruta a la misma ruta en casasiego.com (Cloudflare Redirect Rule, o un repositorio mínimo de GitHub Pages con
+   dominio synode.space que redirija); GitHub Pages no puede servir dos dominios desde un repositorio.
+5. Search Console: verificar casasiego.com, enviar el sitemap y usar **Cambio de dirección** desde synode.space
+   (requiere la redirección 301 del punto 4).
 
 ## Estrategia
 
