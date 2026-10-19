@@ -44,11 +44,9 @@ casasiego.com/
 │   ├── casa/                     catálogo base de la portada (README.md)
 │   ├── brands/reino_fiel/        catálogo de la marca nº 1 (README.md)
 │   └── og/share.jpg              tarjeta para compartir la portada
-├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna de la tienda
+├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna (tienda, SEO.md, docs/ synode-v1.0.x y SEO de Justo)
 └── docs/                         documentación (bloqueada en .htaccess y robots.txt)
-    ├── casasiego-v1.1.0.pdf      documentación del cambio de marca, dominio y DNS (versión actual)
-    ├── casa-siego-prelanzamiento.pdf  nota pública y discreta del cambio de nombre (sin enlaces en el sitio)
-    ├── synode-v1.0.x.pdf         versiones anteriores, con el nombre Synodé
+    ├── casasiego-v1.1.0.pdf      documentación del cambio de marca, dominio y DNS (único PDF en docs/)
     └── src/
         ├── build-pdf.sh          sh docs/src/build-pdf.sh 1.1.0 → docs/casasiego-v1.1.0.pdf · reino-fiel-sesiones → guía PDF de la marca
         ├── make-placeholders.py  marcadores para los huecos vacíos de todos los catálogos
@@ -95,4 +93,4 @@ DNS en Namecheap (`dns1/dns2.registrar-servers.com`). Estado verificado el 2026-
 | `synode.space` | — | redirección 301 a `https://casasiego.com` | **por hacer: hoy responde 404** |
 
 GitHub → Settings → Pages: dominio personalizado `casasiego.com` (ya activo) y **Enforce HTTPS** (por activar).
-Pasos completos, opciones de redirección de synode.space y lista de salida: `docs/casasiego-v1.1.0.pdf` §5–6 y `SEO.md`.
+Pasos completos, opciones de redirección de synode.space y lista de salida: `docs/casasiego-v1.1.0.pdf` §5–6 y `_interno/SEO.md`.
