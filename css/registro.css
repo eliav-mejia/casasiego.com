@@ -1,0 +1,372 @@
+/* Casa Siego — registro.css (Variante D)
+   A real-looking antique letter: the House writes by hand (Pinyon Script / Petit Formal Script),
+   whatever the visitor writes is typed on a typewriter (Special Elite). Uses site.css tokens. */
+
+:root {
+  --papel:        #F1E6CC;
+  --papel-sombra: #DCC6A0;
+  --tinta:        #2B1D16;   /* sepia ink of the hand */
+  --tinta-maquina:#1A1513;   /* ribbon ink of the typewriter */
+  --tinta-roja:   #8E2A2A;   /* margin notes */
+  --font-mano:    "Petit Formal Script", "Pinyon Script", cursive;
+  --font-mano-alta: "Pinyon Script", "Petit Formal Script", cursive;
+  --font-maquina: "Special Elite", "Courier Prime", "Courier New", monospace;
+}
+
+/* ---- desk ------------------------------------------------------------- */
+body.escritorio {
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(16px, 4vw, 56px) 16px 72px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(176, 144, 94, .18), transparent 60%),
+    radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, .45), transparent 60%),
+    var(--wine-deep);
+  color: var(--tinta);
+  overflow-x: hidden;
+}
+
+.regreso {
+  display: inline-block;
+  margin: 0 auto 18px;
+  font: 400 .8rem/1 var(--font-display);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  text-decoration: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.regreso:hover, .regreso:focus-visible { color: #fff; }
+
+/* ---- the sheet -------------------------------------------------------- */
+.carta {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(28px, 6vw, 72px) clamp(20px, 7vw, 84px) clamp(32px, 6vw, 64px);
+  background:
+    linear-gradient(180deg, transparent 49.6%, rgba(120, 85, 45, .10) 50%, rgba(255, 250, 235, .25) 50.4%, transparent 51%), /* fold */
+    radial-gradient(ellipse at 22% 8%, rgba(255, 251, 238, .85), transparent 55%),
+    radial-gradient(circle at 88% 92%, rgba(150, 105, 55, .22), transparent 32%),
+    radial-gradient(circle at 6% 78%, rgba(150, 105, 55, .14), transparent 26%),
+    radial-gradient(circle at 74% 18%, rgba(160, 120, 70, .08), transparent 12%),
+    linear-gradient(172deg, var(--papel) 0%, #EAD9B6 100%);
+  box-shadow:
+    inset 0 0 90px rgba(120, 80, 35, .28),
+    inset 0 0 6px rgba(120, 80, 35, .35),
+    0 2px 0 rgba(255, 255, 255, .15),
+    0 40px 70px -30px rgba(0, 0, 0, .75);
+  border-radius: 2px;
+  transform: rotate(-.35deg);
+  isolation: isolate;
+}
+/* paper grain */
+.carta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .18 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* deckled edge */
+.carta::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border: 3px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cfilter id='d'%3E%3CfeTurbulence baseFrequency='.6' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='4'/%3E%3C/filter%3E%3Crect x='2' y='2' width='26' height='26' fill='none' stroke='%23b89a6a' stroke-width='2' filter='url(%23d)'/%3E%3C/svg%3E") 10 round;
+  opacity: .55;
+}
+
+/* ---- letterhead ------------------------------------------------------- */
+.membrete { text-align: center; margin-bottom: 18px; }
+.membrete__marca { margin: 0; font-size: clamp(1.4rem, 1rem + 1.6vw, 2rem); color: var(--wine); }
+.membrete__dir {
+  margin: 6px 0 0;
+  font: 400 .72rem/1.4 var(--font-display);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--taupe);
+}
+.membrete__filete {
+  width: 120px;
+  margin: 14px auto 0;
+  border: 0;
+  height: 5px;
+  background:
+    linear-gradient(var(--brass), var(--brass)) center 0 / 100% 1px no-repeat,
+    linear-gradient(var(--brass), var(--brass)) center 4px / 70% 1px no-repeat;
+}
+
+/* ---- envelope tabs ---------------------------------------------------- */
+.sobres { display: flex; justify-content: center; gap: 8px; margin: 18px 0 26px; flex-wrap: wrap; }
+.sobre {
+  font: 400 .72rem/1 var(--font-display);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--taupe);
+  background: transparent;
+  border: 1px solid rgba(111, 94, 87, .35);
+  padding: 9px 14px;
+  border-radius: 1px;
+  cursor: pointer;
+}
+.sobre[aria-pressed="true"] { color: var(--wine); border-color: var(--wine); background: rgba(107, 30, 44, .06); }
+.sobre:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+
+/* ---- hand ------------------------------------------------------------- */
+.mano {
+  font-family: var(--font-mano);
+  font-size: clamp(1.02rem, .95rem + .35vw, 1.2rem);
+  line-height: 2.25;
+  color: var(--tinta);
+  text-shadow: 0 0 .4px rgba(43, 29, 22, .55);
+}
+.mano-alta { font-family: var(--font-mano-alta); font-weight: 400; color: var(--tinta); }
+.fecha { text-align: right; margin: 0 0 10px; font-size: clamp(1rem, .95rem + .3vw, 1.15rem); }
+.saludo { font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); margin: 0 0 12px; line-height: 1.3; }
+.parrafo { margin: 0 0 10px; text-indent: 2.2em; }
+.parrafo[hidden], [data-solo][hidden] { display: none !important; }
+
+/* ---- typewriter (what the visitor writes) ------------------------------ */
+.t {
+  font-family: var(--font-maquina);
+  font-size: .92em;
+  line-height: 1.4;
+  letter-spacing: .02em;
+  color: var(--tinta-maquina);
+  text-shadow: 0 0 .6px rgba(26, 21, 19, .7), .3px .2px 0 rgba(26, 21, 19, .25);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px dotted rgba(59, 26, 31, .55);
+  border-radius: 0;
+  padding: 0 .25em;
+  margin: 0 .1em;
+  max-width: 100%;
+  min-width: 4ch;
+  text-indent: 0;
+  caret-color: var(--wine);
+  vertical-align: baseline;
+  box-sizing: content-box;
+}
+.t::placeholder { color: rgba(59, 26, 31, .32); font-family: var(--font-maquina); }
+.t:focus { outline: none; border-bottom: 1px solid var(--wine); background: rgba(176, 144, 94, .14); }
+.t[aria-invalid="true"] { border-bottom: 1px solid var(--tinta-roja); }
+select.t {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 1.1em;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236F5E57'/%3E%3C/svg%3E") no-repeat right .2em center / .55em;
+}
+select.t:focus { background-color: rgba(176, 144, 94, .14); }
+.t--codigo { letter-spacing: .4em; width: 7.6em; min-width: 7.6em; }
+/* each keystroke: the type bar strikes the paper */
+.t.golpe { animation: golpe .09s ease-out; }
+@keyframes golpe {
+  0%   { text-shadow: 0 0 1.4px rgba(26, 21, 19, .95), .5px .4px 0 rgba(26, 21, 19, .4); transform: translateY(.6px); }
+  100% { text-shadow: 0 0 .6px rgba(26, 21, 19, .7), .3px .2px 0 rgba(26, 21, 19, .25); transform: none; }
+}
+
+/* ---- social accounts -------------------------------------------------- */
+.sellos-sociales { margin: 22px 0 8px; }
+.posdata-titulo { margin: 0 0 8px; }
+.sociales { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 10px;
+  font: 500 .95rem/1 var(--font-body);
+  color: #1F1F1F;
+  background: #FFFDF8;
+  border: 1px solid rgba(59, 26, 31, .28);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 2px 4px -2px rgba(60, 35, 15, .45);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.social svg { width: 18px; height: 18px; flex: none; }
+.social[data-proveedor="apple"] { background: #000; color: #fff; border-color: #000; }
+.social:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -6px rgba(60, 35, 15, .55); }
+.social:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+.social:disabled { opacity: .55; cursor: wait; transform: none; }
+
+/* ---- consents (columns with legal consequences) ----------------------- */
+.consentimientos { border: 0; padding: 0; margin: 18px 0 0; }
+.consentimientos legend { padding: 0; margin-bottom: 2px; }
+.consentimiento { display: flex; align-items: baseline; gap: 12px; line-height: 1.75; margin: 4px 0; cursor: pointer; }
+.consentimiento input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  margin: 0;
+  border: 1.5px solid var(--tinta);
+  border-radius: 2px 1px 3px 1px;
+  transform: rotate(-2deg) translateY(.15em);
+  background: transparent center / 120% no-repeat;
+  cursor: pointer;
+}
+.consentimiento input:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M3 11c2 1 3.4 2.8 4.6 5C10 10 13.5 5.4 18 2' fill='none' stroke='%232B1D16' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.consentimiento input:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; }
+.consentimiento a { color: var(--wine); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.consentimiento .version { font-family: var(--font-maquina); font-size: .7em; color: var(--taupe); letter-spacing: .04em; }
+.consentimiento .opcional { font-family: var(--font-body); font-style: italic; font-size: .78em; color: var(--taupe); }
+
+/* ---- postscript (OTP) ------------------------------------------------- */
+.posdata { margin: 22px 0 0; padding-top: 6px; }
+.posdata p { margin: 0; }
+.pd { font-family: var(--font-mano-alta); font-size: 1.35em; margin-right: .25em; }
+.enlace-mano {
+  font: inherit;
+  font-size: .85em;
+  color: var(--wine);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.turnstile { margin: 16px 0 0; }
+
+/* ---- margin note (errors and states, in red ink) ---------------------- */
+.nota-margen {
+  min-height: 1.5em;
+  margin: 18px 0 0;
+  font: italic 400 1rem/1.5 var(--font-body);
+  color: var(--tinta-roja);
+}
+.nota-margen.es-tranquila { color: var(--taupe); }
+
+/* ---- signature and wax seal ------------------------------------------- */
+.despedida {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+.firma { flex: 1 1 240px; min-width: 0; }
+.firma p { margin: 0; }
+.firma__trazo {
+  font-family: var(--font-mano-alta);
+  font-size: clamp(1.9rem, 1.4rem + 2vw, 2.6rem);
+  line-height: 1.3;
+  color: #1E2A4A;   /* blue-black fountain-pen ink for the signature */
+  min-height: 1.3em;
+  margin: 4px 0 0 !important;
+  overflow-wrap: anywhere;
+}
+.firma__linea { border: 0; border-top: 1px solid rgba(43, 29, 22, .45); margin: 0; max-width: 300px; }
+
+.lacre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  margin-left: auto;
+}
+.lacre__sello {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  font: 700 1.55rem/1 var(--font-decorative);
+  color: rgba(214, 192, 154, .9);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .45), 0 1px 0 rgba(255, 210, 200, .18);
+  background:
+    radial-gradient(circle at 50% 50%, transparent 52%, rgba(0, 0, 0, .22) 54%, transparent 57%),
+    radial-gradient(circle at 34% 28%, #A8384C 0%, #7A2232 38%, #5A1624 70%, #3A0E17 100%);
+  border-radius: 48% 52% 46% 54% / 53% 47% 53% 47%;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 180, 180, .25),
+    inset 0 -4px 8px rgba(0, 0, 0, .45),
+    0 6px 10px -4px rgba(40, 10, 15, .7);
+  transform: rotate(-8deg);
+  transition: transform .15s ease, filter .15s ease;
+}
+.lacre__texto {
+  font: 400 .7rem/1 var(--font-display);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+.lacre:hover .lacre__sello { filter: brightness(1.08); }
+.lacre:active .lacre__sello { transform: rotate(-8deg) scale(.94); }
+.lacre:focus-visible { outline: 2px solid var(--wine); outline-offset: 6px; border-radius: 50%; }
+.lacre:disabled { cursor: wait; }
+.lacre:disabled .lacre__sello { filter: grayscale(.35) brightness(.9); }
+
+/* ---- the House's reply ------------------------------------------------ */
+.respuesta {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(30, 10, 14, .72);
+  animation: aparecer .5s ease both;
+}
+.respuesta[hidden] { display: none; }
+.respuesta__tarjeta {
+  width: min(440px, 100%);
+  padding: 44px 28px 36px;
+  text-align: center;
+  background: #FFFFFF;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8);
+  animation: llegar .8s cubic-bezier(.2, .7, .2, 1) both;
+}
+.respuesta__texto {
+  margin: 18px 0 20px;
+  font: 400 clamp(1.7rem, 1.3rem + 1.8vw, 2.3rem)/1.35 "Parisienne", var(--font-mano-alta);
+  color: var(--wine-ink);
+}
+.respuesta__tarjeta .rule { margin-inline: auto; }
+.respuesta__firma { margin: 0; color: var(--wine); font-size: 1rem; }
+@keyframes aparecer { from { opacity: 0; } }
+@keyframes llegar { from { opacity: 0; transform: translateY(24px) rotate(1.5deg); } }
+
+.sin-js { color: var(--brass-light); text-align: center; font-family: var(--font-body); }
+
+/* ---- small screens ---------------------------------------------------- */
+@media (max-width: 640px) {
+  .carta { transform: none; }
+  .sociales { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .parrafo { text-indent: 1.2em; }
+  .mano { line-height: 2.1; }
+  .despedida { flex-direction: column; align-items: stretch; }
+  .firma { flex: none; }
+  .lacre { margin: 6px auto 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t.golpe, .respuesta, .respuesta__tarjeta { animation: none; }
+  .social, .lacre__sello { transition: none; }
+}
+
+@media print {
+  body.escritorio { background: none; padding: 0; }
+  .carta { box-shadow: none; transform: none; }
+  .sobres, .sellos-sociales, .lacre, .regreso { display: none; }
+}

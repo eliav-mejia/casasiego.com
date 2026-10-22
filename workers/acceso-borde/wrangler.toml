@@ -1,0 +1,20 @@
+# Casa Siego · Worker acceso-borde (Variante D). Sin secretos aquí:
+#   npx wrangler secret put SB_SECRET      (sb_secret_… propia de este Worker)
+#   npx wrangler secret put HASH_PEPPER    (32+ bytes aleatorios: openssl rand -hex 32)
+name = "casasiego-acceso-borde"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+routes = [{ pattern = "casasiego.com/api/acceso/*", zone_name = "casasiego.com" }]
+
+[vars]
+SUPABASE_URL = ""                 # https://<ref>.supabase.co
+ORIGEN = "https://casasiego.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "casasiego-acceso"
+database_id = ""                  # npx wrangler d1 create casasiego-acceso
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["* * * * *"]

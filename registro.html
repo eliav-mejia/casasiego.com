@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carta de presentación — Casa Siego®</title>
+  <meta name="description" content="Escribe tu carta de presentación a Casa Siego: regístrate o vuelve a entrar con tu correo, Google, Facebook, Apple o Microsoft.">
+  <meta name="robots" content="noindex, nofollow, noai, noimageai">
+  <link rel="canonical" href="https://casasiego.com/registro.html">
+  <meta name="theme-color" content="#4A1621">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Ledger&family=Petit+Formal+Script&family=Pinyon+Script&family=Special+Elite&display=swap">
+
+  <link rel="stylesheet" href="css/site.css?v=1.1.0">
+  <link rel="stylesheet" href="css/registro.css?v=1.0.0">
+  <script src="js/registro-config.js?v=1.0.0" defer></script>
+  <script src="js/registro.js?v=1.0.0" defer></script>
+</head>
+<body class="escritorio">
+
+  <a class="regreso" href="brands/fiel/">&larr; Casa Siego</a>
+
+  <main class="carta" id="carta" aria-labelledby="carta-titulo">
+    <header class="membrete">
+      <p class="membrete__marca wordmark"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
+      <p class="membrete__dir">Roma Norte &middot; Ciudad de México</p>
+      <hr class="membrete__filete">
+    </header>
+
+    <nav class="sobres" aria-label="Tipo de carta">
+      <button type="button" class="sobre" data-modo="registro" aria-pressed="true">Carta de presentación</button>
+      <button type="button" class="sobre" data-modo="acceso" aria-pressed="false">Carta de regreso</button>
+    </nav>
+
+    <p class="fecha mano" id="fecha">Ciudad de México</p>
+    <h1 class="saludo mano-alta" id="carta-titulo">Estimada Casa Siego:</h1>
+
+    <form class="cuerpo" id="formulario" novalidate autocomplete="on">
+
+      <!-- Registro: presentación -->
+      <div class="parrafo mano" data-solo="registro">
+        Me presento: mi nombre es
+        <input class="t" name="nombre" autocomplete="name" maxlength="120" placeholder="nombre y apellido" aria-label="Tu nombre" data-min="16">,
+        y escribo desde
+        <select class="t" name="pais" aria-label="País">
+          <option value="MX">México</option><option value="ES">España</option><option value="US">Estados Unidos</option>
+          <option value="CO">Colombia</option><option value="AR">Argentina</option><option value="CL">Chile</option>
+          <option value="PE">Perú</option><option value="FR">Francia</option><option value="CH">Suiza</option>
+          <option value="">otro lugar</option>
+        </select>;
+        prefiero leerles en
+        <select class="t" name="idioma" aria-label="Idioma">
+          <option value="es">español</option><option value="en">inglés</option>
+        </select>.
+      </div>
+
+      <!-- Acceso: regreso -->
+      <div class="parrafo mano" data-solo="acceso" hidden>
+        Vuelvo a visitarles. Les recuerdo que soy quien firma con el correo que aquí escribo, o con la cuenta que
+        sello más abajo.
+      </div>
+
+      <div class="parrafo mano">
+        Pueden escribirme a
+        <input class="t" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false"
+               maxlength="254" placeholder="correo@ejemplo.com" aria-label="Tu correo" data-min="20">
+        <span data-solo="acceso" hidden>; les ruego enviarme ahí mi código de entrada</span>.
+      </div>
+
+      <!-- Atributos por marca / campaña (jsonb): los pinta registro.js -->
+      <div class="parrafo mano atributos" id="atributos" data-solo="registro"></div>
+
+      <!-- Proveedores sociales -->
+      <section class="sellos-sociales" aria-labelledby="sociales-titulo">
+        <p class="mano posdata-titulo" id="sociales-titulo">O bien, reconózcanme por mi cuenta de</p>
+        <div class="sociales">
+          <button type="button" class="social" data-proveedor="google">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            <span>Google</span>
+          </button>
+          <button type="button" class="social" data-proveedor="facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1877F2" d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07"/></svg>
+            <span>Facebook</span>
+          </button>
+          <button type="button" class="social" data-proveedor="apple">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 1.43c0 1.14-.49 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4 18.46 2.96 15.65 2.96 13c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg>
+            <span>Apple</span>
+          </button>
+          <button type="button" class="social" data-proveedor="azure">
+            <svg viewBox="0 0 21 21" aria-hidden="true"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
+            <span>Microsoft</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Consentimientos (columnas legales): los pinta registro.js desde identidad.avisos -->
+      <fieldset class="consentimientos mano" id="consentimientos" data-solo="registro">
+        <legend class="mano">Y para que conste:</legend>
+      </fieldset>
+
+      <!-- P. D.: código de 6 dígitos enviado por correo -->
+      <div class="posdata mano" id="posdata" hidden>
+        <p><span class="pd">P. D.</span> Les devuelvo el código que acabo de recibir en mi correo:
+          <input class="t t--codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}"
+                 maxlength="6" placeholder="······" aria-label="Código de 6 dígitos" data-min="10">
+        </p>
+        <button type="button" class="enlace-mano" id="reenviar">¿No llegó? Pedir otro código</button>
+      </div>
+
+      <div class="turnstile" id="turnstile" hidden></div>
+
+      <p class="nota-margen" id="nota" role="status" aria-live="polite"></p>
+
+      <footer class="despedida">
+        <div class="firma">
+          <p class="mano">Atentamente,</p>
+          <p class="firma__trazo" id="firma" aria-hidden="true">&nbsp;</p>
+          <hr class="firma__linea">
+        </div>
+        <button class="lacre" type="submit" id="enviar">
+          <span class="lacre__sello" aria-hidden="true">CS</span>
+          <span class="lacre__texto" id="enviar-texto">Sellar y enviar</span>
+        </button>
+      </footer>
+    </form>
+  </main>
+
+  <!-- Respuesta de la Casa -->
+  <div class="respuesta" id="respuesta" hidden>
+    <div class="respuesta__tarjeta" role="alertdialog" aria-modal="true" aria-labelledby="respuesta-texto">
+      <hr class="rule rule--short rule--gold">
+      <p class="respuesta__texto" id="respuesta-texto"></p>
+      <p class="respuesta__firma wordmark"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
+    </div>
+  </div>
+
+  <noscript><p class="sin-js">Para escribir tu carta necesitas activar JavaScript. También puedes escribirnos a info@casasiego.com.</p></noscript>
+</body>
+</html>

@@ -6,6 +6,7 @@
 # Fiel price study:           python3 docs/src/ajustes-fiel.py && sh docs/src/build-pdf.sh ajustes-fiel
 #   -> brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf (public download, unlike docs/)
 # Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal: _interno/docs/)
+# Variant D setup guide:      sh docs/src/build-pdf.sh variante-d  (internal: _interno/)
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 VERSION="${1:-1.1.0}"
@@ -19,6 +20,9 @@ case "$VERSION" in
   seo-justo)
     SRC="$HERE/../../_interno/docs/src/seo-justo-trajes.html"
     OUT="$HERE/../../_interno/docs/seo-justo-trajes-2026-10.pdf" ;;
+  variante-d)
+    SRC="$HERE/../../_interno/docs/src/variante-d-registro.html"
+    OUT="$HERE/../../_interno/variante-d-guia-de-configuracion.pdf" ;;
   *)
     if [ -f "$HERE/casasiego-v$VERSION.html" ]; then
       SRC="$HERE/casasiego-v$VERSION.html"; OUT="$HERE/../casasiego-v$VERSION.pdf"
