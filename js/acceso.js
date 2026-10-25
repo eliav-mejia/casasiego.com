@@ -1,4 +1,4 @@
-/* Casa Siego — acceso.js
+/* Casa Siego — acceso.js (v1.0.4)
    Sign-in gate of the home page (index.html only; brand pages, terms and the shop have no gate).
    1. A login card covers the page (no sign-up: accounts are created by Casa Siego in Supabase).
    2. On submit the card flips to a white card with a script message:
@@ -171,6 +171,11 @@
       if (session) openPage(null); else buildGate();
     });
   }
+
+  // «Iniciar sesión» in the site menu links to index.html#acceso: already on the open home page, show the card again.
+  window.addEventListener('hashchange', function () {
+    if (location.hash === '#acceso' && !document.querySelector('.acceso')) buildGate();
+  });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

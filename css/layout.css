@@ -609,6 +609,25 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 .enfoque__options span { font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--laurel-leaf); }
 .enfoque__options a:hover strong { color: var(--amphora-rust); }
 
+/* 11a-quinquies. Climate mark in the home footer: 1 % of each Stripe payment to carbon removal (Stripe Climate) */
+.clima {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin: var(--space-2) auto var(--space-3);
+  padding: 0.45em 1.1em 0.45em 0.8em;
+  border: 1px solid color-mix(in srgb, var(--brass-light) 55%, transparent);
+  border-radius: 999px;
+  color: var(--brass-light);
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: var(--step-meta);
+  text-decoration: none;
+}
+.clima strong { font-family: var(--font-display); font-style: normal; font-weight: 400; font-size: 0.85em; letter-spacing: 0.18em; text-transform: uppercase; }
+.clima__leaf { width: 1.15em; height: 1.15em; flex: none; }
+.clima:hover { color: var(--beige-soft); border-color: var(--beige-soft); }
+
 /* 11b. Pages that open on a light section sit below the fixed header (js/casa.js) */
 .head-offset main:first-of-type { padding-top: 4.5rem; }
 .house__image { overflow: hidden; }
