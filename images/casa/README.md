@@ -14,16 +14,19 @@ Imágenes de `index.html`. Estado a 2026-10-10: **foto** = fotografía definitiv
 | `traje-01.jpg` | Capítulo III · Trajes, lámina 01 | Vertical 3:4 | 1200 × 1600 (actual 576 × 768) | Sacos en maniquíes y rack | foto | `og/1000028264.jpg` |
 | `traje-02.jpg` | Capítulo III · Trajes, lámina 02 | Horizontal 9:7 | 1260 × 980 (actual 987 × 768) | Forro de saco de tweed, etiqueta Tailor's Blend | foto | `og/1000028262.jpg` |
 | `traje-03.jpg` | Capítulo III · Trajes, lámina «Suma» | Horizontal 3:2 | 1500 × 1000 (actual 900 × 600) | Anaquel de café Tailor's Blend | foto | `og/1000028263.jpg` |
-| `casa-reino-fiel.jpg` | Las casas · tarjeta Fiel | Horizontal 16:9 | 1600 × 900 | — (decorativa) | foto | `_DSC1861.JPG` |
+| `casa-fiel.jpg` | La casa · tarjeta Fiel (`index.html`, `visitante.html`) | Horizontal 16:9 | 1600 × 901 | — (decorativa) | foto | `Casa Siego/Fiel/Galeria/_DSC1929.JPG` |
+| `fiel-retrato-locacion.jpg` | Capítulo II · Fotografía de retrato (`index.html`, `visitante.html`) | Horizontal 3:2 | 1600 × 1063 | Fotógrafo de Fiel de perfil en una avenida | foto | `Pictures/Screenshots/DSC02933.JPG` |
+| `fiel-retrato.jpg` | Fiel ejecutivo y familiar (servicios y sesión Esencial) | Vertical 2:3 | 1000 × 1505 | Fotógrafo de Fiel en un parque | foto | `Casa Siego/Fiel/Galeria/DSC04242.JPG` |
 
 Las fotos de `og/1000028258–65.jpg` miden 1408 × 768: se exportan a su tamaño real, sin ampliar. Para ganar nitidez, sustituye
 por originales más grandes con el mismo nombre en `images/og/` y vuelve a ejecutar `python docs/src/export-portada-servicios.py`
 (ese script guarda los recortes de cada imagen y también genera `images/og/share.jpg`).
 
-Desde la v1.0.6 la portada ya no usa `hero.jpg`, `recorrido-*.jpg`, `interlude.jpg` ni `estudio-*.jpg`; se conservan como archivo.
+Desde la v1.2.0 `casa-reino-fiel.jpg` ya no se usa (Reino Fiel retirado). Desde la v1.0.6 la portada ya no usa `hero.jpg`, `recorrido-*.jpg`, `interlude.jpg` ni `estudio-*.jpg`; se conservan como archivo.
 
 Las imágenes `plate-01.jpg` … `plate-10.jpg` ya no se usan en la portada (v1.0.5); se conservan como archivo.
 Los originales de cámara (`_DSC*`, `Antes_*`, `Después_*`, `Gemini_*`) viven en esta carpeta pero no se publican (ver `.gitignore`).
+La galería completa de Fiel está fuera del repositorio, en `OneDrive/Documents/Casa Siego/Fiel/Galeria/` (antes `Documents/Fiel/`); las rutas `Casa Siego/…` de la columna «Original» son relativas a `OneDrive/Documents/`.
 
 La tarjeta para compartir la portada es `images/og/share.jpg` (1200 × 630), recortada de `og/1000028264.jpg`.
 Versión de caché de esta página: `?v=1.0.6` en `index.html`.
