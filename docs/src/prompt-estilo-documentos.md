@@ -1,6 +1,6 @@
 # Prompt — Estilo CSS de los documentos anexos de Casa Siego
 
-Pega este prompt al pedir una carta, presentación, cotización o plan ejecutivo de Casa Siego (o de sus marcas Fiel, Justo, Libre, Reino Fiel). Resume el sistema de [css/site.css](../../css/site.css), [css/brand.css](../../css/brand.css) y los PDFs de [docs/src/](.) adaptado a impresión.
+Pega este prompt al pedir una carta, presentación, cotización o plan ejecutivo de Casa Siego (o de sus marcas Fiel, Justo, Libre). Resume el sistema de [css/site.css](../../css/site.css), [css/brand.css](../../css/brand.css) y los PDFs de [docs/src/](.) adaptado a impresión.
 
 ---
 

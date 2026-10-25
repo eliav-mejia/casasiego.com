@@ -1,6 +1,6 @@
 # casasiego.com
 
-Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato), Justo (sastrería) y Reino Fiel (mascotas). Sitio estático en GitHub Pages, sin paso de build.
+Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato ejecutivo, familiar y de mascotas) y Justo (sastrería). Sitio estático en GitHub Pages, sin paso de build.
 
 - Repositorio: <https://github.com/eliav-mejia/casasiego.com> (antes `eliav-mejia/synode.space`; GitHub redirige el nombre viejo)
 - Dominio: <https://casasiego.com> (`CNAME`), `www` redirige al dominio raíz · correo público: `info@casasiego.com`
@@ -9,8 +9,8 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato), Justo (s
 
 ```
 casasiego.com/
-├── index.html                    portada Casa Siego (venta cruzada): Cap. I retrato (Estudio Fiel), Cap. II trajes (Justo), Cap. III mascotas (Reino Fiel)
-├── visitante.html                copia de la portada sin pop-up, destino de «Omitir» (v1.0.0 «Unrecognized visitor»)
+├── index.html                    portada Casa Siego (venta cruzada): Cap. I retrato (Estudio Fiel), Cap. II trajes (Justo), Cap. III mascotas (Fiel)
+├── visitante.html                copia de la portada sin pop-up, destino de «Omitir»: Cap. I trajes (Justo), Cap. II retrato (Fiel), Cap. III mascotas (Fiel)
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── CNAME                         casasiego.com (dominio de GitHub Pages)
@@ -24,7 +24,8 @@ casasiego.com/
 ├── js/region.js                  bandera México / España (todas las páginas): por IP cambia CDMX → Madrid, las locaciones de Fiel y los precios a euros (MXN ÷ 20 × 1.8)
 ├── js/acceso.js · js/acceso-config.js · css/acceso.css   pop-up de acceso de la portada (Supabase Auth, sin registro)
 ├── brands/
-│   ├── fiel/index.html           marca nº 1 · Fiel by Casa Siego, estudio fotográfico
+│   ├── fiel/index.html           Fiel by Casa Siego, estudio fotográfico · enfoque mascotas
+│   ├── fiel/ejecutivo/ · fiel/familiar/   Fiel por enfoque: perfil ejecutivo y familiar / pareja (mismos paquetes)
 │   ├── justo/index.html          marca nº 2 · Justo by Casa Siego, sastrería
 │   ├── justo/tienda/             TIENDA EN LÍNEA de Justo (variante C/D: React + Tailwind por CDN, sin build)
 │   │   ├── index.html            catálogo: 3 sacos, tallas CH · M · G · XG, calculadora de talla
@@ -36,26 +37,22 @@ casasiego.com/
 │   │   ├── css/tienda.css        identidad Casa Siego para Tailwind
 │   │   └── supabase/             esquema Etapa 2 (no se ejecuta aún)
 │   ├── libre/index.html          OCULTA desde v1.1.1: coworking y café; sin enlaces ni menú, fuera del sitemap, noindex
-│   └── reino_fiel/               marca nº 1 · fotografía de mascotas (español, precios en MXN)
-│       ├── index.html
-│       └── descargas/reino-fiel-guia-de-sesiones.pdf
+│   └── reino_fiel/index.html     RETIRADA en v1.2.0: redirige a fiel/ (enlaces antiguos)
 ├── images/
 │   ├── README.md                 índice de catálogos
 │   ├── casa/                     catálogo base de la portada (README.md)
-│   ├── brands/reino_fiel/        catálogo de la marca nº 1 (README.md)
 │   └── og/share.jpg              tarjeta para compartir la portada
 ├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna (tienda, SEO.md, docs/ synode-v1.0.x y SEO de Justo)
 └── docs/                         documentación (bloqueada en .htaccess y robots.txt)
     ├── casasiego-v1.1.0.pdf      documentación del cambio de marca, dominio y DNS (único PDF en docs/)
     └── src/
-        ├── build-pdf.sh          sh docs/src/build-pdf.sh 1.1.0 → docs/casasiego-v1.1.0.pdf · reino-fiel-sesiones → guía PDF de la marca
+        ├── build-pdf.sh          sh docs/src/build-pdf.sh 1.1.0 → docs/casasiego-v1.1.0.pdf
         ├── make-placeholders.py  marcadores para los huecos vacíos de todos los catálogos
         ├── export-portada-servicios.py  recortes web de la portada desde images/og/ (+ og/share.jpg)
-        └── reino-fiel-sesiones.html  fuente de la guía PDF
+        └── ayuda.py              genera el Centro de Ayuda (ayuda/)
 ```
 
-Los precios de Reino Fiel están en dos lugares que deben coincidir: la sección «Sesiones» de `brands/reino_fiel/index.html`
-y `docs/src/reino-fiel-sesiones.html`. Tras cambiarlos, vuelve a generar el PDF.
+Los precios de Fiel están en tres páginas que deben coincidir: `brands/fiel/index.html`, `brands/fiel/ejecutivo/` y `brands/fiel/familiar/`.
 
 ## Tienda Justo (`brands/justo/tienda/`)
 

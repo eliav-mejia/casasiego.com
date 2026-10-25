@@ -14,7 +14,7 @@ CATALOGUE = [
     ("images/casa/hero.jpg",                2400, 1600, "Hero"),
     ("images/casa/recorrido-cafe.jpg",      1400, 1000, "Coffee Space · La barra"),
     ("images/casa/recorrido-sastreria.jpg", 1400, 1000, "Toriku Films · La prueba"),
-    ("images/casa/recorrido-estudio.jpg",   1400, 1000, "Reino Fiel · El estudio"),
+    ("images/casa/recorrido-estudio.jpg",   1400, 1000, "Fiel · El estudio"),
     ("images/casa/interlude.jpg",           2400, 1600, "Interlude"),
     ("images/casa/estudio-01.jpg",          1000, 1400, "Estudio 01"),
     ("images/casa/estudio-02.jpg",          1000, 1200, "Estudio 02"),
@@ -34,20 +34,6 @@ CATALOGUE = [
     ("images/casa/traje-03.jpg",            1500, 1000, "Traje 03"),
     ("images/og/share.jpg",         1200,  630, "Social share image"),
 
-    # Brand no. 1 · Reino Fiel (brands/reino_fiel/)
-    ("images/brands/reino_fiel/hero.jpg",            2400, 1600, "Reino Fiel · Portada"),
-    ("images/brands/reino_fiel/retrato-01.jpg",      1000, 1400, "Retrato 01"),
-    ("images/brands/reino_fiel/retrato-02.jpg",      1000, 1200, "Retrato 02"),
-    ("images/brands/reino_fiel/retrato-03.jpg",      1500, 1000, "Retrato 03"),
-    ("images/brands/reino_fiel/interludio.jpg",      2400, 1600, "Reino Fiel · Interludio"),
-    ("images/brands/reino_fiel/sesion-esencial.jpg", 1200,  900, "Sesión Esencial"),
-    ("images/brands/reino_fiel/sesion-clasica.jpg",  1200,  900, "Sesión Clásica"),
-    ("images/brands/reino_fiel/sesion-legado.jpg",   1200,  900, "Sesión Legado"),
-    ("images/brands/reino_fiel/galeria-01.jpg",      1200, 1600, "Galería 01"),
-    ("images/brands/reino_fiel/galeria-02.jpg",      1260,  980, "Galería 02"),
-    ("images/brands/reino_fiel/galeria-03.jpg",      1080, 1560, "Galería 03"),
-    ("images/brands/reino_fiel/galeria-04.jpg",      1500, 1000, "Galería 04"),
-    ("images/brands/reino_fiel/compartir.jpg",       1200,  630, "Reino Fiel · Compartir"),
 ]
 
 INK, PARCH, GOLD, RUST = (12, 24, 33), (247, 244, 238), (194, 155, 56), (163, 72, 40)

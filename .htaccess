@@ -27,6 +27,11 @@
 # 4. No directory listings (stops browsing /images/plates/ as a file index)
 Options -Indexes
 
+# 4b. Reino Fiel retired in v1.2.0: its pages now live in Fiel
+<IfModule mod_rewrite.c>
+  RewriteRule ^brands/reino_fiel(/.*)?$ /brands/fiel/ [R=301,L]
+</IfModule>
+
 # 5. Missing pages and folders without index → Casa Siego 404 (403 from -Indexes and docs/ too, so nothing hints it exists)
 ErrorDocument 404 /404.html
 ErrorDocument 403 /404.html

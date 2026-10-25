@@ -2,9 +2,7 @@
 # Builds docs/casasiego-vX.pdf from docs/src/casasiego-vX.html (synode-vX before 1.1.0, from _interno/docs/, or a brand PDF, see below)
 # with headless Chrome or Edge.
 # Run from the project root:  sh docs/src/build-pdf.sh 1.1.0
-# Brand downloads:            sh docs/src/build-pdf.sh reino-fiel-sesiones
 # Fiel price study:           python3 docs/src/ajustes-fiel.py && sh docs/src/build-pdf.sh ajustes-fiel
-#   -> brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf (public download, unlike docs/)
 # Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal: _interno/docs/)
 # Variant D setup guide:      sh docs/src/build-pdf.sh variante-d  (internal: _interno/)
 # Club offer guide:           sh docs/src/build-pdf.sh club        (internal: _interno/)
@@ -13,9 +11,6 @@ set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 VERSION="${1:-1.1.0}"
 case "$VERSION" in
-  reino-fiel-sesiones)
-    SRC="$HERE/reino-fiel-sesiones.html"
-    OUT="$HERE/../../brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf" ;;
   ajustes-fiel)
     SRC="$HERE/ajustes-fiel-2026-10.html"
     OUT="$HERE/../ajustes-fiel-2026-10.pdf" ;;
