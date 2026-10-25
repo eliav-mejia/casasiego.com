@@ -77,7 +77,8 @@ const loadJson = (name) => jsonCache[name] || (jsonCache[name] =
 const localPrices = (products, rules) => {
     const price = region() ? region().price : (n) => n;
     return {
-        products: products.map(x => ({ ...x, price_mxn: price(x.price_mxn) })),
+        products: products.map(x => ({ ...x, price_mxn: price(x.price_mxn),
+            prices_mxn: x.prices_mxn && Object.fromEntries(Object.entries(x.prices_mxn).map(([k, v]) => [k, price(v)])) })),
         rules: {
             ...rules,
             monogram_mxn: price(rules.monogram_mxn),
@@ -101,7 +102,7 @@ const db = {
             currency: currency(),
             status: 'por-pagar',
             customer, shipping_id: shippingId, payment_id: paymentId,
-            lines: priced.lines.map(l => ({ sku: l.product.sku, name: l.product.name, size: l.size, monogram: l.monogram || null, qty: l.qty, unit_mxn: l.product.price_mxn, made_to_order: l.madeToOrder })),
+            lines: priced.lines.map(l => ({ sku: l.product.sku, name: l.product.name, size: l.size, monogram: l.monogram || null, qty: l.qty, unit_mxn: unitPrice(l.product, l.size), made_to_order: l.madeToOrder })),
             pieces: priced.pieces, subtotal: priced.subtotal, discount: priced.discount, monogram: priced.monogram, shipping: priced.shipping, total: priced.total,
         };
         store.write(ORDERS_KEY, [order, ...store.read(ORDERS_KEY, [])]);
@@ -146,11 +147,20 @@ const stockText = (product, size, rules) => inStock(product, size)
     : `Sobre pedido · confección en ${rules.made_to_order_days} días`;
 
 // --- PRICING ---
+// Each size has its own price (prices_mxn); price_mxn is the lowest one, shown as «desde» before a size is chosen.
+const unitPrice = (product, size) => (product.prices_mxn && product.prices_mxn[size]) || product.price_mxn;
+const priceRange = (product) => {
+    const all = Object.values(product.prices_mxn || {});
+    return all.length && Math.max(...all) > Math.min(...all) ? `Desde ${formatPrice(Math.min(...all))}` : formatPrice(product.price_mxn);
+};
+// Stripe Payment Link of the size (one jacket, no monogram, charged in MXN). null when the size has none.
+const stripeLink = (product, size) => (product.stripe && product.stripe[size]) || null;
+
 // Same rules the server will apply in Etapa 2 (tienda.json). Prices include IVA.
 //   volume: % off the jackets (not the monogram) from N pieces · monogram: per piece · shipping: free above threshold
 const priceBag = (lines, rules, shippingId) => {
     const pieces = lines.reduce((a, l) => a + l.qty, 0);
-    const subtotal = lines.reduce((a, l) => a + l.qty * l.product.price_mxn, 0);
+    const subtotal = lines.reduce((a, l) => a + l.qty * unitPrice(l.product, l.size), 0);
     const tier = [...rules.volume].sort((a, b) => b.min_qty - a.min_qty).find(v => pieces >= v.min_qty) || null;
     const discount = tier ? Math.round(subtotal * tier.pct / 100) : 0;
     const monoPieces = lines.filter(l => l.monogram).reduce((a, l) => a + l.qty, 0);
@@ -272,7 +282,7 @@ const ProductCard = ({ product, catalog }) => (
             <div className="pt-4 pb-8">
                 <div className="flex justify-between items-baseline gap-3">
                     <h3 className="text-xl">{product.name}</h3>
-                    <p className="label whitespace-nowrap">{formatPrice(product.price_mxn)}</p>
+                    <p className="label whitespace-nowrap">{priceRange(product)}</p>
                 </div>
                 <p className="text-ink-700 mt-1">{product.short}</p>
                 <p className="label text-ink-500 mt-3">
@@ -424,7 +434,7 @@ const ProductPage = () => {
                     </nav>
                     <h1 className="text-3xl md:text-5xl">{product.name}</h1>
                     <p className="label text-ink-500 mt-3">Corte {product.cut.toLowerCase()} &middot; {product.sku}</p>
-                    <p className="text-2xl mt-6">{formatPrice(product.price_mxn)} <span className="label text-ink-500">IVA incluido</span></p>
+                    <p className="text-2xl mt-6">{size ? formatPrice(unitPrice(product, size)) : priceRange(product)} <span className="label text-ink-500">IVA incluido{size ? ` · talla ${size}` : ''}</span></p>
                     <p className="text-ink-700 mt-6 max-w-md">{product.description}</p>
 
                     <div className="mt-10">
@@ -456,6 +466,13 @@ const ProductPage = () => {
                         </div>
                         <button className="btn btn-rust flex-1" onClick={add} disabled={!monoOk}>Añadir a la bolsa</button>
                     </div>
+                    {stripeLink(product, size) && !withMono ? (
+                        <a className="btn btn-line w-full max-w-md mt-1" href={stripeLink(product, size)} rel="noopener">Pagar ahora con Stripe · talla {size}</a>
+                    ) : (
+                        <button className="btn btn-line w-full max-w-md mt-1" type="button" disabled={withMono}
+                            onClick={() => setNeedSize(true)}>{withMono ? 'Con monograma: paga desde la bolsa' : 'Pagar ahora con Stripe'}</button>
+                    )}
+                    <p className="note text-ink-500 mt-2 max-w-md text-[15px]">Pago seguro con Stripe: un saco por liga, cobro en pesos mexicanos (MXN). Para monograma, varios sacos o descuentos por volumen, usa la bolsa. Lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
                     <p className="note text-ink-500 mt-3 max-w-md">Incluye ajuste de mangas (±{tolerances.sleeve_cm} cm) y cintura (±{tolerances.waist_cm} cm) en el taller. {rules.volume[0].label}.</p>
 
                     <div className="mt-10 max-w-md border-b border-line">
@@ -529,7 +546,7 @@ const BagDrawer = () => {
                             <p className="text-ink-500">Talla {added.size} · {catalog.size[added.size]?.label}</p>
                             {added.monogram && <p className="text-ink-500">Monograma: {added.monogram}</p>}
                             <p className={`label ${added.madeToOrder ? 'text-rust' : 'text-ink-500'}`}>{stockText(added.product, added.size, catalog.rules)}</p>
-                            <p>{added.qty} × {formatPrice(added.product.price_mxn)}</p>
+                            <p>{added.qty} × {formatPrice(unitPrice(added.product, added.size))}</p>
                         </div>
                     </div>
                 )}
