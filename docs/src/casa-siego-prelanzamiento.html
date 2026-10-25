@@ -54,6 +54,19 @@
   .sign { margin-top: 14mm; font: italic 11pt var(--meta); color: var(--taupe); }
   .legal { position: absolute; left: 26mm; right: 26mm; bottom: 16mm; padding-top: 4mm; border-top: .6pt solid color-mix(in srgb, var(--brass) 60%, transparent);
            font: italic 8pt/1.5 var(--meta); color: var(--taupe); display: flex; justify-content: space-between; gap: 8mm; }
+  /* Introducción a la marca */
+  .intro { background: #fff; padding: 24mm 26mm 22mm; }
+  .intro .frame { position: absolute; inset: 10mm; border: .6pt solid color-mix(in srgb, var(--brass) 55%, transparent); pointer-events: none; }
+  .intro h1 { margin: 12mm 0 7mm; max-width: 150mm; }
+  .intro p { max-width: 152mm; }
+  .intro .lead::first-letter { float: left; font: 400 38pt/.82 var(--siego); color: var(--wine); padding: 1.6mm 2.4mm 0 0; }
+  .intro .pull { margin: 7mm 0; padding-left: 6mm; border-left: 1.4pt solid var(--wine); font: italic 13pt/1.5 var(--meta); color: var(--wine-deep); max-width: 140mm; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; margin: 9mm 0 0; }
+  .trio .card { background: var(--beige-soft); padding: 6mm 6mm 5mm; }
+  .trio .card h2 { margin-bottom: 1.5mm; }
+  .trio .card .sub { font: italic 9.5pt var(--meta); color: var(--taupe); margin: 0 0 3mm; }
+  .trio .card p { font-size: 9.6pt; line-height: 1.5; margin: 0; }
+  .intro .sign { margin-top: 10mm; }
 </style>
 </head>
 <body>
@@ -69,6 +82,40 @@
   </div>
   <p class="eyebrow date">Ciudad de México &middot; Otoño 2026</p>
   <div class="band"></div>
+</section>
+
+<section class="page intro">
+  <div class="frame"></div>
+  <div class="head" style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:5mm;border-bottom:.6pt solid color-mix(in srgb, var(--brass) 60%, transparent)">
+    <p class="wordmark" style="font-size:15pt"><span class="casa">CASA</span> <span class="siego">Siego</span><sup>&reg;</sup></p>
+    <p class="eyebrow">Bienvenido a casa</p>
+  </div>
+
+  <h1>Para el hombre que se viste con intención</h1>
+  <p class="lead">Hay prendas que se quedan con uno toda la vida: el saco que tu abuelo se ponía los domingos, la camisa blanca recién planchada antes de una cita importante, el primer traje que de verdad te quedó. Casa Siego nace de esa memoria, y de la certeza de que lo mejor de tu armario todavía está por llegar.</p>
+  <p>Somos una casa en Roma Norte para quien quiere subir de categoría su guardarropa sin dejar de ser él mismo. Aquí conviven las <strong>piezas únicas</strong> &mdash;cortadas a tu medida, pensadas para que nadie más las tenga&mdash; con los <strong>clásicos que nunca fallan</strong>: el traje azul marino, el saco bien entallado, el pantalón que cae justo donde debe.</p>
+  <p class="pull">No se trata de perseguir la temporada, sino de construir, prenda por prenda, un armario que hable de ti hoy y que siga vigente dentro de diez años.</p>
+  <p>Lo hacemos como se hacían antes las cosas: con calma, midiendo dos veces y escuchándote primero. Y porque los buenos momentos también merecen guardarse, te retratamos a ti, a los tuyos y a tu compañero de cuatro patas con la misma paciencia con la que cortamos una tela.</p>
+
+  <div class="trio">
+    <div class="card">
+      <h2>Justo</h2>
+      <p class="sub">Sastrería a la medida</p>
+      <p>Trajes, sacos y pantalones hechos para tu cuerpo y tu manera de moverte. Piezas únicas y clásicos de siempre, con ajustes y mantenimiento de la casa.</p>
+    </div>
+    <div class="card">
+      <h2>Fiel</h2>
+      <p class="sub">Fotografía de retrato y mascotas</p>
+      <p>Tu retrato de negocios, el de tu familia y la sesión de tu mascota, en un estudio de madera y concreto donde la luz se toma su tiempo.</p>
+    </div>
+    <div class="card">
+      <h2>Club Casa Siego</h2>
+      <p class="sub">La membresía de la casa</p>
+      <p>Una cuota anual con tu traje a medida, tu retrato, la sesión de tu mascota, mantenimiento ilimitado de tus prendas y reserva prioritaria.</p>
+    </div>
+  </div>
+
+  <p class="sign">Pasa, ponte cómodo. Aquí siempre hay lugar para ti.</p>
 </section>
 
 <section class="page note">
@@ -94,9 +141,8 @@
     <div class="card">
       <h2>Lo que se queda</h2>
       <ul>
-        <li>Fiel <span>&middot; fotografía de retrato</span></li>
-        <li>Justo <span>&middot; sastrería a medida</span></li>
-        <li>Reino Fiel <span>&middot; fotografía de mascotas</span></li>
+        <li>Justo <span>&middot; sastrería a la medida</span></li>
+        <li>Fiel <span>&middot; fotografía de retrato y mascotas</span></li>
         <li>Membresía <span>&middot; ahora Club Casa Siego</span></li>
       </ul>
     </div>

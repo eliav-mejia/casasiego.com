@@ -365,7 +365,9 @@
 
   var state = defaults();
   var ui = { view: 'front', hideJacket: false, stage: 'traje', focus: null, suit: null, vb: null, vbTarget: null };
-  var access = { member: false };
+  // La guía interna de sesión (_interno/guia-a-medida/) abre el constructor desde el disco con ?guia=1 para recorrer
+  // todas las opciones. Solo en file://: en el sitio publicado no cambia nada.
+  var access = { member: location.protocol === 'file:' && /[?&]guia=1\b/.test(location.search) };
   var FIELD_SEC = {};
   SCHEMA.forEach(function (sec) {
     sec.fields.concat(sec.after || []).forEach(function (f) { if (f.id) FIELD_SEC[f.id] = sec; });
