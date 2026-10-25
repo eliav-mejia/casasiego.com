@@ -50,7 +50,7 @@
   </div>
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para hacer tu pedido.</p></noscript>
 
-  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.1.2"></script>
+  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.1.4"></script>
   <script type="text/babel">
     // Size guide: body sizes (db/tallas.json), how to measure, finder, and each jacket's garment table (db/productos.json).
     const GuidePage = () => {
@@ -117,7 +117,7 @@
                         </div>
                         <a href={`${SHOP}/${product.slug}/`} className="lg:col-span-4 group block">
                             <Photo product={product} className="aspect-[3/4]" />
-                            <p className="label-strong mt-3">{product.name} &middot; {formatPrice(product.price_mxn)}</p>
+                            <p className="label-strong mt-3">{product.name} &middot; {priceRange(product)}</p>
                             <p className="label link text-rust mt-1 inline-block">Ver el saco &rarr;</p>
                         </a>
                     </div>

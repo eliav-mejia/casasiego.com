@@ -36,7 +36,7 @@
   <div id="root"></div>
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para hacer tu pedido.</p></noscript>
 
-  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.1.2"></script>
+  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.1.4"></script>
   <script type="text/babel">
     // Etapa 1 checkout: the order is saved in this browser (db.createOrder) and sent by email; Justo replies with the card
     // payment link or the SPEI details. Etapa 2: db.createOrder → Edge Function (re-prices) → Stripe / Mercado Pago.
@@ -90,7 +90,7 @@
             const text = [
                 `Hola Justo, quiero confirmar mi pedido ${order.id}:`,
                 '',
-                ...priced.lines.map(l => `• ${l.qty} × ${l.product.name} (${l.product.sku}) talla ${l.size} · ${catalog.size[l.size].label}${l.monogram ? `, monograma «${l.monogram}»` : ''}${l.madeToOrder ? ' [sobre pedido]' : ''} — ${formatPrice(l.qty * l.product.price_mxn)}`),
+                ...priced.lines.map(l => `• ${l.qty} × ${l.product.name} (${l.product.sku}) talla ${l.size} · ${catalog.size[l.size].label}${l.monogram ? `, monograma «${l.monogram}»` : ''}${l.madeToOrder ? ' [sobre pedido]' : ''} — ${formatPrice(l.qty * unitPrice(l.product, l.size))}`),
                 '',
                 priced.discount > 0 && `Descuento (${priced.tier.pct} %): −${formatPrice(priced.discount)}`,
                 priced.monogram > 0 && `Monograma (${priced.monoPieces}): ${formatPrice(priced.monogram)}`,
@@ -123,7 +123,7 @@
                                     <li key={l.key} className="py-5 flex gap-4">
                                         <a href={`${SHOP}/${l.product.slug}/`} className="shrink-0"><Photo product={l.product} className="w-24 md:w-32 aspect-[3/4]" /></a>
                                         <div className="flex-1 min-w-0 space-y-1">
-                                            <p className="flex justify-between gap-3"><span className="font-section font-semibold">{l.product.name}</span><span className="label whitespace-nowrap">{formatPrice(l.qty * l.product.price_mxn)}</span></p>
+                                            <p className="flex justify-between gap-3"><span className="font-section font-semibold">{l.product.name}</span><span className="label whitespace-nowrap">{formatPrice(l.qty * unitPrice(l.product, l.size))}</span></p>
                                             <p className="text-ink-700">Talla {l.size} · {catalog.size[l.size].label} <span className="text-ink-500">(MX {catalog.size[l.size].mx})</span>{l.monogram ? ` · Monograma ${l.monogram}` : ''}</p>
                                             <p className="text-[14px] text-ink-500">Pecho {cm(spec.chest)} · hombro {cm(spec.shoulder)} · manga {cm(spec.sleeve)} · largo {cm(spec.length)}</p>
                                             <p className={`label ${l.madeToOrder ? 'text-rust' : 'text-ink-500'}`}>{stockText(l.product, l.size, rules)}</p>
@@ -185,7 +185,7 @@
                         {madeToOrder && <p className="note text-rust mt-2">Hay tallas sobre pedido: tu pedido sale completo en {rules.made_to_order_days} días.</p>}
                         <label className="flex gap-3 text-[15px] text-ink-700 mt-8">
                             <input type="checkbox" required checked={form.consent} onChange={e => setForm({ ...form, consent: e.target.checked })} className="mt-1 accent-[#6B1E2C]" />
-                            <span>Acepto los <a href={`${ROOT}terms.html`} className="underline">términos de uso</a> y que Justo use mis datos solo para este pedido.</span>
+                            <span>Acepto los <a href={`${ROOT}terms.html`} className="underline">términos de uso</a>, la <a href={`${ROOT}devoluciones.html`} className="underline">política de devoluciones</a> y que Justo use mis datos solo para este pedido.</span>
                         </label>
                         <button className="btn btn-rust w-full mt-6">Confirmar pedido</button>
                         <p className="note text-ink-500 text-[15px] mt-3">Se abre tu correo con el pedido para {BRAND.email}; te respondemos con {payment === 'spei' ? 'la CLABE' : payment === 'efectivo' ? 'la fecha de tu prueba' : 'la liga de pago'}.</p>

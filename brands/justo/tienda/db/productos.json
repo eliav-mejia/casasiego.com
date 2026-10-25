@@ -1,7 +1,7 @@
 {
-  "_schema": "products: id, slug, sku, name, short, description, price_mxn, cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n}, specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], monogram, active, featured",
+  "_schema": "products: id, slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n}, specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], monogram, active, featured",
   "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/brands/justo.esmx/.",
-  "updated_at": "2026-10-12",
+  "updated_at": "2026-10-25",
   "products": [
     {
       "id": "ju-001",
@@ -10,7 +10,14 @@
       "name": "Saco Azul Marino Raya Diplomática",
       "short": "Raya diplomática fina, dos botones, solapa de muesca.",
       "description": "El azul marino de oficina con carácter: lana merino Super 110s con una raya diplomática fina gris claro que alarga la figura. Dos botones, solapa de muesca de 8 cm, bolsas con cartera y hombro natural con hombrera ligera. Corte regular que deja moverse sin perder la línea; pide camisa blanca y corbata a rayas, o se suelta con un pantalón gris liso.",
-      "price_mxn": 7940,
+      "price_mxn": 7650,
+      "prices_mxn": { "CH": 7650, "M": 7650, "G": 9229, "XG": 9229 },
+      "stripe": {
+        "CH": "https://buy.stripe.com/fZu3cx4zFfWrbnScSMcMM02",
+        "M": "https://buy.stripe.com/6oU4gBc2711x63y060cMM0c",
+        "G": "https://buy.stripe.com/28E8wR1ntdOj2Rm7yscMM09",
+        "XG": "https://buy.stripe.com/bJeeVfc277pV4ZudWQcMM0a"
+      },
       "cut": "Regular",
       "image": "images/brands/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg",
       "focus": "50% 50%",
@@ -47,7 +54,14 @@
       "name": "Saco Gris Carbón Textura Tweed",
       "short": "Gris carbón con textura tipo tweed, dos botones.",
       "description": "Gris carbón en lana con textura tipo tweed: de lejos se lee liso y de cerca tiene grano, así que luce serio sin verse plano. Dos botones, solapa de muesca y bolsas con cartera, con la etiqueta Tailor's Blend de la casa. Va con camisa azul cielo y corbata plateada para la oficina, o con suéter de cuello alto el fin de semana.",
-      "price_mxn": 8970,
+      "price_mxn": 8797,
+      "prices_mxn": { "CH": 8797, "M": 8797, "G": 11932, "XG": 11932 },
+      "stripe": {
+        "CH": "https://buy.stripe.com/5kQcN74zFfWrajO6uocMM01",
+        "M": "https://buy.stripe.com/5kQeVf7LR7pV8bG3iccMM06",
+        "G": "https://buy.stripe.com/5kQ6oJ2rxdOj1Nig4YcMM07",
+        "XG": "https://buy.stripe.com/4gM5kFgineSndw0g4YcMM08"
+      },
       "cut": "Regular",
       "image": "images/brands/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg",
       "focus": "50% 50%",
@@ -83,7 +97,14 @@
       "name": "Saco Negro Clásico Liso",
       "short": "Negro liso, dos botones, corte entallado.",
       "description": "El negro que no falla: paño liso, sin brillo, para la boda, la noche y el escenario. Dos botones, solapa de muesca de 8 cm y corte entallado con cintura marcada y manga angosta. Con chaleco del mismo tono se arma un tres piezas; con camisa blanca y corbata de color, el saco se vuelve el fondo que hace lucir todo lo demás.",
-      "price_mxn": 10240,
+      "price_mxn": 6450,
+      "prices_mxn": { "CH": 6450, "M": 6450, "G": 8632, "XG": 8632 },
+      "stripe": {
+        "CH": "https://buy.stripe.com/9B64gB8PV9y34Zu3iccMM00",
+        "M": "https://buy.stripe.com/8x200ld6bbGb3Vq9GAcMM03",
+        "G": "https://buy.stripe.com/4gM14p5DJ39F4Zu3iccMM04",
+        "XG": "https://buy.stripe.com/eVq5kF8PVaC71NicSMcMM05"
+      },
       "cut": "Entallado",
       "image": "images/brands/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg",
       "focus": "50% 50%",
