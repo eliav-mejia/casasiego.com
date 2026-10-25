@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Favicon S</title>
+<!-- Fuente de los favicon: la S de «Siego» (Ledger, como en el logotipo) en beige sobre vino.
+     Construir:  sh docs/src/build-sello.sh
+     ?px=N fija el tamaño; &cuadro=1 llena el cuadro sin esquinas redondeadas (apple-touch-icon: iOS las redondea). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&display=block">
+<style>
+html, body { margin:0; background:transparent; }
+svg { display:block; width:100vw; height:100vh; }
+</style>
+</head>
+<body>
+<svg id="s" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect id="fondo" width="100" height="100" rx="18" fill="#4A1621"/>
+  <text x="50" y="52" text-anchor="middle" dominant-baseline="central" font-family="Ledger" font-size="84" fill="#F7F2EA">S</text>
+</svg>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), svg = document.getElementById('s');
+  if (q.get('px')) { svg.style.width = svg.style.height = q.get('px') + 'px'; }
+  if (q.get('cuadro')) { document.getElementById('fondo').setAttribute('rx', 0); }
+})();
+</script>
+</body>
+</html>

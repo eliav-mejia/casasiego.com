@@ -420,6 +420,8 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   border-top: 1px solid color-mix(in srgb, var(--hellenic-gold) 40%, transparent);
 }
 .club__col--events .button { margin-top: var(--space-2); }
+.club .club__terms { margin-top: var(--space-2); }
+.club__terms a { color: inherit; }
 
 /* 8. Colophon -------------------------------------------------------------- */
 .colophon {
@@ -554,6 +556,58 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   .houses__grid--two { grid-template-columns: 1fr; max-width: 40rem; }
   .houses__grid--two .house:last-child { min-height: 24rem; }
 }
+
+/* 11a-bis. Centered houses (visitante.html): heading and both cards on the page axis */
+.houses--centered { padding-inline: max(16px, 6%); }
+.houses--centered .houses__head { margin-inline: auto; text-align: center; }
+.houses--centered .houses__grid--two { margin-inline: auto; }
+
+/* 11a-ter. Centro de Ayuda (ayuda/): topic menu and article index in the margin, numbered question list */
+.ayuda-toc { position: sticky; top: 5.5rem; }
+.ayuda-toc ol { margin: var(--space-1) 0 var(--space-2); padding-left: 1.2em; font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); }
+.ayuda-toc li { margin-bottom: 0.35em; }
+.ayuda-toc li::marker { font-family: var(--font-display); font-style: normal; color: var(--amphora-rust); }
+.ayuda-lede { font-family: var(--font-meta); font-style: italic; font-size: 1.15em; color: var(--laurel-leaf); }
+.ayuda-list { margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+.ayuda-entry { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; padding: var(--space-2) 0; border-top: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent); }
+.ayuda-entry__no { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--amphora-rust); padding-top: 0.35em; }
+.ayuda-entry__q { margin: 0 0 0.3em; font-family: var(--font-section); font-weight: 600; font-size: 1.25rem; line-height: 1.25; }
+.ayuda-entry__q a { color: var(--aegean-ink); text-decoration: none; }
+.ayuda-entry__q a:hover { color: var(--amphora-rust); }
+.ayuda-entry p { margin: 0 0 0.4em; }
+.terms .ayuda-entry__toc { display: flex; flex-wrap: wrap; gap: 0.2em 1.2em; margin: 0; padding: 0; list-style: none; font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); }
+.terms .ayuda-entry__toc li { margin: 0; }
+.ayuda-pager { margin-top: var(--space-2); }
+@media (max-width: 960px) { .ayuda-toc { position: static; } }
+
+/* 11a-quater. Enfoque pop-up (visitante.html, js/enfoque.js): choose the Fiel page for each kind of portrait */
+.enfoque {
+  width: min(32rem, calc(100% - 32px));
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  border: 1px solid color-mix(in srgb, var(--hellenic-gold) 40%, transparent);
+  border-radius: 1.25rem;
+  background: var(--thera-white);
+  color: var(--aegean-ink);
+  box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--aegean-ink) 55%, transparent);
+}
+.enfoque::backdrop { background: color-mix(in srgb, var(--wine-deep) 60%, transparent); backdrop-filter: blur(3px); }
+.enfoque__close-form { position: absolute; top: 0.75rem; right: 0.75rem; margin: 0; }
+.enfoque__close { width: 2.25rem; height: 2.25rem; border: 0; border-radius: 50%; background: none; color: var(--laurel-leaf); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.enfoque__close:hover { background: var(--beige-soft); color: var(--amphora-rust); }
+.enfoque__title { margin: 0 0 var(--space-3); font-family: var(--font-section); font-weight: 600; font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem); line-height: 1.15; }
+.enfoque__options { margin: 0; padding: 0; list-style: none; }
+.enfoque__options a {
+  display: block;
+  padding: 0.9rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent);
+  color: inherit;
+  text-decoration: none;
+}
+.enfoque__options li:last-child a { border-bottom: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent); }
+.enfoque__options strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.enfoque__options strong::after { content: " \2192"; color: var(--amphora-rust); }
+.enfoque__options span { font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--laurel-leaf); }
+.enfoque__options a:hover strong { color: var(--amphora-rust); }
 
 /* 11b. Pages that open on a light section sit below the fixed header (js/casa.js) */
 .head-offset main:first-of-type { padding-top: 4.5rem; }

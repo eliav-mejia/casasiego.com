@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Sello CS</title>
+<!-- Fuente del sello de lacre CS (images/sello-cs.png y los favicon).
+     Construir:  sh docs/src/build-sello.sh
+     ?sombra=0 quita la sombra proyectada y recorta al sello (favicon); &px=N fija el tamaño.
+     ?icono=N reduce ../../favicon-512.png a N px, recortado al borde del sello, para 16–48 px. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=block">
+<style>
+html, body { margin:0; background:transparent; }
+svg { display:block; width:100vw; height:100vh; }
+</style>
+</head>
+<body>
+<svg id="s" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- wax grain: low-frequency lumps plus fine pores, added to the heightmap -->
+    <filter id="luz" x="0" y="0" width="1000" height="1000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="alto"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="3" seed="7" result="bulto"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="3" result="poro"/>
+      <feColorMatrix in="bulto" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="bultoA"/>
+      <feColorMatrix in="poro" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="poroA"/>
+      <feComposite in="alto" in2="bultoA" operator="arithmetic" k2="1" k3="0.07" k4="-0.035" result="alto2"/>
+      <feComposite in="alto2" in2="poroA" operator="arithmetic" k2="1" k3="0.018" k4="-0.009" result="relieve"/>
+
+      <feDiffuseLighting in="relieve" surfaceScale="34" diffuseConstant="1.15" lighting-color="#fff" result="difusa">
+        <feDistantLight azimuth="235" elevation="48"/>
+      </feDiffuseLighting>
+      <feSpecularLighting in="relieve" surfaceScale="34" specularConstant="1.1" specularExponent="38" lighting-color="#FFE2DC" result="brillo">
+        <feDistantLight azimuth="235" elevation="38"/>
+      </feSpecularLighting>
+      <feSpecularLighting in="relieve" surfaceScale="34" specularConstant="0.3" specularExponent="9" lighting-color="#C9707E" result="lustre">
+        <feDistantLight azimuth="235" elevation="40"/>
+      </feSpecularLighting>
+
+      <!-- vino base with mottled depth -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" seed="21" result="mancha"/>
+      <feColorMatrix in="mancha" type="matrix"
+        values="0.22 0 0 0 0.25   0.05 0 0 0 0.045   0.07 0 0 0 0.075   0 0 0 0 1" result="vino"/>
+      <feComposite in="vino" in2="difusa" operator="arithmetic" k1="1.3" result="tinta"/>
+      <feComposite in="tinta" in2="brillo" operator="arithmetic" k2="1" k3="0.55" result="t2"/>
+      <feComposite in="t2" in2="lustre" operator="arithmetic" k2="1" k3="0.12" result="t3"/>
+      <feComponentTransfer in="t3">
+        <feFuncR type="gamma" exponent="1.08" amplitude="1"/>
+        <feFuncG type="gamma" exponent="1.08" amplitude="1"/>
+        <feFuncB type="gamma" exponent="1.08" amplitude="1"/>
+      </feComponentTransfer>
+    </filter>
+
+    <filter id="b26" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="26"/></filter>
+    <filter id="b10" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="b5"  x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="b2"  x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <filter id="b1"  x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.1"/></filter>
+    <filter id="sombraF" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>
+
+    <mask id="forma" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="1000">
+      <path class="blob" fill="#fff" filter="url(#b1)"/>
+    </mask>
+  </defs>
+
+  <!-- cast shadow -->
+  <g id="sombra">
+    <path class="blob" fill="#14050A" opacity=".55" transform="translate(14 26)" filter="url(#sombraF)"/>
+    <path class="blob" fill="#14050A" opacity=".45" transform="translate(4 7)" filter="url(#b5)"/>
+  </g>
+
+  <g mask="url(#forma)">
+    <g filter="url(#luz)">
+      <rect width="1000" height="1000" fill="#000"/>
+      <!-- outer puddle of wax: domed edge -->
+      <path class="blob" fill="#9a9a9a" filter="url(#b26)"/>
+      <path class="blob" fill="#6e6e6e" filter="url(#b10)" transform="translate(500 500) scale(.985) translate(-500 -500)"/>
+      <!-- wax pushed out around the stamp -->
+      <circle cx="500" cy="500" r="352" fill="none" stroke="#b9b9b9" stroke-width="60" filter="url(#b26)"/>
+      <circle cx="500" cy="500" r="338" fill="none" stroke="#c4c4c4" stroke-width="22" filter="url(#b10)"/>
+      <!-- pressed face (recessed, flat) -->
+      <circle cx="500" cy="500" r="318" fill="#585858" filter="url(#b5)"/>
+      <circle cx="500" cy="500" r="318" fill="none" stroke="#3c3c3c" stroke-width="4" filter="url(#b2)"/>
+      <!-- matrix border: fine raised line, beaded ring, inner line -->
+      <circle cx="500" cy="500" r="296" fill="none" stroke="#7a7a7a" stroke-width="7" filter="url(#b1)"/>
+      <g id="perlas" fill="#7c7c7c" filter="url(#b1)"></g>
+      <circle cx="500" cy="500" r="256" fill="none" stroke="#777" stroke-width="4" filter="url(#b1)"/>
+      <circle cx="500" cy="500" r="249" fill="none" stroke="#4a4a4a" stroke-width="2" filter="url(#b1)"/>
+      <!-- engraved monogram: cut below the face, bevelled walls -->
+      <text x="500" y="500" text-anchor="middle" dominant-baseline="central" font-family="Cinzel Decorative" font-weight="900"
+            font-size="268" letter-spacing="-6" fill="#3e3e3e" filter="url(#b5)">CS</text>
+      <text x="500" y="500" text-anchor="middle" dominant-baseline="central" font-family="Cinzel Decorative" font-weight="900"
+            font-size="268" letter-spacing="-6" fill="#262626" filter="url(#b2)">CS</text>
+      <!-- trapped air bubbles and drag marks in the wax -->
+      <g id="burbujas" fill="#383838" filter="url(#b2)"></g>
+    </g>
+  </g>
+</svg>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), svg = document.getElementById('s');
+  var NS = 'http://www.w3.org/2000/svg';
+  // seeded random so every build gives the same seal
+  var seed = 1977;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+  // organic wax outline: a circle wobbled by a few harmonics plus three lobes where wax ran
+  var pts = [], N = 180, R = 395;
+  var h = [[3, 9, 0.6], [5, 7, 2.1], [7, 4, 4.0], [11, 2.5, 1.3], [17, 1.4, 5.2]];
+  var lobes = [[0.35, 30, 0.22], [2.4, 22, 0.18], [4.3, 34, 0.25]];
+  for (var i = 0; i < N; i++) {
+    var a = i / N * Math.PI * 2, r = R;
+    h.forEach(function (k) { r += k[1] * Math.sin(k[0] * a + k[2]); });
+    lobes.forEach(function (l) {
+      var d = Math.atan2(Math.sin(a - l[0]), Math.cos(a - l[0]));
+      r += l[1] * Math.exp(-(d * d) / (2 * l[2] * l[2]));
+    });
+    r += (rnd() - 0.5) * 2.2;
+    pts.push([500 + r * Math.cos(a), 500 + r * Math.sin(a)]);
+  }
+  var d = '';
+  for (i = 0; i < N; i++) {   // Catmull-Rom to cubic Béziers
+    var p0 = pts[(i - 1 + N) % N], p1 = pts[i], p2 = pts[(i + 1) % N], p3 = pts[(i + 2) % N];
+    if (!i) d += 'M' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1);
+    d += 'C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' '
+            + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' '
+            + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
+  }
+  document.querySelectorAll('.blob').forEach(function (p) { p.setAttribute('d', d + 'Z'); });
+
+  var perlas = document.getElementById('perlas');
+  for (i = 0; i < 72; i++) {
+    a = i / 72 * Math.PI * 2;
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', 500 + 276 * Math.cos(a)); c.setAttribute('cy', 500 + 276 * Math.sin(a)); c.setAttribute('r', 6.2);
+    perlas.appendChild(c);
+  }
+
+  var burbujas = document.getElementById('burbujas');
+  for (i = 0; i < 30; i++) {
+    a = rnd() * Math.PI * 2;
+    var rr = 60 + rnd() * 180;                // only on the pressed face, where air gets trapped
+    c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', 500 + rr * Math.cos(a)); c.setAttribute('cy', 500 + rr * Math.sin(a));
+    c.setAttribute('r', 0.9 + rnd() * rnd() * 3.2); c.setAttribute('opacity', 0.3 + rnd() * 0.4);
+    burbujas.appendChild(c);
+  }
+
+  if (q.get('px')) { svg.style.width = svg.style.height = q.get('px') + 'px'; }
+  if (q.get('icono')) {   // tiny icons: halve the 512 render step by step, cropped to the round stamp rim
+    var n = +q.get('icono'), img = new Image();
+    svg.remove();
+    img.onload = function () {
+      var src = document.createElement('canvas'), k = 512 / 824, x0 = (145 - 88) * k, w = 710 * k, size = 512;
+      src.width = src.height = size;
+      var c2 = src.getContext('2d');
+      c2.beginPath(); c2.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2); c2.clip();
+      c2.drawImage(img, x0, x0, w, w, 0, 0, size, size);
+      while (size / 2 >= n) {
+        var half = document.createElement('canvas');
+        half.width = half.height = size / 2;
+        half.getContext('2d').drawImage(src, 0, 0, size / 2, size / 2);
+        src = half; size /= 2;
+      }
+      var out = document.createElement('canvas');
+      out.width = out.height = n;
+      out.getContext('2d').drawImage(src, 0, 0, n, n);
+      out.style.display = 'block';
+      document.body.appendChild(out);
+    };
+    img.src = '../../favicon-512.png';
+    return;
+  }
+  if (q.get('sombra') === '0') {
+    document.getElementById('sombra').remove();
+    svg.setAttribute('viewBox', '88 88 824 824');   // crop tight to the wax for icons
+  }
+})();
+</script>
+</body>
+</html>

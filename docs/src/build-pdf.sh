@@ -7,6 +7,8 @@
 #   -> brands/reino_fiel/descargas/reino-fiel-guia-de-sesiones.pdf (public download, unlike docs/)
 # Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal: _interno/docs/)
 # Variant D setup guide:      sh docs/src/build-pdf.sh variante-d  (internal: _interno/)
+# Club offer guide:           sh docs/src/build-pdf.sh club        (internal: _interno/)
+# Internal version notes:     sh docs/src/build-pdf.sh interno-1.2.0  (internal: _interno/docs/)
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 VERSION="${1:-1.1.0}"
@@ -23,6 +25,12 @@ case "$VERSION" in
   variante-d)
     SRC="$HERE/../../_interno/docs/src/variante-d-registro.html"
     OUT="$HERE/../../_interno/variante-d-guia-de-configuracion.pdf" ;;
+  club)
+    SRC="$HERE/../../_interno/docs/src/club-casa-siego-guia.html"
+    OUT="$HERE/../../_interno/club-casa-siego-guia-de-oferta.pdf" ;;
+  interno-*)
+    SRC="$HERE/../../_interno/docs/src/casasiego-v${VERSION#interno-}.html"
+    OUT="$HERE/../../_interno/docs/casasiego-v${VERSION#interno-}.pdf" ;;
   *)
     if [ -f "$HERE/casasiego-v$VERSION.html" ]; then
       SRC="$HERE/casasiego-v$VERSION.html"; OUT="$HERE/../casasiego-v$VERSION.pdf"
