@@ -50,7 +50,7 @@
   </div>
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para hacer tu pedido.</p></noscript>
 
-  <script type="text/babel" src="../../../brands/justo/tienda/js/tienda.jsx?v=1.1.4"></script>
+  <script type="text/babel" src="../../../brands/justo/tienda/js/tienda.jsx?v=1.1.5"></script>
   <script type="text/babel">
     const Catalogue = () => {
         const catalog = useCatalog();
@@ -105,7 +105,7 @@
                     <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20 grid md:grid-cols-3 gap-8">
                         {[
                             ['Ajuste incluido', catalog.tolerances.note],
-                            ['Para cortejos y equipos', catalog.rules.volume.map(v => v.label).join(' · ') + '. El descuento se aplica solo en la bolsa.'],
+                            ['Pago con Stripe', 'Eliges tu talla y pagas en la página segura de Stripe, en pesos mexicanos. Un saco por pago.'],
                             ['La entrega', 'Recoge en Casa Siego con prueba final y retrato en Fiel, o recíbelo en casa en funda con gancho de madera.'],
                         ].map(([t, d]) => <div key={t} className="reveal border-t border-ink pt-5"><p className="label-strong">{t}</p><p className="text-ink-700 mt-3">{d}</p></div>)}
                     </section>

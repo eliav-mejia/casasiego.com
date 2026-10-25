@@ -2,8 +2,9 @@
 // Every shop page loads this file. Each page sets <body data-root="…"> = relative path to the site root (casasiego.com/),
 // so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Casa Siego).
 //
-// Contents: BRAND · store/bag (localStorage) · data layer (db) · useCatalog · priceBag · Photo · Header/Footer ·
-// ProductCard · SizeChips · SizeSpecs · SpecTable · ProductPage · BagDrawer · SizeFinder · renderPage()
+// Contents: BRAND · data layer (db) · useCatalog · prices and Stripe links · Photo · Header/Footer ·
+// ProductCard · SizeChips · SizeSpecs · SpecTable · ProductPage · SizeFinder · renderPage()
+// Payment is Stripe only: each size of each jacket has its own Stripe Payment Link (db/productos.json). No bag, no cart.
 
 const { useState, useEffect, useMemo, useRef } = React;
 
@@ -29,43 +30,6 @@ const formatPrice = (n) => region() ? region().format(n)
 const cm = (n) => `${String(n).replace('.', ',')} cm`;
 const range = ([a, b], unit) => `${a}–${b} ${unit}`;
 
-// --- LOCAL STORAGE ---
-// Private windows or blocked storage throw: the shop still works, the bag just doesn't survive a reload.
-const store = {
-    read: (key, fallback) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
-    write: (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* storage unavailable */ } },
-};
-
-// --- BAG ---
-// One line per product × size × monogram. Only ids are stored; prices are always re-read from the catalogue.
-const BAG_KEY = 'sy-justo-bolsa';
-const ORDERS_KEY = 'sy-justo-pedidos';
-const lineKey = (l) => `${l.productId}|${l.size}|${l.monogram || ''}`;
-const bag = {
-    read: () => store.read(BAG_KEY, []),
-    save: (lines) => { store.write(BAG_KEY, lines); window.dispatchEvent(new CustomEvent('sy-bolsa-cambio')); },
-    add: (line) => {
-        const key = lineKey(line);
-        const lines = bag.read();
-        const hit = lines.find(l => l.key === key);
-        if (hit) hit.qty += line.qty; else lines.push({ ...line, key });
-        bag.save(lines);
-        window.dispatchEvent(new CustomEvent('sy-bolsa-abrir', { detail: key }));
-    },
-    set: (key, qty) => bag.save(qty <= 0 ? bag.read().filter(l => l.key !== key) : bag.read().map(l => l.key === key ? { ...l, qty } : l)),
-    clear: () => bag.save([]),
-};
-const useBag = () => {
-    const [lines, setLines] = useState(bag.read);
-    useEffect(() => {
-        const sync = () => setLines(bag.read());
-        window.addEventListener('sy-bolsa-cambio', sync);
-        window.addEventListener('storage', sync);
-        return () => { window.removeEventListener('sy-bolsa-cambio', sync); window.removeEventListener('storage', sync); };
-    }, []);
-    return lines;
-};
-
 // --- DATA LAYER ---
 // The ONLY place that knows where data comes from. Today: static JSON in ../db (Etapa 1).
 // Etapa 2: replace the bodies of db.* with Supabase queries (supabase/0001_esquema_tienda.sql) and keep the same shapes.
@@ -81,7 +45,6 @@ const localPrices = (products, rules) => {
             prices_mxn: x.prices_mxn && Object.fromEntries(Object.entries(x.prices_mxn).map(([k, v]) => [k, price(v)])) })),
         rules: {
             ...rules,
-            monogram_mxn: price(rules.monogram_mxn),
             shipping: rules.shipping.map(s => ({ ...s, cost_mxn: price(s.cost_mxn), free_from_mxn: price(s.free_from_mxn) })),
         },
     };
@@ -92,22 +55,6 @@ const db = {
         ...localPrices(p.products.filter(x => x.active !== false), rules),
         sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances,
     })),
-
-    // Etapa 1: saved in this browser and sent by email; Justo replies with the payment link or the SPEI details.
-    // Etapa 2: POST ids + qty to an Edge Function that re-prices from the database. Never trust browser prices.
-    createOrder: ({ customer, shippingId, paymentId, priced }) => {
-        const order = {
-            id: `JU-${Date.now().toString(36).toUpperCase()}`,
-            created_at: new Date().toISOString(),
-            currency: currency(),
-            status: 'por-pagar',
-            customer, shipping_id: shippingId, payment_id: paymentId,
-            lines: priced.lines.map(l => ({ sku: l.product.sku, name: l.product.name, size: l.size, monogram: l.monogram || null, qty: l.qty, unit_mxn: unitPrice(l.product, l.size), made_to_order: l.madeToOrder })),
-            pieces: priced.pieces, subtotal: priced.subtotal, discount: priced.discount, monogram: priced.monogram, shipping: priced.shipping, total: priced.total,
-        };
-        store.write(ORDERS_KEY, [order, ...store.read(ORDERS_KEY, [])]);
-        return order;
-    },
 };
 
 // Re-renders when the flag changes currency (js/region.js fires "casasiego:region").
@@ -147,35 +94,15 @@ const stockText = (product, size, rules) => inStock(product, size)
     : `Sobre pedido · confección en ${rules.made_to_order_days} días`;
 
 // --- PRICING ---
-// Each size has its own price (prices_mxn); price_mxn is the lowest one, shown as «desde» before a size is chosen.
+// Prices include IVA. Each size has its own price (prices_mxn); price_mxn is the lowest one, shown as «desde» before a size is chosen.
 const unitPrice = (product, size) => (product.prices_mxn && product.prices_mxn[size]) || product.price_mxn;
 const priceRange = (product) => {
     const all = Object.values(product.prices_mxn || {});
     return all.length && Math.max(...all) > Math.min(...all) ? `Desde ${formatPrice(Math.min(...all))}` : formatPrice(product.price_mxn);
 };
-// Stripe Payment Link of the size (one jacket, no monogram, charged in MXN). null when the size has none.
+// Stripe Payment Link of the size (one jacket, charged in MXN). null when the size has none.
 const stripeLink = (product, size) => (product.stripe && product.stripe[size]) || null;
 
-// Same rules the server will apply in Etapa 2 (tienda.json). Prices include IVA.
-//   volume: % off the jackets (not the monogram) from N pieces · monogram: per piece · shipping: free above threshold
-const priceBag = (lines, rules, shippingId) => {
-    const pieces = lines.reduce((a, l) => a + l.qty, 0);
-    const subtotal = lines.reduce((a, l) => a + l.qty * unitPrice(l.product, l.size), 0);
-    const tier = [...rules.volume].sort((a, b) => b.min_qty - a.min_qty).find(v => pieces >= v.min_qty) || null;
-    const discount = tier ? Math.round(subtotal * tier.pct / 100) : 0;
-    const monoPieces = lines.filter(l => l.monogram).reduce((a, l) => a + l.qty, 0);
-    const monogram = monoPieces * rules.monogram_mxn;
-    const method = rules.shipping.find(s => s.id === shippingId) || rules.shipping[0];
-    const net = subtotal - discount;
-    const shipping = pieces === 0 || !method.cost_mxn || (method.free_from_mxn && net >= method.free_from_mxn) ? 0 : method.cost_mxn;
-    return { lines, pieces, subtotal, tier, discount, monogram, monoPieces, method, shipping, total: net + monogram + shipping };
-};
-
-// Bag lines resolved against the catalogue (unknown or inactive products are dropped).
-const useBagLines = (catalog) => useBag()
-    .map(l => ({ ...l, product: catalog.byId[l.productId] }))
-    .filter(l => l.product)
-    .map(l => ({ ...l, madeToOrder: !inStock(l.product, l.size) }));
 
 // --- REVEAL ON SCROLL ---
 const useReveal = (deps = []) => useEffect(() => {
@@ -193,14 +120,8 @@ const Photo = ({ product, src, className = '', eager = false, alt }) => (
     </div>
 );
 
-const Icon = {
-    bag: (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" {...p}><path d="M5 8h14l-1 12H6L5 8z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>,
-    close: (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" {...p}><path d="M5 5l14 14M19 5L5 19" /></svg>,
-};
-
 // --- HEADER / FOOTER ---
 const Header = ({ current }) => {
-    const count = useBag().reduce((a, l) => a + l.qty, 0);
     const nav = [['sacos', 'Sacos', `${SHOP}/`], ['tallas', 'Guía de tallas', `${SHOP}/guia-de-tallas/`]];
     return (
         <header className="sticky top-0 z-50 bg-parchment/95 backdrop-blur border-b border-line">
@@ -213,11 +134,6 @@ const Header = ({ current }) => {
                 <nav aria-label="Tienda">
                     <ul className="flex items-center gap-4 md:gap-7">
                         {nav.map(([id, label, href]) => <li key={id} className="hidden md:block"><a href={href} className={`label link ${current === id ? 'text-rust' : ''}`} aria-current={current === id ? 'page' : undefined}>{label}</a></li>)}
-                        <li>
-                            <a href={`${SHOP}/bolsa/`} className="label flex items-center gap-1.5" aria-label={`Bolsa, ${count} ${count === 1 ? 'saco' : 'sacos'}`}>
-                                <Icon.bag className="w-5 h-5" /><span>({count})</span>
-                            </a>
-                        </li>
                     </ul>
                 </nav>
             </div>
@@ -251,7 +167,6 @@ const Footer = () => {
                     <p className="label text-gold">Tienda</p>
                     <p><a className="link" href={`${SHOP}/`}>Sacos</a></p>
                     <p><a className="link" href={`${SHOP}/guia-de-tallas/`}>Guía de tallas</a></p>
-                    <p><a className="link" href={`${SHOP}/bolsa/`}>Bolsa</a></p>
                     <p><a className="link" href={`${ROOT}terms.html`}>Términos de uso</a></p>
                     <p><a className="link" href={`${ROOT}devoluciones.html`}>Política de devoluciones</a></p>
                 </div>
@@ -387,9 +302,6 @@ const ProductPage = () => {
     const slug = window.location.pathname.split('/').filter(Boolean).pop();
     const product = catalog.bySlug[slug];
     const [size, setSize] = useState(null);
-    const [qty, setQty] = useState(1);
-    const [withMono, setWithMono] = useState(false);
-    const [mono, setMono] = useState('');
     const [needSize, setNeedSize] = useState(false);
     useReveal([catalog.status]);
 
@@ -405,12 +317,6 @@ const ProductPage = () => {
 
     const { rules, tolerances } = catalog;
     const related = catalog.products.filter(p => p.id !== product.id);
-    const monoOk = !withMono || /^[A-ZÁÉÍÓÚÑ]{1,3}$/.test(mono);
-    const add = () => {
-        if (!size) { setNeedSize(true); return; }
-        bag.add({ productId: product.id, size, monogram: withMono ? mono : '', qty });
-        setQty(1);
-    };
 
     return (
         <>
@@ -448,33 +354,14 @@ const ProductPage = () => {
 
                     {size && <div className="mt-5"><SizeSpecs product={product} catalog={catalog} size={size} /></div>}
 
-                    {product.monogram && (
-                        <div className="mt-8 max-w-md">
-                            <label className="flex gap-3 items-center cursor-pointer">
-                                <input type="checkbox" checked={withMono} onChange={e => setWithMono(e.target.checked)} className="accent-[#6B1E2C] w-4 h-4" />
-                                <span>Monograma bordado en el forro &middot; +{formatPrice(rules.monogram_mxn)}</span>
-                            </label>
-                            {withMono && <input className="field mt-3" placeholder={`Iniciales (máx. ${rules.monogram_max} letras)`} maxLength={rules.monogram_max}
-                                value={mono} onChange={e => setMono(e.target.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, ''))} aria-label="Iniciales del monograma" />}
-                        </div>
-                    )}
-
-                    <div className="flex gap-1 mt-8 max-w-md">
-                        <div className="flex items-center border border-ink">
-                            <button className="w-11 h-11" onClick={() => setQty(q => Math.max(1, q - 1))} aria-label="Uno menos">−</button>
-                            <span className="w-6 text-center" aria-live="polite">{qty}</span>
-                            <button className="w-11 h-11" onClick={() => setQty(q => Math.min(20, q + 1))} aria-label="Uno más">+</button>
-                        </div>
-                        <button className="btn btn-rust flex-1" onClick={add} disabled={!monoOk}>Añadir a la bolsa</button>
+                    <div className="mt-8 max-w-md">
+                        {stripeLink(product, size) ? (
+                            <a className="btn btn-rust w-full" href={stripeLink(product, size)} rel="noopener">Pagar con Stripe · talla {size} · {formatPrice(unitPrice(product, size))}</a>
+                        ) : (
+                            <button className="btn btn-rust w-full" type="button" onClick={() => setNeedSize(true)}>{size ? 'Pago no disponible en esta talla: escríbenos' : 'Elige tu talla para pagar'}</button>
+                        )}
+                        <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, un saco por pago, en pesos mexicanos (MXN). Incluye ajuste de mangas (±{tolerances.sleeve_cm} cm) y cintura (±{tolerances.waist_cm} cm) en el taller. Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
                     </div>
-                    {stripeLink(product, size) && !withMono ? (
-                        <a className="btn btn-line w-full max-w-md mt-1" href={stripeLink(product, size)} rel="noopener">Pagar ahora con Stripe · talla {size}</a>
-                    ) : (
-                        <button className="btn btn-line w-full max-w-md mt-1" type="button" disabled={withMono}
-                            onClick={() => setNeedSize(true)}>{withMono ? 'Con monograma: paga desde la bolsa' : 'Pagar ahora con Stripe'}</button>
-                    )}
-                    <p className="note text-ink-500 mt-2 max-w-md text-[15px]">Pago seguro con Stripe: un saco por liga, cobro en pesos mexicanos (MXN). Para monograma, varios sacos o descuentos por volumen, usa la bolsa. Lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
-                    <p className="note text-ink-500 mt-3 max-w-md">Incluye ajuste de mangas (±{tolerances.sleeve_cm} cm) y cintura (±{tolerances.waist_cm} cm) en el taller. {rules.volume[0].label}.</p>
 
                     <div className="mt-10 max-w-md border-b border-line">
                         <Disclosure title="Especificaciones del saco" open>
@@ -514,52 +401,6 @@ const ProductPage = () => {
 };
 
 const renderProduct = () => renderPage(ProductPage);
-
-// --- BAG DRAWER ---
-// Opens when something is added to the bag (event 'sy-bolsa-abrir' from bag.add).
-const BagDrawer = () => {
-    const catalog = useCatalog();
-    const lines = useBagLines(catalog);
-    const [openKey, setOpenKey] = useState(null);
-    useEffect(() => {
-        const onOpen = (e) => setOpenKey(e.detail);
-        const onKey = (e) => { if (e.key === 'Escape') setOpenKey(null); };
-        window.addEventListener('sy-bolsa-abrir', onOpen);
-        window.addEventListener('keydown', onKey);
-        return () => { window.removeEventListener('sy-bolsa-abrir', onOpen); window.removeEventListener('keydown', onKey); };
-    }, []);
-    if (!openKey || !catalog.rules) return null;
-    const added = lines.find(l => l.key === openKey);
-    const priced = priceBag(lines, catalog.rules);
-    return (
-        <div className="fixed inset-0 z-[80]" role="dialog" aria-modal="true" aria-label="Añadido a tu bolsa">
-            <div className="absolute inset-0 bg-ink/30 animate-fade-in" onClick={() => setOpenKey(null)} />
-            <aside className="absolute right-0 inset-y-0 w-full max-w-sm bg-parchment animate-slide-in flex flex-col">
-                <div className="flex justify-between items-center px-6 h-20 border-b border-line">
-                    <p className="label-strong">Añadido a tu bolsa</p>
-                    <button onClick={() => setOpenKey(null)} aria-label="Cerrar"><Icon.close className="w-5 h-5" /></button>
-                </div>
-                {added && (
-                    <div className="p-6 flex gap-4">
-                        <Photo product={added.product} className="w-28 aspect-[3/4] shrink-0" />
-                        <div className="space-y-1">
-                            <p className="font-section font-semibold">{added.product.name}</p>
-                            <p className="text-ink-500">Talla {added.size} · {catalog.size[added.size]?.label}</p>
-                            {added.monogram && <p className="text-ink-500">Monograma: {added.monogram}</p>}
-                            <p className={`label ${added.madeToOrder ? 'text-rust' : 'text-ink-500'}`}>{stockText(added.product, added.size, catalog.rules)}</p>
-                            <p>{added.qty} × {formatPrice(unitPrice(added.product, added.size))}</p>
-                        </div>
-                    </div>
-                )}
-                <div className="mt-auto p-6 border-t border-line grid gap-2">
-                    <p className="label flex justify-between mb-3"><span>{priced.pieces} {priced.pieces === 1 ? 'saco' : 'sacos'}</span><span>{formatPrice(priced.subtotal - priced.discount + priced.monogram)}</span></p>
-                    <a href={`${SHOP}/bolsa/`} className="btn btn-rust">Ver bolsa</a>
-                    <button className="btn btn-line" onClick={() => setOpenKey(null)}>Seguir comprando</button>
-                </div>
-            </aside>
-        </div>
-    );
-};
 
 // --- SIZE FINDER ---
 // Chest decides the size (it can't be altered); height only warns when the jacket length may be short or long.
@@ -604,7 +445,6 @@ const renderPage = (Page, { current } = {}) => {
             <Header current={current} />
             <main id="contenido"><Page /></main>
             <Footer />
-            <BagDrawer />
         </>
     );
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
