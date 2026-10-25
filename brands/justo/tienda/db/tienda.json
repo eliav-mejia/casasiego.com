@@ -1,22 +1,45 @@
 {
-  "_schema": "monogram_mxn · monogram_max · volume[{ min_qty, pct }] · made_to_order_days · shipping[{ id, label, detail, cost_mxn, free_from_mxn, payments[] }] · payments[{ id, label, detail }]",
-  "_note": "Reglas de ejemplo (Etapa 1): confirmar con Justo. Precios con IVA incluido.",
-  "updated_at": "2026-10-10",
-  "monogram_mxn": 400,
-  "monogram_max": 3,
-  "volume": [
-    { "min_qty": 3, "pct": 10, "label": "Cortejo y equipos: 10 % desde 3 sacos" },
-    { "min_qty": 2, "pct": 5,  "label": "5 % desde 2 sacos" }
-  ],
+  "_schema": "made_to_order_days · shipping[{ id, label, detail, cost_mxn, free_from_mxn, payments[] }] · payments[{ id, label, detail }]",
+  "_note": "Reglas de la tienda: el único pago es Stripe (una liga por talla en productos.json). Precios con IVA incluido.",
+  "updated_at": "2026-10-25",
   "made_to_order_days": 21,
   "shipping": [
-    { "id": "casa",      "label": "Recoger en Casa Siego con prueba", "detail": "Roma Norte, CDMX. Ajuste final sobre ti y retrato en Fiel. Te avisamos cuando esté listo.", "cost_mxn": 0,   "free_from_mxn": 0,     "payments": ["tarjeta", "spei", "efectivo"] },
-    { "id": "cdmx",      "label": "Envío en CDMX y zona metropolitana", "detail": "Mensajería en 1–2 días hábiles desde que se confirma tu pago. Ajustes posteriores en la Casa, sin costo.", "cost_mxn": 290, "free_from_mxn": 10000, "payments": ["tarjeta", "spei"] },
-    { "id": "nacional",  "label": "Envío nacional", "detail": "Paquetería asegurada, 3–5 días hábiles. El saco viaja en funda con gancho de madera.", "cost_mxn": 450, "free_from_mxn": 15000, "payments": ["tarjeta", "spei"] }
+    {
+      "id": "casa",
+      "label": "Recoger en Casa Siego con prueba",
+      "detail": "Roma Norte, CDMX. Ajuste final sobre ti y retrato en Fiel. Te avisamos cuando esté listo.",
+      "cost_mxn": 0,
+      "free_from_mxn": 0,
+      "payments": [
+        "stripe"
+      ]
+    },
+    {
+      "id": "cdmx",
+      "label": "Envío en CDMX y zona metropolitana",
+      "detail": "Mensajería en 1–2 días hábiles desde que se confirma tu pago. Ajustes posteriores en la Casa, sin costo.",
+      "cost_mxn": 290,
+      "free_from_mxn": 10000,
+      "payments": [
+        "stripe"
+      ]
+    },
+    {
+      "id": "nacional",
+      "label": "Envío nacional",
+      "detail": "Paquetería asegurada, 3–5 días hábiles. El saco viaja en funda con gancho de madera.",
+      "cost_mxn": 450,
+      "free_from_mxn": 15000,
+      "payments": [
+        "stripe"
+      ]
+    }
   ],
   "payments": [
-    { "id": "tarjeta",  "label": "Tarjeta de crédito o débito", "detail": "Te enviamos una liga de pago segura por correo." },
-    { "id": "spei",     "label": "Transferencia SPEI",          "detail": "Te enviamos la CLABE y la referencia del pedido." },
-    { "id": "efectivo", "label": "Efectivo en la Casa",         "detail": "Pagas en la prueba. Solo al recoger en Casa Siego." }
+    {
+      "id": "stripe",
+      "label": "Tarjeta de crédito o débito con Stripe",
+      "detail": "Pagas en la página segura de Stripe, en pesos mexicanos. Casa Siego no recibe los datos de tu tarjeta."
+    }
   ]
 }

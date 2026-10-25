@@ -29,11 +29,10 @@ casasiego.com/
 │   ├── justo/index.html          marca nº 2 · Justo by Casa Siego, sastrería
 │   ├── justo/tienda/             TIENDA EN LÍNEA de Justo (variante C/D: React + Tailwind por CDN, sin build)
 │   │   ├── index.html            catálogo: 3 sacos, tallas CH · M · G · XG, calculadora de talla
-│   │   ├── <slug>/index.html     ficha de cada saco (especificaciones por talla, monograma, añadir a la bolsa)
-│   │   ├── bolsa/                bolsa + entrega + pago + datos → pedido por correo (noindex)
+│   │   ├── <slug>/index.html     ficha de cada saco (especificaciones y precio por talla, botón «Pagar con Stripe»)
 │   │   ├── guia-de-tallas/       tallas del cuerpo, cómo medirse, medidas de cada saco
 │   │   ├── db/                   datos simulados: productos.json · tallas.json · tienda.json (envíos, pagos, descuentos)
-│   │   ├── js/tienda.jsx         capa db, bolsa (localStorage), priceBag, componentes · js/tailwind.config.js
+│   │   ├── js/tienda.jsx         capa db, precios por talla y ligas de Stripe, componentes (sin bolsa ni carrito) · js/tailwind.config.js
 │   │   ├── css/tienda.css        identidad Casa Siego para Tailwind
 │   │   └── supabase/             esquema Etapa 2 (no se ejecuta aún)
 │   ├── libre/index.html          OCULTA desde v1.1.1: coworking y café; sin enlaces ni menú, fuera del sitemap, noindex
