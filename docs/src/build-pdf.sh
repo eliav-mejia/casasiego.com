@@ -6,6 +6,7 @@
 # Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal: _interno/docs/)
 # Variant D setup guide:      sh docs/src/build-pdf.sh variante-d  (internal: _interno/)
 # Club offer guide:           sh docs/src/build-pdf.sh club        (internal: _interno/)
+# Image guide:                python3 _interno/docs/src/imagenes-casasiego.py && sh docs/src/build-pdf.sh imagenes  (internal)
 # Internal version notes:     sh docs/src/build-pdf.sh interno-1.2.0  (internal: _interno/docs/)
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -23,6 +24,9 @@ case "$VERSION" in
   club)
     SRC="$HERE/../../_interno/docs/src/club-casa-siego-guia.html"
     OUT="$HERE/../../_interno/club-casa-siego-guia-de-oferta.pdf" ;;
+  imagenes)
+    SRC="$HERE/../../_interno/docs/src/imagenes-casasiego.html"
+    OUT="$HERE/../../_interno/docs/casasiego-imagenes-v1.0.0.pdf" ;;
   interno-*)
     SRC="$HERE/../../_interno/docs/src/casasiego-v${VERSION#interno-}.html"
     OUT="$HERE/../../_interno/docs/casasiego-v${VERSION#interno-}.pdf" ;;
