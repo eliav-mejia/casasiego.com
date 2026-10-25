@@ -253,6 +253,7 @@ const Footer = () => {
                     <p><a className="link" href={`${SHOP}/guia-de-tallas/`}>Guía de tallas</a></p>
                     <p><a className="link" href={`${SHOP}/bolsa/`}>Bolsa</a></p>
                     <p><a className="link" href={`${ROOT}terms.html`}>Términos de uso</a></p>
+                    <p><a className="link" href={`${ROOT}devoluciones.html`}>Política de devoluciones</a></p>
                 </div>
             </div>
             <p className="label text-parchment/50 text-center pb-8 px-4">&copy; 2026 Casa Siego&reg;. Todos los derechos reservados. Precios en {code} con IVA incluido. Fotografías protegidas: prohibido su uso para entrenar IA.</p>
