@@ -235,7 +235,7 @@ def head(title, desc, url, up, kind, ld):
   <link rel="stylesheet" href="{up}css/site.css?v=1.1.0">
   <link rel="stylesheet" href="{up}css/layout.css?v=1.1.3">
   <script src="{up}js/region.js?v=1.1.1" defer></script>
-  <script src="{up}js/casa.js?v=1.1.2" defer></script>
+  <script src="{up}js/casa.js?v=1.1.4" defer></script>
 </head>
 <body>
 '''
