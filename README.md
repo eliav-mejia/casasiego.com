@@ -11,6 +11,7 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato ejecutivo,
 casasiego.com/
 ├── index.html                    portada Casa Siego (venta cruzada): Cap. I trajes (Justo), Cap. II retrato (Fiel, pop-up de enfoque), Cap. III mascotas (Fiel)
 ├── visitante.html                copia de la portada sin pop-up, destino de «Omitir»: Cap. I trajes (Justo), Cap. II retrato (Fiel), Cap. III mascotas (Fiel)
+├── equipo/index.html            índice del equipo (enlace en el pie de la portada): fotógrafos (Fiel) y sastres (Justo), fotos en images/Equipo/
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── CNAME                         casasiego.com (dominio de GitHub Pages)
