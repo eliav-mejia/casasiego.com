@@ -164,6 +164,11 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   color: var(--parchment-marble);
 }
 .interlude__plate { position: absolute; inset: -25% 0; z-index: -2; }
+/* Diptych: two photographs side by side, stacked on narrow screens. */
+/* Half the overflow (pair with data-speed="0.1") so the portraits' heads stay in frame. */
+.interlude__plate--diptych { inset: -12% 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.interlude__plate--diptych img { min-width: 0; min-height: 0; }
+@media (max-width: 720px) { .interlude__plate--diptych { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; } }
 .interlude__veil {
   position: absolute;
   inset: 0;
@@ -627,6 +632,20 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
 .clima strong { font-family: var(--font-display); font-style: normal; font-weight: 400; font-size: 0.85em; letter-spacing: 0.18em; text-transform: uppercase; }
 .clima__leaf { width: 1.15em; height: 1.15em; flex: none; }
 .clima:hover { color: var(--beige-soft); border-color: var(--beige-soft); }
+
+/* 11a-sexies. Equipo (equipo/): portrait cards for the photographers (Fiel) and tailors (Justo) */
+.terms .equipo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--space-3) var(--space-2); max-width: none; margin: var(--space-2) 0 var(--space-4); padding: 0; list-style: none; }
+.terms .equipo-card { margin: 0; }
+.equipo-card figure { margin: 0; }
+.equipo-card__frame { aspect-ratio: 4 / 5; overflow: hidden; background: var(--beige-soft); border: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent); }
+.equipo-card__frame img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1600ms var(--ease-out-expo); }
+.equipo-card:hover .equipo-card__frame img { transform: scale(1.05); }
+.equipo-card figcaption { display: grid; gap: 0.15em; padding-top: 0.7rem; }
+.equipo-card__name { font-family: var(--font-section); font-weight: 600; font-size: 1.15rem; line-height: 1.2; }
+.equipo-card__role { font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--laurel-leaf); }
+.equipo-card__frame:has(.equipo-card__soon) { display: grid; place-items: center; }
+.equipo-card__soon { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amphora-rust); text-align: center; padding: 1rem; }
+@media (prefers-reduced-motion: reduce) { .equipo-card__frame img { transition: none; } }
 
 /* 11b. Pages that open on a light section sit below the fixed header (js/casa.js) */
 .head-offset main:first-of-type { padding-top: 4.5rem; }

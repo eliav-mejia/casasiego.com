@@ -44,6 +44,26 @@
 .sessions--portrait .sessions__grid { width: calc(75% + 0.5 * clamp(1rem, 2.5vw, 2.5rem)); margin-inline: auto; }
 .sessions--portrait .session .plate__frame { aspect-ratio: 9 / 16; }
 .session .plate__frame--whole img { object-fit: contain; transform: none; }
+/* Compact sessions: small cards with tags only, no prices or lists. */
+.sessions--compact .sessions__grid { max-width: 60rem; margin-inline: auto; }
+.sessions--compact .session .plate__frame { aspect-ratio: 4 / 5; }
+.session__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: var(--space-2) 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+.session__tags li {
+  padding: 0.3em 0.8em;
+  border: 1px solid color-mix(in srgb, var(--hellenic-gold) 55%, transparent);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--laurel-leaf);
+}
 .session__body {
   display: flex;
   flex: 1;
@@ -148,6 +168,7 @@
   .sessions__head, .download__inner { margin-left: 0; }
   .sessions__grid { grid-template-columns: 1fr; max-width: 34rem; }
   .sessions--portrait .sessions__grid { width: auto; max-width: 25.5rem; }
+  .sessions--compact .sessions__grid { max-width: 25.5rem; }
   .ledger, .download__inner { grid-template-columns: 1fr; }
 }
 
