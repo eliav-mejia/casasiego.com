@@ -37,6 +37,8 @@
   border: 1px solid color-mix(in srgb, var(--hellenic-gold) 40%, transparent);
   box-shadow: 0 30px 60px -40px color-mix(in srgb, var(--aegean-ink) 35%, transparent);
 }
+.session--link { color: inherit; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+.session--link:hover, .session--link:focus-visible { border-color: var(--amphora-rust); transform: translateY(-4px); }
 .session--featured { border-top: 3px solid var(--amphora-rust); }
 .session .plate__frame { aspect-ratio: 4 / 3; }
 /* Portrait sessions: cards narrowed to 3/4 so the frame keeps its height
