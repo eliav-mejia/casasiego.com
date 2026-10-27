@@ -30,7 +30,7 @@ casasiego.com/
 ├── brands/
 │   ├── fiel/index.html           Fiel by Casa Siego · fotografía de mascotas (v1.2.3): «Reservar» → Payment Link del anticipo (España: correo)
 │   ├── fiel/agenda/              v1.2.3 · noindex, robots: calendario interno tras el pago (Stripe → <sesión>/?pago=cs_…)
-│   │   ├── calendario.json       156 días en 52 semanas (domingo siempre, nunca sábado), mañana y tarde a la hora dorada
+│   │   ├── calendario.json       reglas: semana actual 3 horarios, siguiente 9; 9:00 o 16:00; domingo 30 %, nunca sábado (js/agenda.js)
 │   │   ├── ocupados.json         horarios confirmados, a mano al confirmar cada cita
 │   │   └── esencial/ · clasica/ · legado/   generadas por docs/src/agenda-fiel.py (js/agenda.js, css/agenda.css)
 │   ├── fiel/mascota/             redirige a fiel/ desde v1.2.3
@@ -58,7 +58,6 @@ casasiego.com/
         ├── make-placeholders.py  marcadores para los huecos vacíos de todos los catálogos
         ├── export-portada-servicios.py  recortes web de la portada desde images/og/ (+ og/share.jpg)
         ├── ayuda.py              genera el Centro de Ayuda (ayuda/)
-        ├── calendario-fiel.py    genera brands/fiel/agenda/calendario.json (nota: _interno/docs/Calendar/)
         └── agenda-fiel.py        genera las tres páginas de brands/fiel/agenda/
 ```
 

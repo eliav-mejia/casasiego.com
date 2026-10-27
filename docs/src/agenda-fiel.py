@@ -1,6 +1,6 @@
 """Builds brands/fiel/agenda/{esencial,clasica,legado}/index.html (v1.2.3): the page Stripe opens after the
 deposit of each Fiel Mascotas session. One template, so the three pages stay in step; the calendar itself
-is drawn by js/agenda.js from brands/fiel/agenda/calendario.json (docs/src/calendario-fiel.py).
+is drawn by js/agenda.js from the rules in brands/fiel/agenda/calendario.json: this week and the next only.
 Run:  python3 docs/src/agenda-fiel.py"""
 from html import escape
 from pathlib import Path
@@ -39,9 +39,9 @@ PLANTILLA = """<!doctype html>
   <link rel="stylesheet" href="../../../../css/site.css?v=1.1.0">
   <link rel="stylesheet" href="../../../../css/layout.css?v=1.1.7">
   <link rel="stylesheet" href="../../../../css/web.css?v=1.0.0">
-  <link rel="stylesheet" href="../../../../css/agenda.css?v=1.0.0">
+  <link rel="stylesheet" href="../../../../css/agenda.css?v=2.0.0">
   <script src="../../../../js/casa.js?v=1.1.5" defer></script>
-  <script src="../../../../js/agenda.js?v=1.0.0" defer></script>
+  <script src="../../../../js/agenda.js?v=2.0.0" defer></script>
 </head>
 <body>
 
@@ -75,18 +75,11 @@ PLANTILLA = """<!doctype html>
 
       <div id="agenda" hidden data-sesion="{id}" data-nombre="{nombre}" data-duracion="{duracion}" data-anticipo="{anticipo} MXN">
         <div class="agenda-pick">
-          <p class="ayuda-lede">Fotografiamos a la hora dorada: la primera hora de sol de la mañana y la última de la tarde, cuando el pelaje toma el color del día. Elige un día marcado y uno de sus dos horarios.</p>
+          <p class="ayuda-lede">Abrimos pocas fechas y solo para esta semana y la próxima: por la mañana a las 9:00 o por la tarde a las 16:00, algunos domingos y nunca en sábado. Elige un día marcado y su horario.</p>
           <p class="agenda-estado" id="agenda-estado" role="status">Cargando el calendario…</p>
 
-          <div class="agenda-cal">
-            <div class="agenda-cal__head">
-              <button class="agenda-cal__nav" type="button" id="agenda-prev" aria-label="Mes anterior">&larr;</button>
-              <h2 class="agenda-cal__mes" id="agenda-mes" aria-live="polite"></h2>
-              <button class="agenda-cal__nav" type="button" id="agenda-next" aria-label="Mes siguiente">&rarr;</button>
-            </div>
-            <ol class="agenda-cal__dias" aria-hidden="true"><li>Lu</li><li>Ma</li><li>Mi</li><li>Ju</li><li>Vi</li><li>Sá</li><li>Do</li></ol>
-            <div class="agenda-cal__grid" id="agenda-grid"></div>
-          </div>
+          <div class="agenda-semanas" id="agenda-semanas"></div>
+          <p class="agenda-leyenda meta" aria-hidden="true"><span class="agenda-leyenda__libre"></span> con horario libre &middot; &bull; un horario &middot; &bull;&bull; dos horarios</p>
 
           <fieldset class="q agenda-horarios" id="agenda-horarios" hidden>
             <legend class="q__t">Horario del <span id="agenda-dia"></span></legend>

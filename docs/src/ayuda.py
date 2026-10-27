@@ -77,7 +77,7 @@ ARTICLES = [
         ]),
     ]),
     ('sesiones-de-retrato', 'citas', '¿Cómo reservo una sesión de Fiel Mascotas?',
-     'Pagas el anticipo en línea y eliges tu fecha en el calendario de tu sesión, a la hora dorada.', [
+     'Pagas el anticipo en línea y eliges tu fecha en el calendario de tu sesión, esta semana o la próxima.', [
         ('Elige tu sesión', [
             'Fiel fotografía mascotas con luz natural: Esencial, Clásica y Legado. Compáralas en <a href="../../brands/fiel/#sesiones">las sesiones de Fiel</a> y pulsa «Reservar» en la tuya.',
         ]),
@@ -85,7 +85,7 @@ ARTICLES = [
             'El anticipo es el 50&nbsp;% del precio y se paga con tarjeta en la página segura de Stripe. Casa Siego no recibe ni guarda los datos de tu tarjeta. El resto se paga el día de la sesión.',
         ]),
         ('Elige tu fecha', [
-            'Al terminar el pago, Stripe te lleva al calendario de tu sesión. Abrimos tres días por semana, siempre en domingo y nunca en sábado, cada uno con dos horarios a la hora dorada: la primera hora de sol de la mañana y la última de la tarde. Elige uno, completa tus datos y envía la solicitud desde tu correo; te confirmamos la cita en un día hábil.',
+            'Al terminar el pago, Stripe te lleva al calendario de tu sesión. Solo abrimos fechas para esta semana y la próxima, por la mañana a las 9:00 o por la tarde a las 16:00, algunos domingos y nunca en sábado. Elige una, completa tus datos y envía la solicitud desde tu correo; te confirmamos la cita en un día hábil.',
         ]),
         ('Prepara tu sesión', [
             'Para ideas de preparación, lee <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
