@@ -126,7 +126,7 @@
       lines.push((no + ' · ' + textOf(legend).slice(no.length).trim()).toUpperCase(), '');
       lines.push(block.join('\n\n'), '');
     });
-    lines.push('—', 'Enviado desde casasiego.com/web/');
+    lines.push('—', 'Enviado desde casasiego.com/membresia/web/');
     return lines.join('\n');
   }
 

@@ -1,7 +1,7 @@
 """Builds the Centro de Ayuda (Casa Siego's help blog) at ayuda/: an index grouped by topic and one article per question.
 Each article opens with its own index of sections. Edit ARTICLES below and run from the project root:
     python3 docs/src/ayuda.py
-Fields left in [brackets] render as .fill and must be decided before launch (see _interno/club-casa-siego-guia-de-oferta.pdf)."""
+Fields left in [brackets] render as .fill and must be decided before launch (see _interno/Marketing/club-casa-siego-guia-de-oferta.pdf)."""
 import html, json, os, re
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
@@ -76,16 +76,19 @@ ARTICLES = [
             'Recibes por correo la confirmación con el detalle de tu oferta, tu comprobante y las fechas de vigencia de tu membresía.',
         ]),
     ]),
-    ('sesiones-de-retrato', 'beneficios', '¿Cómo agendo mis sesiones de retrato?',
-     'Tu membresía incluye sesiones mensuales en el estudio Fiel; agéndalas con reserva prioritaria.', [
-        ('Una sesión cada mes', [
-            'Durante tu año de membresía tienes sesiones mensuales de retrato en el estudio Fiel: retrato de negocios, perfil corporativo o retrato personal, con luz de estudio, dirección y edición.',
+    ('sesiones-de-retrato', 'citas', '¿Cómo reservo una sesión de Fiel Mascotas?',
+     'Pagas el anticipo en línea y eliges tu fecha en el calendario de tu sesión, a la hora dorada.', [
+        ('Elige tu sesión', [
+            'Fiel fotografía mascotas con luz natural: Esencial, Clásica y Legado. Compáralas en <a href="../../brands/fiel/#sesiones">las sesiones de Fiel</a> y pulsa «Reservar» en la tuya.',
         ]),
-        ('Cómo agendar', [
-            'Escríbenos a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Sesi%C3%B3n%20de%20retrato">info@casasiego.com</a> o pídela en atención a clientes durante tu siguiente visita. Como miembro, tienes reserva prioritaria del estudio.',
+        ('Paga el anticipo', [
+            'El anticipo es el 50&nbsp;% del precio y se paga con tarjeta en la página segura de Stripe. Casa Siego no recibe ni guarda los datos de tu tarjeta. El resto se paga el día de la sesión.',
+        ]),
+        ('Elige tu fecha', [
+            'Al terminar el pago, Stripe te lleva al calendario de tu sesión. Abrimos tres días por semana, siempre en domingo y nunca en sábado, cada uno con dos horarios a la hora dorada: la primera hora de sol de la mañana y la última de la tarde. Elige uno, completa tus datos y envía la solicitud desde tu correo; te confirmamos la cita en un día hábil.',
         ]),
         ('Prepara tu sesión', [
-            'Puedes combinarla con la sastrería: ajusta tu saco antes de la sesión o estrena tu traje frente a la cámara. Para ideas de preparación, lee <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
+            'Para ideas de preparación, lee <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
         ]),
     ]),
     ('reclamar-tu-traje', 'beneficios', '¿Cómo reclamo mi traje a la medida?',
@@ -141,8 +144,11 @@ ARTICLES = [
     ]),
     ('cancelar-o-mover-una-cita', 'citas', '¿Cómo cancelo o muevo una cita?',
      'Avísanos con anticipación para no perder tu sesión o tu prueba.', [
-        ('Con anticipación', [
-            'Puedes cancelar o mover tu sesión de retrato o tu cita de sastrería avisando con al menos <span class="fill">[horas]</span> horas de anticipación a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>.',
+        ('Sesiones de Fiel Mascotas', [
+            'Para mover tu sesión, escríbenos con al menos 24 horas de anticipación a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>: te proponemos otro horario libre del calendario y tu anticipo pasa a la nueva fecha. Las reglas de cancelación y del anticipo están en los <a href="../../brands/fiel/terminos/">términos de Fiel</a>.',
+        ]),
+        ('Citas del Club', [
+            'Puedes cancelar o mover tu cita de sastrería avisando con al menos <span class="fill">[horas]</span> horas de anticipación a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>.',
         ]),
         ('Si no llegas', [
             'Una cita que no se cancela a tiempo puede contarse como utilizada.',
@@ -175,7 +181,7 @@ ARTICLES = [
     ('actualizacion-de-politicas', 'politicas', '¿Cómo me entero si cambian las políticas?',
      'Publicamos los cambios en este Centro de Ayuda y te enviamos un aviso automático por correo.', [
         ('Dónde se publican', [
-            'Las políticas del Club se actualizan en este Centro de Ayuda. La versión y la fecha de los <a href="../../membresia.html">términos y condiciones</a> cambian con cada actualización.',
+            'Las políticas del Club se actualizan en este Centro de Ayuda. La versión y la fecha de los <a href="../../membresia/">términos y condiciones</a> cambian con cada actualización.',
         ]),
         ('Cómo te avisamos', [
             'Cada vez que una política se actualiza, enviamos en automático un aviso por correo a todos los miembros. También te las explicamos en atención a clientes durante tus servicios y en cada cotización.',
@@ -235,7 +241,7 @@ def head(title, desc, url, up, kind, ld):
   <link rel="stylesheet" href="{up}css/site.css?v=1.1.0">
   <link rel="stylesheet" href="{up}css/layout.css?v=1.1.3">
   <script src="{up}js/region.js?v=1.1.1" defer></script>
-  <script src="{up}js/casa.js?v=1.1.4" defer></script>
+  <script src="{up}js/casa.js?v=1.1.5" defer></script>
 </head>
 <body>
 '''
@@ -293,7 +299,7 @@ def article(i, a):
 {secs}
 
       <hr class="rule">
-      <p class="meta">¿No encontraste tu respuesta? Escríbenos a <a href="mailto:info@casasiego.com?subject=Centro%20de%20Ayuda">info@casasiego.com</a>. Consulta también los <a href="../../membresia.html">términos y condiciones de la membresía</a>.</p>
+      <p class="meta">¿No encontraste tu respuesta? Escríbenos a <a href="mailto:info@casasiego.com?subject=Centro%20de%20Ayuda">info@casasiego.com</a>. Consulta también los <a href="../../membresia/">términos y condiciones de la membresía</a>.</p>
       <p class="meta ayuda-pager">{pager}</p>
     </article>
   </main>
@@ -340,7 +346,7 @@ def index():
       <p class="meta">Temas</p>
       <ol>
 {menu}      </ol>
-      <p class="meta"><a href="../membresia.html">Términos de la membresía</a></p>
+      <p class="meta"><a href="../membresia/">Términos de la membresía</a></p>
     </nav>
 
     <div class="folio__text">

@@ -9,10 +9,12 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato ejecutivo,
 
 ```
 casasiego.com/
-├── index.html                    portada Casa Siego (venta cruzada): Cap. I trajes (Justo), Cap. II retrato (Fiel, pop-up de enfoque), Cap. III mascotas (Fiel)
-├── visitante.html                copia de la portada sin pop-up, destino de «Omitir»: Cap. I trajes (Justo), Cap. II retrato (Fiel), Cap. III mascotas (Fiel)
-├── equipo/index.html            índice del equipo (enlace en el pie de la portada): fotógrafos (Fiel) y sastres (Justo), fotos en images/Equipo/
-├── web/index.html               Web · Lujo, Arte e Imagen: cuestionario de consultoría para miembros (css/web.css, js/web.js); se envía por el correo del visitante
+├── index.html                    portada Casa Siego (venta cruzada): Cap. I trajes (Justo), Cap. II mascotas (Fiel) · sin pop-up de enfoque desde v1.2.3
+├── visitante.html                copia de la portada sin pop-up, destino de «Omitir»: Cap. I trajes (Justo), Cap. II mascotas (Fiel)
+├── membresia/
+│   ├── index.html                términos y condiciones de la membresía del Club
+│   ├── equipo/index.html         índice del equipo (enlace en el pie de la portada): fotógrafos (Fiel) y sastres (Justo), fotos en images/Equipo/
+│   └── web/index.html            Web · Lujo, Arte e Imagen: cuestionario de consultoría para miembros (css/web.css, js/web.js); se envía por el correo del visitante
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── CNAME                         casasiego.com (dominio de GitHub Pages)
@@ -26,8 +28,13 @@ casasiego.com/
 ├── js/region.js                  bandera México / España (todas las páginas): por IP cambia CDMX → Madrid, las locaciones de Fiel y los precios a euros (MXN ÷ 20 × 1.8)
 ├── js/acceso.js · js/acceso-config.js · css/acceso.css   pop-up de acceso de la portada (Supabase Auth, sin registro)
 ├── brands/
-│   ├── fiel/index.html           Fiel by Casa Siego, estudio fotográfico · enfoque mascotas
-│   ├── fiel/ejecutivo/ · fiel/familiar/   Fiel por enfoque: perfil ejecutivo y familiar / pareja (mismos paquetes)
+│   ├── fiel/index.html           Fiel by Casa Siego · fotografía de mascotas (v1.2.3): «Reservar» → Payment Link del anticipo (España: correo)
+│   ├── fiel/agenda/              v1.2.3 · noindex, robots: calendario interno tras el pago (Stripe → <sesión>/?pago=cs_…)
+│   │   ├── calendario.json       156 días en 52 semanas (domingo siempre, nunca sábado), mañana y tarde a la hora dorada
+│   │   ├── ocupados.json         horarios confirmados, a mano al confirmar cada cita
+│   │   └── esencial/ · clasica/ · legado/   generadas por docs/src/agenda-fiel.py (js/agenda.js, css/agenda.css)
+│   ├── fiel/mascota/             redirige a fiel/ desde v1.2.3
+│   ├── fiel/ejecutivo/ · fiel/familiar/   OCULTAS desde v1.2.3 (en desarrollo): noindex, sin enlaces, fuera del sitemap
 │   ├── justo/index.html          marca nº 2 · Justo by Casa Siego, sastrería
 │   ├── justo/tienda/             TIENDA EN LÍNEA de Justo (variante C/D: React + Tailwind por CDN, sin build)
 │   │   ├── index.html            catálogo: 3 sacos, tallas CH · M · G · XG, calculadora de talla
@@ -43,17 +50,19 @@ casasiego.com/
 │   ├── README.md                 índice de catálogos
 │   ├── casa/                     catálogo base de la portada (README.md)
 │   └── og/share.jpg              tarjeta para compartir la portada
-├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna (tienda, SEO.md, docs/ synode-v1.0.x y SEO de Justo)
+├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna (tienda, SEO.md, docs/mockup/ synode-v1.0.x, docs/rebranding/ casasiego-v1.2.x, docs/cyberseguridad/ y SEO de Justo)
 └── docs/                         documentación (bloqueada en .htaccess y robots.txt)
     ├── casasiego-v1.1.0.pdf      documentación del cambio de marca, dominio y DNS (único PDF en docs/)
     └── src/
         ├── build-pdf.sh          sh docs/src/build-pdf.sh 1.1.0 → docs/casasiego-v1.1.0.pdf
         ├── make-placeholders.py  marcadores para los huecos vacíos de todos los catálogos
         ├── export-portada-servicios.py  recortes web de la portada desde images/og/ (+ og/share.jpg)
-        └── ayuda.py              genera el Centro de Ayuda (ayuda/)
+        ├── ayuda.py              genera el Centro de Ayuda (ayuda/)
+        ├── calendario-fiel.py    genera brands/fiel/agenda/calendario.json (nota: _interno/docs/Calendar/)
+        └── agenda-fiel.py        genera las tres páginas de brands/fiel/agenda/
 ```
 
-Los precios de Fiel están en tres páginas que deben coincidir: `brands/fiel/index.html`, `brands/fiel/ejecutivo/` y `brands/fiel/familiar/`.
+Los precios de Fiel deben coincidir en `brands/fiel/index.html`, `SESIONES` de `docs/src/agenda-fiel.py` y los montos de los Payment Links en Stripe (las páginas ocultas `ejecutivo/` y `familiar/` repiten los paquetes).
 
 ## Tienda Justo (`brands/justo/tienda/`)
 

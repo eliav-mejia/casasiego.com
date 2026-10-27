@@ -1,20 +1,22 @@
 <!doctype html>
+<!-- v1.2.3: Fiel is pet photography only (the ejecutivo and familiar pages are hidden; mascota/ redirects here).
+     «Reservar» opens the Stripe Payment Link of each deposit; Stripe returns to agenda/<sesión>/. -->
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fiel by Casa Siego® — Fotografía profesional en locación</title>
-  <meta name="description" content="Fiel, marca nº 1 de Casa Siego: fotografía profesional en la locación que elijas, en Ciudad de México. Sesiones de perfil ejecutivo, familiar y de mascotas, con luz natural.">
+  <title>Fiel by Casa Siego® — Fotografía de mascotas</title>
+  <meta name="description" content="Fiel, marca nº 1 de Casa Siego: fotografía de mascotas con luz natural en Ciudad de México. Sesiones Esencial, Clásica y Legado, precios en pesos mexicanos.">
   <link rel="canonical" href="https://casasiego.com/brands/fiel/">
   <meta property="og:site_name" content="Casa Siego">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Fiel","url":"https://casasiego.com/brands/fiel/","description":"Estudio fotográfico de Casa Siego: fotografía profesional en locación a elegir, de perfil ejecutivo, familiar y de mascotas, en Ciudad de México.","parentOrganization":{"@id":"https://casasiego.com/#organizacion"},"email":"info@casasiego.com"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Casa Siego","item":"https://casasiego.com/"},{"@type":"ListItem","position":2,"name":"Fiel","item":"https://casasiego.com/brands/fiel/"}]}]}</script>
-  <meta property="og:title" content="Fiel by Casa Siego — Fotografía profesional en locación">
-  <meta property="og:description" content="Fotografía profesional en la locación que elijas: perfil ejecutivo, familiar y mascotas. Luz natural, dirección y sin prisa.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Fiel","url":"https://casasiego.com/brands/fiel/","description":"Estudio fotográfico de Casa Siego: fotografía de mascotas con luz natural en Ciudad de México.","parentOrganization":{"@id":"https://casasiego.com/#organizacion"},"email":"info@casasiego.com"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Casa Siego","item":"https://casasiego.com/"},{"@type":"ListItem","position":2,"name":"Fiel","item":"https://casasiego.com/brands/fiel/"}]}]}</script>
+  <meta property="og:title" content="Fiel by Casa Siego — Fotografía de mascotas">
+  <meta property="og:description" content="Retratos de quienes nos son fieles. Sesiones con luz natural, sin prisa y con el bienestar de tu mascota primero.">
   <meta property="og:url" content="https://casasiego.com/brands/fiel/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_MX">
-  <meta property="og:image" content="https://casasiego.com/images/brands/fiel.esmx/web/hero-anillos.jpg">
+  <meta property="og:image" content="https://casasiego.com/images/brands/fiel.esmx/web/hero.jpg">
   <meta name="theme-color" content="#4A1621">
 
   <!-- Derechos: aviso de copyright y exclusión de minería de textos y datos / entrenamiento de IA -->
@@ -34,7 +36,7 @@
   <script src="../../js/parallax.js?v=1.1.0" defer></script>
   <script src="../../js/protect.js" defer></script>
   <script src="../../js/region.js?v=1.1.1" defer></script>
-  <script src="../../js/casa.js?v=1.1.4" defer></script>
+  <script src="../../js/casa.js?v=1.1.5" defer></script>
 </head>
 <body>
 
@@ -42,18 +44,18 @@
   <header class="hero" id="inicio">
     <a class="brand-return" href="../../">&larr; Casa Siego</a>
     <div class="hero__plate" data-speed="0.35" aria-hidden="true">
-      <img draggable="false" width="1600" height="2400" src="../../images/brands/fiel.esmx/web/hero-alianzas.jpg?v=1.0.0" alt="" fetchpriority="high" style="object-position: 55% 70%">
+      <img draggable="false" width="2400" height="1600" src="../../images/brands/fiel.esmx/web/hero.jpg?v=1.0.8" alt="" fetchpriority="high">
     </div>
     <div class="hero__veil" aria-hidden="true"></div>
 
     <div class="hero__inscription" data-speed="-0.12">
-      <p class="eyebrow eyebrow--gold">Casa Siego &middot; Concepto</p>
+      <p class="eyebrow eyebrow--gold">Casa Siego &middot; Fiel &middot; Mascotas</p>
       <h1 class="display">Fiel</h1>
-      <p class="hero__lede">Fotografía profesional en locación.</p>
-      <p class="hero__sub">Perfil ejecutivo, familiar y mascotas, con luz natural, en el lugar que tú elijas: la oficina, el parque, tu casa o el estudio.</p>
+      <p class="hero__lede">Fotografía de mascotas.</p>
+      <p class="hero__sub">Retratos de quienes nos son fieles, con luz natural, en el estudio, en el parque o en casa.</p>
       <div class="hero__actions">
-        <a class="button" href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Sesi%C3%B3n">Agendar una sesión</a>
-        <a class="button button--ghost" href="#sesiones">Ver las sesiones</a>
+        <a class="button" href="https://casasiego.com/index.html#acceso">Agendar una sesión</a>
+        <a class="button button--ghost" href="blog/organiza-tu-sesion/">Cómo organizar tu sesión</a>
       </div>
     </div>
 
@@ -69,12 +71,12 @@
     <section class="prologue folio" id="prologo" aria-labelledby="prologo-titulo">
       <div class="folio__margin">
         <p class="meta">Prólogo</p>
-        <p class="meta meta--muted">En la locación que elijas, en Ciudad de México</p>
+        <p class="meta meta--muted">Fotografiado en Ciudad de México, con luz natural</p>
       </div>
       <div class="folio__text">
         <h2 class="section-title" id="prologo-titulo">Un retrato fiel</h2>
-        <p class="dropcap">Fiel es el estudio de fotografía profesional de Casa Siego. Vamos a donde tú estés: a tu oficina, a tu casa, al parque de siempre o a la calle que te gusta. Trabajamos con luz natural, entre la primera y la última hora del sol. Un retrato fiel es el que se parece a quien lo mira de vuelta.</p>
-        <p>Retratamos tu perfil ejecutivo, a tu familia y a tus mascotas. Una sesión no empieza con la cámara sino con una conversación: elegimos juntos el lugar, la hora y la intención. Después, dirección fotográfica sin prisa y sin poses forzadas.</p>
+        <p class="dropcap">Fiel es el estudio de Casa Siego dedicado a retratar a los animales que comparten nuestra casa. Trabajamos con luz natural, entre la primera y la última hora del sol, cuando el pelaje toma el color del día. Un retrato fiel es el que se parece a quien lo mira de vuelta.</p>
+        <p>Una sesión no empieza con la cámara sino con un paseo. Dejamos que tu mascota conozca el lugar, nos huela y decida cuándo está lista. No hay prisa, no hay sedantes y no hay poses forzadas: hay agua, pausas y su premio favorito.</p>
         <hr class="rule">
       </div>
     </section>
@@ -84,19 +86,19 @@
       <header class="stack__head folio">
         <div class="folio__margin"><p class="eyebrow">Capítulo I</p></div>
         <div class="folio__text">
-          <h2 class="section-title" id="servicios-titulo">La locación la eliges tú</h2>
-          <p>Cada retrato se hace en el lugar que mejor cuenta tu historia. Nosotros llevamos la cámara, la dirección y la paciencia.</p>
+          <h2 class="section-title" id="servicios-titulo">Servicios</h2>
+          <p>Cada sesión incluye la edición de las fotografías seleccionadas; Clásica y Legado incluyen además una galería privada en línea.</p>
         </div>
       </header>
 
       <article class="stack__leaf">
         <div class="leaf">
-          <div class="leaf__image"><img draggable="false" width="1400" height="1000" src="../../images/brands/fiel.esmx/web/servicio-parque.jpg?v=1.0.0" alt="Parque con jacarandas en flor y una persona con sombrero caminando por el andador" loading="lazy"></div>
+          <div class="leaf__image"><img draggable="false" width="1400" height="1000" src="../../images/brands/fiel.esmx/web/servicio-03.jpg?v=1.0.8" alt="Perro de pelo dorado recostado bajo un árbol, sonriendo a la cámara" loading="lazy"></div>
           <div class="leaf__text">
             <p class="leaf__no">I</p>
             <p class="eyebrow">Al aire libre</p>
-            <h3 class="subhead">Luz natural, donde tú quieras</h3>
-            <p>Parques, plazas, terrazas o la calle de tu barrio. Buscamos la luz y el fondo que mejor te van, ya sea para un retrato profesional, una tarde en familia o un paseo con tu mascota.</p>
+            <h3 class="subhead">Tu mascota, tal como es</h3>
+            <p>Sesiones con luz natural en los parques de la ciudad, con el bienestar de tu mascota primero. A la altura de sus ojos: el que vigila, el que juega, el que descansa.</p>
             <p class="caption" data-region="mx">Bosque de Chapultepec &middot; Parque México &middot; Parque de los Venados</p>
             <p class="caption" data-region="es" hidden>Parque Ríos Rosas &middot; Parque de Santander</p>
             <a class="leaf__link" href="#sesiones">Ver las sesiones &rarr;</a>
@@ -105,71 +107,83 @@
       </article>
       <article class="stack__leaf">
         <div class="leaf leaf--reverse">
-          <div class="leaf__image"><img draggable="false" width="1400" height="1000" src="../../images/brands/fiel.esmx/web/servicio-propuesta.jpg?v=1.0.0" style="object-position: 50% 45%" alt="Hombre arrodillado en una duna toma la mano de su pareja, vestida de blanco y con un ramo de flores secas" loading="lazy"></div>
+          <div class="leaf__image"><img draggable="false" width="1074" height="768" src="../../images/brands/fiel.esmx/web/servicio-familia.jpg?v=1.0.9" alt="Dos perros juntos en el parque: uno de pelo dorado con arnés gris y otro blanco con orejas canela, sonriendo" loading="lazy"></div>
           <div class="leaf__text">
             <p class="leaf__no">II</p>
-            <p class="eyebrow">En casa, en la oficina</p>
-            <h3 class="subhead">O donde sea</h3>
-            <p>Elige con quién estar y el dónde será el menor de tus problemas.</p>
-            <p class="caption">Cualquier locación en CDMX &middot; fuera de la ciudad, se cotiza el traslado</p>
+            <p class="eyebrow">Familia</p>
+            <h3 class="subhead">Con quienes los quieren</h3>
+            <p>Retratos de tu mascota junto a su familia, o de varias mascotas juntas, en el parque o en su casa, en su jardín o en su sillón favorito.</p>
+            <p class="caption">Hasta 3 mascotas con Legado &middot; cualquier locación en CDMX</p>
             <a class="leaf__link" href="#sesiones">Ver las sesiones &rarr;</a>
           </div>
         </div>
       </article>
     </section>
 
-    <!-- IV. Capítulo II — Sesiones: ejecutivo, familiar y mascotas -->
-    <section class="sessions sessions--compact" id="sesiones" aria-labelledby="sesiones-titulo">
+    <!-- IV. Capítulo II — Sesiones y precios (MXN, IVA incluido) -->
+    <section class="sessions sessions--portrait" id="sesiones" data-prices aria-labelledby="sesiones-titulo">
       <header class="sessions__head">
         <p class="eyebrow">Capítulo II</p>
         <h2 class="section-title" id="sesiones-titulo">Sesiones</h2>
-        <p>Tres retratos, una misma manera de trabajar: en la locación que elijas, con luz natural y sin prisa. Antes de reservar, lee <a href="blog/organiza-tu-sesion/">cómo organizar bien tu sesión</a> y los <a href="terminos/">términos y condiciones</a>.</p>
+        <p>Tres formas de reunirnos fuera del estudio. Todos los precios están en pesos mexicanos (MXN) e incluyen IVA. La guía en PDF detalla cada sesión, sus locaciones y cómo prepararse. Reservas pagando el anticipo en línea con Stripe y, al terminar el pago, eliges tu fecha en el calendario de tu sesión. Antes de reservar, lee <a href="blog/organiza-tu-sesion/">cómo organizar bien tu sesión</a> y los <a href="terminos/">términos y condiciones</a>.</p>
       </header>
 
       <div class="sessions__grid">
         <article class="session">
-          <div class="plate__frame"><img draggable="false" width="900" height="1350" src="../../images/brands/fiel.esmx/web/perfil-ejecutivo.jpg?v=1.2.0" style="object-position: 50% 28%" alt="Hombre de lentes con traje gris de tres piezas y moño, sonriendo junto a una ventana: ejemplo de perfil ejecutivo" loading="lazy"></div>
+          <div class="plate__frame"><img draggable="false" width="846" height="1500" src="../../images/brands/fiel.esmx/web/sesion-esencial.jpg?v=1.0.11" alt="Perro blanco con manchas negras junto a su pelota naranja: ejemplo de sesión Esencial" loading="lazy"></div>
           <div class="session__body">
-            <p class="eyebrow session__tag">Perfil ejecutivo</p>
-            <h3 class="subhead">Ejecutivo</h3>
-            <p>Tu imagen profesional, en tu oficina o en un lugar que hable de ti.</p>
-            <ul class="session__tags">
-              <li>LinkedIn</li>
-              <li>CV</li>
-              <li>Corporativo</li>
-              <li>Portafolio</li>
+            <p class="eyebrow session__tag">La más elegida</p>
+            <h3 class="subhead">Esencial</h3>
+            <p class="session__price">$310 <small>MXN</small></p>
+            <p class="meta session__terms">IVA incluido · anticipo de $155</p>
+            <ul class="session__list">
+              <li><b>Mascotas</b> 1</li>
+              <li><b>Locación</b> Parque México, Condesa</li>
+              <li><b>Entrega</b> 2 fotografías editadas</li>
             </ul>
-            <a class="button" href="ejecutivo/">Ver ejecutivo</a>
+            <a class="button" data-region="mx" href="https://buy.stripe.com/4gM6oJ4zFaC7eA4bOIcMM0g" rel="noopener">Reservar</a>
+            <a class="button" data-region="es" hidden href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Sesi%C3%B3n%20Esencial">Reservar</a>
           </div>
         </article>
-        <article class="session">
-          <div class="plate__frame"><img draggable="false" width="900" height="1350" src="../../images/brands/fiel.esmx/web/perfil-familiar-campo.jpg?v=1.0.0" style="object-position: 50% 45%" alt="Pareja vestida de blanco en un prado, la mamá alza a su bebé mientras el papá sonríe: ejemplo de sesión familiar" loading="lazy"></div>
+
+        <article class="session session--featured">
+          <div class="plate__frame"><img draggable="false" width="846" height="1502" src="../../images/brands/fiel.esmx/web/sesion-clasica-familia.jpg?v=1.0.0" alt="Perra de pelo dorado con collar de colores, sentada en el parque mirando a un lado: ejemplo de sesión Clásica" loading="lazy"></div>
           <div class="session__body">
-            <p class="eyebrow session__tag">Familia y pareja</p>
-            <h3 class="subhead">Familiar</h3>
-            <p>Retratos para el portarretrato y el álbum, en casa, en el parque o donde se sientan ustedes.</p>
-            <ul class="session__tags">
-              <li>Pareja</li>
-              <li>Familia</li>
-              <li>Aniversario</li>
-              <li>En casa</li>
+            <p class="eyebrow session__tag">Con la familia</p>
+            <h3 class="subhead">Clásica</h3>
+            <p class="session__price">$750 <small>MXN</small></p>
+            <p class="meta session__terms">IVA incluido · anticipo de $375</p>
+            <ul class="session__list">
+              <li><b>Duración</b> 30 minutos</li>
+              <li><b>Mascotas</b> 1</li>
+              <li><b>Locación</b> Parque México, Condesa</li>
+              <li><b>Entrega</b> 5 fotografías editadas</li>
+              <li><b>Mentoría</b> previa a la sesión, incluida</li>
+              <li><b>Galería</b> privada en línea, 10 días hábiles</li>
             </ul>
-            <a class="button" href="familiar/">Ver familiar</a>
+            <a class="button" data-region="mx" href="https://buy.stripe.com/28EbJ3c27fWrcrW6uocMM0f" rel="noopener">Reservar</a>
+            <a class="button" data-region="es" hidden href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Sesi%C3%B3n%20Cl%C3%A1sica">Reservar</a>
           </div>
         </article>
+
         <article class="session">
-          <div class="plate__frame"><img draggable="false" width="614" height="768" src="../../images/brands/fiel.esmx/web/sesion-mascotas-parque.jpg?v=1.0.0" alt="Dos perros juntos en el parque, uno de pelo dorado con arnés y otro blanco con orejas canela y la lengua afuera: ejemplo de sesión de mascotas" loading="lazy"></div>
+          <div class="plate__frame"><img draggable="false" width="846" height="1500" src="../../images/brands/fiel.esmx/web/sesion-legado.jpg?v=1.0.11" alt="Perra de pelo crema con arnés azul, de pie en el parque: ejemplo de sesión Legado" loading="lazy"></div>
           <div class="session__body">
-            <p class="eyebrow session__tag">Quienes nos son fieles</p>
-            <h3 class="subhead">Mascotas</h3>
-            <p>A su ritmo, con agua, pausas y su premio favorito. El bienestar de tu mascota, primero.</p>
-            <ul class="session__tags">
-              <li>Perros</li>
-              <li>Gatos</li>
-              <li>Al aire libre</li>
-              <li>Con su familia</li>
+            <p class="eyebrow session__tag">La favorita</p>
+            <h3 class="subhead">Legado</h3>
+            <p class="session__price">$1,450 <small>MXN</small></p>
+            <p class="meta session__terms">IVA incluido · anticipo de $725</p>
+            <ul class="session__list">
+              <li><b>Duración</b> 45 minutos</li>
+              <li><b>Mascotas</b> hasta 3</li>
+              <li><b>Locación</b> cualquiera en CDMX</li>
+              <li><b>Entrega</b> 15 fotografías editadas</li>
+              <li><b>Material</b> original en crudo incluido</li>
+              <li><b>Mentoría</b> previa a la sesión, incluida</li>
+              <li><b>Galería</b> privada en línea, 30 días</li>
             </ul>
-            <a class="button" href="mascota/">Ver mascotas</a>
+            <a class="button" data-region="mx" href="https://buy.stripe.com/cNi14p9TZcKf63y8CwcMM0e" rel="noopener">Reservar</a>
+            <a class="button" data-region="es" hidden href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Sesi%C3%B3n%20Legado">Reservar</a>
           </div>
         </article>
       </div>
@@ -198,15 +212,14 @@
           <li data-region="es" hidden><strong>Parque Ríos Rosas</strong><span class="caption">A primera hora de la mañana; mascota siempre con correa.</span></li>
           <li data-region="es" hidden><strong>Parque de Santander</strong><span class="caption">Árboles y luz filtrada, a primera hora de la mañana.</span></li>
         </ul>
-        <p class="caption">Horarios: 8:00 – 11:00 y 16:00 – 19:00, según la luz. Sujeto al reglamento de cada parque.</p>
+        <p class="caption">Horarios: a la hora dorada, la primera hora de sol de la mañana y la última de la tarde, tres días por semana y siempre en domingo. Sujeto al reglamento de cada parque.</p>
       </div>
     </section>
 
     <!-- VI. Interludio -->
     <section class="interlude" aria-label="Interludio">
-      <div class="interlude__plate interlude__plate--diptych" data-speed="0.1" aria-hidden="true">
-        <img draggable="false" width="1200" height="1800" src="../../images/brands/fiel.esmx/web/interludio-manos.jpg?v=1.0.0" alt="" loading="lazy" style="object-position: 50% 45%">
-        <img draggable="false" width="1800" height="1200" src="../../images/brands/fiel.esmx/web/interludio-sacos.jpg?v=1.0.0" alt="" loading="lazy" style="object-position: 50% 50%">
+      <div class="interlude__plate" data-speed="0.2" aria-hidden="true">
+        <img draggable="false" width="2400" height="1352" src="../../images/brands/fiel.esmx/web/interludio.jpg?v=1.0.8" alt="" loading="lazy">
       </div>
       <div class="interlude__veil" aria-hidden="true"></div>
       <blockquote class="inscription">
@@ -220,19 +233,18 @@
       <div class="club__col">
         <p class="eyebrow eyebrow--gold">Capítulo III</p>
         <h2 class="section-title" id="estudio-titulo">Fotografía de estudio</h2>
-        <p>Si prefieres no salir, el Estudio Casa Siego también es una locación: luz de ventana y fondos de lino para retratos ejecutivos, familiares y de mascotas. Cada entrega incluye la edición de las fotografías seleccionadas.</p>
+        <p>En el Estudio Casa Siego retratamos a tu mascota con luz de ventana y fondos de lino. Cada entrega incluye la edición de las fotografías seleccionadas.</p>
         <ul class="club__list">
           <li>Luz de ventana y fondos de lino</li>
-          <li>Retratos de perfil ejecutivo con fondo neutro</li>
-          <li>Para días de lluvia o mascotas nerviosas</li>
+          <li>Para mascotas nerviosas, mayores o días de lluvia</li>
           <li>Retratos solos o con toda la familia</li>
         </ul>
         <a class="button" href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Proyecto%20de%20estudio">Cotizar proyecto</a>
       </div>
       <div class="club__col club__col--events">
-        <p class="eyebrow eyebrow--gold">Sin prisa</p>
-        <h3 class="subhead">Tu ritmo primero</h3>
-        <p>Pausas, conversación y dirección clara. Sea en el estudio o en la locación que elijas, la sesión se adapta a ti, a tu familia y a tu mascota.</p>
+        <p class="eyebrow eyebrow--gold">Bienestar</p>
+        <h3 class="subhead">Su ritmo primero</h3>
+        <p>Agua, pausas y su premio favorito. El estudio es un espacio tranquilo, lejos del ruido del parque, para que tu mascota se sienta en casa.</p>
         <a class="button button--ghost" href="#sesiones">Ver las sesiones</a>
       </div>
     </section>
@@ -245,16 +257,14 @@
       <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
       <p class="eyebrow eyebrow--gold">Colofón</p>
       <p class="colophon__title">Reservas y preguntas</p>
-      <a class="button" href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Sesi%C3%B3n">Agendar una sesión</a>
+      <a class="button" href="https://casasiego.com/index.html#acceso">Agendar una sesión</a>
       <p class="meta meta--gold"><a href="mailto:info@casasiego.com?subject=Fiel">info@casasiego.com</a></p>
       <hr class="rule rule--short rule--gold">
       <p class="meta meta--gold">Fiel es la marca nº 1 de Casa Siego. Compuesto en Palacio, Ledger y EB Garamond.</p>
       <p class="meta meta--gold">Todas las fotografías &copy; 2026 Casa Siego&reg;. Todos los derechos reservados. Prohibida su descarga, reproducción o uso para entrenar IA sin licencia por escrito.</p>
       <nav class="colophon__nav" aria-label="Casa Siego">
         <ul class="meta meta--gold inline-list">
-          <li>Fiel &middot; <a href="ejecutivo/">Perfil ejecutivo</a></li>
-          <li><a href="familiar/">Familiar / pareja</a></li>
-          <li><a href="mascota/">Mascotas</a></li>
+          <li>Fiel &middot; <a href="./">Mascotas</a></li>
           <li>Concepto &middot; <a href="../justo/">Justo</a></li>
         </ul>
         <ul class="meta meta--gold inline-list">
