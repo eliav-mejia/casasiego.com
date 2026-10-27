@@ -1,0 +1,168 @@
+/* Casa Siego — web.css (v1.0.0)
+   Web · Lujo, Arte e Imagen (web/): the consulting questionnaire for Club members.
+   Builds on site.css and layout.css (terms page and folio grid); only the form lives here. */
+
+/* Process and the three crafts */
+.web-steps li::marker { font-family: var(--font-display); color: var(--amphora-rust); }
+.web-oficios {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+.web-oficios > div {
+  padding: var(--space-2);
+  background: var(--beige-soft);
+  border-top: 2px solid var(--wine);
+}
+.web-oficios p { margin: 0; font-size: 0.95em; }
+.web-oficios .eyebrow { margin-bottom: 0.5em; }
+
+/* Side index: progress */
+.web-progress {
+  height: 2px;
+  margin: var(--space-2) 0 var(--space-1);
+  background: color-mix(in srgb, var(--brass) 30%, transparent);
+}
+.web-progress span { display: block; height: 100%; width: 0; background: var(--wine); transition: width 400ms ease; }
+
+/* Parts of the form */
+.web-form { margin-top: var(--space-5); }
+.web-part {
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  scroll-margin-top: 6rem;
+}
+.web-part > legend {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  width: 100%;
+  margin-bottom: var(--space-3);
+  padding: 0 0 0.6rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--brass) 55%, transparent);
+  font-family: var(--font-section);
+  font-weight: 600;
+  font-size: var(--step-h3);
+  letter-spacing: 0.02em;
+  color: var(--wine-deep);
+}
+.web-part__no { font-family: var(--font-display); font-size: 0.8em; letter-spacing: 0.2em; color: var(--brass); }
+
+.web-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-3);
+}
+
+/* One question */
+.q { display: block; margin: 0 0 var(--space-3); padding: 0; border: 0; min-width: 0; }
+.q__t {
+  display: block;
+  margin-bottom: 0.45em;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--wine-ink);
+}
+.q__t em { font-family: var(--font-meta); font-size: var(--step-meta); color: var(--taupe); }
+.q__hint { min-height: 1.2em; margin: 0.4em 0 0; font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--wine); }
+
+.web-form input[type="text"],
+.web-form input[type="email"],
+.web-form input[type="tel"],
+.web-form input[type="url"],
+.web-form select,
+.web-form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.6em 0.75em;
+  border: 1px solid color-mix(in srgb, var(--brass) 60%, transparent);
+  border-radius: 0;
+  background: var(--thera-white);
+  color: var(--wine-ink);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.web-form textarea { resize: vertical; min-height: 4.5em; }
+.web-form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--wine) 50%), linear-gradient(135deg, var(--wine) 50%, transparent 50%); background-position: calc(100% - 1.1em) 55%, calc(100% - 0.8em) 55%; background-size: 0.3em 0.3em; background-repeat: no-repeat; padding-right: 2.2em; }
+.web-form input:focus,
+.web-form select:focus,
+.web-form textarea:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px color-mix(in srgb, var(--wine) 15%, transparent); }
+.web-form ::placeholder { color: color-mix(in srgb, var(--taupe) 70%, transparent); font-style: italic; }
+.web-form [aria-invalid="true"] { border-color: var(--wine); background: color-mix(in srgb, var(--wine) 4%, var(--thera-white)); }
+
+/* Choices as chips: the input stays real (keyboard, screen readers) and the span is drawn */
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chips label { position: relative; cursor: pointer; }
+.chips input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chips span {
+  display: inline-block;
+  padding: 0.45em 0.95em;
+  border: 1px solid color-mix(in srgb, var(--brass) 60%, transparent);
+  background: var(--thera-white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--wine-ink);
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.chips label:hover span { border-color: var(--wine); }
+.chips input:checked + span { background: var(--wine); border-color: var(--wine); color: var(--beige-soft); }
+.chips input:focus-visible + span { outline: 2px solid var(--wine); outline-offset: 2px; }
+.chips input:disabled + span { opacity: 0.4; cursor: not-allowed; }
+.chips--words span { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.7em 1.1em; }
+
+/* Scales between two extremes */
+.scales { margin: 0 0 var(--space-3); padding: var(--space-2) var(--space-3) var(--space-1); background: var(--beige-soft); }
+.scale {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr) 6.5rem;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: var(--step-meta);
+  color: var(--taupe);
+}
+.scale span:last-child { text-align: right; }
+.scale input[type="range"] { width: 100%; accent-color: var(--wine); }
+
+.web-consent { display: flex; gap: 0.7em; align-items: flex-start; margin: var(--space-3) 0 0; font-size: 0.95rem; }
+.web-consent input { margin-top: 0.3em; accent-color: var(--wine); flex: none; width: 1.05em; height: 1.05em; }
+
+.web-submit { padding-top: var(--space-3); border-top: 1px solid color-mix(in srgb, var(--brass) 55%, transparent); }
+.web-submit .meta { margin-top: var(--space-2); }
+.web-error { margin: 0 0 var(--space-2); font-family: var(--font-meta); font-style: italic; color: var(--wine); }
+
+/* After sending */
+.web-done { margin-top: var(--space-4); }
+.web-done:focus { outline: none; }
+.web-done__actions { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); align-items: center; margin: var(--space-3) 0; }
+.web-ghost { color: var(--wine-ink); border-color: var(--wine); }
+.web-back { background: none; border: 0; padding: 0; font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--taupe); text-decoration: underline; cursor: pointer; }
+.web-summary {
+  max-height: 28rem;
+  overflow: auto;
+  padding: var(--space-2) var(--space-3);
+  background: var(--beige-soft);
+  border-left: 2px solid var(--wine);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 720px) {
+  .web-oficios, .web-grid { grid-template-columns: 1fr; }
+  .scale { grid-template-columns: 1fr 1fr; }
+  .scale input[type="range"] { grid-column: 1 / -1; grid-row: 2; }
+  .scales { padding-inline: var(--space-2); }
+}
+@media (prefers-reduced-motion: reduce) { .web-progress span, .chips span { transition: none; } }
