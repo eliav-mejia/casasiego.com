@@ -25,6 +25,7 @@ Disallow: /
 
 User-agent: *
 Disallow: /docs/
+Disallow: /brands/fiel/agenda/
 Allow: /
 
 Sitemap: https://casasiego.com/sitemap.xml

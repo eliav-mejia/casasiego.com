@@ -1,0 +1,2358 @@
+{
+ "version": "1.2.3",
+ "generado": "python3 docs/src/calendario-fiel.py",
+ "semilla": "casasiego-fiel-calendario-v1.2.3",
+ "zona": "America/Mexico_City",
+ "utc": "-06:00",
+ "lugar": {
+  "nombre": "Parque México, Condesa",
+  "lat": 19.4119,
+  "lon": -99.1694
+ },
+ "desde": "2026-11-02",
+ "hasta": "2027-10-31",
+ "anticipacion_horas": 24,
+ "ventana_min": 60,
+ "dias": [
+  {
+   "fecha": "2026-11-04",
+   "manana": {
+    "inicio": "06:40",
+    "fin": "07:40"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "06:38",
+    "puesta": "18:02"
+   }
+  },
+  {
+   "fecha": "2026-11-06",
+   "manana": {
+    "inicio": "06:40",
+    "fin": "07:40"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "06:39",
+    "puesta": "18:01"
+   }
+  },
+  {
+   "fecha": "2026-11-08",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "06:40",
+    "puesta": "18:00"
+   }
+  },
+  {
+   "fecha": "2026-11-10",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:41",
+    "puesta": "17:59"
+   }
+  },
+  {
+   "fecha": "2026-11-12",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:42",
+    "puesta": "17:59"
+   }
+  },
+  {
+   "fecha": "2026-11-15",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:44",
+    "puesta": "17:58"
+   }
+  },
+  {
+   "fecha": "2026-11-16",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:45",
+    "puesta": "17:58"
+   }
+  },
+  {
+   "fecha": "2026-11-20",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:47",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-11-22",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:48",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-11-25",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:50",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-11-26",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:51",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-11-29",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:53",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-11-30",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:53",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-12-01",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:54",
+    "puesta": "17:57"
+   }
+  },
+  {
+   "fecha": "2026-12-06",
+   "manana": {
+    "inicio": "07:00",
+    "fin": "08:00"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:57",
+    "puesta": "17:58"
+   }
+  },
+  {
+   "fecha": "2026-12-08",
+   "manana": {
+    "inicio": "07:00",
+    "fin": "08:00"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:58",
+    "puesta": "17:58"
+   }
+  },
+  {
+   "fecha": "2026-12-10",
+   "manana": {
+    "inicio": "07:00",
+    "fin": "08:00"
+   },
+   "tarde": {
+    "inicio": "16:55",
+    "fin": "17:55"
+   },
+   "sol": {
+    "salida": "06:59",
+    "puesta": "17:59"
+   }
+  },
+  {
+   "fecha": "2026-12-13",
+   "manana": {
+    "inicio": "07:05",
+    "fin": "08:05"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "07:01",
+    "puesta": "18:00"
+   }
+  },
+  {
+   "fecha": "2026-12-15",
+   "manana": {
+    "inicio": "07:05",
+    "fin": "08:05"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "07:02",
+    "puesta": "18:00"
+   }
+  },
+  {
+   "fecha": "2026-12-18",
+   "manana": {
+    "inicio": "07:05",
+    "fin": "08:05"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "07:04",
+    "puesta": "18:01"
+   }
+  },
+  {
+   "fecha": "2026-12-20",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "07:05",
+    "puesta": "18:02"
+   }
+  },
+  {
+   "fecha": "2026-12-21",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "07:05",
+    "puesta": "18:03"
+   }
+  },
+  {
+   "fecha": "2026-12-25",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "07:07",
+    "puesta": "18:05"
+   }
+  },
+  {
+   "fecha": "2026-12-27",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "07:08",
+    "puesta": "18:06"
+   }
+  },
+  {
+   "fecha": "2026-12-30",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "07:09",
+    "puesta": "18:07"
+   }
+  },
+  {
+   "fecha": "2027-01-01",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "07:10",
+    "puesta": "18:08"
+   }
+  },
+  {
+   "fecha": "2027-01-03",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:10",
+    "fin": "18:10"
+   },
+   "sol": {
+    "salida": "07:10",
+    "puesta": "18:10"
+   }
+  },
+  {
+   "fecha": "2027-01-05",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:10",
+    "fin": "18:10"
+   },
+   "sol": {
+    "salida": "07:11",
+    "puesta": "18:11"
+   }
+  },
+  {
+   "fecha": "2027-01-08",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:10",
+    "fin": "18:10"
+   },
+   "sol": {
+    "salida": "07:12",
+    "puesta": "18:13"
+   }
+  },
+  {
+   "fecha": "2027-01-10",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:10",
+    "fin": "18:10"
+   },
+   "sol": {
+    "salida": "07:12",
+    "puesta": "18:14"
+   }
+  },
+  {
+   "fecha": "2027-01-12",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:15",
+    "fin": "18:15"
+   },
+   "sol": {
+    "salida": "07:12",
+    "puesta": "18:15"
+   }
+  },
+  {
+   "fecha": "2027-01-15",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:15",
+    "fin": "18:15"
+   },
+   "sol": {
+    "salida": "07:13",
+    "puesta": "18:17"
+   }
+  },
+  {
+   "fecha": "2027-01-17",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:15",
+    "fin": "18:15"
+   },
+   "sol": {
+    "salida": "07:13",
+    "puesta": "18:18"
+   }
+  },
+  {
+   "fecha": "2027-01-21",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:20",
+    "fin": "18:20"
+   },
+   "sol": {
+    "salida": "07:13",
+    "puesta": "18:21"
+   }
+  },
+  {
+   "fecha": "2027-01-22",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:20",
+    "fin": "18:20"
+   },
+   "sol": {
+    "salida": "07:13",
+    "puesta": "18:22"
+   }
+  },
+  {
+   "fecha": "2027-01-24",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:20",
+    "fin": "18:20"
+   },
+   "sol": {
+    "salida": "07:12",
+    "puesta": "18:23"
+   }
+  },
+  {
+   "fecha": "2027-01-27",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:25",
+    "fin": "18:25"
+   },
+   "sol": {
+    "salida": "07:12",
+    "puesta": "18:25"
+   }
+  },
+  {
+   "fecha": "2027-01-28",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:25",
+    "fin": "18:25"
+   },
+   "sol": {
+    "salida": "07:12",
+    "puesta": "18:25"
+   }
+  },
+  {
+   "fecha": "2027-01-31",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:25",
+    "fin": "18:25"
+   },
+   "sol": {
+    "salida": "07:11",
+    "puesta": "18:27"
+   }
+  },
+  {
+   "fecha": "2027-02-02",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:25",
+    "fin": "18:25"
+   },
+   "sol": {
+    "salida": "07:11",
+    "puesta": "18:28"
+   }
+  },
+  {
+   "fecha": "2027-02-05",
+   "manana": {
+    "inicio": "07:15",
+    "fin": "08:15"
+   },
+   "tarde": {
+    "inicio": "17:30",
+    "fin": "18:30"
+   },
+   "sol": {
+    "salida": "07:10",
+    "puesta": "18:30"
+   }
+  },
+  {
+   "fecha": "2027-02-07",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:30",
+    "fin": "18:30"
+   },
+   "sol": {
+    "salida": "07:09",
+    "puesta": "18:31"
+   }
+  },
+  {
+   "fecha": "2027-02-10",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:30",
+    "fin": "18:30"
+   },
+   "sol": {
+    "salida": "07:08",
+    "puesta": "18:33"
+   }
+  },
+  {
+   "fecha": "2027-02-12",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:30",
+    "fin": "18:30"
+   },
+   "sol": {
+    "salida": "07:07",
+    "puesta": "18:34"
+   }
+  },
+  {
+   "fecha": "2027-02-14",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "07:06",
+    "puesta": "18:35"
+   }
+  },
+  {
+   "fecha": "2027-02-15",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "07:05",
+    "puesta": "18:35"
+   }
+  },
+  {
+   "fecha": "2027-02-16",
+   "manana": {
+    "inicio": "07:10",
+    "fin": "08:10"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "07:05",
+    "puesta": "18:36"
+   }
+  },
+  {
+   "fecha": "2027-02-21",
+   "manana": {
+    "inicio": "07:05",
+    "fin": "08:05"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "07:02",
+    "puesta": "18:38"
+   }
+  },
+  {
+   "fecha": "2027-02-22",
+   "manana": {
+    "inicio": "07:05",
+    "fin": "08:05"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "07:01",
+    "puesta": "18:39"
+   }
+  },
+  {
+   "fecha": "2027-02-26",
+   "manana": {
+    "inicio": "07:00",
+    "fin": "08:00"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:59",
+    "puesta": "18:40"
+   }
+  },
+  {
+   "fecha": "2027-02-28",
+   "manana": {
+    "inicio": "07:00",
+    "fin": "08:00"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:57",
+    "puesta": "18:41"
+   }
+  },
+  {
+   "fecha": "2027-03-02",
+   "manana": {
+    "inicio": "07:00",
+    "fin": "08:00"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:56",
+    "puesta": "18:42"
+   }
+  },
+  {
+   "fecha": "2027-03-05",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:54",
+    "puesta": "18:43"
+   }
+  },
+  {
+   "fecha": "2027-03-07",
+   "manana": {
+    "inicio": "06:55",
+    "fin": "07:55"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:52",
+    "puesta": "18:44"
+   }
+  },
+  {
+   "fecha": "2027-03-11",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:49",
+    "puesta": "18:45"
+   }
+  },
+  {
+   "fecha": "2027-03-12",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:48",
+    "puesta": "18:45"
+   }
+  },
+  {
+   "fecha": "2027-03-14",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:47",
+    "puesta": "18:46"
+   }
+  },
+  {
+   "fecha": "2027-03-15",
+   "manana": {
+    "inicio": "06:50",
+    "fin": "07:50"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:46",
+    "puesta": "18:46"
+   }
+  },
+  {
+   "fecha": "2027-03-19",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:42",
+    "puesta": "18:47"
+   }
+  },
+  {
+   "fecha": "2027-03-21",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:41",
+    "puesta": "18:47"
+   }
+  },
+  {
+   "fecha": "2027-03-22",
+   "manana": {
+    "inicio": "06:45",
+    "fin": "07:45"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:40",
+    "puesta": "18:48"
+   }
+  },
+  {
+   "fecha": "2027-03-23",
+   "manana": {
+    "inicio": "06:40",
+    "fin": "07:40"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:39",
+    "puesta": "18:48"
+   }
+  },
+  {
+   "fecha": "2027-03-28",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:35",
+    "puesta": "18:49"
+   }
+  },
+  {
+   "fecha": "2027-03-29",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:34",
+    "puesta": "18:49"
+   }
+  },
+  {
+   "fecha": "2027-03-31",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:32",
+    "puesta": "18:50"
+   }
+  },
+  {
+   "fecha": "2027-04-04",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:28",
+    "puesta": "18:51"
+   }
+  },
+  {
+   "fecha": "2027-04-05",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:28",
+    "puesta": "18:51"
+   }
+  },
+  {
+   "fecha": "2027-04-06",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:27",
+    "puesta": "18:51"
+   }
+  },
+  {
+   "fecha": "2027-04-11",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:23",
+    "puesta": "18:52"
+   }
+  },
+  {
+   "fecha": "2027-04-12",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:22",
+    "puesta": "18:53"
+   }
+  },
+  {
+   "fecha": "2027-04-14",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:20",
+    "puesta": "18:53"
+   }
+  },
+  {
+   "fecha": "2027-04-18",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:17",
+    "puesta": "18:54"
+   }
+  },
+  {
+   "fecha": "2027-04-19",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:16",
+    "puesta": "18:55"
+   }
+  },
+  {
+   "fecha": "2027-04-21",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:15",
+    "puesta": "18:55"
+   }
+  },
+  {
+   "fecha": "2027-04-25",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:12",
+    "puesta": "18:56"
+   }
+  },
+  {
+   "fecha": "2027-04-26",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:11",
+    "puesta": "18:57"
+   }
+  },
+  {
+   "fecha": "2027-04-28",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:10",
+    "puesta": "18:57"
+   }
+  },
+  {
+   "fecha": "2027-05-02",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:07",
+    "puesta": "18:59"
+   }
+  },
+  {
+   "fecha": "2027-05-03",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:07",
+    "puesta": "18:59"
+   }
+  },
+  {
+   "fecha": "2027-05-07",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:05",
+    "puesta": "19:00"
+   }
+  },
+  {
+   "fecha": "2027-05-09",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:04",
+    "puesta": "19:01"
+   }
+  },
+  {
+   "fecha": "2027-05-12",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:02",
+    "puesta": "19:02"
+   }
+  },
+  {
+   "fecha": "2027-05-13",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:02",
+    "puesta": "19:03"
+   }
+  },
+  {
+   "fecha": "2027-05-16",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:01",
+    "puesta": "19:04"
+   }
+  },
+  {
+   "fecha": "2027-05-19",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "06:00",
+    "puesta": "19:05"
+   }
+  },
+  {
+   "fecha": "2027-05-20",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "05:59",
+    "puesta": "19:05"
+   }
+  },
+  {
+   "fecha": "2027-05-23",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "05:59",
+    "puesta": "19:07"
+   }
+  },
+  {
+   "fecha": "2027-05-26",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "05:58",
+    "puesta": "19:08"
+   }
+  },
+  {
+   "fecha": "2027-05-28",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "05:58",
+    "puesta": "19:09"
+   }
+  },
+  {
+   "fecha": "2027-05-30",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:09"
+   }
+  },
+  {
+   "fecha": "2027-05-31",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:10"
+   }
+  },
+  {
+   "fecha": "2027-06-02",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:11"
+   }
+  },
+  {
+   "fecha": "2027-06-06",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:12"
+   }
+  },
+  {
+   "fecha": "2027-06-07",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:12"
+   }
+  },
+  {
+   "fecha": "2027-06-10",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:13"
+   }
+  },
+  {
+   "fecha": "2027-06-13",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:14"
+   }
+  },
+  {
+   "fecha": "2027-06-15",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "05:57",
+    "puesta": "19:15"
+   }
+  },
+  {
+   "fecha": "2027-06-16",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "05:58",
+    "puesta": "19:15"
+   }
+  },
+  {
+   "fecha": "2027-06-20",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "05:58",
+    "puesta": "19:16"
+   }
+  },
+  {
+   "fecha": "2027-06-23",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "05:59",
+    "puesta": "19:17"
+   }
+  },
+  {
+   "fecha": "2027-06-24",
+   "manana": {
+    "inicio": "06:00",
+    "fin": "07:00"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "05:59",
+    "puesta": "19:17"
+   }
+  },
+  {
+   "fecha": "2027-06-27",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:00",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-01",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:01",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-02",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:01",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-04",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:02",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-06",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:03",
+    "puesta": "19:19"
+   }
+  },
+  {
+   "fecha": "2027-07-08",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:03",
+    "puesta": "19:19"
+   }
+  },
+  {
+   "fecha": "2027-07-11",
+   "manana": {
+    "inicio": "06:05",
+    "fin": "07:05"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:04",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-15",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:06",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-16",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:06",
+    "puesta": "19:18"
+   }
+  },
+  {
+   "fecha": "2027-07-18",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:07",
+    "puesta": "19:17"
+   }
+  },
+  {
+   "fecha": "2027-07-22",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:09",
+    "puesta": "19:17"
+   }
+  },
+  {
+   "fecha": "2027-07-23",
+   "manana": {
+    "inicio": "06:10",
+    "fin": "07:10"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:09",
+    "puesta": "19:16"
+   }
+  },
+  {
+   "fecha": "2027-07-25",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:10",
+    "puesta": "19:16"
+   }
+  },
+  {
+   "fecha": "2027-07-27",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:10",
+    "puesta": "19:15"
+   }
+  },
+  {
+   "fecha": "2027-07-28",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "18:15",
+    "fin": "19:15"
+   },
+   "sol": {
+    "salida": "06:11",
+    "puesta": "19:15"
+   }
+  },
+  {
+   "fecha": "2027-08-01",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "06:12",
+    "puesta": "19:13"
+   }
+  },
+  {
+   "fecha": "2027-08-02",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "06:13",
+    "puesta": "19:13"
+   }
+  },
+  {
+   "fecha": "2027-08-05",
+   "manana": {
+    "inicio": "06:15",
+    "fin": "07:15"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "06:14",
+    "puesta": "19:11"
+   }
+  },
+  {
+   "fecha": "2027-08-08",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:10",
+    "fin": "19:10"
+   },
+   "sol": {
+    "salida": "06:15",
+    "puesta": "19:10"
+   }
+  },
+  {
+   "fecha": "2027-08-09",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "06:15",
+    "puesta": "19:09"
+   }
+  },
+  {
+   "fecha": "2027-08-11",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "06:16",
+    "puesta": "19:08"
+   }
+  },
+  {
+   "fecha": "2027-08-15",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:05",
+    "fin": "19:05"
+   },
+   "sol": {
+    "salida": "06:17",
+    "puesta": "19:05"
+   }
+  },
+  {
+   "fecha": "2027-08-17",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:17",
+    "puesta": "19:04"
+   }
+  },
+  {
+   "fecha": "2027-08-19",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:18",
+    "puesta": "19:03"
+   }
+  },
+  {
+   "fecha": "2027-08-22",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:19",
+    "puesta": "19:00"
+   }
+  },
+  {
+   "fecha": "2027-08-23",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "18:00",
+    "fin": "19:00"
+   },
+   "sol": {
+    "salida": "06:19",
+    "puesta": "19:00"
+   }
+  },
+  {
+   "fecha": "2027-08-24",
+   "manana": {
+    "inicio": "06:20",
+    "fin": "07:20"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:19",
+    "puesta": "18:59"
+   }
+  },
+  {
+   "fecha": "2027-08-29",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:55",
+    "fin": "18:55"
+   },
+   "sol": {
+    "salida": "06:20",
+    "puesta": "18:55"
+   }
+  },
+  {
+   "fecha": "2027-08-30",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:20",
+    "puesta": "18:54"
+   }
+  },
+  {
+   "fecha": "2027-09-03",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:50",
+    "fin": "18:50"
+   },
+   "sol": {
+    "salida": "06:21",
+    "puesta": "18:51"
+   }
+  },
+  {
+   "fecha": "2027-09-05",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:22",
+    "puesta": "18:49"
+   }
+  },
+  {
+   "fecha": "2027-09-06",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:22",
+    "puesta": "18:48"
+   }
+  },
+  {
+   "fecha": "2027-09-07",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:45",
+    "fin": "18:45"
+   },
+   "sol": {
+    "salida": "06:22",
+    "puesta": "18:47"
+   }
+  },
+  {
+   "fecha": "2027-09-12",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:23",
+    "puesta": "18:43"
+   }
+  },
+  {
+   "fecha": "2027-09-14",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:40",
+    "fin": "18:40"
+   },
+   "sol": {
+    "salida": "06:23",
+    "puesta": "18:41"
+   }
+  },
+  {
+   "fecha": "2027-09-16",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "06:23",
+    "puesta": "18:39"
+   }
+  },
+  {
+   "fecha": "2027-09-19",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "06:24",
+    "puesta": "18:36"
+   }
+  },
+  {
+   "fecha": "2027-09-20",
+   "manana": {
+    "inicio": "06:25",
+    "fin": "07:25"
+   },
+   "tarde": {
+    "inicio": "17:35",
+    "fin": "18:35"
+   },
+   "sol": {
+    "salida": "06:24",
+    "puesta": "18:35"
+   }
+  },
+  {
+   "fecha": "2027-09-24",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:30",
+    "fin": "18:30"
+   },
+   "sol": {
+    "salida": "06:25",
+    "puesta": "18:32"
+   }
+  },
+  {
+   "fecha": "2027-09-26",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:30",
+    "fin": "18:30"
+   },
+   "sol": {
+    "salida": "06:25",
+    "puesta": "18:30"
+   }
+  },
+  {
+   "fecha": "2027-09-27",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:25",
+    "fin": "18:25"
+   },
+   "sol": {
+    "salida": "06:25",
+    "puesta": "18:29"
+   }
+  },
+  {
+   "fecha": "2027-09-28",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:25",
+    "fin": "18:25"
+   },
+   "sol": {
+    "salida": "06:26",
+    "puesta": "18:28"
+   }
+  },
+  {
+   "fecha": "2027-10-03",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:20",
+    "fin": "18:20"
+   },
+   "sol": {
+    "salida": "06:27",
+    "puesta": "18:23"
+   }
+  },
+  {
+   "fecha": "2027-10-04",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:20",
+    "fin": "18:20"
+   },
+   "sol": {
+    "salida": "06:27",
+    "puesta": "18:23"
+   }
+  },
+  {
+   "fecha": "2027-10-05",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:20",
+    "fin": "18:20"
+   },
+   "sol": {
+    "salida": "06:27",
+    "puesta": "18:22"
+   }
+  },
+  {
+   "fecha": "2027-10-10",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:15",
+    "fin": "18:15"
+   },
+   "sol": {
+    "salida": "06:28",
+    "puesta": "18:18"
+   }
+  },
+  {
+   "fecha": "2027-10-12",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:15",
+    "fin": "18:15"
+   },
+   "sol": {
+    "salida": "06:29",
+    "puesta": "18:16"
+   }
+  },
+  {
+   "fecha": "2027-10-13",
+   "manana": {
+    "inicio": "06:30",
+    "fin": "07:30"
+   },
+   "tarde": {
+    "inicio": "17:15",
+    "fin": "18:15"
+   },
+   "sol": {
+    "salida": "06:29",
+    "puesta": "18:15"
+   }
+  },
+  {
+   "fecha": "2027-10-17",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:10",
+    "fin": "18:10"
+   },
+   "sol": {
+    "salida": "06:31",
+    "puesta": "18:12"
+   }
+  },
+  {
+   "fecha": "2027-10-21",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "06:32",
+    "puesta": "18:09"
+   }
+  },
+  {
+   "fecha": "2027-10-22",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "06:32",
+    "puesta": "18:09"
+   }
+  },
+  {
+   "fecha": "2027-10-24",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "06:33",
+    "puesta": "18:07"
+   }
+  },
+  {
+   "fecha": "2027-10-27",
+   "manana": {
+    "inicio": "06:35",
+    "fin": "07:35"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "06:34",
+    "puesta": "18:06"
+   }
+  },
+  {
+   "fecha": "2027-10-29",
+   "manana": {
+    "inicio": "06:40",
+    "fin": "07:40"
+   },
+   "tarde": {
+    "inicio": "17:05",
+    "fin": "18:05"
+   },
+   "sol": {
+    "salida": "06:35",
+    "puesta": "18:05"
+   }
+  },
+  {
+   "fecha": "2027-10-31",
+   "manana": {
+    "inicio": "06:40",
+    "fin": "07:40"
+   },
+   "tarde": {
+    "inicio": "17:00",
+    "fin": "18:00"
+   },
+   "sol": {
+    "salida": "06:36",
+    "puesta": "18:04"
+   }
+  }
+ ]
+}
