@@ -1,9 +1,12 @@
-/* Casa Siego — agenda.js (v1.0.0)
-   Fiel Mascotas · internal calendar (brands/fiel/agenda/<sesión>/), opened by Stripe after the deposit.
+/* Casa Siego — agenda.js (v2.0.0)
+   Fiel Mascotas · calendar of Esencial, Clásica and Legado (brands/fiel/agenda/<sesión>/), opened by Stripe
+   after the deposit.
    1. Without ?pago=cs_… the calendar stays closed and the page points back to the sessions.
-   2. Reads ../calendario.json (open days and their two golden-hour slots, from docs/src/calendario-fiel.py)
-      and ../ocupados.json (slots already confirmed, edited by hand), and draws one month at a time.
-      Slots that start sooner than anticipacion_horas are not offered.
+   2. Only two weeks exist: the current one (Monday to Sunday, Mexico City time) and the next. The rules in
+      ../calendario.json say how many slots each week offers (3 now, 9 next), at 9:00 or 16:00. Weekdays are
+      drawn at random; Sunday opens in 30 % of the weeks; Saturday never. The draw is seeded with the week's
+      Monday, so every visitor sees the same slots. Slots already past (or sooner than anticipacion_horas)
+      and those in ../ocupados.json (edited by hand) drop out, and the next ones of the draw take their place.
    3. The visitor picks a day and a slot, fills a short form, and the request opens in their own mail,
       addressed to info@casasiego.com with the Stripe payment id. Fiel confirms by mail and adds the
       slot to ocupados.json. Nothing is stored or sent from the browser. */
@@ -13,7 +16,7 @@
   var TO = 'info@casasiego.com';
   var page = document.getElementById('agenda');
   if (!page) return;
-  var S = page.dataset;                        // sesion, nombre, duracion, anticipo, lugar ("libre" asks where)
+  var S = page.dataset;                        // sesion, nombre, duracion, anticipo
   var pago = new URLSearchParams(location.search).get('pago') || '';
   var closed = document.getElementById('agenda-sin-pago');
 
@@ -25,11 +28,11 @@
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre',
                'octubre', 'noviembre', 'diciembre'];
   var FRANJA = { manana: 'Mañana', tarde: 'Tarde' };
+  var SEMANA = ['Esta semana', 'La próxima semana'];
+  var CDMX = -6 * 3600 * 1000;                 // UTC−6 all year (no daylight saving since 2022)
+  var DAY = 24 * 3600 * 1000;
 
-  var grid = document.getElementById('agenda-grid');
-  var title = document.getElementById('agenda-mes');
-  var prev = document.getElementById('agenda-prev');
-  var next = document.getElementById('agenda-next');
+  var weeksBox = document.getElementById('agenda-semanas');
   var slotsBox = document.getElementById('agenda-horarios');
   var slotsDay = document.getElementById('agenda-dia');
   var slots = document.getElementById('agenda-franjas');
@@ -40,17 +43,40 @@
   var mailLink = document.getElementById('agenda-mail');
   var status = document.getElementById('agenda-estado');
 
-  var open = {};                               // 'YYYY-MM-DD' → { manana: {inicio, fin}, tarde: {…} } still free
-  var months = [];                             // ['YYYY-MM', …] with at least one free slot
-  var shown = 0;
-  var chosen = null;                           // { fecha, franja, inicio, fin }
+  var open = {};                               // 'YYYY-MM-DD' → { manana: {inicio}, tarde: {inicio} } offered
+  var chosen = null;                           // { fecha, franja, inicio }
 
-  // CDMX is UTC−6 all year (no daylight saving since 2022)
   function startsAt(fecha, hora) { return new Date(fecha + 'T' + hora + ':00-06:00'); }
   function parts(fecha) { var p = fecha.split('-').map(Number); return { y: p[0], m: p[1], d: p[2] }; }
   function weekday(fecha) { var p = parts(fecha); return (new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay() + 6) % 7; }
   function longDate(fecha) { var p = parts(fecha); return DIAS[weekday(fecha)] + ' ' + p.d + ' de ' + MESES[p.m - 1] + ' de ' + p.y; }
-  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function iso(ms) { return new Date(ms).toISOString().slice(0, 10); }
+  function addDays(fecha, n) { return iso(Date.parse(fecha + 'T00:00:00Z') + n * DAY); }
+
+  // Seeded random numbers: FNV-1a hash of the seed, then mulberry32
+  function random(seed) {
+    var h = 2166136261;
+    for (var i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return function () {
+      h = (h + 0x6D2B79F5) | 0;
+      var t = Math.imul(h ^ (h >>> 15), 1 | h);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // The fixed draw of one week: Sunday first when it opens, then every weekday slot in random order
+  function draw(cal, monday) {
+    var rnd = random(cal.semilla + ':' + monday);
+    var franjas = Object.keys(cal.horarios);
+    var list = [];
+    for (var d = 0; d < 5; d++) franjas.forEach(function (f) { list.push({ fecha: addDays(monday, d), franja: f }); });
+    for (var i = list.length - 1; i > 0; i--) {
+      var j = Math.floor(rnd() * (i + 1)), t = list[i]; list[i] = list[j]; list[j] = t;
+    }
+    if (rnd() < cal.domingo) list.unshift({ fecha: addDays(monday, 6), franja: franjas[Math.floor(rnd() * franjas.length)] });
+    return list;
+  }
 
   function load(url) {
     return fetch(url, { cache: 'no-cache' }).then(function (r) {
@@ -65,61 +91,76 @@
       var taken = {};
       (res[1].ocupados || []).forEach(function (k) { taken[k] = true; });
       var limit = Date.now() + (cal.anticipacion_horas || 24) * 3600 * 1000;
-      cal.dias.forEach(function (dia) {
-        var free = {};
-        ['manana', 'tarde'].forEach(function (f) {
-          if (!taken[dia.fecha + ' ' + f] && startsAt(dia.fecha, dia[f].inicio).getTime() > limit) free[f] = dia[f];
+      var today = iso(Date.now() + CDMX);
+      var monday = addDays(today, -weekday(today));
+      var weeks = cal.semanas.map(function (count, w) {
+        var start = addDays(monday, 7 * w);
+        var offered = draw(cal, start).filter(function (s) {
+          return !taken[s.fecha + ' ' + s.franja] && startsAt(s.fecha, cal.horarios[s.franja]).getTime() > limit;
+        }).slice(0, count);
+        offered.forEach(function (s) {
+          (open[s.fecha] = open[s.fecha] || {})[s.franja] = { inicio: cal.horarios[s.franja] };
         });
-        if (!free.manana && !free.tarde) return;
-        open[dia.fecha] = free;
-        var m = dia.fecha.slice(0, 7);
-        if (months.indexOf(m) < 0) months.push(m);
+        return { start: start, count: offered.length };
       });
       status.hidden = true;
-      if (!months.length) {
+      drawWeeks(weeks, today);
+      if (!Object.keys(open).length) {
         status.textContent = 'Por ahora no hay fechas libres. Escríbenos a ' + TO + ' con tu número de pago y te proponemos una.';
         status.hidden = false;
-        return;
       }
-      draw();
     })
     .catch(function () {
       status.textContent = 'No pudimos cargar el calendario. Recarga la página o escríbenos a ' + TO + ' con tu número de pago.';
     });
 
-  // --- Month grid ------------------------------------------------------------------
-  function draw() {
-    var ym = months[shown].split('-').map(Number);
-    title.textContent = MESES[ym[1] - 1] + ' ' + ym[0];
-    prev.disabled = shown === 0;
-    next.disabled = shown === months.length - 1;
-    grid.textContent = '';
-    var first = months[shown] + '-01';
-    var blanks = weekday(first);
-    var days = new Date(Date.UTC(ym[0], ym[1], 0)).getUTCDate();
-    for (var b = 0; b < blanks; b++) grid.appendChild(document.createElement('span'));
-    for (var d = 1; d <= days; d++) {
-      var fecha = months[shown] + '-' + pad(d);
-      var cell;
-      if (open[fecha]) {
-        cell = document.createElement('button');
-        cell.type = 'button';
-        cell.dataset.fecha = fecha;
-        cell.setAttribute('aria-label', longDate(fecha) + ', con horario libre');
-        if (chosen && chosen.fecha === fecha) cell.setAttribute('aria-pressed', 'true');
-      } else {
-        cell = document.createElement('span');
-        cell.className = 'agenda-cal__off';
+  // --- Two weeks ---------------------------------------------------------------------
+  function drawWeeks(weeks, today) {
+    weeksBox.textContent = '';
+    weeks.forEach(function (week, w) {
+      var box = document.createElement('section');
+      box.className = 'agenda-semana';
+      var head = document.createElement('h3');
+      head.className = 'agenda-semana__titulo';
+      var a = parts(week.start), b = parts(addDays(week.start, 6));
+      head.innerHTML = '<span></span><small></small>';
+      head.firstChild.textContent = SEMANA[w] || 'Semana';
+      head.lastChild.textContent = a.d + (a.m !== b.m ? ' de ' + MESES[a.m - 1] : '') + ' – ' + b.d + ' de ' + MESES[b.m - 1] +
+        ' · ' + (week.count === 1 ? '1 horario' : week.count + ' horarios');
+      box.appendChild(head);
+      var grid = document.createElement('div');
+      grid.className = 'agenda-cal__grid';
+      for (var d = 0; d < 7; d++) {
+        var fecha = addDays(week.start, d);
+        var free = open[fecha];
+        var cell = document.createElement(free ? 'button' : 'span');
+        cell.innerHTML = '<span class="agenda-cal__dia"></span><span class="agenda-cal__num"></span>';
+        cell.firstChild.textContent = DIAS[d].slice(0, 2);
+        cell.lastChild.textContent = parts(fecha).d;
+        if (free) {
+          cell.type = 'button';
+          cell.dataset.fecha = fecha;
+          var n = Object.keys(free).length;
+          var dots = document.createElement('span');
+          dots.className = 'agenda-cal__puntos';
+          dots.setAttribute('aria-hidden', 'true');
+          dots.textContent = n === 2 ? '••' : '•';
+          cell.appendChild(dots);
+          cell.setAttribute('aria-label', longDate(fecha) + ', ' + (n === 2 ? 'dos horarios' : 'un horario') + ' libre' + (n === 2 ? 's' : ''));
+          if (chosen && chosen.fecha === fecha) cell.setAttribute('aria-pressed', 'true');
+        } else {
+          cell.className = 'agenda-cal__off' + (d === 5 ? ' agenda-cal__off--sabado' : '');
+          if (fecha < today) cell.className += ' agenda-cal__off--pasado';
+        }
+        if (fecha === today) cell.classList.add('agenda-cal__hoy');
+        grid.appendChild(cell);
       }
-      cell.textContent = d;
-      grid.appendChild(cell);
-    }
+      box.appendChild(grid);
+      weeksBox.appendChild(box);
+    });
   }
 
-  prev.addEventListener('click', function () { if (shown > 0) { shown--; draw(); } });
-  next.addEventListener('click', function () { if (shown < months.length - 1) { shown++; draw(); } });
-
-  grid.addEventListener('click', function (e) {
+  weeksBox.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-fecha]');
     if (!b) return;
     pickDay(b.dataset.fecha);
@@ -128,8 +169,8 @@
   // --- Slots -----------------------------------------------------------------------
   function pickDay(fecha) {
     chosen = null;
-    Array.prototype.forEach.call(grid.querySelectorAll('[aria-pressed]'), function (el) { el.removeAttribute('aria-pressed'); });
-    var b = grid.querySelector('[data-fecha="' + fecha + '"]');
+    Array.prototype.forEach.call(weeksBox.querySelectorAll('[aria-pressed]'), function (el) { el.removeAttribute('aria-pressed'); });
+    var b = weeksBox.querySelector('[data-fecha="' + fecha + '"]');
     if (b) b.setAttribute('aria-pressed', 'true');
     slotsDay.textContent = longDate(fecha);
     slots.textContent = '';
@@ -141,10 +182,10 @@
       var input = label.firstChild;
       input.value = f;
       input.addEventListener('change', function () {
-        chosen = { fecha: fecha, franja: f, inicio: s.inicio, fin: s.fin };
+        chosen = { fecha: fecha, franja: f, inicio: s.inicio };
         form.hidden = false;
       });
-      label.lastChild.textContent = FRANJA[f] + ' · ' + s.inicio + ' – ' + s.fin;
+      label.lastChild.textContent = FRANJA[f] + ' · ' + s.inicio.replace(/^0/, '');
       slots.appendChild(label);
     });
     slotsBox.hidden = false;
@@ -160,7 +201,7 @@
       'FIEL · MASCOTAS · SOLICITUD DE CITA', '',
       'Sesión: ' + S.nombre + (S.duracion ? ' (' + S.duracion + ')' : ''),
       'Fecha: ' + longDate(chosen.fecha),
-      'Horario: ' + FRANJA[chosen.franja].toLowerCase() + ', ' + chosen.inicio + ' – ' + chosen.fin + ' (hora de la Ciudad de México)',
+      'Horario: ' + FRANJA[chosen.franja].toLowerCase() + ', ' + chosen.inicio.replace(/^0/, '') + ' h (hora de la Ciudad de México)',
       'Anticipo: ' + S.anticipo + ' · pago ' + pago, '',
       'Nombre: ' + value('nombre'),
       'Correo: ' + value('correo')

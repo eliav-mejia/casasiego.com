@@ -1,51 +1,88 @@
-/* Casa Siego — agenda.css (v1.0.0)
-   Fiel Mascotas · calendar of the agenda pages (brands/fiel/agenda/<sesión>/).
+/* Casa Siego — agenda.css (v2.0.0)
+   Fiel Mascotas · calendar of the agenda pages (brands/fiel/agenda/<sesión>/): this week and the next,
+   one row of seven days each, drawn by js/agenda.js.
    Builds on site.css, layout.css (terms page) and web.css (form fields, chips, after-sending panel). */
 
 /* Steps the script shows and hides (.q and other classes set their own display) */
 [hidden] { display: none !important; }
 
-.agenda-resumen {margin: var(--space-2) 0 0; padding: 0; list-style: none; font-family: var(--font-meta); font-size: var(--step-meta); }
+.agenda-resumen { margin: var(--space-2) 0 0; padding: 0; list-style: none; font-family: var(--font-meta); font-size: var(--step-meta); }
 .agenda-resumen li { margin: 0 0 0.35em; }
 .agenda-resumen b { font-family: var(--font-display); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); margin-right: 0.4em; }
 
-/* Month */
-.agenda-cal { max-width: 26rem; margin: var(--space-3) 0 var(--space-4); }
-.agenda-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2); }
-.terms .agenda-cal__mes { margin: 0; font-family: var(--font-section); font-weight: 600; font-size: var(--step-h3); color: var(--wine-deep); text-transform: capitalize; }
-.agenda-cal__nav {
-  width: 2.4rem; height: 2.4rem;
-  border: 1px solid color-mix(in srgb, var(--brass) 60%, transparent);
-  background: var(--thera-white);
-  color: var(--wine);
-  font-size: 1.1rem;
-  cursor: pointer;
+/* Two weeks */
+.agenda-semanas { display: grid; gap: var(--space-3); max-width: 34rem; margin: var(--space-3) 0 var(--space-2); }
+.agenda-semana { padding: var(--space-2); background: var(--beige-soft); border-top: 2px solid var(--wine); }
+.terms .agenda-semana__titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2em 1em;
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-section);
+  font-weight: 600;
+  font-size: var(--step-h3);
+  color: var(--wine-deep);
 }
-.agenda-cal__nav:disabled { opacity: 0.3; cursor: default; }
-.agenda-cal__dias,
-.agenda-cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.3rem; }
-.agenda-cal__dias { margin: 0 0 0.4rem; padding: 0; list-style: none; font-family: var(--font-display); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; color: var(--taupe); }
+.agenda-semana__titulo small { font-family: var(--font-meta); font-style: italic; font-weight: 400; font-size: var(--step-meta); color: var(--taupe); }
+
+.agenda-cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.35rem; }
 .agenda-cal__grid > * {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-height: 4.25rem;
+  padding: 0.4rem 0 0.55rem;
+  border: 1px solid transparent;
   font-family: var(--font-body);
-  font-size: 1rem;
+  line-height: 1;
 }
-.agenda-cal__off { color: color-mix(in srgb, var(--taupe) 45%, transparent); }
+.agenda-cal__dia { font-family: var(--font-display); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.agenda-cal__num { font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.agenda-cal__puntos { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--brass); }
+
+.agenda-cal__off { color: color-mix(in srgb, var(--taupe) 55%, transparent); }
+.agenda-cal__off .agenda-cal__dia { color: var(--taupe); opacity: 0.7; }
+.agenda-cal__off--pasado .agenda-cal__num { text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--taupe) 45%, transparent); }
+.agenda-cal__off--sabado { background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--brass) 14%, transparent) 6px 7px); }
+.agenda-cal__hoy { border-bottom: 2px solid var(--brass); }
+
 .agenda-cal__grid button {
-  border: 1px solid var(--brass);
-  background: var(--beige-soft);
+  border-color: var(--brass);
+  background: var(--thera-white);
   color: var(--wine-ink);
   cursor: pointer;
-  transition: background 200ms ease, color 200ms ease;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
 }
+.agenda-cal__grid button .agenda-cal__dia { color: var(--wine); }
 .agenda-cal__grid button:hover { background: var(--beige); }
 .agenda-cal__grid button[aria-pressed="true"] { background: var(--wine); border-color: var(--wine); color: var(--beige-soft); }
+.agenda-cal__grid button[aria-pressed="true"] .agenda-cal__dia,
+.agenda-cal__grid button[aria-pressed="true"] .agenda-cal__puntos { color: var(--brass-light); }
 .agenda-cal__grid button:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
 
-.agenda-horarios { margin: 0 0 var(--space-4); }
+.agenda-leyenda { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; margin: 0 0 var(--space-4); }
+.agenda-leyenda__libre { display: inline-block; width: 0.9em; height: 0.9em; border: 1px solid var(--brass); background: var(--thera-white); }
+
+.agenda-horarios { margin: 0 0 var(--space-4); scroll-margin-top: 6rem; }
 .agenda-horarios .chips span { font-variant-numeric: tabular-nums; }
 .agenda-estado { font-family: var(--font-meta); font-style: italic; color: var(--taupe); }
+
+/* Phones: the seven days still fit in one row; tighter cells, bigger touch targets for the slots */
+@media (max-width: 520px) {
+  .agenda-semana { padding: var(--space-2) 0.6rem; margin-inline: -0.6rem; }
+  .agenda-cal__grid { gap: 0.2rem; }
+  .agenda-cal__grid > * { min-height: 3.6rem; padding: 0.35rem 0 0.45rem; }
+  .agenda-cal__dia { font-size: 0.55rem; letter-spacing: 0.06em; }
+  .agenda-cal__num { font-size: 1rem; }
+  .agenda-horarios .chips { display: grid; grid-template-columns: 1fr 1fr; }
+  .agenda-horarios .chips span { display: block; text-align: center; padding-block: 0.8em; }
+  .agenda-pick .web-submit .button,
+  .web-done__actions .button { width: 100%; text-align: center; }
+}
 
 @media (prefers-reduced-motion: reduce) { .agenda-cal__grid button { transition: none; } }
