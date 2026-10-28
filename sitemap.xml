@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://casasiego.com/</loc></url>
-  <url><loc>https://casasiego.com/brands/fiel/</loc></url>
-  <url><loc>https://casasiego.com/brands/fiel/mascota/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://casasiego.com/</loc>
+    <image:image><image:loc>https://casasiego.com/images/casa/portada.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/casa/traje-01.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/casa/foto-mascotas.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/casa/interlude-servicios.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://casasiego.com/brands/fiel/</loc>
+    <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/hero-anillos.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/perfil-ejecutivo.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/perfil-familiar-campo.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/sesion-legado.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://casasiego.com/brands/fiel/mascota/</loc>
+    <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/interludio.jpg</image:loc></image:image>
+  </url>
   <url><loc>https://casasiego.com/brands/fiel/blog/organiza-tu-sesion/</loc></url>
   <url><loc>https://casasiego.com/brands/fiel/terminos/</loc></url>
-  <url><loc>https://casasiego.com/brands/justo/</loc></url>
+  <url><loc>https://casasiego.com/brands/justo/</loc>
+    <image:image><image:loc>https://casasiego.com/images/brands/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/brands/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/brands/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/casa/traje-02.jpg</image:loc></image:image>
+  </url>
   <url><loc>https://casasiego.com/brands/justo/tienda/</loc></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/guia-de-tallas/</loc></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/saco-azul-marino-raya-diplomatica/</loc></url>
