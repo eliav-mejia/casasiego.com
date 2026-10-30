@@ -1,5 +1,6 @@
 /* Casa Siego — registro.js (Variante D · registro e inicio de sesión)
-   The page is a letter to the House. Two letters share the sheet:
+   The page is a letter to the House; its fields live in a drop-down form (<details>) inside the sheet.
+   Two letters share the sheet:
      · «Carta de presentación» (sign-up): name, country, language, e-mail, brand attributes, consents.
      · «Carta de regreso» (sign-in): e-mail only, or a social account.
    Ways in: e-mail with a 6-digit code (P. D.), Google, Facebook, Apple, Microsoft (Supabase provider «azure»).
@@ -134,7 +135,7 @@
 
   function campoHTML(c) {
     var name = 'a_' + c.clave;
-    var aria = ' aria-label="' + c.etiqueta.replace(/"/g, '') + '"';
+    var aria = '';
     if (c.tipo === 'opcion' || c.tipo === 'booleano') {
       var ops = c.tipo === 'booleano' ? ['true', 'false'] : c.opciones || [];
       return '<select class="t" name="' + name + '"' + aria + '><option value="">—</option>' +
@@ -151,9 +152,11 @@
     var box = $('#atributos');
     if (!state.campos.length) { box.innerHTML = ''; box.setAttribute('data-vacio', ''); return; }
     box.removeAttribute('data-vacio');
-    var partes = state.campos.map(function (c) { return c.etiqueta + ' es ' + campoHTML(c); });
-    var ultima = partes.pop();
-    box.innerHTML = 'Si me lo permiten, les cuento que ' + (partes.length ? partes.join(', ') + ' y ' : '') + ultima + '.';
+    box.innerHTML = state.campos.map(function (c) {
+      var etiqueta = c.etiqueta.replace(/[<>&"]/g, '');
+      return '<label class="campo"><span class="campo__etiqueta">' + etiqueta.charAt(0).toUpperCase() + etiqueta.slice(1) +
+        '</span>' + campoHTML(c) + '</label>';
+    }).join('');
     Array.prototype.forEach.call(box.querySelectorAll('input.t'), ajustar);
   }
 
@@ -200,7 +203,8 @@
     Array.prototype.forEach.call(document.querySelectorAll('.sobre'), function (b) {
       b.setAttribute('aria-pressed', String(b.getAttribute('data-modo') === modo));
     });
-    enviarTexto.textContent = modo === 'acceso' ? 'Sellar y entrar' : 'Sellar y enviar';
+    enviarTexto.textContent = 'Sellar y entrar';
+    $('#desplegable-texto').textContent = modo === 'acceso' ? 'Formulario de acceso' : 'Formulario de registro';
     form.email.setAttribute('autocomplete', modo === 'acceso' ? 'username' : 'email');
     setEtapa('carta');
     setNota('');
@@ -271,7 +275,12 @@
   }
 
   function marcar(el, msg) {
-    if (el) { el.setAttribute('aria-invalid', 'true'); el.focus(); }
+    if (el) {
+      var caja = el.closest('details');
+      if (caja) caja.open = true;
+      el.setAttribute('aria-invalid', 'true');
+      el.focus();
+    }
     setNota(msg);
     return false;
   }
@@ -329,6 +338,7 @@
       if (sesion.user.email) { form.email.value = sesion.user.email; ajustar(form.email); }
       if (state.modo !== 'registro') setModo('registro');
       form.email.readOnly = true;
+      $('#desplegable').open = true;
       var listo = validarRegistro(true);
       if (!listo) {
         setNota('Ya le reconocemos por ' + (PROVEEDORES[proveedor] || 'su correo') +
@@ -416,7 +426,7 @@
         : 'Le enviamos un código de 6 dígitos. Escríbalo en la posdata.', true);
     }).catch(function () {
       setBusy(false);
-      enviarTexto.textContent = state.modo === 'acceso' ? 'Sellar y entrar' : 'Sellar y enviar';
+      enviarTexto.textContent = 'Sellar y entrar';
       setNota('No pudimos enviar el código. Espere un minuto e intente de nuevo.');
     });
   }
@@ -534,7 +544,7 @@
       pintarAtributos();
       pintarConsentimientos();
       var d = readDraft();
-      if (d && d.marca === marca) restore(d);
+      if (d && d.marca === marca) { restore(d); $('#desplegable').open = true; }
       setModo(d && d.pendiente && d.modo ? d.modo : state.modo);
       iniciarCaptcha();
 

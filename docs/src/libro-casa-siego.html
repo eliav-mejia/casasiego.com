@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Libro de la casa — Casa Siego®</title>
+<!-- Source of docs/libro-casa-siego.pdf. Build from the project root: sh docs/src/build-pdf.sh libro
+     Uses css/site.css + css/libro.css as they are; the print rules of libro.css set one square page per face. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=Spectral:ital@1&display=block">
+<link rel="stylesheet" href="../../css/site.css">
+<link rel="stylesheet" href="../../css/libro.css">
+<style>
+  @page { size: 210mm 210mm; margin: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { transition: none; }
+  @media print { .face { width: 210mm; height: 210mm; aspect-ratio: auto; } }   /* one face = one 210 mm page, whatever width Chrome gives 100vw */
+</style>
+</head>
+<body class="libro-body">
+<main class="libro-stage">
+<div class="book">
+
+  <!-- Hoja 1: portada / índice -->
+  <div class="leaf">
+    <section class="face face--front page page--ave page--cover">
+      <div class="page__frame"></div>
+      <div class="page__text">
+        <p class="eyebrow">Libro de la casa</p>
+        <p class="wordmark wordmark--cover"><span class="wordmark__casa">CASA</span><span class="wordmark__siego">Siego</span><span class="wordmark__r">&reg;</span></p>
+        <hr class="rule rule--short rule--gold">
+        <p class="page__lede">Tu traje y quienes te acompañan.</p>
+      </div>
+    </section>
+    <section class="face face--back page page--granada page--verso">
+      <div class="page__text">
+        <h2 class="section-title">Contenido</h2>
+        <ol class="toc">
+          <li><b>I</b><a>Justo · Sastrería</a><span>5</span></li>
+          <li><b>II</b><a>Fiel · Mascotas</a><span>6</span></li>
+          <li><b>III</b><a>Club Casa Siego</a><span>7</span></li>
+          <li><b>IV</b><a>Empresas y eventos</a><span>8</span></li>
+          <li><b>V</b><a>La casa</a><span>9</span></li>
+        </ol>
+      </div>
+      <p class="page__folio">2</p>
+    </section>
+  </div>
+
+  <!-- Hoja 2: prólogo / dicho -->
+  <div class="leaf">
+    <section class="face face--front page page--granada">
+      <div class="page__text">
+        <p class="eyebrow">Prólogo</p>
+        <h2 class="section-title">Entra por un servicio, sal con lo que necesitas</h2>
+        <p>Casa Siego es una casa con dos puertas: un taller para vestirte a la medida y un estudio para retratar a quienes te son fieles.</p>
+        <p class="meta">Madera, concreto y luz natural · Ciudad de México</p>
+      </div>
+      <p class="page__folio">3</p>
+    </section>
+    <section class="face face--back page page--ave page--verso">
+      <div class="page__text">
+        <p class="page__quote">“Vienes por un traje.<br>Te llevas el retrato.”</p>
+        <hr class="rule rule--short rule--gold">
+        <p class="caption">Dicho de Casa Siego</p>
+      </div>
+      <p class="page__folio">4</p>
+    </section>
+  </div>
+
+  <!-- Hoja 3: Justo / Fiel -->
+  <div class="leaf">
+    <section class="face face--front page page--granada">
+      <div class="page__text">
+        <p class="page__numeral">I</p>
+        <p class="eyebrow">Capítulo I · Justo</p>
+        <h2 class="section-title">Trajes a la medida</h2>
+        <ul class="page__list">
+          <li>La prueba: medir, cortar, ajustar.</li>
+          <li>Tela, forro y botón, a elegir.</li>
+          <li>Se estrena frente a la cámara.</li>
+        </ul>
+      </div>
+      <p class="page__folio">5</p>
+    </section>
+    <section class="face face--back page page--granada page--verso">
+      <div class="page__text">
+        <p class="page__numeral">II</p>
+        <p class="eyebrow">Capítulo II · Fiel</p>
+        <h2 class="section-title">Fotografía de mascotas</h2>
+        <p>Luz natural, sin prisa y con su bienestar primero, en locación o en el estudio.</p>
+      </div>
+      <p class="page__folio">6</p>
+    </section>
+  </div>
+
+  <!-- Hoja 4: Club / Empresas -->
+  <div class="leaf">
+    <section class="face face--front page page--ave">
+      <div class="page__text">
+        <p class="eyebrow">Capítulo III</p>
+        <h2 class="section-title">Club Casa Siego</h2>
+        <p class="caption">Toda la casa en una cuota anual.</p>
+      </div>
+      <p class="page__folio">7</p>
+    </section>
+    <section class="face face--back page page--granada page--verso">
+      <div class="page__text">
+        <p class="eyebrow">Capítulo IV · Empresas y eventos</p>
+        <h2 class="section-title">Para tu equipo</h2>
+        <p>Retratos corporativos de todo el equipo en un día, uniformes y trajes a medida, y el estudio fuera de horario para lanzamientos y sesiones de marca.</p>
+      </div>
+      <p class="page__folio">8</p>
+    </section>
+  </div>
+
+  <!-- Hoja 5: La casa / contraportada -->
+  <div class="leaf">
+    <section class="face face--front page page--granada">
+      <div class="page__text">
+        <p class="eyebrow">Capítulo V · La casa</p>
+        <h2 class="section-title">Dos conceptos, una casa</h2>
+        <ul class="page__list">
+          <li><strong>Fiel</strong> · Estudio fotográfico</li>
+          <li><strong>Justo</strong> · Sastrería</li>
+        </ul>
+        <p class="meta" style="margin-top:1em">Selecta en telas, locaciones y espacios de colaboración.</p>
+      </div>
+      <p class="page__folio">9</p>
+    </section>
+    <section class="face face--back page page--ave page--verso page--cover">
+      <div class="page__frame"></div>
+      <div class="page__text">
+        <p class="wordmark wordmark--back"><span class="wordmark__casa">CASA</span><span class="wordmark__siego">Siego</span><span class="wordmark__r">&reg;</span></p>
+        <hr class="rule rule--short rule--gold">
+        <p class="meta">México · España</p>
+        <p class="meta">info@casasiego.com</p>
+        <p class="caption">© 2026 Casa Siego®</p>
+      </div>
+    </section>
+  </div>
+
+</div>
+</main>
+</body>
+</html>

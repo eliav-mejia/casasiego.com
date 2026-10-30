@@ -14,10 +14,11 @@ TOPICS = [
     ('unirte', 'Unirte al Club'),
     ('beneficios', 'Tus beneficios'),
     ('citas', 'Citas y eventos'),
+    ('empresas', 'Empresas y uniformes'),
     ('politicas', 'Cancelaciones y políticas'),
 ]
 
-# slug, topic, question, summary, [(section title, [paragraphs or ('ul', [items])])]
+# slug, topic, question, summary, [(section title, [paragraphs or ('ul', [items])])], optional {'title', 'desc'} for search engines
 ARTICLES = [
     ('que-incluye-la-membresia', 'unirte', '¿Qué incluye la membresía?',
      'Eventos especiales, sesiones mensuales de retrato, un traje a la medida, reserva prioritaria y, desde la etapa 2, un café diario.', [
@@ -235,6 +236,54 @@ ARTICLES = [
             'Llega unos minutos antes. Las sesiones y pruebas tienen un horario reservado para ti y para los siguientes miembros.',
         ]),
     ]),
+    ('uniformes-ejecutivos-a-medida', 'empresas', '¿Cómo encargo uniformes ejecutivos a la medida?',
+     'En Justo, la sastrería de Casa Siego, confeccionamos uniformes ejecutivos y trajes a la medida para caballero: un patrón por persona, pruebas en el taller y un retrato corporativo de todo el equipo.', [
+        ('Uniformes ejecutivos a la medida', [
+            'Un uniforme ejecutivo a la medida es el traje de tu equipo cortado sobre las medidas de cada persona, con la tela, el color y los detalles de tu empresa. Todos visten igual y a cada uno le queda como propio. En Justo lo confeccionamos de principio a fin en nuestro taller de Roma Norte, Ciudad de México.',
+        ]),
+        ('Casa Siego: imagen y estilo', [
+            'Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir faire artesanal con procesos sostenibles: la constancia de un taller que produce para equipos completos y el oficio de la sastrería que mide, corta y ajusta a mano.',
+            'La casa reúne dos oficios bajo un mismo techo de madera, concreto y luz natural: <a href="../../brands/justo/">Justo</a>, la sastrería, y <a href="../../brands/fiel/">Fiel</a>, el estudio de retrato. Por eso tu equipo puede estrenar su uniforme frente a la cámara el día de la entrega. Conoce a los sastres y fotógrafos en <a href="../../membresia/equipo/">el equipo de Casa Siego</a>.',
+        ]),
+        ('Trajes a la medida para caballero', [
+            'Un traje justo es el que te queda: cortado sobre un patrón propio, con costuras que no se ven y la compostura de quien sabe que va bien vestido. En el taller confeccionamos:',
+            ('ul', [
+                '<strong>Trajes completos</strong> de saco y pantalón, con chaleco si la ocasión lo pide.',
+                '<strong>Sacos estructurados</strong>, la pieza que más dice de un uniforme ejecutivo.',
+                '<strong>Camisería y corbatas</strong> coordinadas con la paleta de tu marca.',
+                '<strong>Ajuste y mantenimiento</strong> de las prendas, para que sigan cayendo como el primer día.',
+            ]),
+        ]),
+        ('De fábrica o a la medida', [
+            'Hay dos caminos, y puedes combinarlos:',
+            ('ul', [
+                '<strong>A la medida.</strong> Cada persona tiene su patrón y sus pruebas. Es la opción para el equipo directivo, la atención a clientes y quienes representan a tu empresa todos los días.',
+                '<strong>De fábrica, en tallas.</strong> Los sacos de la <a href="../../brands/justo/tienda/">tienda en línea de Justo</a> vienen en tallas Chico, Mediano, Grande y Extra grande, listos para usarse. Sirven para reposiciones rápidas o nuevas contrataciones; la <a href="../../brands/justo/tienda/guia-de-tallas/">guía de tallas</a> explica cómo medirse.',
+            ]),
+        ]),
+        ('El proceso para tu empresa', [
+            ('ul', [
+                '<strong>Cotización.</strong> Escríbenos a <a href="mailto:info@casasiego.com?subject=Justo%20%C2%B7%20Uniformes%20ejecutivos">info@casasiego.com</a> con el número de personas, las piezas que necesitas y la fecha en que las quieres estrenar.',
+                '<strong>Tela y detalles.</strong> Elegimos contigo la tela, el forro, los botones y el color de la temporada que mejor representan a tu marca.',
+                '<strong>Toma de medidas.</strong> Agendamos la cita de cada persona en la sastrería Justo.',
+                '<strong>Pruebas.</strong> Ajustamos cada prenda en una o más pruebas, hasta que el saco caiga como debe.',
+                '<strong>Entrega y retrato.</strong> El ajuste final se hace sobre cada persona y, si lo quieres, retratamos a todo el equipo en Fiel para tu sitio web, LinkedIn o informe anual.',
+            ]),
+            'Encarga con tiempo: la confección a la medida requiere varias semanas y pruebas. La cotización llega por escrito, con el monto total, antes de que pagues.',
+        ]),
+        ('Procesos sostenibles', [
+            ('ul', [
+                '<strong>Sobre pedido.</strong> Cortamos lo que tu equipo va a usar, no inventario que espera en una bodega.',
+                '<strong>Un patrón por persona.</strong> Una prenda que queda bien se usa más y se reemplaza menos.',
+                '<strong>Mantenimiento en la casa.</strong> Ajustamos y cuidamos las prendas para alargar su vida.',
+                '<strong>Reposiciones por pieza.</strong> Si una persona cambia de talla o se integra al equipo, confeccionamos solo lo que hace falta.',
+            ]),
+        ]),
+        ('Para ti, como miembro del Club', [
+            'Si buscas un traje a la medida para ti, la membresía del Club Casa Siego incluye uno de Justo. Lee <a href="../reclamar-tu-traje/">¿Cómo reclamo mi traje a la medida?</a> Para tu retrato profesional, lee <a href="../reservar-sesion-de-retrato/">¿Cómo reservo una sesión Fiel de retrato?</a>',
+        ]),
+    ], {'title': 'Uniformes ejecutivos a la medida para empresas | Casa Siego®',
+        'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego en Roma Norte, CDMX. Cotiza para tu equipo.'}),
     ('cancelar-la-membresia', 'politicas', '¿Puedo cancelar mi membresía?',
      'Cinco días hábiles para arrepentirte si contrataste a distancia; después, reembolso proporcional.', [
         ('Los primeros cinco días hábiles', [
@@ -319,7 +368,7 @@ def head(title, desc, url, up, kind, ld):
   <link rel="stylesheet" href="{up}css/site.css?v=1.1.0">
   <link rel="stylesheet" href="{up}css/layout.css?v=1.1.3">
   <script src="{up}js/region.js?v=1.1.1" defer></script>
-  <script src="{up}js/casa.js?v=1.1.5" defer></script>
+  <script src="{up}js/casa.js?v=1.1.6" defer></script>
 </head>
 <body>
 '''
@@ -341,7 +390,8 @@ def body_html(blocks):
 
 
 def article(i, a):
-    slug, topic, q, summary, sections = a
+    slug, topic, q, summary, sections = a[:5]
+    seo = a[5] if len(a) > 5 else {}
     url = f'{SITE}/ayuda/{slug}/'
     topic_name = dict(TOPICS)[topic]
     answer = ' '.join(plain(b) for b in sections[0][1] if isinstance(b, str))
@@ -356,7 +406,7 @@ def article(i, a):
         f'<a href="../{prev_a[0]}/">&larr; {prev_a[2]}</a>' if prev_a else '',
         '<a href="../">Centro de Ayuda</a>',
         f'<a href="../{next_a[0]}/">{next_a[2]} &rarr;</a>' if next_a else ''] if x)
-    return head(f'{q} — Centro de Ayuda · Casa Siego®', plain(summary), url, '../../', 'article', ld) + f'''
+    return head(seo.get('title', f'{q} — Centro de Ayuda · Casa Siego®'), seo.get('desc', plain(summary)), url, '../../', 'article', ld) + f'''
   <header class="terms-head">
     <p class="eyebrow eyebrow--gold">Centro de Ayuda &middot; {topic_name}</p>
     <h1 class="display">{q}</h1>
@@ -411,7 +461,7 @@ def index():
           </div>
         </li>''')
         groups.append(f'      <h2 class="section-title" id="{t}">{name}</h2>\n      <ol class="ayuda-list">\n' + '\n'.join(items) + '\n      </ol>')
-    return head('Centro de Ayuda — Casa Siego®', 'Preguntas frecuentes sobre el Club Casa Siego: cómo unirte, tus beneficios, citas, eventos, cancelaciones y políticas.', url, '../', 'website', ld) + f'''
+    return head('Centro de Ayuda — Casa Siego®', 'Preguntas frecuentes de Casa Siego: el Club, tus beneficios, retratos Fiel, uniformes ejecutivos y trajes a la medida de Justo, cancelaciones y políticas.', url, '../', 'website', ld) + f'''
   <header class="terms-head">
     <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
     <p class="eyebrow eyebrow--gold">Blog</p>

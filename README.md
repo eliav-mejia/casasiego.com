@@ -15,6 +15,11 @@ casasiego.com/
 │   ├── index.html                términos y condiciones de la membresía del Club
 │   ├── equipo/index.html         índice del equipo (enlace en el pie de la portada): fotógrafos (Fiel) y sastres (Justo), fotos en images/Equipo/
 │   └── web/index.html            Web · Lujo, Arte e Imagen: cuestionario de consultoría para miembros (css/web.css, js/web.js); se envía por el correo del visitante
+├── cargando/                     pantallas de carga «Casa Siego» sobre papel vino, sin cabecera ni pie; noindex · ?a=/ruta/ continúa ahí
+│   ├── index.html                las 7 variantes lado a lado
+│   ├── cargando-1.html … -7.html  1 Kastemo · 2 Silhouette Phantom · 3 Gallery Dwiarna · 4 Helleny · 5 Hathem Bosteem · 6 Bethney Signature · 7 Breind Signature
+│   └── fonts/                    sus fuentes, todas de uso personal: ver fonts/README.md antes de publicar
+│                                 generado por docs/src/cargando.py
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── CNAME                         casasiego.com (dominio de GitHub Pages)

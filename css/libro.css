@@ -1,0 +1,292 @@
+/* ==========================================================================
+   Casa Siego — libro.css  (v1.0.0)
+   "Libro de la casa" (libro/index.html): a square-page book that turns its
+   leaves in 3D on wide screens and reads as a stack of pages on phones.
+   Paper: images/casa/Granada.jpg (pomegranate, top-right corner) and
+   images/casa/Ave_Paraiso.jpg (bird of paradise and calla, opposite corners).
+   Loaded after site.css; uses its tokens only. Behaviour in js/libro.js.
+   ========================================================================== */
+
+/* 1. Desk ------------------------------------------------------------------ */
+.libro-body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    radial-gradient(120% 90% at 50% 45%, var(--beige-soft) 0%, var(--beige) 60%, color-mix(in srgb, var(--beige) 80%, var(--taupe)) 100%);
+  overflow-x: hidden;
+}
+
+.libro-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 3vh, 1.75rem) clamp(1rem, 4vw, 3rem) 0;
+}
+.libro-head .wordmark { font-size: 1.3rem; }
+.libro-head .eyebrow { margin: 0; }
+
+.libro-stage {
+  --side: min(calc((100vw - 2 * clamp(1rem, 4vw, 3rem)) / 2), calc(100vh - 11rem), 40rem);
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vh, 2rem) clamp(1rem, 4vw, 3rem);
+}
+@supports (height: 100dvh) {
+  .libro-stage { --side: min(calc((100vw - 2 * clamp(1rem, 4vw, 3rem)) / 2), calc(100dvh - 11rem), 40rem); }
+}
+
+/* 2. Book and leaves -------------------------------------------------------- */
+/* Each leaf holds a recto (front, right page) and a verso (back, next left page).
+   js/libro.js turns leaves and moves the closed book to the centre (--shift). */
+.book {
+  --shift: 0%;
+  position: relative;
+  width: calc(var(--side) * 2);
+  height: var(--side);
+  perspective: calc(var(--side) * 5);
+  transform: translateX(var(--shift));
+  transition: transform 1100ms var(--ease-out-expo);
+}
+.book[data-state="closed"] { --shift: -25%; }
+.book[data-state="ended"]  { --shift: 25%; }
+
+.leaf {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1100ms var(--ease-silk);
+}
+.leaf.is-turned { transform: rotateY(-180deg); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.face--back { transform: rotateY(180deg); }
+
+/* 3. Page: paper, gutter, folio --------------------------------------------- */
+.page {
+  --paper: url("../images/casa/Granada.jpg?v=1.0.0");
+  container-type: inline-size;
+  overflow: hidden;
+  background: #EFE9DF;
+  box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--wine-ink) 45%, transparent);
+  font-size: 2.55cqi;
+  line-height: 1.55;
+}
+.page--ave { --paper: url("../images/casa/Ave_Paraiso.jpg?v=1.0.0"); }
+
+.page::before {                       /* the paper; mirrored on versos so ornaments sit at the outer edge */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--paper) center / cover no-repeat;
+}
+.page--verso::before { transform: scaleX(-1); }
+
+.page::after {                        /* gutter shade on the binding edge */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right, color-mix(in srgb, var(--wine-ink) 22%, transparent), transparent 7%);
+}
+.page--verso::after {
+  background: linear-gradient(to left, color-mix(in srgb, var(--wine-ink) 22%, transparent), transparent 7%);
+}
+
+.page__folio {
+  position: absolute;
+  bottom: 2.6%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0;
+  max-width: none;
+  text-align: center;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 2cqi;
+  color: var(--taupe);
+}
+
+/* Text block: kept in the paper's clear area, away from the engraving */
+.page__text {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.page__text p { max-width: none; }
+
+/* Granada: ornament top and outer edge → text low, toward the binding */
+.page--granada .page__text           { top: 36%; bottom: 9%; left: 9%; right: 39%; }
+.page--granada.page--verso .page__text { left: 39%; right: 9%; }
+
+/* Ave del paraíso: ornaments in opposite corners → text on the clear diagonal */
+.page--ave .page__text {
+  inset: 30% 29% 30%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* 4. Type on the page (site.css classes, sized to the page) ------------------ */
+.page .eyebrow       { font-size: 1.9cqi; margin-bottom: 0.9em; }
+.page .section-title { font-size: 5.4cqi; margin-bottom: 0.6em; }
+.page .subhead       { font-size: 2.6cqi; margin-bottom: 0.6em; }
+.page .caption,
+.page .meta          { font-size: 2.2cqi; }
+.page .rule          { margin: 1.4em 0; }
+.page--ave .rule--short { margin-inline: auto; }
+/* Ave pages: the clear diagonal is narrow, so headings run smaller */
+.page--ave .section-title { font-size: 4.2cqi; }
+.page--ave .page__quote   { font-size: 3.2cqi; }
+
+.page__numeral {
+  margin: 0 0 0.1em;
+  font-family: var(--font-decorative);
+  font-weight: 700;
+  font-size: 13cqi;
+  line-height: 1;
+  color: var(--wine);
+}
+.page__quote {
+  margin: 0 0 0.8em;
+  font-family: var(--font-section);
+  font-weight: 600;
+  font-size: 4.6cqi;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.page .wordmark--cover { font-size: 7cqi;   color: var(--wine-ink); }
+.page .wordmark--back  { font-size: 6cqi;   color: var(--wine-ink); }
+.page__lede {
+  margin: 1.1em 0 0;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 3cqi;
+}
+
+/* Cover and back cover: a brass hairline frame */
+.page--cover .page__frame {
+  position: absolute;
+  inset: 3.5%;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb, var(--brass) 70%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--brass) 35%, transparent);
+  outline-offset: -0.9cqi;
+  pointer-events: none;
+}
+
+/* Contents */
+.toc { margin: 0; padding: 0; list-style: none; border-top: 1px solid color-mix(in srgb, var(--brass) 45%, transparent); }
+.toc li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  padding: 0.5em 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--brass) 25%, transparent);
+}
+.toc a { flex: 1; text-decoration: none; }
+.toc b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.75em;
+  letter-spacing: 0.18em;
+  color: var(--wine);
+  min-width: 2.2em;
+}
+.toc span { font-family: var(--font-meta); font-style: italic; color: var(--taupe); }
+
+.page__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid color-mix(in srgb, var(--brass) 40%, transparent); }
+.page__list li { padding: 0.4em 0; border-bottom: 1px solid color-mix(in srgb, var(--brass) 22%, transparent); }
+.page__list li::before { content: "—"; margin-right: 0.6em; color: var(--brass); }
+
+/* 5. Controls --------------------------------------------------------------- */
+.libro-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 4vw, 3rem);
+  padding: 0 1rem clamp(1rem, 3vh, 2rem);
+}
+.libro-controls button {
+  padding: 0.7em 1.4em;
+  border: 1px solid color-mix(in srgb, var(--wine) 60%, transparent);
+  background: transparent;
+  color: var(--wine);
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 350ms var(--ease-silk), color 350ms var(--ease-silk), opacity 350ms var(--ease-silk);
+}
+.libro-controls button:hover:not(:disabled) { background: var(--wine); color: var(--thera-white); }
+.libro-controls button:disabled { opacity: 0.35; cursor: default; }
+.libro-controls .meta { min-width: 11em; text-align: center; }
+
+.js .book { cursor: pointer; }
+.js .book a { cursor: pointer; }
+
+/* 6. Phones: the leaves fall open into a column of pages ---------------------- */
+@media screen and (max-width: 760px) {
+  .libro-stage { --side: auto; display: block; padding-inline: 16px; }
+  .book,
+  .book[data-state] { width: 100%; height: auto; transform: none; perspective: none; cursor: auto; }
+  .leaf { position: static; width: 100%; height: auto; transform: none !important; transform-style: flat; }
+  .face {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 1.25rem;
+    transform: none;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+  .page { font-size: 3.6cqi; }
+  .page::after { display: none; }
+  .page--granada .page__text,
+  .page--granada.page--verso .page__text { top: 30%; bottom: 8%; left: 7%; right: 7%; }
+  .page--granada .page__text > * { position: relative; }
+  .page--granada .page__text::before {   /* paper veil so the text can cross the engraving */
+    content: "";
+    position: absolute;
+    inset: -4% -4%;
+    background: color-mix(in srgb, #EFE9DF 86%, transparent);
+  }
+  .page--ave .page__text { inset: 20% 14% 22%; }
+  .page .eyebrow  { font-size: 2.6cqi; }
+  .page .section-title { font-size: 6.6cqi; }
+  .page .subhead  { font-size: 3.4cqi; }
+  .page .caption,
+  .page .meta     { font-size: 3cqi; }
+  .page__folio    { font-size: 2.8cqi; }
+  .libro-controls { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book, .leaf { transition: none; }
+}
+
+@media print {
+  .libro-head, .libro-controls { display: none; }
+  .libro-body { background: none; display: block; }
+  .libro-stage { display: block; padding: 0; }
+  .book, .book[data-state] { width: auto; height: auto; transform: none; perspective: none; }
+  .leaf { position: static; width: auto; height: auto; transform: none !important; }
+  .face { position: relative; width: 100vw; aspect-ratio: 1 / 1; transform: none; backface-visibility: visible; break-after: page; box-shadow: none; }
+  .page::after { display: none; }
+  .page::before { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
