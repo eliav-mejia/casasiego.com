@@ -22,6 +22,35 @@ TOPICS = [
 
 # slug, topic, question, summary, [(section title, [paragraphs or ('ul', [items])])], optional {'title', 'desc'} for search engines
 ARTICLES = [
+    ('clientes-priority', 'unirte', '¿Cómo me vuelvo cliente Priority?',
+     'Priority distingue a quien se compromete con su imagen y con la de su gente: diseñamos contigo tu colección con los servicios de la casa a tu disposición.', [
+        ('Clientes Priority', [
+            'Un cliente Priority se distingue por el compromiso con su imagen y con la de su gente. Viste bien a diario, cuida cómo se presenta su equipo y entiende la imagen como parte de su palabra. Para esa persona, Casa Siego deja de ser un lugar al que se acude y se vuelve un aliado.',
+            'La casa reúne dos oficios: <a href="../../brands/justo/">Justo</a>, la sastrería, y <a href="../../brands/fiel/">Fiel</a>, el estudio de retrato. Como cliente Priority, los dos trabajan juntos para tu colección.',
+        ]),
+        ('Valores agregados', [
+            'Diseñamos tu colección con los servicios de la casa a tu disposición:',
+            ('ul', [
+                '<strong>Corte y confección de trajes a medida</strong> en el taller de Justo, con un patrón propio.',
+                '<strong>Visita para toma de medidas</strong>: vamos a tu oficina o a donde te acomode.',
+                '<strong>Acompañamiento</strong> en cada decisión: tela, corte, detalles y el momento de estrenar.',
+                '<strong>Fotografía de retrato</strong> en Fiel, para ti y para tu equipo.',
+                '<strong>Acceso a eventos especiales</strong> de la casa.',
+            ]),
+        ]),
+        ('Diseña tu colección', [
+            ('ul', [
+                '<strong>Conversación.</strong> Nos cuentas cómo vistes, a qué te dedicas y qué quieres proyectar, tú y tu gente.',
+                '<strong>Propuesta.</strong> Preparamos una colección a tu medida: piezas, telas y el orden en que conviene hacerlas.',
+                '<strong>Medidas y confección.</strong> Tomamos medidas en tu visita y confeccionamos cada pieza con sus pruebas.',
+                '<strong>Retrato.</strong> Estrenas tu colección frente a la cámara de Fiel.',
+            ]),
+        ]),
+        ('Vuélvete cliente Priority', [
+            'Diseña tu colección y vuélvete cliente Priority. Escríbenos a <a href="mailto:info@casasiego.com?subject=Cliente%20Priority">info@casasiego.com</a> y agendamos la primera conversación. Si buscas piezas listas para usarse, conoce las <a href="../../brands/justo/tienda/">colecciones de Justo</a>.',
+        ]),
+    ], {'title': 'Clientes Priority: diseña tu colección | Casa Siego®',
+        'desc': 'Cómo ser cliente Priority de Casa Siego: trajes a medida, visita para toma de medidas, acompañamiento, fotografía de retrato y eventos especiales para ti y tu equipo.'}),
     ('que-incluye-la-membresia', 'unirte', '¿Qué incluye la membresía?',
      'Eventos especiales, sesiones mensuales de retrato, un traje a la medida, reserva prioritaria y, desde la etapa 2, un café diario.', [
         ('Los beneficios', [

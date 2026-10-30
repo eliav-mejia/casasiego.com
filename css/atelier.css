@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Casa Siego — atelier.css  (v1.0.0)
+   Opening of visitante.html: the fabric up close (textura-macro.jpg) melts into the finished garment
+   (prenda-catalogo.jpg) in a 4:5 frame. CSS only: a 12 s loop of two layers that cross-fade while
+   each image drifts 2 % closer. Hover pauses the loop, lifts the frame and draws a thin gold rule.
+   ========================================================================== */
+
+.atelier {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  padding: clamp(3rem, 7vw, 6rem) 10% clamp(3rem, 6vw, 5rem);
+}
+.atelier__text { max-width: 30rem; justify-self: end; }
+.atelier__title { margin: 0.4rem 0 1.25rem; }
+.atelier__text p { margin: 0 0 1.75rem; }
+
+/* The frame: 4:5, the two layers stacked in the same cell */
+.atelier__frame {
+  position: relative;
+  width: min(100%, 30rem);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  background: var(--beige);
+  transition: transform 900ms var(--ease-silk), box-shadow 900ms var(--ease-silk);
+}
+.atelier__layer {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  animation: atelier-fade 12s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.atelier__layer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: atelier-drift 12s linear infinite;
+  will-change: transform;
+}
+/* The second layer runs half a loop behind: one fades out while the other fades in */
+.atelier__layer--prenda,
+.atelier__layer--prenda img { animation-delay: -6s; }
+
+/* Each layer is visible from 92 % to 50 % of the loop (with 8 % of cross-fade at each end) */
+@keyframes atelier-fade {
+  0%, 42% { opacity: 1; }
+  50%, 92% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* … and drifts 2 % closer only while it can be seen, resetting while hidden */
+@keyframes atelier-drift {
+  0% { transform: scale(1.004); }
+  50% { transform: scale(1.02); }
+  51%, 92% { transform: scale(1); }
+  100% { transform: scale(1.004); }
+}
+
+/* Caption of each layer, in gold, only on hover */
+.atelier__caption {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--beige-soft);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 700ms var(--ease-silk), transform 700ms var(--ease-silk);
+}
+
+/* Gold inset rule, drawn on hover */
+.atelier__frame::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--brass-light);
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 900ms var(--ease-silk), transform 900ms var(--ease-silk);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .atelier__frame:hover { transform: translateY(-4px); box-shadow: 0 22px 44px -26px rgba(59, 26, 31, 0.45); }
+  .atelier__frame:hover .atelier__layer,
+  .atelier__frame:hover .atelier__layer img { animation-play-state: paused; }
+  .atelier__frame:hover::after { opacity: 0.85; transform: none; }
+  .atelier__frame:hover .atelier__caption { opacity: 1; transform: none; }
+}
+
+@media (max-width: 900px) {
+  .atelier { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 3rem; gap: 2rem; }
+  .atelier__text { justify-self: start; }
+  .atelier__frame { justify-self: center; }
+}
+
+/* Reduced motion: no loop. The garment stays; hover fades to the fabric */
+@media (prefers-reduced-motion: reduce) {
+  .atelier__layer, .atelier__layer img { animation: none; }
+  .atelier__layer--textura { opacity: 0; transition: opacity 900ms ease; }
+  .atelier__frame:hover .atelier__layer--textura { opacity: 1; }
+  .atelier__frame, .atelier__frame::after { transition-duration: 1ms; }
+}
