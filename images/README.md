@@ -6,8 +6,8 @@ las páginas los recogen sin cambiar código.
 | Carpeta | Página | Catálogo |
 |---|---|---|
 | `images/casa/` | Portada, `index.html` (catálogo base Casa Siego) | [`casa/README.md`](casa/README.md) |
-| `images/brands/fiel.esmx/web/` | Fiel · `brands/fiel/` (y `mascota/`, `ejecutivo/`, `familiar/`) | sin catálogo; `sesion-clasica-familia.jpg` (846 × 1502) sale de `Casa Siego/Fiel/Galeria/_DSC2190.JPG` |
-| `images/og/share.jpg` | Tarjeta al compartir la portada (1200 × 630) | — |
+| `images/fiel.esmx/web/` | Fiel · `brands/fiel/` (y `mascota/`, `ejecutivo/`, `familiar/`) | sin catálogo; `sesion-clasica-familia.jpg` (846 × 1502) sale de `Casa Siego/Fiel/Galeria/_DSC2190.JPG` |
+| `images/casa/share.jpg` | Tarjeta al compartir la portada (1200 × 630) | — |
 
 `images/og/` guarda además los originales de cámara; no se publican (ver `.gitignore`).
 
