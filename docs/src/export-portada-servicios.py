@@ -21,7 +21,7 @@ JOBS = [
     ("traje-02.jpg",         "1000028262.jpg",        (210, 0, 1197, 768),      1260),  # 9:7 saco de tweed
     ("traje-03.jpg",         "1000028263.jpg",        (0, 100, 900, 700),       1500),  # 3:2 anaquel Tailor's Blend
 ]
-SHARE = ("images/og/share.jpg", "1000028264.jpg", (0, 15, 1408, 754), 1200)  # 1200 × 630 card
+SHARE = ("images/casa/share.jpg", "1000028264.jpg", (0, 15, 1408, 754), 1200)  # 1200 × 630 card
 
 
 def export(out, src, box, maxw, keep=(0x013B, 0x8298)):

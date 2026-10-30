@@ -1,6 +1,6 @@
 {
   "_schema": "products: id, slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n}, specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], active, featured",
-  "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/brands/justo.esmx/.",
+  "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/justo.esmx/.",
   "updated_at": "2026-10-25",
   "products": [
     {
@@ -19,7 +19,7 @@
         "XG": "https://buy.stripe.com/bJeeVfc277pV4ZudWQcMM0a"
       },
       "cut": "Regular",
-      "image": "images/brands/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg",
+      "image": "images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg",
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],
@@ -62,7 +62,7 @@
         "XG": "https://buy.stripe.com/4gM5kFgineSndw0g4YcMM08"
       },
       "cut": "Regular",
-      "image": "images/brands/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg",
+      "image": "images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg",
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],
@@ -104,7 +104,7 @@
         "XG": "https://buy.stripe.com/eVq5kF8PVaC71NicSMcMM05"
       },
       "cut": "Entallado",
-      "image": "images/brands/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg",
+      "image": "images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg",
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],

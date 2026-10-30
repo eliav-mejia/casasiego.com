@@ -11,6 +11,11 @@ images/casa/Gemini_*
 images/casa/pexels-*
 images/brands/fiel.esmx/*
 !images/brands/fiel.esmx/web/
+# Fiel: originales de cámara (JPG, ARW), Antes/Después, Ai_ y Stock de Pexels; solo se publica web/
+images/fiel.esmx/*
+!images/fiel.esmx/web/
+# Justo: solo las fotos que usan las páginas (ya versionadas); una nueva se sube con git add -f
+images/justo.esmx/*
 
 # Documentación interna (tienda Justo, decisiones, riesgos): nunca en el repositorio ni en el sitio
 _interno/

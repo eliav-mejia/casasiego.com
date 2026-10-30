@@ -279,7 +279,7 @@ def head(title, desc, url, up, kind, ld):
   <meta property="og:url" content="{url}">
   <meta property="og:type" content="{kind}">
   <meta property="og:locale" content="es_MX">
-  <meta property="og:image" content="{SITE}/images/og/share.jpg?v=1.0.6">
+  <meta property="og:image" content="{SITE}/images/casa/share.jpg?v=1.0.6">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
   <meta name="theme-color" content="#4A1621">

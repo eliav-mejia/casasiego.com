@@ -17,7 +17,7 @@
     measureSubject: 'Justo · Toma de medidas',
     membershipSubject: 'Membresía Club Casa Siego',
     signIn: '../../../',                       // portada con el acceso de miembros
-    photos: '../../../images/brands/justo.esmx/'
+    photos: '../../../images/justo.esmx/'
   };
 
   /* 1. Opciones ------------------------------------------------------------- */

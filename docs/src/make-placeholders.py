@@ -26,7 +26,7 @@ CATALOGUE = [
     ("images/casa/traje-01.jpg",            1200, 1600, "Traje 01"),
     ("images/casa/traje-02.jpg",            1260,  980, "Traje 02"),
     ("images/casa/traje-03.jpg",            1500, 1000, "Traje 03"),
-    ("images/og/share.jpg",         1200,  630, "Social share image"),
+    ("images/casa/share.jpg",         1200,  630, "Social share image"),
 
 ]
 
