@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — site.css  (v1.1.0)
+   Casa Siego — site.css  (v1.1.1)
    Brand tokens, typography and small components.
    Layout, sticky sections and parallax live in layout.css.
    Style guide: "Casa Siego" — white pages, vintage beige and wine; wordmark CASA (Palacio) + Siego (Ledger).
@@ -394,6 +394,17 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 .site-nav a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
 .site-nav a:hover { color: inherit; }
 
+/* Members' sign-in: grey profile silhouette (casa.js). In the nav on desktop, beside the burger on mobile, atop the drawer */
+.site-nav__perfil { display: flex; align-items: center; }
+.site-perfil { display: inline-flex; align-items: center; gap: 0.75rem; color: inherit; text-decoration: none; }
+.site-perfil svg { display: block; width: 1.75rem; height: 1.75rem; border-radius: 50%; transition: transform 300ms var(--ease-out-expo), box-shadow 300ms ease; }
+.site-perfil:hover svg, .site-perfil:focus-visible svg { transform: scale(1.08); box-shadow: 0 0 0 1px currentColor; }
+.site-nav .site-perfil::after { content: none; }
+.site-perfil--head { display: none; margin-left: auto; }
+.site-perfil--drawer { margin-bottom: 1.75rem; font-family: var(--font-meta); font-style: italic; font-size: 0.95rem; opacity: 0; transition: opacity 600ms var(--ease-silk) 300ms; }
+.menu-open .site-perfil--drawer { opacity: 0.9; }
+.site-perfil--drawer svg { width: 2.5rem; height: 2.5rem; }
+
 .site-burger {
   display: none;
   position: relative;
@@ -502,6 +513,7 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 @media (max-width: 900px) {
   .site-nav { display: none; }
   .site-burger { display: block; }
+  .site-perfil--head { display: inline-flex; }
   .site-head__mark { font-size: 1.15rem; }
 }
 @media (min-width: 901px) {

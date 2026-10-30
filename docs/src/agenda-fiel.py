@@ -38,11 +38,11 @@ PLANTILLA = """<!doctype html>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=Spectral:ital@1&display=swap">
-  <link rel="stylesheet" href="../../../../css/site.css?v=1.1.0">
+  <link rel="stylesheet" href="../../../../css/site.css?v=1.1.1">
   <link rel="stylesheet" href="../../../../css/layout.css?v=1.1.7">
   <link rel="stylesheet" href="../../../../css/web.css?v=1.0.0">
   <link rel="stylesheet" href="../../../../css/agenda.css?v=2.0.0">
-  <script src="../../../../js/casa.js?v=1.1.6" defer></script>
+  <script src="../../../../js/casa.js?v=1.1.9" defer></script>
   <script src="../../../../js/agenda.js?v=2.0.1" defer></script>
 </head>
 <body>

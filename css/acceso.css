@@ -12,9 +12,8 @@ html.acceso-pendiente body > :not(.acceso) { visibility: hidden; }
   position: fixed; inset: 0; z-index: 1000;
   display: grid; place-items: center;
   padding: 1rem;
-  background:
-    linear-gradient(180deg, rgba(74, 22, 33, 0.78), rgba(59, 26, 31, 0.94)),
-    url("../images/casa/portada.jpg?v=1.0.6") center / cover no-repeat;
+  /* Colonial façade, no wine veil: web copy of images/casa/pexels-chrisluengas-15075698.jpg (Pexels licence) */
+  background: #8C7A68 url("../images/casa/acceso-fachada.jpg?v=1.0.0") center / cover no-repeat;
   opacity: 0; animation: acceso-in 900ms var(--ease-silk) 80ms forwards;
 }
 .acceso.is-leaving { animation: acceso-out 900ms var(--ease-silk) forwards; }
@@ -98,6 +97,15 @@ html.acceso-pendiente body > :not(.acceso) { visibility: hidden; }
 }
 .acceso__sign { margin: 0; font-size: 1.1rem; color: var(--hellenic-gold); justify-content: center; }
 .acceso__back .rule { margin: 0; }
+
+/* Mobile: a wider frame of façade around the card, and a more compact card so the photo shows above and below */
+@media (max-width: 600px) {
+  .acceso { padding: clamp(2.5rem, 9vh, 4.5rem) clamp(1.75rem, 9vw, 2.75rem); }
+  .acceso__face { padding: 1.75rem 1.4rem; }
+  .acceso__lede { margin: 0.8rem auto 1.1rem; }
+  .acceso__form { gap: 0.8rem; }
+  .acceso__fine { margin-top: 1rem; }
+}
 
 /* Reduced motion: no flip or rise, faces swap with a fade */
 @media (prefers-reduced-motion: reduce) {

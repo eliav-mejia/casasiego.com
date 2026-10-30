@@ -1,4 +1,4 @@
-/* Casa Siego — acceso.js (v1.0.5)
+/* Casa Siego — acceso.js (v1.1.0)
    Sign-in gate of the home page (index.html only; brand pages, terms and the shop have no gate).
    1. A login card covers the page (no sign-up: accounts are created by Casa Siego in Supabase).
    2. On submit the card flips to a white card with a script message:
@@ -6,9 +6,12 @@
         error   → «Esperamos tener el honor de conocerte pronto» → redirect to brands/fiel/
       Any failure counts as an error: wrong credentials, Supabase not configured, network, timeout.
    3. A valid Supabase session skips the gate on later visits.
+   3b. Without a session, the card only appears for visits from outside the site (typed in the address bar,
+       a bookmark, a search result) and for the avatar link (#acceso). Arriving from another page of casasiego.com
+       («Inicio», «← Casa Siego»…) goes to visitante.html instead (casa.js already routes «Inicio» there).
    4. «Omitir», in light grey under the login, goes to visitante.html (copy of the home page without the gate,
       version 1.0.0 «Unrecognized visitor»).
-   Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso-casasiego.md. */
+   Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso/acceso-casasiego.md. */
 (function () {
   'use strict';
 
@@ -169,9 +172,17 @@
     back.setAttribute('aria-hidden', 'true');
   }
 
+  // Came from another page of this site (same-origin referrer), not typed in the address bar.
+  function desdeElSitio() {
+    try { return Boolean(document.referrer) && new URL(document.referrer).origin === location.origin; }
+    catch (e) { return false; }
+  }
+
   function start() {
     existingSession().then(function (session) {
-      if (session) openPage(null); else buildGate();
+      if (session) return openPage(null);
+      if (location.hash === '#acceso' || !desdeElSitio()) return buildGate();
+      window.location.replace(CFG.redirectOnSkip || 'visitante.html');
     });
   }
 
