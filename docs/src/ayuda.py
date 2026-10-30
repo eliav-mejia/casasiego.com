@@ -14,7 +14,6 @@ DATE = '28 de octubre de 2026'
 # Topics of the blog menu, in order
 TOPICS = [
     ('unirte', 'Unirte al Club'),
-    ('beneficios', 'Tus beneficios'),
     ('citas', 'Citas y eventos'),
     ('empresas', 'Empresas y uniformes'),
     ('politicas', 'Cancelaciones y políticas'),
@@ -51,67 +50,32 @@ ARTICLES = [
         ]),
     ], {'title': 'Clientes Priority: diseña tu colección | Casa Siego®',
         'desc': 'Cómo ser cliente Priority de Casa Siego: trajes a medida, visita para toma de medidas, acompañamiento, fotografía de retrato y eventos especiales para ti y tu equipo.'}),
-    ('que-incluye-la-membresia', 'unirte', '¿Qué incluye la membresía?',
-     'Eventos especiales, sesiones mensuales de retrato, un traje a la medida, reserva prioritaria y, desde la etapa 2, un café diario.', [
+    ('beneficios-de-cliente-priority', 'unirte', 'Beneficios de cliente Priority',
+     'Trajes a medida, visita para toma de medidas, acompañamiento, fotografía de retrato y acceso a eventos especiales de la casa.', [
         ('Los beneficios', [
-            'El Club Casa Siego es una cuota anual con los servicios de la casa, fotografía y sastrería a tu disposición. Durante doce meses a partir de la fecha en que adquieres la membresía, incluye:',
+            'Como cliente Priority, Justo y Fiel trabajan juntos para tu colección. Tienes a tu disposición:',
             ('ul', [
-                '<strong>Acceso a eventos especiales</strong> de la casa, sujeto al cupo de cada evento.',
-                '<strong>Fotografía de retrato</strong>: sesiones mensuales en el estudio Fiel.',
-                '<strong>Traje a la medida</strong> de Justo, que puedes reclamar durante un año.',
-                '<strong>Reserva prioritaria</strong> del estudio y de las citas de sastrería.',
-                '<strong>Cafetería</strong>: un café diario, no acumulable, a partir de la etapa 2.',
+                '<strong>Corte y confección de trajes a medida</strong> en el taller de Justo, con un patrón propio.',
+                '<strong>Visita para toma de medidas</strong>: vamos a tu oficina o a donde te acomode.',
+                '<strong>Acompañamiento</strong> en cada decisión: tela, corte, detalles y el momento de estrenar.',
+                '<strong>Fotografía de retrato</strong> en Fiel, para ti y para tu equipo.',
+                '<strong>Acceso a eventos especiales</strong> de la casa.',
             ]),
         ]),
         ('Un servicio personalizado', [
-            'Las telas, locaciones, eventos y horarios cambian con la temporada. El alcance exacto de cada beneficio se acuerda contigo en una reunión por Zoom y queda por escrito en tu cotización.',
-        ]),
-        ('Lo que no incluye', [
-            'Los beneficios son personales e intransferibles, no se canjean por dinero y vencen al terminar tu año de membresía. Las telas fuera de la selección del Club y las piezas adicionales se cotizan aparte.',
+            'Las telas, locaciones, eventos y horarios cambian con la temporada. El alcance de cada beneficio se acuerda contigo al diseñar tu colección y queda por escrito en tu cotización.',
         ]),
     ]),
-    ('como-unirte-al-club', 'unirte', '¿Cómo me uno al Club?',
-     'Envía tu solicitud, revisamos los requisitos, conversamos por Zoom y recibes tu cotización.', [
-        ('Paso a paso', [
-            ('ul', [
-                '<strong>Solicitud.</strong> Escríbenos a <a href="mailto:info@casasiego.com?subject=Membres%C3%ADa%20Club%20Casa%20Siego">info@casasiego.com</a> con tu nombre y un teléfono de contacto.',
-                '<strong>Revisión.</strong> Confirmamos que cumples los requisitos de admisión.',
-                '<strong>Reunión por Zoom.</strong> Te presentamos la casa, los beneficios y la selección de la temporada.',
-                '<strong>Cotización.</strong> Te enviamos por correo la cotización explícita con la cuota y las formas de pago.',
-                '<strong>Bienvenida.</strong> Al recibir tu pago te enviamos por correo el detalle de tu membresía.',
-            ]),
-        ]),
-        ('Requisitos de admisión', [
-            'Aplicamos los mismos requisitos a todas las solicitudes:',
-            ('ul', [
-                'Tener 18 años o más.',
-                'Entregar la solicitud con datos verídicos e identificación oficial vigente.',
-                'Cubrir la cuota anual en los términos de tu cotización.',
-                'No tener adeudos con Casa Siego ni una baja previa del Club por incumplimiento.',
-                'Que haya lugar disponible en el Club.',
-            ]),
-            'Si una solicitud no se admite, te decimos por escrito qué requisito no se cumplió y te reembolsamos cualquier cantidad pagada.',
-        ]),
-        ('Cupo y lista de espera', [
-            'El Club admite un número limitado de miembros para cuidar la calidad del servicio. Cuando el cupo está completo, tu solicitud entra a una lista de espera y se atiende en el orden en que llegó.',
+    ('tiene-un-costo-ser-priority', 'unirte', '¿Tiene un costo ser Priority?',
+     'El acceso a Priority no tiene costo. Es un servicio intransferible que puede agregarse a tu cotización.', [
+        ('Sin costo de acceso', [
+            'No te pueden cobrar el acceso a ser Priority. Es un servicio intransferible que puede ser agregado a tu cotización en el <a href="../clientes-priority/">diseño de tu colección</a>.',
         ]),
     ]),
-    ('cuanto-cuesta-la-membresia', 'unirte', '¿Cuánto cuesta la membresía?',
-     'La cuota se presenta en una reunión por Zoom con una cotización explícita, antes de que pagues.', [
-        ('Por qué no publicamos un precio', [
-            'Cada membresía se ajusta a quien la adquiere: telas, sesiones y temporada. Por eso la cuota anual y las formas de pago se presentan en una reunión por Zoom con una cotización explícita.',
-        ]),
-        ('Antes de pagar', [
-            'Siempre conoces el monto total antes de pagar. La cotización llega por correo y forma parte del acuerdo entre tú y Casa Siego.',
-        ]),
-        ('Después de pagar', [
-            'Recibes por correo la confirmación con el detalle de tu oferta, tu comprobante y las fechas de vigencia de tu membresía.',
-        ]),
-    ]),
-    ('sesiones-de-retrato', 'citas', '¿Cómo reservo una sesión de Fiel Mascotas?',
+    ('sesiones-de-retrato', 'citas', '¿Cómo contratar una sesión de retrato fotográfico para mascotas?',
      'Pagas el anticipo en línea y eliges tu fecha en el calendario de tu sesión, esta semana o la próxima.', [
         ('Elige tu sesión', [
-            'Fiel fotografía mascotas con luz natural: Esencial, Clásica y Legado. Compáralas en <a href="../../brands/fiel/#sesiones">las sesiones de Fiel</a> y pulsa «Reservar» en la tuya.',
+            'Fiel fotografía mascotas con luz natural: Esencial, Clásica y Legado. Compáralas en <a href="../../brands/fiel/mascota/">Fiel Mascotas</a> y pulsa «Reservar» en la tuya.',
         ]),
         ('Paga el anticipo', [
             'El anticipo es el 50&nbsp;% del precio y se paga con tarjeta en la página segura de Stripe. Casa Siego no recibe ni guarda los datos de tu tarjeta. El resto se paga el día de la sesión.',
@@ -123,14 +87,14 @@ ARTICLES = [
             'Para ideas de preparación, lee <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
         ]),
     ]),
-    ('reservar-sesion-de-retrato', 'citas', '¿Cómo reservo una sesión Fiel de retrato?',
+    ('reservar-sesion-de-retrato', 'citas', '¿Cómo agendar una sesión de retrato fotográfico?',
      'Elige el tipo de retrato y la sesión, pide tu fecha por correo y aparta tu lugar con el anticipo.', [
         ('Elige tu retrato', [
             'Fiel retrata con luz natural en tres enfoques. Cada uno tiene su página con sesiones, locaciones y extras:',
             ('ul', [
                 '<strong><a href="../../brands/fiel/ejecutivo/">Perfil ejecutivo</a></strong>: tu retrato profesional para CV, LinkedIn, perfil corporativo o sitio web.',
                 '<strong><a href="../../brands/fiel/familiar/">Familiar o de pareja</a></strong>: retratos para el portarretrato y el álbum.',
-                '<strong><a href="../../brands/fiel/mascota/">Mascota</a></strong>: se reserva y se paga en línea; lee <a href="../sesiones-de-retrato/">¿Cómo reservo una sesión de Fiel Mascotas?</a>',
+                '<strong><a href="../../brands/fiel/mascota/">Mascota</a></strong>: se reserva y se paga en línea; lee <a href="../sesiones-de-retrato/">¿Cómo contratar una sesión de retrato fotográfico para mascotas?</a>',
             ]),
         ]),
         ('Elige tu sesión', [
@@ -156,88 +120,36 @@ ARTICLES = [
             'La cita se confirma con el anticipo del 50&nbsp;% del precio de tu sesión; el monto aparece junto a cada precio. El resto se paga el día de la sesión. Te confirmamos la cita por correo en un día hábil.',
         ]),
         ('Fotografía de estudio', [
-            'La sesión Clásica de perfil ejecutivo se fotografía en el Estudio Casa Siego. Fuera de ella, el estudio es exclusivo para miembros del <a href="../que-incluye-la-membresia/">Club Casa Siego</a>. Para retratos de estudio de un equipo o un proyecto especial, pide una cotización personalizada a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Proyecto%20de%20estudio">info@casasiego.com</a>.',
+            'La sesión Clásica de perfil ejecutivo se fotografía en el Estudio Casa Siego. Fuera de ella, el estudio es exclusivo para miembros del <a href="../beneficios-de-cliente-priority/">Club Casa Siego</a>. Para retratos de estudio de un equipo o un proyecto especial, pide una cotización personalizada a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Proyecto%20de%20estudio">info@casasiego.com</a>.',
         ]),
         ('Antes de reservar', [
-            'Lee los <a href="../../brands/fiel/terminos/">términos y condiciones de Fiel</a>. Puedes mover tu cita una vez, sin costo, con al menos 24 horas de anticipación; lee <a href="../cancelar-o-mover-una-cita/">¿Cómo cancelo o muevo una cita?</a> Para llegar listo, lee <a href="../preparar-sesion-de-retrato/">¿Cómo preparo una sesión de retrato?</a>',
+            'Lee los <a href="../../brands/fiel/terminos/">términos y condiciones de Fiel</a>. Puedes mover tu cita una vez, sin costo, con al menos 24 horas de anticipación; lee <a href="../cancelar-o-mover-una-cita/">¿Cómo cancelo o muevo una cita?</a>',
         ]),
     ]),
-    ('preparar-sesion-de-retrato', 'citas', '¿Cómo preparo una sesión de retrato?',
-     'Un buen retrato se decide antes de llegar: qué quieres transmitir, qué vas a vestir y a qué hora te espera la mejor luz.', [
-        ('Define para qué es', [
-            'Una sesión empieza con una conversación: dónde vas a usar tus fotografías y qué quieres transmitir. Un perfil de LinkedIn pide un encuadre distinto al de un portarretrato familiar. Si reservaste Clásica o Legado, la mentoría previa está incluida: en ella elegimos contigo locación, horario y vestuario.',
-        ]),
-        ('Elige tu ropa', [
-            ('ul', [
-                '<strong>Colores lisos y sobrios</strong>: azul marino, gris, beige, blanco roto. La luz natural los favorece y no envejecen.',
-                '<strong>Evita</strong> logotipos, letras, estampados pequeños y rayas muy finas, que vibran en la fotografía.',
-                '<strong>Ropa que te quede bien</strong>, planchada la víspera. En el perfil ejecutivo, el saco cuenta: si es de Justo, podemos ajustarlo en la sastrería antes de tu sesión.',
-                '<strong>En familia o en pareja</strong>, coordinen una paleta de dos o tres colores en lugar de vestir igual.',
-                'Trae un cambio de ropa si tu sesión lo permite: en 30 o 45 minutos caben dos.',
-            ]),
-        ]),
-        ('Cuida los detalles', [
-            ('ul', [
-                'Corte de pelo o barba unos días antes, no el mismo día.',
-                'Manos y uñas cuidadas: en un retrato se ven más de lo que crees.',
-                'Maquillaje natural, como el de un día de trabajo. Trae polvo traslúcido para el brillo.',
-                'Lentes sin reflejo si los usas a diario; si no, mejor sin ellos.',
-                'Vacía los bolsillos del saco y del pantalón.',
-            ]),
-        ]),
-        ('La luz y la hora', [
-            'Fotografiamos con luz natural, entre la primera y la última hora del sol, cuando es más suave. En la mañana los parques están más tranquilos; en la tarde la luz es más cálida. Si llueve o el reglamento del parque lo impide, te proponemos otra fecha o te devolvemos el anticipo.',
-        ]),
-        ('El día de la sesión', [
-            ('ul', [
-                'Llega diez minutos antes, para acomodarte al lugar.',
-                'Duerme bien, toma agua y come algo ligero antes.',
-                'Con niños, elige su mejor hora del día y trae un juguete y algo de comer.',
-                'Déjate dirigir: te guiamos en la postura, la mirada y las manos, y revisamos las tomas contigo en pantalla.',
-            ]),
-            'Las fotografías adicionales y los extras se acuerdan antes de la sesión: la sesión se realiza con el paquete agendado.',
-        ]),
-        ('Después de la sesión', [
-            'Con Clásica y Legado recibes una galería privada en línea para elegir tus fotografías. Elige con calma, pero a tiempo: mientras antes envíes tu selección, antes recibes tus fotografías editadas. Para sesiones con mascota, lee también <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
-        ]),
-    ]),
-    ('reclamar-tu-traje', 'beneficios', '¿Cómo reclamo mi traje a la medida?',
-     'Tienes un año desde que adquieres la membresía para reclamar tu traje de Justo.', [
-        ('El plazo', [
-            'Cuentas con un año a partir de la fecha en que adquieres la membresía para reclamar tu traje a la medida. La fecha límite aparece en tu correo de bienvenida.',
+    ('adquirir-traje-a-la-medida', 'citas', '¿Cómo agendar una cita para toma de medidas?',
+     'Tu traje a la medida forma parte del diseño de tu colección, a partir de 10 trajes.', [
+        ('Diseña tu colección', [
+            'Los trajes a la medida de Justo se encargan al <a href="../clientes-priority/">diseñar tu colección</a> como cliente Priority. La colección se confecciona a partir de un mínimo de 10 trajes, para ti y para tu equipo.',
         ]),
         ('El proceso', [
             ('ul', [
-                '<strong>Cita de medidas.</strong> Agenda tu prueba en la sastrería Justo.',
-                '<strong>Tela y detalles.</strong> Eliges entre la selección vigente del Club.',
-                '<strong>Pruebas.</strong> Ajustamos el traje en una o más pruebas.',
-                '<strong>Entrega.</strong> Lo estrenas, si quieres, con un retrato en el estudio.',
+                '<strong>Conversación.</strong> Nos cuentas cómo vistes, a qué te dedicas y qué quieres proyectar, tú y tu gente.',
+                '<strong>Propuesta.</strong> Preparamos tu colección: piezas, telas y el orden en que conviene hacerlas.',
+                '<strong>Medidas y confección.</strong> Tomamos medidas en tu visita y confeccionamos cada traje con sus pruebas.',
+                '<strong>Retrato.</strong> Estrenas tu colección frente a la cámara de Fiel; lee <a href="../reservar-sesion-de-retrato/">¿Cómo agendar una sesión de retrato fotográfico?</a>',
             ]),
-            'Reclámalo con tiempo: la confección requiere varias semanas y pruebas antes de que termine tu plazo.',
         ]),
-        ('Telas y opciones', [
-            'La selección de telas cambia por temporada. Las telas fuera de la selección del Club, las piezas adicionales y los acabados especiales se cotizan aparte.',
+        ('Piezas listas para usarse', [
+            'Si buscas una pieza individual, conoce los <a href="../../brands/justo/tienda/">esenciales de Justo</a>, en tallas Chico a Extra grande.',
         ]),
     ]),
-    ('reserva-prioritaria', 'beneficios', '¿Cómo funciona la reserva prioritaria?',
+    ('reserva-prioritaria', 'citas', '¿Cómo funciona la reserva prioritaria?',
      'Como miembro, apartas el estudio y tus citas de sastrería antes que el público general.', [
         ('Qué es', [
             'Los miembros reservan el estudio y las citas de sastrería con anticipación sobre el público general. Así aseguras tu horario en fechas de alta demanda.',
         ]),
         ('Cómo usarla', [
             'Escríbenos a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Reserva%20prioritaria">info@casasiego.com</a> o pide tu cita en atención a clientes indicando que eres miembro del Club.',
-        ]),
-    ]),
-    ('cafeteria-del-club', 'beneficios', '¿La membresía incluye café?',
-     'En la etapa 1 no hay cafetería. Desde la etapa 2, un café diario no acumulable.', [
-        ('Etapa 1', [
-            'En la etapa actual de la casa no existe servicio de cafetería.',
-        ]),
-        ('Etapa 2', [
-            'Cuando abra la etapa 2, tu membresía incluye un café al día. El café no es acumulable: si un día no lo tomas, no se suma al siguiente.',
-        ]),
-        ('Cómo te avisamos', [
-            'Te avisaremos por correo cuando abra la cafetería, y publicaremos aquí los detalles.',
         ]),
     ]),
     ('eventos-y-vestimenta', 'citas', 'Eventos especiales y código de vestimenta',
@@ -311,22 +223,10 @@ ARTICLES = [
             ]),
         ]),
         ('Para ti, como miembro del Club', [
-            'Si buscas un traje a la medida para ti, la membresía del Club Casa Siego incluye uno de Justo. Lee <a href="../reclamar-tu-traje/">¿Cómo reclamo mi traje a la medida?</a> Para tu retrato profesional, lee <a href="../reservar-sesion-de-retrato/">¿Cómo reservo una sesión Fiel de retrato?</a>',
+            'Si buscas un traje a la medida para ti, lee <a href="../adquirir-traje-a-la-medida/">¿Cómo agendar una cita para toma de medidas?</a> Para tu retrato profesional, lee <a href="../reservar-sesion-de-retrato/">¿Cómo agendar una sesión de retrato fotográfico?</a>',
         ]),
     ], {'title': 'Uniformes ejecutivos a la medida para empresas | Casa Siego®',
         'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego en Roma Norte, CDMX. Cotiza para tu equipo.'}),
-    ('cancelar-la-membresia', 'politicas', '¿Puedo cancelar mi membresía?',
-     'Cinco días hábiles para arrepentirte si contrataste a distancia; después, reembolso proporcional.', [
-        ('Los primeros cinco días hábiles', [
-            'Si contrataste a distancia (en línea, por videollamada, por teléfono o por correo), puedes cancelar sin responsabilidad dentro de los cinco días hábiles siguientes y recibes el reembolso total si no has usado ningún beneficio.',
-        ]),
-        ('Después de ese plazo', [
-            'Puedes cancelar en cualquier momento escribiendo a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Cancelaci%C3%B3n">info@casasiego.com</a>. Te reembolsamos la parte proporcional de los meses completos restantes, menos el valor de los beneficios que ya usaste según tu cotización.',
-        ]),
-        ('Si tu traje ya se cortó', [
-            'Te lo entregamos y su valor se descuenta del reembolso.',
-        ]),
-    ]),
     ('cambios-de-temporada', 'politicas', '¿Por qué cambian las telas o las locaciones?',
      'Es un servicio personalizado: las opciones varían por temporada, y siempre ofrecemos una alternativa equivalente.', [
         ('Un servicio por temporada', [
@@ -345,7 +245,7 @@ ARTICLES = [
             'Cada vez que una política se actualiza, enviamos en automático un aviso por correo a todos los miembros. También te las explicamos en atención a clientes durante tus servicios y en cada cotización.',
         ]),
         ('Si no estás de acuerdo', [
-            'Si un cambio te afecta durante tu periodo vigente y no estás de acuerdo, puedes cancelar con reembolso proporcional. Lee <a href="../cancelar-la-membresia/">¿Puedo cancelar mi membresía?</a>',
+            'Si un cambio te afecta durante tu periodo vigente y no estás de acuerdo, puedes cancelar con reembolso proporcional.',
         ]),
     ]),
 ]
