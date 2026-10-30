@@ -5,7 +5,7 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato ejecutivo,
 - Repositorio: <https://github.com/eliav-mejia/casasiego.com> (antes `eliav-mejia/synode.space`; GitHub redirige el nombre viejo)
 - Dominio: <https://casasiego.com> (`CNAME`), `www` redirige al dominio raíz · correo público: `info@casasiego.com`
 - Versión: **1.1.0 — cambio de marca** · documentación: `docs/casasiego-v1.1.0.pdf` (fuente `docs/src/casasiego-v1.1.0.html`)
-- Última versión: **1.2.4 — medición con Google Tag Manager** · notas internas: `_interno/features/casasiego-v1.2.4.pdf` (`sh docs/src/build-pdf.sh interno-1.2.4`)
+- Última versión: **1.2.4 — medición con Google Tag Manager** · notas internas: `_interno/implementaciones/features/casasiego-v1.2.4.pdf` (`sh docs/src/build-pdf.sh interno-1.2.4`)
 - Carpeta local: `Meyer/sites/casasiego.com/` (antes `sites/synode.space/`)
 
 ```
@@ -57,7 +57,7 @@ casasiego.com/
 │   ├── README.md                 índice de catálogos
 │   ├── casa/                     catálogo base de la portada (README.md)
 │   └── og/share.jpg              tarjeta para compartir la portada
-├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna (tienda, SEO.md, docs/mockup/ synode-v1.0.x, docs/rebranding/ casasiego-v1.2.x, docs/cyberseguridad/ y SEO de Justo)
+├── _interno/                     LOCAL, NO SE PUBLICA (.gitignore): documentación interna: acceso/ (pop-up y Variante D), propuestas/ (v1.2.3 en adelante) e implementaciones/ (features, cyberseguridad, Marketing, protocolos, RRHH, SEO.md, tienda-justo.md)
 └── docs/                         documentación (bloqueada en .htaccess y robots.txt)
     ├── casasiego-v1.1.0.pdf      documentación del cambio de marca, dominio y DNS (único PDF en docs/)
     └── src/
@@ -101,14 +101,14 @@ etiqueta de evento de GA4 que use `{{Event}}` como nombre. GTM solo detecta la e
 
 Servir desde la raíz del sitio (`py -m http.server 8130` → http://localhost:8130/brands/justo/tienda/): la tienda lee
 `db/*.json` con `fetch`, así que abrir el HTML con doble clic no funciona. Sacos, precios, medidas y existencias:
-`brands/justo/tienda/db/`. Detalle, decisiones y pendientes: `_interno/tienda-justo.md` (solo local).
+`brands/justo/tienda/db/`. Detalle, decisiones y pendientes: `_interno/implementaciones/tienda-justo.md` (solo local).
 
 ## Acceso a la portada
 
 `index.html` abre con un pop-up de inicio de sesión (Supabase Auth, sin registro). Éxito: la tarjeta gira a «Encantados de
 volvernos a encontrar» y abre la portada. Error: gira a «Esperamos tener el honor de conocerte pronto» y redirige a
-`brands/fiel/`. «Omitir», en gris claro bajo el botón Entrar, lleva a `visitante.html`: copia de la portada sin pop-up (versión 1.0.0 «Unrecognized visitor», noindex). Los cambios a `index.html` deben copiarse ahí. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
-tienda y `404.html` no tienen pop-up. Es una barrera visual, no protección real del HTML: ver `_interno/acceso-casasiego.md`.
+`brands/fiel/`. El pop-up solo aparece al llegar desde fuera del sitio (URL escrita, marcador, buscador) o con el avatar del menú (`#acceso`); «Inicio» y los enlaces internos llevan sin sesión a `visitante.html` y con sesión a la portada (casa.js 1.1.9, acceso.js 1.1.0). «Omitir», en gris claro bajo el botón Entrar, lleva a `visitante.html`: copia de la portada sin pop-up (versión 1.0.0 «Unrecognized visitor», noindex). Los cambios a `index.html` deben copiarse ahí. Sin proyecto Supabase configurado (`js/acceso-config.js` vacío), todo intento es error. Las marcas, la
+tienda y `404.html` no tienen pop-up. Es una barrera visual, no protección real del HTML: ver `_interno/acceso/acceso-casasiego.md`.
 
 ## Identidad Casa Siego® (v1.1.0)
 
@@ -133,4 +133,4 @@ DNS en Namecheap (`dns1/dns2.registrar-servers.com`). Estado verificado el 2026-
 | `synode.space` | — | redirección 301 a `https://casasiego.com` | **por hacer: hoy responde 404** |
 
 GitHub → Settings → Pages: dominio personalizado `casasiego.com` (ya activo) y **Enforce HTTPS** (por activar).
-Pasos completos, opciones de redirección de synode.space y lista de salida: `docs/casasiego-v1.1.0.pdf` §5–6 y `_interno/SEO.md`.
+Pasos completos, opciones de redirección de synode.space y lista de salida: `docs/casasiego-v1.1.0.pdf` §5–6 y `_interno/implementaciones/SEO.md`.

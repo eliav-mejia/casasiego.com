@@ -1,5 +1,6 @@
-/* Casa Siego — region.js (v1.1.0)
-   Small flag in the bottom-left corner: México or España.
+/* Casa Siego — region.js (v1.2.0)
+   Small flag: México or España. On pages with the shared menu (casa.js) it sits at the end of the
+   header links and, on mobile, at the foot of the side drawer; elsewhere (shop, 404) in the bottom-left corner.
    España swaps every "Ciudad de México" / "CDMX" for "Madrid" and shows the
    elements marked data-region="es" instead of data-region="mx".
 
@@ -129,12 +130,48 @@
     for (var i = 0; i < list.length; i++) list[i].hidden = list[i].getAttribute('data-region') !== region;
   }
 
-  var button;
+  var buttons = [];
   function paint() {
     var other = region === 'mx' ? 'es' : 'mx';
-    button.innerHTML = FLAGS[region];
-    button.setAttribute('aria-label', 'Ubicación: ' + NAMES[region] + '. Cambiar a ' + NAMES[other]);
-    button.title = NAMES[region] + ' · cambiar a ' + NAMES[other];
+    buttons.forEach(function (b) {
+      // The drawer's flag also names the country, in the drawer's own type
+      b.innerHTML = FLAGS[region] + (b.classList.contains('region-flag--drawer') ? '<span>' + NAMES[region] + '</span>' : '');
+      b.setAttribute('aria-label', 'Ubicación: ' + NAMES[region] + '. Cambiar a ' + NAMES[other]);
+      b.title = NAMES[region] + ' · cambiar a ' + NAMES[other];
+    });
+  }
+
+  function flag(className) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = className;
+    b.addEventListener('click', function () {
+      var next = region === 'mx' ? 'es' : 'mx';
+      store(next);
+      apply(next);
+    });
+    buttons.push(b);
+    return b;
+  }
+
+  // Moves the flag into the shared menu once casa.js has built it (event «casasiego:menu»).
+  function dock() {
+    var nav = document.querySelector('.site-nav ul');
+    var foot = document.querySelector('.site-drawer__foot');
+    if (!nav || document.querySelector('.region-flag--menu')) return;
+    buttons.forEach(function (b) { b.remove(); });
+    buttons = [];
+    var li = document.createElement('li');
+    li.className = 'site-nav__region';
+    li.appendChild(flag('region-flag region-flag--menu'));
+    nav.insertBefore(li, nav.querySelector('.site-nav__perfil'));   // the profile avatar stays last
+    if (foot) {
+      var p = document.createElement('p');
+      p.className = 'site-drawer__region';
+      p.appendChild(flag('region-flag region-flag--drawer'));
+      foot.parentNode.insertBefore(p, foot);
+    }
+    paint();
   }
 
   function apply(next) {
@@ -151,7 +188,7 @@
       walk(document.body);
     }
     blocks();
-    if (button) paint();
+    paint();
     window.dispatchEvent(new CustomEvent('casasiego:region', { detail: { region: region } }));
   }
 
@@ -203,21 +240,23 @@
       '.region-flag:hover,.region-flag:focus-visible{opacity:1;transform:scale(1.15);background:rgba(255,255,255,.9)}' +
       '.region-flag:focus-visible{outline:2px solid currentColor;outline-offset:2px}' +
       '.region-flag svg{display:block;width:100%;height:100%;border-radius:1px}' +
+      '.site-nav__region{display:flex;align-items:center}' +
+      '.region-flag--menu{position:static;width:22px;height:15px;padding:0;background:none;box-shadow:none;opacity:.8;border-radius:1px}' +
+      '.region-flag--menu:hover,.region-flag--menu:focus-visible{background:none;transform:scale(1.12)}' +
+      '.site-drawer__region{margin:2rem 0 0;opacity:0;transition:opacity .6s ease .6s}.menu-open .site-drawer__region{opacity:1}' +
+      '.region-flag--drawer{position:static;display:inline-flex;align-items:center;gap:.6em;width:auto;height:auto;padding:0;' +
+      'background:none;box-shadow:none;opacity:.85;color:inherit;font:italic .95rem var(--font-meta,serif)}' +
+      '.region-flag--drawer:hover,.region-flag--drawer:focus-visible{background:none;transform:none;opacity:1}' +
+      '.region-flag--drawer svg{width:24px;height:16px}' +
       '@media print{.region-flag{display:none}}';
     document.head.appendChild(css);
   }
 
   function init() {
     style();
-    button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'region-flag';
-    button.addEventListener('click', function () {
-      var next = region === 'mx' ? 'es' : 'mx';
-      store(next);
-      apply(next);
-    });
-    document.body.appendChild(button);
+    document.body.appendChild(flag('region-flag'));
+    dock();
+    window.addEventListener('casasiego:menu', dock);
     observe();
 
     var saved = stored();

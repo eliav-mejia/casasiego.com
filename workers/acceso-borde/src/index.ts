@@ -1,5 +1,5 @@
 // Casa Siego · Variante D · Worker «acceso-borde» (Cloudflare Workers + D1).
-// Ruta: casasiego.com/api/acceso/*  (requiere el dominio detrás de Cloudflare; ver _interno/acceso-casasiego.md §4).
+// Ruta: casasiego.com/api/acceso/*  (requiere el dominio detrás de Cloudflare; ver _interno/acceso/acceso-casasiego.md §4).
 //
 //   POST /api/acceso/evento   el navegador avisa de un intento de acceso (OAuth, OTP, login, logout).
 //                             El Worker añade lo que el navegador no puede falsear: hash de IP y UA, país, hora,

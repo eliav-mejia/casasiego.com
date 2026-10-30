@@ -3,13 +3,13 @@
 # with headless Chrome or Edge.
 # Run from the project root:  sh docs/src/build-pdf.sh 1.1.0
 # Fiel price study:           python3 docs/src/ajustes-fiel.py && sh docs/src/build-pdf.sh ajustes-fiel
-# Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal: _interno/Marketing/)
-# Keyword strategy:       sh docs/src/build-pdf.sh seo-palabras-clave   (internal: _interno/Marketing/)
-# Variant D setup guide:     sh docs/src/build-pdf.sh variante-d  (internal: _interno/docs/)
-# Club offer guide:           sh docs/src/build-pdf.sh club        (internal: _interno/Marketing/)
-# Image guide:                python3 _interno/docs/src/imagenes-casasiego.py && sh docs/src/build-pdf.sh imagenes
-#                             (internal: _interno/docs/cyberseguridad/proteccion-de-propiedad-intelectual-v1.0.0.pdf)
-# Internal version notes:     sh docs/src/build-pdf.sh interno-1.2.4  (internal: _interno/features/)
+# Justo SEO strategy:         sh docs/src/build-pdf.sh seo-justo   (internal: _interno/implementaciones/Marketing/)
+# Keyword strategy:       sh docs/src/build-pdf.sh seo-palabras-clave   (internal: _interno/implementaciones/Marketing/)
+# Variant D setup guide:     sh docs/src/build-pdf.sh variante-d  (internal: _interno/implementaciones/cyberseguridad/)
+# Club offer guide:           sh docs/src/build-pdf.sh club        (internal: _interno/implementaciones/Marketing/)
+# Image guide:                python3 _interno/implementaciones/features/src/imagenes-casasiego.py && sh docs/src/build-pdf.sh imagenes
+#                             (internal: _interno/implementaciones/cyberseguridad/imagenPI-fiel-v1.0.0.pdf)
+# Internal version notes:     sh docs/src/build-pdf.sh interno-1.2.4  (internal: _interno/implementaciones/features/)
 # Libro de la casa:          sh docs/src/build-pdf.sh libro   (docs/libro-casa-siego.pdf)
 # Synodé versions:            sh docs/src/build-pdf.sh 1.0.3  (internal: _interno/docs/mockup/)
 set -e
@@ -23,28 +23,28 @@ case "$VERSION" in
     SRC="$HERE/ajustes-fiel-2026-10.html"
     OUT="$HERE/../ajustes-fiel-2026-10.pdf" ;;
   seo-justo)
-    SRC="$HERE/../../_interno/features/src/seo-justo-trajes.html"
-    OUT="$HERE/../../_interno/Marketing/seo-justo-trajes-2026-10.pdf" ;;
+    SRC="$HERE/../../_interno/implementaciones/features/src/seo-justo-trajes.html"
+    OUT="$HERE/../../_interno/implementaciones/Marketing/seo-justo-trajes-2026-10.pdf" ;;
   seo-palabras-clave)
-    SRC="$HERE/../../_interno/features/src/seo-palabras-clave-casasiego.html"
-    OUT="$HERE/../../_interno/Marketing/seo-palabras-clave-v1.0.0.pdf" ;;
+    SRC="$HERE/../../_interno/implementaciones/features/src/seo-palabras-clave-casasiego.html"
+    OUT="$HERE/../../_interno/implementaciones/Marketing/seo-palabras-clave-v1.0.0.pdf" ;;
   variante-d)
-    SRC="$HERE/../../_interno/features/src/variante-d-registro.html"
-    OUT="$HERE/../../_interno/docs/variante-d-guia-de-configuracion.pdf" ;;
+    SRC="$HERE/../../_interno/implementaciones/features/src/variante-d-registro.html"
+    OUT="$HERE/../../_interno/implementaciones/cyberseguridad/varianteD-v1.0.0.pdf" ;;
   club)
-    SRC="$HERE/../../_interno/features/src/club-casa-siego-guia.html"
-    OUT="$HERE/../../_interno/Marketing/club-casa-siego-guia-de-oferta.pdf" ;;
+    SRC="$HERE/../../_interno/implementaciones/features/src/club-casa-siego-guia.html"
+    OUT="$HERE/../../_interno/implementaciones/Marketing/club-casa-siego-guia-de-oferta.pdf" ;;
   imagenes)
-    SRC="$HERE/../../_interno/features/src/imagenes-casasiego.html"
-    OUT="$HERE/../../_interno/docs/cyberseguridad/proteccion-de-propiedad-intelectual-v1.0.0.pdf" ;;
+    SRC="$HERE/../../_interno/implementaciones/features/src/imagenes-casasiego.html"
+    OUT="$HERE/../../_interno/implementaciones/cyberseguridad/imagenPI-fiel-v1.0.0.pdf" ;;
   interno-*)
-    SRC="$HERE/../../_interno/features/src/casasiego-v${VERSION#interno-}.html"
-    OUT="$HERE/../../_interno/features/casasiego-v${VERSION#interno-}.pdf" ;;
+    SRC="$HERE/../../_interno/implementaciones/features/src/casasiego-v${VERSION#interno-}.html"
+    OUT="$HERE/../../_interno/implementaciones/features/casasiego-v${VERSION#interno-}.pdf" ;;
   *)
     if [ -f "$HERE/casasiego-v$VERSION.html" ]; then
       SRC="$HERE/casasiego-v$VERSION.html"; OUT="$HERE/../casasiego-v$VERSION.pdf"
     else   # renamed at 1.1.0: the Synodé versions are internal
-      SRC="$HERE/../../_interno/features/src/synode-v$VERSION.html"; OUT="$HERE/../../_interno/docs/mockup/synode-v$VERSION.pdf"
+      SRC="$HERE/../../_interno/implementaciones/features/src/synode-v$VERSION.html"; OUT="$HERE/../../_interno/docs/mockup/synode-v$VERSION.pdf"
     fi ;;
 esac
 
