@@ -9,7 +9,7 @@
 # Club offer guide:           sh docs/src/build-pdf.sh club        (internal: _interno/Marketing/)
 # Image guide:                python3 _interno/docs/src/imagenes-casasiego.py && sh docs/src/build-pdf.sh imagenes
 #                             (internal: _interno/docs/cyberseguridad/proteccion-de-propiedad-intelectual-v1.0.0.pdf)
-# Internal version notes:     sh docs/src/build-pdf.sh interno-1.2.1  (internal: _interno/docs/rebranding/)
+# Internal version notes:     sh docs/src/build-pdf.sh interno-1.2.4  (internal: _interno/features/)
 # Libro de la casa:          sh docs/src/build-pdf.sh libro   (docs/libro-casa-siego.pdf)
 # Synodé versions:            sh docs/src/build-pdf.sh 1.0.3  (internal: _interno/docs/mockup/)
 set -e
@@ -23,28 +23,28 @@ case "$VERSION" in
     SRC="$HERE/ajustes-fiel-2026-10.html"
     OUT="$HERE/../ajustes-fiel-2026-10.pdf" ;;
   seo-justo)
-    SRC="$HERE/../../_interno/docs/src/seo-justo-trajes.html"
+    SRC="$HERE/../../_interno/features/src/seo-justo-trajes.html"
     OUT="$HERE/../../_interno/Marketing/seo-justo-trajes-2026-10.pdf" ;;
   seo-palabras-clave)
     SRC="$HERE/../../_interno/features/src/seo-palabras-clave-casasiego.html"
     OUT="$HERE/../../_interno/Marketing/seo-palabras-clave-v1.0.0.pdf" ;;
   variante-d)
-    SRC="$HERE/../../_interno/docs/src/variante-d-registro.html"
+    SRC="$HERE/../../_interno/features/src/variante-d-registro.html"
     OUT="$HERE/../../_interno/docs/variante-d-guia-de-configuracion.pdf" ;;
   club)
-    SRC="$HERE/../../_interno/docs/src/club-casa-siego-guia.html"
+    SRC="$HERE/../../_interno/features/src/club-casa-siego-guia.html"
     OUT="$HERE/../../_interno/Marketing/club-casa-siego-guia-de-oferta.pdf" ;;
   imagenes)
-    SRC="$HERE/../../_interno/docs/src/imagenes-casasiego.html"
+    SRC="$HERE/../../_interno/features/src/imagenes-casasiego.html"
     OUT="$HERE/../../_interno/docs/cyberseguridad/proteccion-de-propiedad-intelectual-v1.0.0.pdf" ;;
   interno-*)
-    SRC="$HERE/../../_interno/docs/src/casasiego-v${VERSION#interno-}.html"
-    OUT="$HERE/../../_interno/docs/rebranding/casasiego-v${VERSION#interno-}.pdf" ;;
+    SRC="$HERE/../../_interno/features/src/casasiego-v${VERSION#interno-}.html"
+    OUT="$HERE/../../_interno/features/casasiego-v${VERSION#interno-}.pdf" ;;
   *)
     if [ -f "$HERE/casasiego-v$VERSION.html" ]; then
       SRC="$HERE/casasiego-v$VERSION.html"; OUT="$HERE/../casasiego-v$VERSION.pdf"
     else   # renamed at 1.1.0: the Synodé versions are internal
-      SRC="$HERE/../../_interno/docs/src/synode-v$VERSION.html"; OUT="$HERE/../../_interno/docs/mockup/synode-v$VERSION.pdf"
+      SRC="$HERE/../../_interno/features/src/synode-v$VERSION.html"; OUT="$HERE/../../_interno/docs/mockup/synode-v$VERSION.pdf"
     fi ;;
 esac
 

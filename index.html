@@ -3,12 +3,9 @@
 <head>
   <meta charset="utf-8">
   <!-- Google Tag Manager -->
-  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WHTQ77F9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  </script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHTQ77F9');</script>
+  <!-- End Google Tag Manager -->
+  <script src="js/medicion.js?v=1.0.0" defer></script>
   <!-- Acceso: hide the page until js/acceso.js opens it; without JavaScript, go to Fiel (no gate) -->
   <script>document.documentElement.classList.add('acceso-pendiente');</script>
   <noscript><meta http-equiv="refresh" content="0; url=brands/fiel/"></noscript>
@@ -51,11 +48,14 @@
   <!-- Acceso con Supabase Auth: tarjeta de inicio de sesión (sin registro) que gira a un mensaje y abre la página o redirige a Fiel -->
   <link rel="stylesheet" href="css/acceso.css?v=1.0.2">
   <script src="js/acceso-config.js?v=1.0.2" defer></script>
-  <script src="js/acceso.js?v=1.0.4" defer></script>
+  <script src="js/acceso.js?v=1.0.5" defer></script>
   <script src="js/region.js?v=1.1.1" defer></script>
   <script src="js/casa.js?v=1.1.6" defer></script>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHTQ77F9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <!-- I. Hero — the header and mobile sidebar come from js/casa.js -->
   <header class="hero" id="top">

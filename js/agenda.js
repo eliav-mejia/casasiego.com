@@ -1,4 +1,4 @@
-/* Casa Siego — agenda.js (v2.0.0)
+/* Casa Siego — agenda.js (v2.0.1)
    Fiel Mascotas · calendar of Esencial, Clásica and Legado (brands/fiel/agenda/<sesión>/), opened by Stripe
    after the deposit.
    1. Without ?pago=cs_… the calendar stays closed and the page points back to the sessions.
@@ -23,6 +23,8 @@
   if (!/^cs_(live|test)_[A-Za-z0-9]+$/.test(pago)) { closed.hidden = false; return; }
   page.hidden = false;
   document.getElementById('agenda-estado-pago').textContent = 'Anticipo recibido · Elige tu fecha';
+  // Google Tag Manager (js/medicion.js): the deposit came back from Stripe. The cs_… id never leaves the page.
+  if (window.casaMedir) window.casaMedir('casa_agenda', { paso: 'anticipo_recibido', sesion: S.sesion, anticipo: S.anticipo });
 
   var DIAS = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre',
@@ -183,6 +185,7 @@
       input.value = f;
       input.addEventListener('change', function () {
         chosen = { fecha: fecha, franja: f, inicio: s.inicio };
+        if (window.casaMedir) window.casaMedir('casa_agenda', { paso: 'horario_elegido', sesion: S.sesion, franja: f });
         form.hidden = false;
       });
       label.lastChild.textContent = FRANJA[f] + ' · ' + s.inicio.replace(/^0/, '');
@@ -240,6 +243,7 @@
       return;
     }
     error.hidden = true;
+    if (window.casaMedir) window.casaMedir('casa_agenda', { paso: 'solicitud_enviada', sesion: S.sesion, franja: chosen.franja });
     var text = letter();
     var subject = 'Fiel · Cita ' + S.nombre + ' · ' + chosen.fecha + ' ' + chosen.inicio;
     summary.textContent = text;

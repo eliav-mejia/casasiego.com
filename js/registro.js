@@ -92,6 +92,8 @@
 
   // --- edge log (Worker + D1): fire and forget ---------------------------------
   function bitacora(evento, extra) {
+    // Same step to Google Tag Manager (js/medicion.js): only the step and the provider, never the e-mail.
+    if (window.casaMedir) window.casaMedir('casa_registro', { paso: evento, proveedor: (extra && extra.proveedor) || '', modo: state.modo });
     if (!CFG.bitacoraBorde || !configured) return;
     var body = { evento: evento };
     for (var k in extra) body[k] = extra[k];
@@ -358,6 +360,7 @@
       });
     }).then(function () {
       clearDraft();
+      if (window.casaMedir) window.casaMedir('casa_registro', { paso: 'registro_completo', proveedor: proveedor || '', modo: 'registro' });
       bitacora(proveedor === 'email' ? 'login_ok' : 'oauth_ok', { proveedor: proveedor });
       return call(function (c) { return c.auth.refreshSession(); }).catch(function () {}); // new claim registro_completo
     }).then(function () {

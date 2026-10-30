@@ -28,3 +28,6 @@ docs/src/seo-justo-*
 # Fuentes de las pantallas de carga: demo / uso personal, nunca en el repositorio hasta comprar la licencia (cargando/fonts/README.md)
 cargando/fonts/*
 !cargando/fonts/README.md
+
+# Python bytecode of the generators in docs/src/
+__pycache__/

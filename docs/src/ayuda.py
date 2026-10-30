@@ -4,6 +4,8 @@ Each article opens with its own index of sections. Edit ARTICLES below and run f
 Fields left in [brackets] render as .fill and must be decided before launch (see _interno/Marketing/club-casa-siego-guia-de-oferta.pdf)."""
 import html, json, os, re
 
+from medicion import GTM_BODY, gtm_head
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
 OUT = os.path.join(ROOT, 'ayuda')
 SITE = 'https://casasiego.com'
@@ -338,7 +340,7 @@ def head(title, desc, url, up, kind, ld):
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{gtm_head(up)}  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{html.escape(desc)}">
   <link rel="canonical" href="{url}">
@@ -371,7 +373,7 @@ def head(title, desc, url, up, kind, ld):
   <script src="{up}js/casa.js?v=1.1.6" defer></script>
 </head>
 <body>
-'''
+{GTM_BODY}'''
 
 
 def crumbs(*items):

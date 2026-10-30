@@ -1,4 +1,4 @@
-/* Casa Siego — web.js (v1.0.0)
+/* Casa Siego — web.js (v1.0.1)
    Web · Lujo, Arte e Imagen (web/): the consulting questionnaire.
    1. Keeps a draft in this browser while the visitor writes (localStorage; nothing leaves the device).
    2. Shows progress in the side index and caps «tres palabras» at three.
@@ -156,6 +156,7 @@
       return;
     }
     error.hidden = true;
+    if (window.casaMedir) window.casaMedir('casa_consultoria', { paso: 'enviado' });
     var text = letter();
     var subject = 'Web · Lujo, Arte e Imagen · ' + form.elements.marca.value.trim();
     summary.textContent = text;

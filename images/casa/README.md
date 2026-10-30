@@ -22,9 +22,10 @@ Las fotos de `og/1000028258–65.jpg` miden 1408 × 768: se exportan a su tamañ
 por originales más grandes con el mismo nombre en `images/og/` y vuelve a ejecutar `python docs/src/export-portada-servicios.py`
 (ese script guarda los recortes de cada imagen y también genera `images/og/share.jpg`).
 
-Desde la v1.2.0 `casa-reino-fiel.jpg` ya no se usa (Reino Fiel retirado). Desde la v1.0.6 la portada ya no usa `hero.jpg`, `recorrido-*.jpg`, `interlude.jpg` ni `estudio-*.jpg`; se conservan como archivo.
+Desde la v1.0.6 la portada ya no usa `hero.jpg`, `recorrido-estudio.jpg` ni `interlude.jpg`; se conservan como archivo. En la v1.2.4 se borraron `casa-reino-fiel.jpg` (Reino Fiel, retirado en v1.2.0), `recorrido-cafe.jpg`, `recorrido-sastreria.jpg` y `estudio-*.jpg`.
 
-Las imágenes `plate-01.jpg` … `plate-10.jpg` ya no se usan en la portada (v1.0.5); se conservan como archivo.
+Las imágenes `plate-01.jpg` … `plate-04.jpg` ya no se usan en la portada (v1.0.5); se conservan como archivo. `plate-05.jpg` … `plate-10.jpg` se borraron en la v1.2.4.
+`Ave_Paraiso.jpg` y `Granada.jpg` (v1.2.4) ilustran el libro de la casa (`css/libro.css`, `docs/libro-casa-siego.pdf`).
 Los originales de cámara (`_DSC*`, `Antes_*`, `Después_*`, `Gemini_*`) viven en esta carpeta pero no se publican (ver `.gitignore`).
 La galería completa de Fiel está fuera del repositorio, en `OneDrive/Documents/Casa Siego/Fiel/Galeria/` (antes `Documents/Fiel/`); las rutas `Casa Siego/…` de la columna «Original» son relativas a `OneDrive/Documents/`.
 
