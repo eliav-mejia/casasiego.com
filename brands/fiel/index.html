@@ -4,6 +4,10 @@
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHTQ77F9');</script>
+  <!-- End Google Tag Manager -->
+  <script src="../../js/medicion.js?v=1.0.0" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fiel por Siego — Fotografía de retrato en CDMX | Casa Siego®</title>
   <meta name="description" content="Fiel por Siego, el estudio fotográfico de Casa Siego: fotografía de retrato con luz natural en Ciudad de México. Perfil ejecutivo, familia y mascotas.">
@@ -33,13 +37,17 @@
 
   <link rel="stylesheet" href="../../css/site.css?v=1.1.0">
   <link rel="stylesheet" href="../../css/layout.css?v=1.1.7">
-  <link rel="stylesheet" href="../../css/brand.css?v=1.1.2">
+  <link rel="stylesheet" href="../../css/brand.css?v=1.1.3">
   <script src="../../js/parallax.js?v=1.1.0" defer></script>
   <script src="../../js/protect.js" defer></script>
   <script src="../../js/region.js?v=1.1.1" defer></script>
-  <script src="../../js/casa.js?v=1.1.5" defer></script>
+  <script src="../../js/casa.js?v=1.1.6" defer></script>
+  <script src="../../js/retratos.js?v=1.0.0" defer></script>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHTQ77F9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <!-- I. Portada -->
   <header class="hero" id="inicio">
@@ -55,7 +63,7 @@
       <p class="hero__lede">Fotografía de retrato.</p>
       <p class="hero__sub">Retratos que realzan tu imagen, con luz natural, en el estudio, en el parque o en casa.</p>
       <div class="hero__actions">
-        <a class="button" href="../../ayuda/index.html">Cómo organizar tu sesión</a>
+        <a class="button" href="../../ayuda/preparar-sesion-de-retrato/">Cómo organizar tu sesión</a>
       </div>
     </div>
 
@@ -84,7 +92,7 @@
     <!-- III. Retratos -->
     <section class="sessions sessions--portrait" id="retratos" aria-label="Retratos">
       <div class="sessions__grid">
-        <a class="session session--link" href="ejecutivo/">
+        <a class="session session--link" href="ejecutivo/" data-desc="Tu retrato profesional para CV, LinkedIn, perfil corporativo o sitio web, con luz natural y dirección fotográfica.">
           <div class="plate__frame"><img draggable="false" width="900" height="1350" src="../../images/brands/fiel.esmx/web/perfil-ejecutivo.jpg?v=1.0.0" alt="Hombre de traje gris y moño junto a una ventana, sonriendo: retrato ejecutivo" loading="lazy"></div>
           <div class="session__body">
             <p class="leaf__no">I</p>
@@ -92,7 +100,7 @@
           </div>
         </a>
 
-        <a class="session session--link" href="familiar/">
+        <a class="session session--link" href="familiar/" data-desc="Retratos de familia y de pareja para el portarretrato y el álbum, a su ritmo y sin poses forzadas.">
           <div class="plate__frame"><img draggable="false" width="900" height="1350" src="../../images/brands/fiel.esmx/web/perfil-familiar-campo.jpg?v=1.0.0" alt="Familia vestida de blanco en un prado: la mamá levanta a su hija mientras el papá sonríe" loading="lazy"></div>
           <div class="session__body">
             <p class="leaf__no">II</p>
@@ -100,7 +108,7 @@
           </div>
         </a>
 
-        <a class="session session--link" href="mascota/">
+        <a class="session session--link" href="mascota/" data-desc="Retratos de quienes nos son fieles: tu perro o tu gato, solo o con su familia, con luz natural.">
           <div class="plate__frame"><img draggable="false" width="846" height="1500" src="../../images/brands/fiel.esmx/web/sesion-legado.jpg?v=1.0.11" alt="Perra de pelo crema con arnés azul, de pie en el parque" loading="lazy"></div>
           <div class="session__body">
             <p class="leaf__no">III</p>
@@ -110,6 +118,20 @@
       </div>
     </section>
 
+    <!-- Pop-up of a portrait card, filled by js/retratos.js -->
+    <dialog class="retrato" id="retrato" aria-labelledby="retrato-tag">
+      <figure class="retrato__photo"><img class="retrato__img" draggable="false" src="" alt=""></figure>
+      <div class="retrato__body">
+        <form class="retrato__close-form" method="dialog"><button class="retrato__close" type="button" aria-label="Cerrar">&times;</button></form>
+        <p class="leaf__no retrato__no"></p>
+        <h2 class="retrato__tag" id="retrato-tag"></h2>
+        <p class="retrato__desc"></p>
+        <p class="meta retrato__caption">Esencial, Clásica y Legado &middot; con anticipo</p>
+        <a class="button retrato__go" href="#">Ver sesiones</a>
+        <p class="meta retrato__more"><a href="../../ayuda/reservar-sesion-de-retrato/">Cómo reservar</a> &middot; <a href="../../ayuda/preparar-sesion-de-retrato/">Cómo prepararte</a></p>
+      </div>
+    </dialog>
+
   </main>
 
   <!-- IV. Colofón -->
@@ -118,7 +140,7 @@
       <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
       <p class="eyebrow eyebrow--gold">Colofón</p>
       <p class="colophon__title">Preguntas</p>
-      <a class="button" href="../../ayuda/index.html">Cómo organizar tu sesión</a>
+      <a class="button" href="../../ayuda/preparar-sesion-de-retrato/">Cómo organizar tu sesión</a>
       <p class="meta meta--gold"><a href="mailto:info@casasiego.com?subject=Fiel">info@casasiego.com</a></p>
       <hr class="rule rule--short rule--gold">
       <p class="meta meta--gold">Fiel es la marca nº 1 de Casa Siego. Compuesto en Palacio, Ledger y EB Garamond.</p>

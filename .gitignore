@@ -24,3 +24,10 @@ brands/builds/sites/_plataforma/
 # Estrategia SEO de Justo (trajes a la medida, club de membresía): PDF y fuente solo locales, nunca en el sitio
 docs/seo-justo-*
 docs/src/seo-justo-*
+
+# Fuentes de las pantallas de carga: demo / uso personal, nunca en el repositorio hasta comprar la licencia (cargando/fonts/README.md)
+cargando/fonts/*
+!cargando/fonts/README.md
+
+# Python bytecode of the generators in docs/src/
+__pycache__/

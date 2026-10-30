@@ -12,15 +12,9 @@ from PIL import Image, ImageDraw, ImageFont
 # filename, width, height, label  — keep in sync with images/casa/README.md and images/brands/*/README.md
 CATALOGUE = [
     ("images/casa/hero.jpg",                2400, 1600, "Hero"),
-    ("images/casa/recorrido-cafe.jpg",      1400, 1000, "Coffee Space · La barra"),
-    ("images/casa/recorrido-sastreria.jpg", 1400, 1000, "Toriku Films · La prueba"),
+    # v1.2.4: recorrido-cafe/-sastreria, estudio-* and casa-reino-fiel were deleted; no placeholders for them
     ("images/casa/recorrido-estudio.jpg",   1400, 1000, "Fiel · El estudio"),
     ("images/casa/interlude.jpg",           2400, 1600, "Interlude"),
-    ("images/casa/estudio-01.jpg",          1000, 1400, "Estudio 01"),
-    ("images/casa/estudio-02.jpg",          1000, 1200, "Estudio 02"),
-    ("images/casa/estudio-antes.jpg",       1500, 1000, "Estudio · Antes"),
-    ("images/casa/estudio-despues.jpg",     1500, 1000, "Estudio · Después"),
-    ("images/casa/casa-reino-fiel.jpg",     1600,  900, "Casa · Reino Fiel"),
     # v1.0.6 · coworking, fotografía y trajes (exportados con docs/src/export-portada-servicios.py)
     ("images/casa/portada.jpg",             2400, 1600, "Portada"),
     ("images/casa/cowork-01.jpg",           1000, 1400, "Coworking 01"),

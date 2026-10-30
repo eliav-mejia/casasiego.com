@@ -1,19 +1,23 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-MX">
 <head>
   <meta charset="utf-8">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHTQ77F9');</script>
+  <!-- End Google Tag Manager -->
+  <script src="js/medicion.js?v=1.0.0" defer></script>
   <!-- Acceso: hide the page until js/acceso.js opens it; without JavaScript, go to Fiel (no gate) -->
   <script>document.documentElement.classList.add('acceso-pendiente');</script>
   <noscript><meta http-equiv="refresh" content="0; url=brands/fiel/"></noscript>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Casa Siego® — Trajes a medida y fotografía de mascotas</title>
-  <meta name="description" content="Casa Siego reúne en Roma Norte, Ciudad de México, a Justo por Siego, sastrería y trajes a medida, y a Fiel por Siego, fotografía de mascotas y retrato.">
+  <title>Casa Siego - Imagen y estilo.</title>
+  <meta name="description" content="Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir faire artesanal con procesos sostenibles.">
   <link rel="canonical" href="https://casasiego.com/">
   <meta property="og:site_name" content="Casa Siego">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://casasiego.com/#organizacion","name":"Casa Siego","description":"Casa Siego reúne la sastrería Justo por Siego y el estudio fotográfico Fiel por Siego en Roma Norte, Ciudad de México.","url":"https://casasiego.com/","image":"https://casasiego.com/images/og/share.jpg?v=1.0.6","email":"info@casasiego.com","address":{"@type":"PostalAddress","addressLocality":"Ciudad de México","addressRegion":"CDMX","addressCountry":"MX"},"brand":[{"@type":"Brand","name":"Fiel","alternateName":["Fiel por Siego","Fiel by Casa Siego"],"url":"https://casasiego.com/brands/fiel/"},{"@type":"Brand","name":"Justo","alternateName":["Justo por Siego","Justo by Casa Siego"],"url":"https://casasiego.com/brands/justo/"}]},{"@type":"WebSite","name":"Casa Siego","url":"https://casasiego.com/","inLanguage":"es-MX","publisher":{"@id":"https://casasiego.com/#organizacion"}}]}</script>
-  <meta property="og:title" content="Casa Siego — Trajes a medida y fotografía de mascotas">
-  <meta property="og:description" content="Viste un traje a medida y lleva a tu mascota a su sesión, bajo un mismo techo en Roma Norte.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://casasiego.com/#organizacion","name":"Casa Siego","description":"Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir faire artesanal con procesos sostenibles. Reúne la sastrería Justo por Siego y el estudio fotográfico Fiel por Siego en Roma Norte, Ciudad de México.","slogan":"Imagen y estilo","url":"https://casasiego.com/","image":"https://casasiego.com/images/og/share.jpg?v=1.0.6","email":"info@casasiego.com","address":{"@type":"PostalAddress","addressLocality":"Ciudad de México","addressRegion":"CDMX","addressCountry":"MX"},"brand":[{"@type":"Brand","name":"Fiel","alternateName":["Fiel por Siego","Fiel by Casa Siego"],"url":"https://casasiego.com/brands/fiel/"},{"@type":"Brand","name":"Justo","alternateName":["Justo por Siego","Justo by Casa Siego"],"url":"https://casasiego.com/brands/justo/"}]},{"@type":"WebSite","name":"Casa Siego","url":"https://casasiego.com/","inLanguage":"es-MX","publisher":{"@id":"https://casasiego.com/#organizacion"}},{"@type":"ItemList","@id":"https://casasiego.com/#menu","name":"Casa Siego","itemListElement":[{"@type":"SiteNavigationElement","position":1,"name":"Fiel · Fotografía de retrato","description":"Retrato ejecutivo, familiar y de mascotas con luz natural en Ciudad de México.","url":"https://casasiego.com/brands/fiel/"},{"@type":"SiteNavigationElement","position":2,"name":"Justo · Sastrería y trajes a la medida","description":"Trajes a la medida para caballero, sacos, camisería y ajustes en Roma Norte.","url":"https://casasiego.com/brands/justo/"},{"@type":"SiteNavigationElement","position":3,"name":"Uniformes ejecutivos a la medida","description":"Uniformes ejecutivos y trajes para equipos de empresa, de fábrica a medida.","url":"https://casasiego.com/ayuda/uniformes-ejecutivos-a-medida/"},{"@type":"SiteNavigationElement","position":4,"name":"Tienda de sacos","description":"Sacos de la casa en tallas Chico, Mediano, Grande y Extra grande.","url":"https://casasiego.com/brands/justo/tienda/"},{"@type":"SiteNavigationElement","position":5,"name":"Centro de Ayuda","description":"Preguntas frecuentes sobre el Club, citas, retratos, uniformes y políticas.","url":"https://casasiego.com/ayuda/"}]}]}</script>
+  <meta property="og:title" content="Casa Siego - Imagen y estilo.">
+  <meta property="og:description" content="Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir faire artesanal con procesos sostenibles.">
   <meta property="og:url" content="https://casasiego.com/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_MX">
@@ -44,11 +48,14 @@
   <!-- Acceso con Supabase Auth: tarjeta de inicio de sesión (sin registro) que gira a un mensaje y abre la página o redirige a Fiel -->
   <link rel="stylesheet" href="css/acceso.css?v=1.0.2">
   <script src="js/acceso-config.js?v=1.0.2" defer></script>
-  <script src="js/acceso.js?v=1.0.4" defer></script>
+  <script src="js/acceso.js?v=1.0.5" defer></script>
   <script src="js/region.js?v=1.1.1" defer></script>
-  <script src="js/casa.js?v=1.1.5" defer></script>
+  <script src="js/casa.js?v=1.1.6" defer></script>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHTQ77F9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <!-- I. Hero — the header and mobile sidebar come from js/casa.js -->
   <header class="hero" id="top">

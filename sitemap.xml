@@ -1,49 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>https://casasiego.com/</loc>
+  <url><loc>https://casasiego.com/</loc><lastmod>2026-10-29</lastmod>
     <image:image><image:loc>https://casasiego.com/images/casa/portada.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/traje-01.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/foto-mascotas.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/interlude-servicios.jpg</image:loc></image:image>
   </url>
-  <url><loc>https://casasiego.com/brands/fiel/</loc>
+  <url><loc>https://casasiego.com/brands/fiel/</loc><lastmod>2026-10-29</lastmod>
     <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/hero-anillos.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/perfil-ejecutivo.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/perfil-familiar-campo.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/sesion-legado.jpg</image:loc></image:image>
   </url>
-  <url><loc>https://casasiego.com/brands/fiel/mascota/</loc>
+  <url><loc>https://casasiego.com/brands/fiel/mascota/</loc><lastmod>2026-10-29</lastmod>
     <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/hero.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/brands/fiel.esmx/web/interludio.jpg</image:loc></image:image>
   </url>
-  <url><loc>https://casasiego.com/brands/fiel/blog/organiza-tu-sesion/</loc></url>
-  <url><loc>https://casasiego.com/brands/fiel/terminos/</loc></url>
-  <url><loc>https://casasiego.com/brands/justo/</loc>
+  <url><loc>https://casasiego.com/brands/fiel/blog/organiza-tu-sesion/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/brands/fiel/terminos/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/brands/justo/</loc><lastmod>2026-10-29</lastmod>
     <image:image><image:loc>https://casasiego.com/images/brands/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/brands/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/brands/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/traje-02.jpg</image:loc></image:image>
   </url>
-  <url><loc>https://casasiego.com/brands/justo/tienda/</loc></url>
-  <url><loc>https://casasiego.com/brands/justo/tienda/guia-de-tallas/</loc></url>
-  <url><loc>https://casasiego.com/brands/justo/tienda/saco-azul-marino-raya-diplomatica/</loc></url>
-  <url><loc>https://casasiego.com/brands/justo/tienda/saco-gris-carbon-textura-tweed/</loc></url>
-  <url><loc>https://casasiego.com/brands/justo/tienda/saco-negro-clasico-liso/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/actualizacion-de-politicas/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/cafeteria-del-club/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/cambios-de-temporada/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/cancelar-la-membresia/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/cancelar-o-mover-una-cita/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/como-unirte-al-club/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/cuanto-cuesta-la-membresia/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/eventos-y-vestimenta/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/que-incluye-la-membresia/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/reclamar-tu-traje/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/reserva-prioritaria/</loc></url>
-  <url><loc>https://casasiego.com/ayuda/sesiones-de-retrato/</loc></url>
-  <url><loc>https://casasiego.com/membresia/equipo/</loc></url>
-  <url><loc>https://casasiego.com/membresia/web/</loc></url>
-  <url><loc>https://casasiego.com/terms.html</loc></url>
-  <url><loc>https://casasiego.com/devoluciones.html</loc></url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/guia-de-tallas/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/saco-azul-marino-raya-diplomatica/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/saco-gris-carbon-textura-tweed/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/saco-negro-clasico-liso/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/actualizacion-de-politicas/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/cafeteria-del-club/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/cambios-de-temporada/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/cancelar-la-membresia/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/cancelar-o-mover-una-cita/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/como-unirte-al-club/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/cuanto-cuesta-la-membresia/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/eventos-y-vestimenta/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/que-incluye-la-membresia/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/reclamar-tu-traje/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/reserva-prioritaria/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/sesiones-de-retrato/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/reservar-sesion-de-retrato/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/preparar-sesion-de-retrato/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/uniformes-ejecutivos-a-medida/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/membresia/equipo/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/membresia/web/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/terms.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://casasiego.com/devoluciones.html</loc><lastmod>2026-10-29</lastmod></url>
 </urlset>

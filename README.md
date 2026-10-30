@@ -5,6 +5,7 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato ejecutivo,
 - Repositorio: <https://github.com/eliav-mejia/casasiego.com> (antes `eliav-mejia/synode.space`; GitHub redirige el nombre viejo)
 - Dominio: <https://casasiego.com> (`CNAME`), `www` redirige al dominio raíz · correo público: `info@casasiego.com`
 - Versión: **1.1.0 — cambio de marca** · documentación: `docs/casasiego-v1.1.0.pdf` (fuente `docs/src/casasiego-v1.1.0.html`)
+- Última versión: **1.2.4 — medición con Google Tag Manager** · notas internas: `_interno/features/casasiego-v1.2.4.pdf` (`sh docs/src/build-pdf.sh interno-1.2.4`)
 - Carpeta local: `Meyer/sites/casasiego.com/` (antes `sites/synode.space/`)
 
 ```
@@ -15,6 +16,11 @@ casasiego.com/
 │   ├── index.html                términos y condiciones de la membresía del Club
 │   ├── equipo/index.html         índice del equipo (enlace en el pie de la portada): fotógrafos (Fiel) y sastres (Justo), fotos en images/Equipo/
 │   └── web/index.html            Web · Lujo, Arte e Imagen: cuestionario de consultoría para miembros (css/web.css, js/web.js); se envía por el correo del visitante
+├── cargando/                     pantallas de carga «Casa Siego» sobre papel vino, sin cabecera ni pie; noindex · ?a=/ruta/ continúa ahí
+│   ├── index.html                las 7 variantes lado a lado
+│   ├── cargando-1.html … -7.html  1 Kastemo · 2 Silhouette Phantom · 3 Gallery Dwiarna · 4 Helleny · 5 Hathem Bosteem · 6 Bethney Signature · 7 Breind Signature
+│   └── fonts/                    sus fuentes, todas de uso personal: ver fonts/README.md antes de publicar
+│                                 generado por docs/src/cargando.py
 ├── terms.html                    términos de uso y derechos
 ├── 404.html                      página no encontrada (rutas incompletas y carpetas sin index; rutas absolutas)
 ├── CNAME                         casasiego.com (dominio de GitHub Pages)
@@ -25,6 +31,7 @@ casasiego.com/
 │   └── brand.css                 componentes de marca: sesiones, precios, extras, locaciones, descargas
 ├── js/casa.js                    cabecera, menú lateral móvil animado, tonos de fondo por sección, barra de progreso
 ├── js/parallax.js · js/compare.js · js/protect.js
+├── js/medicion.js                eventos para Google Tag Manager (GTM-WHTQ77F9) en todas las páginas públicas; ver «Medición»
 ├── js/region.js                  bandera México / España (todas las páginas): por IP cambia CDMX → Madrid, las locaciones de Fiel y los precios a euros (MXN ÷ 20 × 1.8)
 ├── js/acceso.js · js/acceso-config.js · css/acceso.css   pop-up de acceso de la portada (Supabase Auth, sin registro)
 ├── brands/
@@ -62,6 +69,33 @@ casasiego.com/
 ```
 
 Los precios de Fiel deben coincidir en `brands/fiel/index.html`, `SESIONES` de `docs/src/agenda-fiel.py` y los montos de los Payment Links en Stripe (las páginas ocultas `ejecutivo/` y `familiar/` repiten los paquetes).
+
+## Medición (Google Tag Manager)
+
+Contenedor **GTM-WHTQ77F9** en las 42 páginas públicas (todas menos `cargando/`, `docs/` y la redirección de `reino_fiel/`):
+el código estándar de Google justo después de `<meta charset>` y su `<noscript>` justo después de `<body>`, más
+`js/medicion.js`. Las páginas generadas lo reciben de `docs/src/medicion.py` (lo importan `ayuda.py` y `agenda-fiel.py`):
+al crear una página nueva a mano, copia los dos bloques de cualquier página y ajusta la ruta de `js/medicion.js`.
+
+Eventos en `dataLayer` (todos llevan `marca`, `seccion` y `region`; nunca nombres, correos ni ids de pago):
+
+| Evento | Cuándo | Datos |
+|---|---|---|
+| `casa_pagina` | cada página | `plantilla` (ruta) |
+| `casa_region` | cambio México / España | — |
+| `casa_pago_inicio` | clic en un Payment Link de Stripe | `producto`, `destino` |
+| `casa_contacto` | clic en correo, teléfono o WhatsApp | `canal`, `asunto` |
+| `casa_cta` | clic en un botón (`.button`, `.btn`) | `texto`, `destino` |
+| `casa_salida` | clic a otro dominio | `destino` |
+| `casa_formulario` | intento de envío de un formulario | `formulario` |
+| `casa_acceso` | pop-up de la portada (`acceso.js`) | `paso`: exito · error · omitir |
+| `casa_registro` | carta de registro (`registro.js`) | `paso` (los de la bitácora + registro_completo), `proveedor`, `modo` |
+| `casa_agenda` | agenda de Fiel (`agenda.js`) | `paso`: anticipo_recibido · horario_elegido · solicitud_enviada, `sesion` |
+| `casa_consultoria` | cuestionario Web (`web.js`) | `paso`: enviado |
+
+En GTM: una variable de capa de datos por cada dato, un activador «Evento personalizado» con `casa_.*` (regex) y una
+etiqueta de evento de GA4 que use `{{Event}}` como nombre. GTM solo detecta la etiqueta cuando el sitio publicado
+(rama `main`) la lleva.
 
 ## Tienda Justo (`brands/justo/tienda/`)
 

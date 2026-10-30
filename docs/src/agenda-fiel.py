@@ -5,6 +5,8 @@ Run:  python3 docs/src/agenda-fiel.py"""
 from html import escape
 from pathlib import Path
 
+from medicion import GTM_BODY, gtm_head
+
 RAIZ = Path(__file__).resolve().parents[2]
 
 # Keep in step with the session cards in brands/fiel/index.html
@@ -22,7 +24,7 @@ PLANTILLA = """<!doctype html>
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{gtm_head}  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Elige tu fecha · Sesión {nombre} — Fiel by Casa Siego®</title>
   <meta name="robots" content="noindex, nofollow, noai, noimageai">
   <meta name="theme-color" content="#4A1621">
@@ -40,11 +42,11 @@ PLANTILLA = """<!doctype html>
   <link rel="stylesheet" href="../../../../css/layout.css?v=1.1.7">
   <link rel="stylesheet" href="../../../../css/web.css?v=1.0.0">
   <link rel="stylesheet" href="../../../../css/agenda.css?v=2.0.0">
-  <script src="../../../../js/casa.js?v=1.1.5" defer></script>
-  <script src="../../../../js/agenda.js?v=2.0.0" defer></script>
+  <script src="../../../../js/casa.js?v=1.1.6" defer></script>
+  <script src="../../../../js/agenda.js?v=2.0.1" defer></script>
 </head>
 <body>
-
+{gtm_body}
   <header class="terms-head">
     <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
     <p class="eyebrow eyebrow--gold">Fiel &middot; Mascotas &middot; Agenda</p>
@@ -136,6 +138,8 @@ def pagina(s: dict) -> str:
     return PLANTILLA.format(
         **v,
         nombre_url=s["nombre"].replace("á", "%C3%A1"),
+        gtm_head=gtm_head("../../../../"),
+        gtm_body=GTM_BODY,
         duracion_li=f'\n        <li><b>Duración</b> {v["duracion"]}</li>' if s["duracion"] else "",
         lugar_corto="cualquiera en CDMX" if libre else v["lugar"],
         mascota_label="Nombre de tus mascotas" if s["mascotas"] != "1" else "Nombre de tu mascota",

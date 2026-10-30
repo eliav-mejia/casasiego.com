@@ -1,4 +1,4 @@
-/* Casa Siego — casa.js (v1.1.5)
+/* Casa Siego — casa.js (v1.1.6)
    Shared chrome for the public pages (not the shop or the suit builder, which have their own):
    1. Header with the CASA Siego® wordmark: transparent over a dark hero, white once you scroll,
       tucked away while scrolling down and back on the way up.
@@ -24,6 +24,7 @@
     ['Fiel', ROOT + 'brands/fiel/', 'mascotas', '#6B1E2C'],
     ['Justo', ROOT + 'brands/justo/', 'sastrería', '#3B1A1F'],
     ['Membresía', ROOT + 'index.html#acceso', '', '#7A2436'],
+    ['Ayuda', ROOT + 'ayuda/', 'preguntas', '#6B1E2C'],
     ['Contacto', 'mailto:info@casasiego.com', '', '#4A1621']
   ];
 

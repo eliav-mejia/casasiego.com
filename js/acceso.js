@@ -1,4 +1,4 @@
-/* Casa Siego — acceso.js (v1.0.4)
+/* Casa Siego — acceso.js (v1.0.5)
    Sign-in gate of the home page (index.html only; brand pages, terms and the shop have no gate).
    1. A login card covers the page (no sign-up: accounts are created by Casa Siego in Supabase).
    2. On submit the card flips to a white card with a script message:
@@ -140,6 +140,7 @@
     skip.addEventListener('click', function () {
       if (busy) return;
       busy = true;
+      if (window.casaMedir) window.casaMedir('casa_acceso', { paso: 'omitir' });
       window.location.assign(CFG.redirectOnSkip || 'visitante.html');
     });
 
@@ -156,9 +157,11 @@
 
       signIn(email, password).then(function () {
         form.password.value = '';
+        if (window.casaMedir) window.casaMedir('casa_acceso', { paso: 'exito' });
         flip(MSG_OK, function () { openPage(gate); });
       }).catch(function () {
         form.password.value = '';
+        if (window.casaMedir) window.casaMedir('casa_acceso', { paso: 'error' });
         flip(MSG_ERROR, function () { window.location.replace(CFG.redirectOnError || 'brands/fiel/'); });
       });
     });

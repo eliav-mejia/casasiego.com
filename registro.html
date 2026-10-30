@@ -2,6 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHTQ77F9');</script>
+  <!-- End Google Tag Manager -->
+  <script src="js/medicion.js?v=1.0.0" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Carta de presentación — Casa Siego®</title>
   <meta name="description" content="Escribe tu carta de presentación a Casa Siego: regístrate o vuelve a entrar con tu correo, Google, Facebook, Apple o Microsoft.">
@@ -19,18 +23,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Ledger&family=Petit+Formal+Script&family=Pinyon+Script&family=Special+Elite&display=swap">
 
   <link rel="stylesheet" href="css/site.css?v=1.1.0">
-  <link rel="stylesheet" href="css/registro.css?v=1.0.0">
+  <link rel="stylesheet" href="css/registro.css?v=1.1.0">
   <script src="js/registro-config.js?v=1.0.0" defer></script>
-  <script src="js/registro.js?v=1.0.0" defer></script>
+  <script src="js/registro.js?v=1.1.1" defer></script>
 </head>
 <body class="escritorio">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHTQ77F9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <a class="regreso" href="brands/fiel/">&larr; Casa Siego</a>
 
   <main class="carta" id="carta" aria-labelledby="carta-titulo">
     <header class="membrete">
       <p class="membrete__marca wordmark"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
-      <p class="membrete__dir">Roma Norte &middot; Ciudad de México</p>
+      <p class="membrete__dir">Ciudad de México &ndash; España</p>
       <hr class="membrete__filete">
     </header>
 
@@ -44,38 +51,53 @@
 
     <form class="cuerpo" id="formulario" novalidate autocomplete="on">
 
-      <!-- Registro: presentación -->
-      <div class="parrafo mano" data-solo="registro">
-        Me presento: mi nombre es
-        <input class="t" name="nombre" autocomplete="name" maxlength="120" placeholder="nombre y apellido" aria-label="Tu nombre" data-min="16">,
-        y escribo desde
-        <select class="t" name="pais" aria-label="País">
-          <option value="MX">México</option><option value="ES">España</option><option value="US">Estados Unidos</option>
-          <option value="CO">Colombia</option><option value="AR">Argentina</option><option value="CL">Chile</option>
-          <option value="PE">Perú</option><option value="FR">Francia</option><option value="CH">Suiza</option>
-          <option value="">otro lugar</option>
-        </select>;
-        prefiero leerles en
-        <select class="t" name="idioma" aria-label="Idioma">
-          <option value="es">español</option><option value="en">inglés</option>
-        </select>.
-      </div>
+      <!-- Formulario desplegable: los datos van aquí, no en el cuerpo de la carta -->
+      <details class="desplegable" id="desplegable">
+        <summary class="desplegable__titulo">
+          <span id="desplegable-texto">Formulario de registro</span>
+          <span class="desplegable__pista">Despliegue para escribir sus datos</span>
+        </summary>
 
-      <!-- Acceso: regreso -->
-      <div class="parrafo mano" data-solo="acceso" hidden>
-        Vuelvo a visitarles. Les recuerdo que soy quien firma con el correo que aquí escribo, o con la cuenta que
-        sello más abajo.
-      </div>
+        <div class="desplegable__cuerpo">
+          <label class="campo" data-solo="registro">
+            <span class="campo__etiqueta">Nombre y apellido</span>
+            <input class="t" name="nombre" autocomplete="name" maxlength="120" placeholder="nombre y apellido">
+          </label>
 
-      <div class="parrafo mano">
-        Pueden escribirme a
-        <input class="t" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false"
-               maxlength="254" placeholder="correo@ejemplo.com" aria-label="Tu correo" data-min="20">
-        <span data-solo="acceso" hidden>; les ruego enviarme ahí mi código de entrada</span>.
-      </div>
+          <div class="campos-par" data-solo="registro">
+            <label class="campo">
+              <span class="campo__etiqueta">País</span>
+              <select class="t" name="pais">
+                <option value="MX">México</option><option value="ES">España</option><option value="US">Estados Unidos</option>
+                <option value="CO">Colombia</option><option value="AR">Argentina</option><option value="CL">Chile</option>
+                <option value="PE">Perú</option><option value="FR">Francia</option><option value="CH">Suiza</option>
+                <option value="">Otro lugar</option>
+              </select>
+            </label>
+            <label class="campo">
+              <span class="campo__etiqueta">Idioma</span>
+              <select class="t" name="idioma">
+                <option value="es">Español</option><option value="en">Inglés</option>
+              </select>
+            </label>
+          </div>
 
-      <!-- Atributos por marca / campaña (jsonb): los pinta registro.js -->
-      <div class="parrafo mano atributos" id="atributos" data-solo="registro"></div>
+          <label class="campo">
+            <span class="campo__etiqueta">Correo electrónico</span>
+            <input class="t" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false"
+                   maxlength="254" placeholder="correo@ejemplo.com">
+            <span class="campo__ayuda" data-solo="acceso" hidden>Le enviaremos ahí su código de entrada.</span>
+          </label>
+
+          <!-- Atributos por marca / campaña (jsonb): los pinta registro.js -->
+          <div class="atributos" id="atributos" data-solo="registro"></div>
+
+          <!-- Consentimientos (columnas legales): los pinta registro.js desde identidad.avisos -->
+          <fieldset class="consentimientos" id="consentimientos" data-solo="registro">
+            <legend class="campo__etiqueta">Y para que conste</legend>
+          </fieldset>
+        </div>
+      </details>
 
       <!-- Proveedores sociales -->
       <section class="sellos-sociales" aria-labelledby="sociales-titulo">
@@ -100,11 +122,6 @@
         </div>
       </section>
 
-      <!-- Consentimientos (columnas legales): los pinta registro.js desde identidad.avisos -->
-      <fieldset class="consentimientos mano" id="consentimientos" data-solo="registro">
-        <legend class="mano">Y para que conste:</legend>
-      </fieldset>
-
       <!-- P. D.: código de 6 dígitos enviado por correo -->
       <div class="posdata mano" id="posdata" hidden>
         <p><span class="pd">P. D.</span> Les devuelvo el código que acabo de recibir en mi correo:
@@ -126,7 +143,7 @@
         </div>
         <button class="lacre" type="submit" id="enviar">
           <span class="lacre__sello" aria-hidden="true">CS</span>
-          <span class="lacre__texto" id="enviar-texto">Sellar y enviar</span>
+          <span class="lacre__texto" id="enviar-texto">Sellar y entrar</span>
         </button>
       </footer>
     </form>

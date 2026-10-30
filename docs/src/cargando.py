@@ -1,0 +1,206 @@
+"""Builds the loading-screen variants at cargando/: «Casa Siego» on wine fibre paper, full screen, no header or footer,
+one page per font (cargando-1.html … cargando-7.html) and an index that shows them side by side.
+Fonts live in cargando/fonts/ (all demo or personal-use licences: see cargando/fonts/README.md). Run from the project root:
+    python3 docs/src/cargando.py
+Each page accepts ?a=/ruta/ to continue there once the name is written (same-site paths only)."""
+import os
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
+OUT = os.path.join(ROOT, 'cargando')
+
+# n, font family, file, format, licence note, font size, extra CSS for .signature
+# Sizes come from each font's ink box for «Casa Siego» at 100px (canvas measureText): about 70vw wide, capped by height
+VARIANTS = [
+    (1, 'Kastemo', 'Kastemo.otf', 'opentype', '© 2026 NDNL Studio — demo, personal use only',
+     'min(11.2vw, 76vh)',
+     # Kastemo is all caps; the demo's swash ligatures (from lowercase) carry a watermark, so capitals only
+     'text-transform: uppercase; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0, "dlig" 0; letter-spacing: .04em;'),
+    (2, 'Silhouette Phantom', 'SilhouettePhantom.ttf', 'truetype', '© 2020 yuliusparyadi.id — demo, personal use only',
+     # its tall capitals lift the ink above centre: move it down
+     'min(29vw, 53vh)', 'top: 12vh;'),
+    (3, 'Gallery Dwiarna', 'GalleryDwiarna.ttf', 'truetype', '© NihStudio — demo, personal use only',
+     'min(7.4vw, 14vh)', ''),
+    (4, 'Helleny', 'Helleny.ttf', 'truetype', '© 2019 Jadatpye — all rights reserved, no licence in the download',
+     'min(13.2vw, 38vh)', ''),
+    (5, 'Hathem Bosteem', 'HathemBosteem.ttf', 'truetype', '© mmfarhansr — personal use only',
+     'min(14.3vw, 35vh)', ''),
+    (6, 'Bethney Signature', 'BethneySignature.ttf', 'truetype', '© Hyperactype — demo, personal use only',
+     'min(18.7vw, 53vh)', ''),
+    (7, 'Breind Signature', 'BreindSignature.ttf', 'truetype', '© Breind — demo, personal use only',
+     'min(13.4vw, 36vh)', ''),
+]
+
+HEAD = '''<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{title}</title>
+  <meta name="robots" content="noindex, noai, noimageai">
+  <meta name="theme-color" content="#4A1621">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+'''
+
+PAPER_CSS = '''    :root { --wine: #6B1E2C; --wine-deep: #4A1621; --beige: #EEE4D3; --brass: #B0905E; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+
+    /* Paper: a wine wash, soft vignette, then grain and fibres from the SVG below */
+    .paper {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 120% 90% at 50% 45%, var(--wine) 0%, #5A1A26 55%, var(--wine-deep) 100%);
+    }
+    .paper svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .paper .grain { mix-blend-mode: multiply; opacity: .55; }
+    .paper .mottle { mix-blend-mode: soft-light; opacity: .35; }
+    .paper .fibres { mix-blend-mode: screen; opacity: .16; }
+'''
+
+PAPER_SVG = '''  <div class="paper" aria-hidden="true">
+    <svg class="grain" preserveAspectRatio="none">
+      <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+      <rect width="100%" height="100%" filter="url(#grain)"/>
+    </svg>
+    <svg class="mottle" preserveAspectRatio="none">
+      <!-- Soft clouding of the pulp -->
+      <filter id="mottle"><feTurbulence type="fractalNoise" baseFrequency=".006" numOctaves="3" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>
+      <rect width="100%" height="100%" filter="url(#mottle)"/>
+    </svg>
+    <svg class="fibres" preserveAspectRatio="none">
+      <!-- Fine, sparse threads: stretched noise thresholded hard, in two directions -->
+      <filter id="fibres" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="turbulence" baseFrequency=".018 .55" numOctaves="2" seed="11" result="a"/>
+        <feColorMatrix in="a" type="matrix" values="0 0 0 0 .93  0 0 0 0 .89  0 0 0 0 .83  0 0 0 -22 2.2" result="h"/>
+        <feTurbulence type="turbulence" baseFrequency=".5 .03" numOctaves="2" seed="29" result="b"/>
+        <feColorMatrix in="b" type="matrix" values="0 0 0 0 .93  0 0 0 0 .89  0 0 0 0 .83  0 0 0 -26 2.2" result="v"/>
+        <feMerge><feMergeNode in="h"/><feMergeNode in="v"/></feMerge>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#fibres)"/>
+    </svg>
+  </div>
+'''
+
+
+def page(n, family, file, fmt, licence, size, extra):
+    return HEAD.format(title='Casa Siego®') + f'''  <!-- Loading screen {n}: «Casa Siego» set in {family} on wine paper. Generated by docs/src/cargando.py -->
+  <link rel="preload" href="fonts/{file}" as="font" crossorigin>
+  <style>
+    /* {family} {licence}: buy a commercial licence before publishing (fonts/README.md) */
+    @font-face {{
+      font-family: "{family}";
+      src: url("fonts/{file}") format("{fmt}");
+      font-display: block;
+    }}
+{PAPER_CSS}
+    body {{
+      background: var(--wine-deep);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }}
+    .signature {{
+      position: relative;
+      margin: 0;
+      padding: 0 .3em;
+      font: normal {size}/1.4 "{family}", "Ledger", serif;
+      text-align: center;
+      white-space: nowrap;
+      color: var(--beige);
+      text-shadow: 0 1px 0 rgba(0, 0, 0, .18);
+      {extra}
+      /* Written left to right, like a pen */
+      clip-path: inset(-300% 100% -300% -10%);
+      animation: write 2.2s cubic-bezier(.55, .1, .35, 1) .35s forwards;
+    }}
+    .rule {{
+      position: fixed; left: 50%; bottom: calc(18vh + env(safe-area-inset-bottom));
+      width: min(9rem, 30vw); height: 1px;
+      background: var(--brass);
+      transform: translateX(-50%) scaleX(0); transform-origin: left;
+      opacity: .7;
+      animation: load 2.6s ease-in-out .2s forwards;
+    }}
+    .sr-only {{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }}
+
+    @keyframes write {{ to {{ clip-path: inset(-300% -10% -300% -10%); }} }}
+    @keyframes load {{ to {{ transform: translateX(-50%) scaleX(1); }} }}
+    @media (prefers-reduced-motion: reduce) {{
+      .signature {{ animation: none; clip-path: none; }}
+      .rule {{ animation: none; transform: translateX(-50%) scaleX(1); }}
+    }}
+  </style>
+</head>
+<body>
+
+{PAPER_SVG}
+  <main role="status" aria-live="polite">
+    <p class="signature" translate="no">Casa Siego</p>
+    <span class="sr-only">Casa Siego. Cargando…</span>
+  </main>
+  <div class="rule" aria-hidden="true"></div>
+
+  <script>
+    // ?a=/brands/justo/ → continue there after the name is written (same-site paths only, never //host or javascript:)
+    (function () {{
+      var a = new URLSearchParams(location.search).get('a');
+      if (!a || !/^\\/(?!\\/)/.test(a)) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(function () {{ location.replace(a); }}, reduce ? 600 : 3000);
+    }})();
+  </script>
+</body>
+</html>
+'''
+
+
+def index():
+    cards = ''.join(f'''      <li>
+        <a href="cargando-{n}.html">
+          <iframe src="cargando-{n}.html" title="Variante {n}: {family}" loading="lazy" tabindex="-1"></iframe>
+          <span><b>{n}</b> {family}</span>
+        </a>
+      </li>
+''' for n, family, *_ in VARIANTS)
+    return HEAD.format(title='Pantallas de carga — Casa Siego®') + f'''  <!-- Index of the loading-screen variants. Generated by docs/src/cargando.py -->
+  <style>
+{PAPER_CSS}
+    body {{ background: var(--wine-deep); color: var(--beige); font: 16px/1.5 "EB Garamond", Georgia, serif; }}
+    main {{ position: relative; max-width: 1200px; margin: 0 auto; padding: 48px 16px; }}
+    h1 {{ font: 400 1.6rem/1.2 "Cinzel", Georgia, serif; letter-spacing: .12em; margin: 0 0 .25rem; }}
+    p {{ margin: 0 0 2rem; opacity: .8; }}
+    ul {{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }}
+    a {{ display: block; color: inherit; text-decoration: none; }}
+    iframe {{ display: block; width: 100%; aspect-ratio: 16 / 10; border: 1px solid rgba(176, 144, 94, .5); pointer-events: none; background: var(--wine-deep); }}
+    span {{ display: block; padding-top: 8px; letter-spacing: .04em; }}
+    b {{ color: var(--brass); font-weight: 400; margin-right: .4em; }}
+    a:hover iframe, a:focus-visible iframe {{ border-color: var(--brass); }}
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel&family=EB+Garamond&display=swap">
+</head>
+<body>
+
+{PAPER_SVG}
+  <main>
+    <h1>Pantallas de carga</h1>
+    <p>Siete variantes de «Casa Siego» sobre papel vino. Abre una para verla a pantalla completa.</p>
+    <ul>
+{cards}    </ul>
+  </main>
+
+</body>
+</html>
+'''
+
+
+os.makedirs(OUT, exist_ok=True)
+for v in VARIANTS:
+    with open(os.path.join(OUT, f'cargando-{v[0]}.html'), 'w', encoding='utf-8') as f:
+        f.write(page(*v))
+with open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8') as f:
+    f.write(index())
+print(f'Wrote cargando/index.html and {len(VARIANTS)} variants')

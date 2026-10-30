@@ -4,20 +4,23 @@ Each article opens with its own index of sections. Edit ARTICLES below and run f
 Fields left in [brackets] render as .fill and must be decided before launch (see _interno/Marketing/club-casa-siego-guia-de-oferta.pdf)."""
 import html, json, os, re
 
+from medicion import GTM_BODY, gtm_head
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
 OUT = os.path.join(ROOT, 'ayuda')
 SITE = 'https://casasiego.com'
-DATE = '25 de octubre de 2026'
+DATE = '28 de octubre de 2026'
 
 # Topics of the blog menu, in order
 TOPICS = [
     ('unirte', 'Unirte al Club'),
     ('beneficios', 'Tus beneficios'),
     ('citas', 'Citas y eventos'),
+    ('empresas', 'Empresas y uniformes'),
     ('politicas', 'Cancelaciones y políticas'),
 ]
 
-# slug, topic, question, summary, [(section title, [paragraphs or ('ul', [items])])]
+# slug, topic, question, summary, [(section title, [paragraphs or ('ul', [items])])], optional {'title', 'desc'} for search engines
 ARTICLES = [
     ('que-incluye-la-membresia', 'unirte', '¿Qué incluye la membresía?',
      'Eventos especiales, sesiones mensuales de retrato, un traje a la medida, reserva prioritaria y, desde la etapa 2, un café diario.', [
@@ -91,6 +94,84 @@ ARTICLES = [
             'Para ideas de preparación, lee <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
         ]),
     ]),
+    ('reservar-sesion-de-retrato', 'citas', '¿Cómo reservo una sesión Fiel de retrato?',
+     'Elige el tipo de retrato y la sesión, pide tu fecha por correo y aparta tu lugar con el anticipo.', [
+        ('Elige tu retrato', [
+            'Fiel retrata con luz natural en tres enfoques. Cada uno tiene su página con sesiones, locaciones y extras:',
+            ('ul', [
+                '<strong><a href="../../brands/fiel/ejecutivo/">Perfil ejecutivo</a></strong>: tu retrato profesional para CV, LinkedIn, perfil corporativo o sitio web.',
+                '<strong><a href="../../brands/fiel/familiar/">Familiar o de pareja</a></strong>: retratos para el portarretrato y el álbum.',
+                '<strong><a href="../../brands/fiel/mascota/">Mascota</a></strong>: se reserva y se paga en línea; lee <a href="../sesiones-de-retrato/">¿Cómo reservo una sesión de Fiel Mascotas?</a>',
+            ]),
+        ]),
+        ('Elige tu sesión', [
+            'Hay tres sesiones, Esencial, Clásica y Legado. Son paquetes cerrados, con precios en pesos mexicanos e IVA incluido, y cambian según el enfoque.',
+            '<strong><a href="../../brands/fiel/ejecutivo/#sesiones">Perfil ejecutivo</a></strong>:',
+            ('ul', [
+                '<strong>Esencial</strong> · $750 MXN: al aire libre en Parque México, una persona, 2 fotografías editadas.',
+                '<strong>Clásica</strong> · $1,450 MXN: para LinkedIn, 30 minutos en el estudio fotográfico Casa Siego, 5 fotografías editadas estilo catálogo, mentoría previa y galería privada en línea.',
+                '<strong>Legado</strong> · $3,800 MXN: 45 minutos, hasta 3 personas, cualquier locación en la Ciudad de México, 15 fotografías editadas de portafolio profesional para portada o firma corporativa, material en crudo, mentoría previa y galería privada en línea.',
+            ]),
+            '<strong><a href="../../brands/fiel/familiar/#sesiones">Familiar o de pareja</a></strong>:',
+            ('ul', [
+                '<strong>Esencial</strong> · $310 MXN: Parque México, 2 fotografías editadas.',
+                '<strong>Clásica</strong> · $750 MXN: 30 minutos en Parque México, 5 fotografías editadas, mentoría previa y galería privada en línea.',
+                '<strong>Legado</strong> · $1,450 MXN: 45 minutos, hasta 3 personas, cualquier locación en la Ciudad de México, 15 fotografías editadas, material en crudo, mentoría previa y galería privada en línea.',
+            ]),
+            'Puedes sumar extras como persona adicional, fotografías editadas adicionales, sesión en tu oficina o a domicilio y entrega exprés. Los precios están en la página de cada enfoque.',
+        ]),
+        ('Pide tu fecha', [
+            'Pulsa «Reservar» en la sesión que elegiste: se abre un correo a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Reservar%20un%20retrato">info@casasiego.com</a> con la sesión en el asunto. Escríbenos el día y el horario que prefieres. Fotografiamos de 8:00 a 11:00 y de 16:00 a 19:00, según la luz y el reglamento de cada parque.',
+        ]),
+        ('Aparta tu lugar', [
+            'La cita se confirma con el anticipo del 50&nbsp;% del precio de tu sesión; el monto aparece junto a cada precio. El resto se paga el día de la sesión. Te confirmamos la cita por correo en un día hábil.',
+        ]),
+        ('Fotografía de estudio', [
+            'La sesión Clásica de perfil ejecutivo se fotografía en el Estudio Casa Siego. Fuera de ella, el estudio es exclusivo para miembros del <a href="../que-incluye-la-membresia/">Club Casa Siego</a>. Para retratos de estudio de un equipo o un proyecto especial, pide una cotización personalizada a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Proyecto%20de%20estudio">info@casasiego.com</a>.',
+        ]),
+        ('Antes de reservar', [
+            'Lee los <a href="../../brands/fiel/terminos/">términos y condiciones de Fiel</a>. Puedes mover tu cita una vez, sin costo, con al menos 24 horas de anticipación; lee <a href="../cancelar-o-mover-una-cita/">¿Cómo cancelo o muevo una cita?</a> Para llegar listo, lee <a href="../preparar-sesion-de-retrato/">¿Cómo preparo una sesión de retrato?</a>',
+        ]),
+    ]),
+    ('preparar-sesion-de-retrato', 'citas', '¿Cómo preparo una sesión de retrato?',
+     'Un buen retrato se decide antes de llegar: qué quieres transmitir, qué vas a vestir y a qué hora te espera la mejor luz.', [
+        ('Define para qué es', [
+            'Una sesión empieza con una conversación: dónde vas a usar tus fotografías y qué quieres transmitir. Un perfil de LinkedIn pide un encuadre distinto al de un portarretrato familiar. Si reservaste Clásica o Legado, la mentoría previa está incluida: en ella elegimos contigo locación, horario y vestuario.',
+        ]),
+        ('Elige tu ropa', [
+            ('ul', [
+                '<strong>Colores lisos y sobrios</strong>: azul marino, gris, beige, blanco roto. La luz natural los favorece y no envejecen.',
+                '<strong>Evita</strong> logotipos, letras, estampados pequeños y rayas muy finas, que vibran en la fotografía.',
+                '<strong>Ropa que te quede bien</strong>, planchada la víspera. En el perfil ejecutivo, el saco cuenta: si es de Justo, podemos ajustarlo en la sastrería antes de tu sesión.',
+                '<strong>En familia o en pareja</strong>, coordinen una paleta de dos o tres colores en lugar de vestir igual.',
+                'Trae un cambio de ropa si tu sesión lo permite: en 30 o 45 minutos caben dos.',
+            ]),
+        ]),
+        ('Cuida los detalles', [
+            ('ul', [
+                'Corte de pelo o barba unos días antes, no el mismo día.',
+                'Manos y uñas cuidadas: en un retrato se ven más de lo que crees.',
+                'Maquillaje natural, como el de un día de trabajo. Trae polvo traslúcido para el brillo.',
+                'Lentes sin reflejo si los usas a diario; si no, mejor sin ellos.',
+                'Vacía los bolsillos del saco y del pantalón.',
+            ]),
+        ]),
+        ('La luz y la hora', [
+            'Fotografiamos con luz natural, entre la primera y la última hora del sol, cuando es más suave. En la mañana los parques están más tranquilos; en la tarde la luz es más cálida. Si llueve o el reglamento del parque lo impide, te proponemos otra fecha o te devolvemos el anticipo.',
+        ]),
+        ('El día de la sesión', [
+            ('ul', [
+                'Llega diez minutos antes, para acomodarte al lugar.',
+                'Duerme bien, toma agua y come algo ligero antes.',
+                'Con niños, elige su mejor hora del día y trae un juguete y algo de comer.',
+                'Déjate dirigir: te guiamos en la postura, la mirada y las manos, y revisamos las tomas contigo en pantalla.',
+            ]),
+            'Las fotografías adicionales y los extras se acuerdan antes de la sesión: la sesión se realiza con el paquete agendado.',
+        ]),
+        ('Después de la sesión', [
+            'Con Clásica y Legado recibes una galería privada en línea para elegir tus fotografías. Elige con calma, pero a tiempo: mientras antes envíes tu selección, antes recibes tus fotografías editadas. Para sesiones con mascota, lee también <a href="../../brands/fiel/blog/organiza-tu-sesion/">Cómo organizar bien tu sesión</a>.',
+        ]),
+    ]),
     ('reclamar-tu-traje', 'beneficios', '¿Cómo reclamo mi traje a la medida?',
      'Tienes un año desde que adquieres la membresía para reclamar tu traje de Justo.', [
         ('El plazo', [
@@ -157,6 +238,54 @@ ARTICLES = [
             'Llega unos minutos antes. Las sesiones y pruebas tienen un horario reservado para ti y para los siguientes miembros.',
         ]),
     ]),
+    ('uniformes-ejecutivos-a-medida', 'empresas', '¿Cómo encargo uniformes ejecutivos a la medida?',
+     'En Justo, la sastrería de Casa Siego, confeccionamos uniformes ejecutivos y trajes a la medida para caballero: un patrón por persona, pruebas en el taller y un retrato corporativo de todo el equipo.', [
+        ('Uniformes ejecutivos a la medida', [
+            'Un uniforme ejecutivo a la medida es el traje de tu equipo cortado sobre las medidas de cada persona, con la tela, el color y los detalles de tu empresa. Todos visten igual y a cada uno le queda como propio. En Justo lo confeccionamos de principio a fin en nuestro taller de Roma Norte, Ciudad de México.',
+        ]),
+        ('Casa Siego: imagen y estilo', [
+            'Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir faire artesanal con procesos sostenibles: la constancia de un taller que produce para equipos completos y el oficio de la sastrería que mide, corta y ajusta a mano.',
+            'La casa reúne dos oficios bajo un mismo techo de madera, concreto y luz natural: <a href="../../brands/justo/">Justo</a>, la sastrería, y <a href="../../brands/fiel/">Fiel</a>, el estudio de retrato. Por eso tu equipo puede estrenar su uniforme frente a la cámara el día de la entrega. Conoce a los sastres y fotógrafos en <a href="../../membresia/equipo/">el equipo de Casa Siego</a>.',
+        ]),
+        ('Trajes a la medida para caballero', [
+            'Un traje justo es el que te queda: cortado sobre un patrón propio, con costuras que no se ven y la compostura de quien sabe que va bien vestido. En el taller confeccionamos:',
+            ('ul', [
+                '<strong>Trajes completos</strong> de saco y pantalón, con chaleco si la ocasión lo pide.',
+                '<strong>Sacos estructurados</strong>, la pieza que más dice de un uniforme ejecutivo.',
+                '<strong>Camisería y corbatas</strong> coordinadas con la paleta de tu marca.',
+                '<strong>Ajuste y mantenimiento</strong> de las prendas, para que sigan cayendo como el primer día.',
+            ]),
+        ]),
+        ('De fábrica o a la medida', [
+            'Hay dos caminos, y puedes combinarlos:',
+            ('ul', [
+                '<strong>A la medida.</strong> Cada persona tiene su patrón y sus pruebas. Es la opción para el equipo directivo, la atención a clientes y quienes representan a tu empresa todos los días.',
+                '<strong>De fábrica, en tallas.</strong> Los sacos de la <a href="../../brands/justo/tienda/">tienda en línea de Justo</a> vienen en tallas Chico, Mediano, Grande y Extra grande, listos para usarse. Sirven para reposiciones rápidas o nuevas contrataciones; la <a href="../../brands/justo/tienda/guia-de-tallas/">guía de tallas</a> explica cómo medirse.',
+            ]),
+        ]),
+        ('El proceso para tu empresa', [
+            ('ul', [
+                '<strong>Cotización.</strong> Escríbenos a <a href="mailto:info@casasiego.com?subject=Justo%20%C2%B7%20Uniformes%20ejecutivos">info@casasiego.com</a> con el número de personas, las piezas que necesitas y la fecha en que las quieres estrenar.',
+                '<strong>Tela y detalles.</strong> Elegimos contigo la tela, el forro, los botones y el color de la temporada que mejor representan a tu marca.',
+                '<strong>Toma de medidas.</strong> Agendamos la cita de cada persona en la sastrería Justo.',
+                '<strong>Pruebas.</strong> Ajustamos cada prenda en una o más pruebas, hasta que el saco caiga como debe.',
+                '<strong>Entrega y retrato.</strong> El ajuste final se hace sobre cada persona y, si lo quieres, retratamos a todo el equipo en Fiel para tu sitio web, LinkedIn o informe anual.',
+            ]),
+            'Encarga con tiempo: la confección a la medida requiere varias semanas y pruebas. La cotización llega por escrito, con el monto total, antes de que pagues.',
+        ]),
+        ('Procesos sostenibles', [
+            ('ul', [
+                '<strong>Sobre pedido.</strong> Cortamos lo que tu equipo va a usar, no inventario que espera en una bodega.',
+                '<strong>Un patrón por persona.</strong> Una prenda que queda bien se usa más y se reemplaza menos.',
+                '<strong>Mantenimiento en la casa.</strong> Ajustamos y cuidamos las prendas para alargar su vida.',
+                '<strong>Reposiciones por pieza.</strong> Si una persona cambia de talla o se integra al equipo, confeccionamos solo lo que hace falta.',
+            ]),
+        ]),
+        ('Para ti, como miembro del Club', [
+            'Si buscas un traje a la medida para ti, la membresía del Club Casa Siego incluye uno de Justo. Lee <a href="../reclamar-tu-traje/">¿Cómo reclamo mi traje a la medida?</a> Para tu retrato profesional, lee <a href="../reservar-sesion-de-retrato/">¿Cómo reservo una sesión Fiel de retrato?</a>',
+        ]),
+    ], {'title': 'Uniformes ejecutivos a la medida para empresas | Casa Siego®',
+        'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego en Roma Norte, CDMX. Cotiza para tu equipo.'}),
     ('cancelar-la-membresia', 'politicas', '¿Puedo cancelar mi membresía?',
      'Cinco días hábiles para arrepentirte si contrataste a distancia; después, reembolso proporcional.', [
         ('Los primeros cinco días hábiles', [
@@ -211,7 +340,7 @@ def head(title, desc, url, up, kind, ld):
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{gtm_head(up)}  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{html.escape(desc)}">
   <link rel="canonical" href="{url}">
@@ -241,10 +370,10 @@ def head(title, desc, url, up, kind, ld):
   <link rel="stylesheet" href="{up}css/site.css?v=1.1.0">
   <link rel="stylesheet" href="{up}css/layout.css?v=1.1.3">
   <script src="{up}js/region.js?v=1.1.1" defer></script>
-  <script src="{up}js/casa.js?v=1.1.5" defer></script>
+  <script src="{up}js/casa.js?v=1.1.6" defer></script>
 </head>
 <body>
-'''
+{GTM_BODY}'''
 
 
 def crumbs(*items):
@@ -263,7 +392,8 @@ def body_html(blocks):
 
 
 def article(i, a):
-    slug, topic, q, summary, sections = a
+    slug, topic, q, summary, sections = a[:5]
+    seo = a[5] if len(a) > 5 else {}
     url = f'{SITE}/ayuda/{slug}/'
     topic_name = dict(TOPICS)[topic]
     answer = ' '.join(plain(b) for b in sections[0][1] if isinstance(b, str))
@@ -278,7 +408,7 @@ def article(i, a):
         f'<a href="../{prev_a[0]}/">&larr; {prev_a[2]}</a>' if prev_a else '',
         '<a href="../">Centro de Ayuda</a>',
         f'<a href="../{next_a[0]}/">{next_a[2]} &rarr;</a>' if next_a else ''] if x)
-    return head(f'{q} — Centro de Ayuda · Casa Siego®', plain(summary), url, '../../', 'article', ld) + f'''
+    return head(seo.get('title', f'{q} — Centro de Ayuda · Casa Siego®'), seo.get('desc', plain(summary)), url, '../../', 'article', ld) + f'''
   <header class="terms-head">
     <p class="eyebrow eyebrow--gold">Centro de Ayuda &middot; {topic_name}</p>
     <h1 class="display">{q}</h1>
@@ -333,7 +463,7 @@ def index():
           </div>
         </li>''')
         groups.append(f'      <h2 class="section-title" id="{t}">{name}</h2>\n      <ol class="ayuda-list">\n' + '\n'.join(items) + '\n      </ol>')
-    return head('Centro de Ayuda — Casa Siego®', 'Preguntas frecuentes sobre el Club Casa Siego: cómo unirte, tus beneficios, citas, eventos, cancelaciones y políticas.', url, '../', 'website', ld) + f'''
+    return head('Centro de Ayuda — Casa Siego®', 'Preguntas frecuentes de Casa Siego: el Club, tus beneficios, retratos Fiel, uniformes ejecutivos y trajes a la medida de Justo, cancelaciones y políticas.', url, '../', 'website', ld) + f'''
   <header class="terms-head">
     <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
     <p class="eyebrow eyebrow--gold">Blog</p>
