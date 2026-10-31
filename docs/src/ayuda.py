@@ -298,7 +298,7 @@ def head(title, desc, url, up, kind, ld):
   <link rel="stylesheet" href="{FONTS}">
   <link rel="stylesheet" href="{up}css/site.css?v=1.1.1">
   <link rel="stylesheet" href="{up}css/layout.css?v=1.1.3">
-  <script src="{up}js/region.js?v=1.2.0" defer></script>
+  <script src="{up}js/region.js?v=1.3.0" defer></script>
   <script src="{up}js/casa.js?v=1.1.9" defer></script>
 </head>
 <body>
