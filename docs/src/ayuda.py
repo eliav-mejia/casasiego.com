@@ -50,6 +50,25 @@ ARTICLES = [
         ]),
     ], {'title': 'Clientes Priority: diseña tu colección | Casa Siego®',
         'desc': 'Cómo ser cliente Priority de Casa Siego: trajes a medida, visita para toma de medidas, acompañamiento, fotografía de retrato y eventos especiales para ti y tu equipo.'}),
+    ('una-coleccion-para-renovar-un-closet', 'unirte', 'Una colección para renovar un clóset',
+     'Un cargo nuevo, una práctica propia, una nueva etapa: diseñamos contigo una colección que muestre tu carácter.', [
+        ('Una nueva etapa', [
+            'Hay momentos en que el clóset se queda atrás: un cargo nuevo, una práctica independiente, un cambio de ciudad o de rumbo. Una colección personal de Casa Siego renueva tu guardarropa de una vez, con piezas pensadas para quien eres ahora y para lo que quieres proyectar.',
+        ]),
+        ('Cómo la armamos', [
+            ('ul', [
+                '<strong>Conversación.</strong> Nos cuentas a qué te dedicas, cómo es tu semana y qué quieres que diga tu imagen.',
+                '<strong>Revisión de tu clóset.</strong> Vemos qué se queda, qué se ajusta y qué hace falta.',
+                '<strong>Propuesta.</strong> Preparamos tu colección: sacos, camisería y corbatas, telas y el orden en que conviene hacerlas.',
+                '<strong>Medidas y confección.</strong> Tomamos medidas en tu visita y confeccionamos cada pieza en el taller de <a href="../../brands/justo/">Justo</a>, con sus pruebas.',
+                '<strong>Retrato.</strong> Estrenas tu colección frente a la cámara de <a href="../../brands/fiel/">Fiel</a>, con fotografías para tu perfil profesional.',
+            ]),
+        ]),
+        ('Empieza tu colección', [
+            'Escríbenos a <a href="mailto:info@casasiego.com?subject=Colecci%C3%B3n%20personal">info@casasiego.com</a> y agendamos la primera conversación. Conoce también los <a href="../clientes-priority/">beneficios de ser cliente Priority</a> y, si buscas piezas listas para usarse, los <a href="../../brands/justo/tienda/">esenciales de Justo</a>.',
+        ]),
+    ], {'title': 'Una colección para renovar un clóset | Casa Siego®',
+        'desc': 'Colecciones personalizadas de Casa Siego para renovar tu clóset en una nueva etapa: sacos, camisería y corbatas a la medida, con retrato profesional en Fiel.'}),
     ('beneficios-de-cliente-priority', 'unirte', 'Beneficios de cliente Priority',
      'Trajes a medida, visita para toma de medidas, acompañamiento, fotografía de retrato y acceso a eventos especiales de la casa.', [
         ('Los beneficios', [
