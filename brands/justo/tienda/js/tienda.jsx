@@ -1,4 +1,4 @@
-// Justo by Casa Siego · tienda de sacos y camisas (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
+// Justo by Casa Siego · tienda de sacos, camisas y corbatas (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
 // Every shop page loads this file. Each page sets <body data-root="…"> = relative path to the site root (casasiego.com/),
 // so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Casa Siego).
 //
@@ -90,6 +90,8 @@ const useCatalog = () => {
 // stock[size] > 0 → ships from the workshop; 0 → sold out: the size shows «Agotado» and its Stripe button is disabled.
 const inStock = (product, size) => (product.stock?.[size] ?? 0) > 0;
 const soldOut = (product) => !product.sizes.some(s => inStock(product, s));
+// One size only (ties: sizes ["U"]): no size chips; the size is chosen on load and the page says «Talla única».
+const oneSize = (product) => product.sizes.length === 1;
 const stockText = (product, size) => inStock(product, size)
     ? `${product.stock[size]} en existencia · listo en 48 h hábiles`
     : 'Agotado';
@@ -211,9 +213,10 @@ const ProductCard = ({ product, catalog }) => (
                 </div>
                 <p className="text-ink-700 mt-1">{product.short}</p>
                 <p className="label text-ink-500 mt-3">
+                    {oneSize(product) ? <span className={inStock(product, product.sizes[0]) ? '' : 'text-ink-300 line-through'}>Talla única</span> : <>
                     Corte {product.cut.toLowerCase()} &middot; {product.sizes.map(s => (
                         <span key={s} className={inStock(product, s) ? '' : 'text-ink-300 line-through'} title={inStock(product, s) ? `${catalog.size[s]?.label}: en existencia` : `${catalog.size[s]?.label}: agotado`}>{s} </span>
-                    ))}
+                    ))}</>}
                 </p>
             </div>
         </a>
@@ -304,8 +307,9 @@ const Disclosure = ({ title, children, open = false }) => (
     </details>
 );
 
-// Rows of «Especificaciones»: jackets and shirts (kind: 'camisa') describe different parts.
+// Rows of «Especificaciones»: jackets, shirts (kind: 'camisa') and ties (kind: 'corbata') describe different parts.
 const JACKET_ROWS = [['fabric', 'Tela'], ['lining', 'Forro'], ['construction', 'Construcción'], ['buttons', 'Botones'], ['pockets', 'Bolsillos'], ['vents', 'Aberturas'], ['cut', 'Corte']];
+const TIE_ROWS = [['fabric', 'Tela'], ['pattern', 'Diseño'], ['size_note', 'Medida']];
 const SHIRT_ROWS = [['fabric', 'Tela'], ['collar', 'Cuello'], ['cuffs', 'Puños'], ['buttons', 'Botones'], ['cut', 'Corte']];
 
 // --- PRODUCT PAGE ---
@@ -319,6 +323,7 @@ const ProductPage = () => {
     useReveal([catalog.status]);
 
     useEffect(() => { if (product) document.title = `${product.name} · Tienda Justo · Casa Siego®`; }, [product]);
+    useEffect(() => { if (product && oneSize(product)) setSize(product.sizes[0]); }, [product]);
 
     if (catalog.status === 'loading') return <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16"><Skeleton n={2} /></div>;
     if (catalog.status === 'error') return <LoadError />;
@@ -330,6 +335,9 @@ const ProductPage = () => {
 
     const { rules, tolerances } = catalog;
     const isShirt = product.kind === 'camisa';
+    const isTie = product.kind === 'corbata';
+    const isJacket = !product.kind;
+    const single = oneSize(product);
     const related = catalog.products.filter(p => p.id !== product.id);
 
     return (
@@ -357,37 +365,37 @@ const ProductPage = () => {
                         </ol>
                     </nav>
                     <h1 className="text-3xl md:text-5xl">{product.name}</h1>
-                    <p className="label text-ink-500 mt-3">Corte {product.cut.toLowerCase()} &middot; {product.sku}</p>
-                    <p className="text-2xl mt-6">{size && product.price_mxn != null ? formatPrice(unitPrice(product, size)) : priceRange(product)} {product.price_mxn != null && <span className="label text-ink-500">IVA incluido{size ? ` · talla ${size}` : ''}</span>}</p>
+                    <p className="label text-ink-500 mt-3">{single ? 'Talla única' : `Corte ${product.cut.toLowerCase()}`} &middot; {product.sku}</p>
+                    <p className="text-2xl mt-6">{size && product.price_mxn != null ? formatPrice(unitPrice(product, size)) : priceRange(product)} {product.price_mxn != null && <span className="label text-ink-500">IVA incluido{size && !single ? ` · talla ${size}` : ''}</span>}</p>
                     <p className="text-ink-700 mt-6 max-w-md">{product.description}</p>
 
-                    <div className="mt-10">
+                    {!single && <div className="mt-10">
                         <div className="flex justify-between items-baseline mb-3 max-w-md">
                             <p className={`label-strong ${needSize && !size ? 'text-rust' : ''}`}>{needSize && !size ? 'Elige una talla' : 'Talla'}</p>
                             <a href={`${SHOP}/guia-de-tallas/`} className="label link text-ink-500">Guía de tallas</a>
                         </div>
                         <SizeChips product={product} catalog={catalog} value={size} onChange={(s) => { setSize(s); setNeedSize(false); }} />
-                    </div>
+                    </div>}
 
                     {size && <div className="mt-5"><SizeSpecs product={product} catalog={catalog} size={size} /></div>}
 
                     <div className="mt-8 max-w-md">
                         {(size ? !inStock(product, size) : soldOut(product)) ? (
-                            <button className="btn btn-off w-full" type="button" disabled aria-disabled="true">Agotado{size ? ` · talla ${size}` : ''}</button>
+                            <button className="btn btn-off w-full" type="button" disabled aria-disabled="true">Agotado{size && !single ? ` · talla ${size}` : ''}</button>
                         ) : size && !stripeLink(product, size) ? (
                             <a className="btn btn-rust w-full" href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Justo · ${product.name} · talla ${size}`)}`}>Comprar por correo · talla {size}</a>
                         ) : stripeLink(product, size) ? (
-                            <a className="btn btn-rust w-full" href={stripeLink(product, size)} rel="noopener">Pagar con Stripe · talla {size} · {formatPrice(unitPrice(product, size))}</a>
+                            <a className="btn btn-rust w-full" href={stripeLink(product, size)} rel="noopener">Pagar con Stripe{single ? '' : ` · talla ${size}`} · {formatPrice(unitPrice(product, size))}</a>
                         ) : (
                             <button className="btn btn-rust w-full" type="button" onClick={() => setNeedSize(true)}>{size ? 'Pago no disponible en esta talla: escríbenos' : 'Elige tu talla para pagar'}</button>
                         )}
-                        <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, una pieza por pago, en pesos mexicanos (MXN).{!isShirt && ` Incluye ajuste de mangas (±${tolerances.sleeve_cm} cm) y cintura (±${tolerances.waist_cm} cm) en el taller.`} Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
+                        <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, una pieza por pago, en pesos mexicanos (MXN).{isJacket && ` Incluye ajuste de mangas (±${tolerances.sleeve_cm} cm) y cintura (±${tolerances.waist_cm} cm) en el taller.`} Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
                     </div>
 
                     <div className="mt-10 max-w-md border-b border-line">
-                        <Disclosure title={isShirt ? 'Especificaciones de la camisa' : 'Especificaciones del saco'} open>
+                        <Disclosure title={isTie ? 'Especificaciones de la corbata' : isShirt ? 'Especificaciones de la camisa' : 'Especificaciones del saco'} open>
                             <dl className="grid grid-cols-[7.5rem_1fr] gap-x-4 gap-y-2">
-                                {(isShirt ? SHIRT_ROWS : JACKET_ROWS).map(([k, label]) => <React.Fragment key={k}><dt className="label text-ink-500 pt-1">{label}</dt><dd>{product[k]}</dd></React.Fragment>)}
+                                {(isTie ? TIE_ROWS : isShirt ? SHIRT_ROWS : JACKET_ROWS).map(([k, label]) => <React.Fragment key={k}><dt className="label text-ink-500 pt-1">{label}</dt><dd>{product[k]}</dd></React.Fragment>)}
                             </dl>
                             <ul className="mt-4 space-y-1">{product.features.map(f => <li key={f}>— {f}</li>)}</ul>
                         </Disclosure>
@@ -397,7 +405,7 @@ const ProductPage = () => {
                                 <p className="note text-ink-500 text-[15px] mt-3">Medidas de la prenda en plano, en centímetros (pecho, cintura y bajo: contorno completo). Tolerancia de confección ±1 cm.</p>
                             </Disclosure>
                         )}
-                        {!isShirt && <Disclosure title="Ajustes incluidos"><p>{tolerances.note}</p></Disclosure>}
+                        {isJacket && <Disclosure title="Ajustes incluidos"><p>{tolerances.note}</p></Disclosure>}
                         <Disclosure title="Cuidados"><p>{product.care}</p></Disclosure>
                         <Disclosure title="Entrega y pago">
                             {rules.shipping.map(s => <p key={s.id} className="mb-2"><strong className="font-semibold text-ink">{s.label}.</strong> {s.detail} {s.cost_mxn ? `${formatPrice(s.cost_mxn)}, gratis desde ${formatPrice(s.free_from_mxn)}.` : 'Sin costo.'}</p>)}
