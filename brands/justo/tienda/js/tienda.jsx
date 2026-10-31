@@ -51,8 +51,9 @@ const localPrices = (products, rules) => {
 };
 
 const db = {
+    // Products with stock come first; sold-out ones go last, each group in the order of productos.json (stable sort).
     catalog: () => Promise.all([loadJson('productos'), loadJson('tallas'), loadJson('tienda')]).then(([p, t, rules]) => ({
-        ...localPrices(p.products.filter(x => x.active !== false), rules),
+        ...localPrices(p.products.filter(x => x.active !== false).sort((a, b) => soldOut(a) - soldOut(b)), rules),
         sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances,
     })),
 };
