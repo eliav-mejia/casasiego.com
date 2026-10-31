@@ -204,7 +204,7 @@ ARTICLES = [
             'Un uniforme ejecutivo a la medida es el traje de tu equipo cortado sobre las medidas de cada persona, con la tela, el color y los detalles de tu empresa. Todos visten igual y a cada uno le queda como propio. En Justo lo confeccionamos de principio a fin en nuestro taller de Roma Norte, Ciudad de México.',
         ]),
         ('Casa Siego: imagen y estilo', [
-            'Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir faire artesanal con procesos sostenibles: la constancia de un taller que produce para equipos completos y el oficio de la sastrería que mide, corta y ajusta a mano.',
+            'Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir-faire artesanal con procesos sostenibles: la constancia de un taller que produce para equipos completos y el oficio de la sastrería que mide, corta y ajusta a mano.',
             'La casa reúne dos oficios bajo un mismo techo de madera, concreto y luz natural: <a href="../../brands/justo/">Justo</a>, la sastrería, y <a href="../../brands/fiel/">Fiel</a>, el estudio de retrato. Por eso tu equipo puede estrenar su uniforme frente a la cámara el día de la entrega. Conoce a los sastres y fotógrafos en <a href="../../membresia/equipo/">el equipo de Casa Siego</a>.',
         ]),
         ('Trajes a la medida para caballero', [
