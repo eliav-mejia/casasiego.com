@@ -1,7 +1,7 @@
 {
-  "_schema": "products: id, slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n}, specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], active, featured",
+  "_schema": "products: id, kind? (camisa: sin specs, con collar y cuffs; price_mxn null = precio por confirmar), slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n} (0 = agotado: sin pago), specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], active, featured",
   "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/justo.esmx/.",
-  "updated_at": "2026-10-25",
+  "updated_at": "2026-10-30",
   "products": [
     {
       "id": "ju-001",
@@ -23,7 +23,7 @@
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 3, "M": 5, "G": 4, "XG": 2 },
+      "stock": { "CH": 3, "M": 0, "G": 0, "XG": 0 },
       "specs": {
         "CH": { "chest": 102, "waist": 92,  "shoulder": 44.0, "sleeve": 62.0, "length": 73, "hem": 104, "lapel": 8, "drop": 6 },
         "M":  { "chest": 108, "waist": 98,  "shoulder": 45.5, "sleeve": 63.5, "length": 75, "hem": 110, "lapel": 8, "drop": 6 },
@@ -66,7 +66,7 @@
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 2, "M": 4, "G": 3, "XG": 0 },
+      "stock": { "CH": 2, "M": 0, "G": 0, "XG": 0 },
       "specs": {
         "CH": { "chest": 104, "waist": 96,  "shoulder": 44.5, "sleeve": 62.5, "length": 74, "hem": 108, "lapel": 8.5, "drop": 5 },
         "M":  { "chest": 110, "waist": 102, "shoulder": 46.0, "sleeve": 64.0, "length": 76, "hem": 114, "lapel": 8.5, "drop": 5 },
@@ -108,7 +108,7 @@
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 1, "M": 3, "G": 2, "XG": 1 },
+      "stock": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
       "specs": {
         "CH": { "chest": 100, "waist": 88,  "shoulder": 43.5, "sleeve": 62.0, "length": 72, "hem": 100, "lapel": 8, "drop": 7 },
         "M":  { "chest": 106, "waist": 94,  "shoulder": 45.0, "sleeve": 63.5, "length": 74, "hem": 106, "lapel": 8, "drop": 7 },
@@ -130,6 +130,9 @@
       ],
       "active": true,
       "featured": true
-    }
+    },
+    {"id": "ju-004", "kind": "camisa", "slug": "camisa-azul-cielo", "sku": "JUS-CAM-01", "name": "Camisa Azul Cielo", "short": "Azul cielo, cuello italiano, puño sencillo.", "description": "El azul de oficina que acompaña a todo: al gris carbón, al azul marino y a la corbata plata. Cuello italiano semiabierto que deja ver el nudo, puño sencillo de un botón y faldón curvo para llevarla fajada.", "price_mxn": 550, "prices_mxn": {"CH": 550, "M": 550, "G": 550, "XG": 550}, "stripe": {"CH": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i"}, "cut": "Regular", "image": "images/justo.esmx/Azul-Celeste_camiseria_fgris.jpg", "focus": "50% 50%", "zoom": 1, "sizes": ["CH", "M", "G", "XG"], "stock": {"CH": 1, "M": 0, "G": 0, "XG": 0}, "fabric": "[confirmar con el taller]", "collar": "Italiano, semiabierto", "cuffs": "Sencillo de un botón", "buttons": "Botones blancos", "care": "[confirmar con el taller]", "features": ["Faldón curvo para llevarse fajada"], "active": true, "featured": true},
+    {"id": "ju-005", "kind": "camisa", "slug": "camisa-azul-indigo", "sku": "JUS-CAM-02", "name": "Camisa Azul Índigo", "short": "Índigo profundo, botones al tono.", "description": "Índigo profundo con botones al tono: más carácter que el azul cielo sin dejar la oficina. Con saco gris y corbata clara para el día; sola, con pantalón beige, para la tarde. Cuello italiano semiabierto y puño sencillo.", "price_mxn": 550, "prices_mxn": {"CH": 550, "M": 550, "G": 550, "XG": 550}, "stripe": {"CH": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h"}, "cut": "Regular", "image": "images/justo.esmx/Azul-Indigo_camiseria_fgris.jpg", "focus": "50% 50%", "zoom": 1, "sizes": ["CH", "M", "G", "XG"], "stock": {"CH": 1, "M": 0, "G": 0, "XG": 0}, "fabric": "[confirmar con el taller]", "collar": "Italiano, semiabierto", "cuffs": "Sencillo de un botón", "buttons": "Botones azules al tono", "care": "[confirmar con el taller]", "features": ["Faldón curvo para llevarse fajada"], "active": true, "featured": true},
+    {"id": "ju-006", "kind": "camisa", "slug": "camisa-blanca", "sku": "JUS-CAM-03", "name": "Camisa Blanca", "short": "Blanca, cuello italiano, puño sencillo.", "description": "La blanca de la casa: la base de la raya diplomática y del negro de noche. Cuello italiano semiabierto que sostiene cualquier corbata, puño sencillo de un botón y faldón curvo.", "price_mxn": 550, "prices_mxn": {"CH": 550, "M": 550, "G": 550, "XG": 550}, "stripe": {"CH": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j"}, "cut": "Regular", "image": "images/justo.esmx/Blanco_camiseria_fgris.jpg", "focus": "50% 50%", "zoom": 1, "sizes": ["CH", "M", "G", "XG"], "stock": {"CH": 1, "M": 0, "G": 0, "XG": 0}, "fabric": "[confirmar con el taller]", "collar": "Italiano, semiabierto", "cuffs": "Sencillo de un botón", "buttons": "Botones blancos", "care": "[confirmar con el taller]", "features": ["Faldón curvo para llevarse fajada"], "active": true, "featured": true}
   ]
 }

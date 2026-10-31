@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:ital@1&display=swap">
-  <link rel="stylesheet" href="../../../brands/justo/tienda/css/tienda.css?v=1.0.0">
+  <link rel="stylesheet" href="../../../brands/justo/tienda/css/tienda.css?v=1.1.0">
 
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -57,7 +57,7 @@
   </div>
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para hacer tu pedido.</p></noscript>
 
-  <script type="text/babel" src="../../../brands/justo/tienda/js/tienda.jsx?v=1.1.5"></script>
+  <script type="text/babel" src="../../../brands/justo/tienda/js/tienda.jsx?v=1.3.1"></script>
   <script type="text/babel">
     const Catalogue = () => {
         const catalog = useCatalog();
@@ -72,7 +72,7 @@
                         <h1 className="font-display font-bold tracking-display text-5xl md:text-7xl mt-4">Esenciales<span className="sr-only"> de Justo por Siego</span></h1>
                         <p className="text-lg md:text-xl max-w-xl mt-5 text-parchment/90">Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Disponibles desde 1 pieza en tallas Chico a Extra Grande, acompañados de su tabla de medidas.</p>
                         <div className="flex flex-wrap gap-2 mt-8">
-                            <a href="#sacos" className="btn btn-rust">Ver los sacos</a>
+                            <a href="#sacos" className="btn btn-rust">Ver la colección</a>
                             <a href={`${SHOP}/guia-de-tallas/`} className="btn btn-light">¿Qué talla soy?</a>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <p className="label text-gold">Capítulo I</p>
                             <h2 className="text-3xl md:text-4xl mt-2">La colección</h2>
                         </div>
-                        <p className="note text-ink-500 max-w-sm">Las tallas en gris claro se confeccionan sobre pedido. Ninguna talla se agota: solo tarda más.</p>
+                        <p className="note text-ink-500 max-w-sm">Las tallas tachadas están agotadas.</p>
                     </div>
                     {catalog.status === 'loading' && <Skeleton />}
                     {catalog.status === 'error' && <LoadError />}
@@ -112,7 +112,7 @@
                     <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20 grid md:grid-cols-3 gap-8">
                         {[
                             ['Ajuste incluido', catalog.tolerances.note],
-                            ['Pago con Stripe', 'Eliges tu talla y pagas en la página segura de Stripe, en pesos mexicanos. Un saco por pago.'],
+                            ['Pago con Stripe', 'Eliges tu talla y pagas en la página segura de Stripe, en pesos mexicanos. Una pieza por pago.'],
                             ['La entrega', 'Recoge en Casa Siego con prueba final y retrato en Fiel, o recíbelo en casa en funda con gancho de madera.'],
                         ].map(([t, d]) => <div key={t} className="reveal border-t border-ink pt-5"><p className="label-strong">{t}</p><p className="text-ink-700 mt-3">{d}</p></div>)}
                     </section>
