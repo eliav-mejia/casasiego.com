@@ -46,6 +46,13 @@ h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; fon
 .btn-line:hover:not(:disabled) { background: var(--ink); color: var(--parchment); }
 .btn-light { background: transparent; color: var(--parchment); border: 1px solid rgba(247,242,234,.8); }
 .btn-light:hover:not(:disabled) { background: var(--parchment); color: var(--ink); }
+/* Sold out: grey, flat and not clickable (the Stripe link is not rendered) */
+.btn-off, .btn-off:disabled { background: #D6CEC4; color: #FFFFFF; border: 1px solid #D6CEC4; opacity: 1; cursor: not-allowed; pointer-events: none; }
+
+/* «Agotado»: small rounded tag in translucent grey over the photo; the photo dims a little */
+.tag-out { font-family: Cinzel, Georgia, serif; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+           padding: .3rem .6rem; border-radius: 4px; background: rgba(111,94,87,.55); color: #FFFFFF; backdrop-filter: blur(2px); }
+.crop.is-out > img { filter: grayscale(.35); opacity: .75; }
 
 .field {
     width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0;

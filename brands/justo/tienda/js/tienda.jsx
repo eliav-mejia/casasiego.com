@@ -1,4 +1,4 @@
-// Justo by Casa Siego · tienda de sacos (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
+// Justo by Casa Siego · tienda de sacos y camisas (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
 // Every shop page loads this file. Each page sets <body data-root="…"> = relative path to the site root (casasiego.com/),
 // so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Casa Siego).
 //
@@ -41,7 +41,7 @@ const loadJson = (name) => jsonCache[name] || (jsonCache[name] =
 const localPrices = (products, rules) => {
     const price = region() ? region().price : (n) => n;
     return {
-        products: products.map(x => ({ ...x, price_mxn: price(x.price_mxn),
+        products: products.map(x => ({ ...x, price_mxn: x.price_mxn == null ? null : price(x.price_mxn),
             prices_mxn: x.prices_mxn && Object.fromEntries(Object.entries(x.prices_mxn).map(([k, v]) => [k, price(v)])) })),
         rules: {
             ...rules,
@@ -87,16 +87,22 @@ const useCatalog = () => {
 };
 
 // --- STOCK ---
-// stock[size] > 0 → ships from the workshop; 0 → made to order (rules.made_to_order_days). Never blocks the sale.
+// stock[size] > 0 → ships from the workshop; 0 → sold out: the size shows «Agotado» and its Stripe button is disabled.
 const inStock = (product, size) => (product.stock?.[size] ?? 0) > 0;
-const stockText = (product, size, rules) => inStock(product, size)
+const soldOut = (product) => !product.sizes.some(s => inStock(product, s));
+const stockText = (product, size) => inStock(product, size)
     ? `${product.stock[size]} en existencia · listo en 48 h hábiles`
-    : `Sobre pedido · confección en ${rules.made_to_order_days} días`;
+    : 'Agotado';
+
+// Small grey «Agotado» tag over the photo of a sold-out product
+const SoldOutTag = () => <span className="tag-out absolute top-3 left-3 z-10">Agotado</span>;
 
 // --- PRICING ---
 // Prices include IVA. Each size has its own price (prices_mxn); price_mxn is the lowest one, shown as «desde» before a size is chosen.
 const unitPrice = (product, size) => (product.prices_mxn && product.prices_mxn[size]) || product.price_mxn;
+// price_mxn null (new shirts): «Precio por confirmar» until the workshop sets it.
 const priceRange = (product) => {
+    if (product.price_mxn == null) return 'Precio por confirmar';
     const all = Object.values(product.prices_mxn || {});
     return all.length && Math.max(...all) > Math.min(...all) ? `Desde ${formatPrice(Math.min(...all))}` : formatPrice(product.price_mxn);
 };
@@ -122,7 +128,7 @@ const Photo = ({ product, src, className = '', eager = false, alt }) => (
 
 // --- HEADER / FOOTER ---
 const Header = ({ current }) => {
-    const nav = [['sacos', 'Sacos', `${SHOP}/`], ['tallas', 'Guía de tallas', `${SHOP}/guia-de-tallas/`]];
+    const nav = [['sacos', 'Esenciales', `${SHOP}/`], ['tallas', 'Guía de tallas', `${SHOP}/guia-de-tallas/`]];
     return (
         <header className="sticky top-0 z-50 bg-parchment/95 backdrop-blur border-b border-line">
             <div className="max-w-[1400px] mx-auto px-4 md:px-10 h-16 md:h-20 flex items-center justify-between gap-4">
@@ -165,7 +171,7 @@ const Footer = () => {
                 </div>
                 <div className="space-y-2">
                     <p className="label text-gold">Tienda</p>
-                    <p><a className="link" href={`${SHOP}/`}>Sacos</a></p>
+                    <p><a className="link" href={`${SHOP}/`}>Esenciales</a></p>
                     <p><a className="link" href={`${SHOP}/guia-de-tallas/`}>Guía de tallas</a></p>
                     <p><a className="link" href={`${ROOT}terms.html`}>Términos de uso</a></p>
                     <p><a className="link" href={`${ROOT}devoluciones.html`}>Política de devoluciones</a></p>
@@ -194,7 +200,10 @@ const Skeleton = ({ n = 3 }) => (
 const ProductCard = ({ product, catalog }) => (
     <article className="reveal group">
         <a href={`${SHOP}/${product.slug}/`} className="block">
-            <Photo product={product} className="aspect-[3/4]" />
+            <div className="relative">
+                <Photo product={product} className={`aspect-[3/4] ${soldOut(product) ? 'is-out' : ''}`} />
+                {soldOut(product) && <SoldOutTag />}
+            </div>
             <div className="pt-4 pb-8">
                 <div className="flex justify-between items-baseline gap-3">
                     <h3 className="text-xl">{product.name}</h3>
@@ -203,7 +212,7 @@ const ProductCard = ({ product, catalog }) => (
                 <p className="text-ink-700 mt-1">{product.short}</p>
                 <p className="label text-ink-500 mt-3">
                     Corte {product.cut.toLowerCase()} &middot; {product.sizes.map(s => (
-                        <span key={s} className={inStock(product, s) ? '' : 'text-ink-300'} title={inStock(product, s) ? `${catalog.size[s]?.label}: en existencia` : `${catalog.size[s]?.label}: sobre pedido`}>{s} </span>
+                        <span key={s} className={inStock(product, s) ? '' : 'text-ink-300 line-through'} title={inStock(product, s) ? `${catalog.size[s]?.label}: en existencia` : `${catalog.size[s]?.label}: agotado`}>{s} </span>
                     ))}
                 </p>
             </div>
@@ -232,7 +241,7 @@ const GARMENT_ROWS = [
 // Everything about one size of one jacket, side by side: who it fits (body) and what it measures (garment).
 const SizeSpecs = ({ product, catalog, size }) => {
     const s = catalog.size[size];
-    const g = product.specs[size];
+    const g = product.specs?.[size];
     if (!s || !g) return null;
     const ease = g.chest - s.body.chest_cm[1];
     return (
@@ -254,7 +263,7 @@ const SizeSpecs = ({ product, catalog, size }) => {
                 </dl>
             </div>
             <p className="note text-ink-500 text-[15px] mt-5">Holgura en pecho: {ease} cm sobre el máximo de la talla (corte {product.cut.toLowerCase()}, drop {g.drop}).</p>
-            <p className={`label mt-3 ${inStock(product, size) ? 'text-ink-500' : 'text-rust'}`}>{stockText(product, size, catalog.rules)}</p>
+            <p className={`label mt-3 ${inStock(product, size) ? 'text-ink-500' : 'text-rust'}`}>{stockText(product, size)}</p>
         </div>
     );
 };
@@ -281,7 +290,7 @@ const SpecTable = ({ product, catalog, selected }) => {
                     {GARMENT_ROWS.map(([k, label]) => <tr key={k}><td>{label}</td>{cols.map(s => td(s.id, String(product.specs[s.id][k]).replace('.', ',')))}</tr>)}
                     <tr><td>Drop (pecho − cintura del pantalón)</td>{cols.map(s => td(s.id, product.specs[s.id].drop))}</tr>
                     <tr className="group"><td colSpan={cols.length + 1}>Disponibilidad</td></tr>
-                    <tr><td>Existencia</td>{cols.map(s => td(s.id, inStock(product, s.id) ? product.stock[s.id] : 'Pedido'))}</tr>
+                    <tr><td>Existencia</td>{cols.map(s => td(s.id, inStock(product, s.id) ? product.stock[s.id] : 'Agotado'))}</tr>
                 </tbody>
             </table>
         </div>
@@ -294,6 +303,10 @@ const Disclosure = ({ title, children, open = false }) => (
         <div className="pb-6 text-ink-700 text-[16px] leading-relaxed">{children}</div>
     </details>
 );
+
+// Rows of «Especificaciones»: jackets and shirts (kind: 'camisa') describe different parts.
+const JACKET_ROWS = [['fabric', 'Tela'], ['lining', 'Forro'], ['construction', 'Construcción'], ['buttons', 'Botones'], ['pockets', 'Bolsillos'], ['vents', 'Aberturas'], ['cut', 'Corte']];
+const SHIRT_ROWS = [['fabric', 'Tela'], ['collar', 'Cuello'], ['cuffs', 'Puños'], ['buttons', 'Botones'], ['cut', 'Corte']];
 
 // --- PRODUCT PAGE ---
 // Each tienda/<slug>/index.html calls renderProduct(); the slug comes from the URL.
@@ -316,13 +329,17 @@ const ProductPage = () => {
     );
 
     const { rules, tolerances } = catalog;
+    const isShirt = product.kind === 'camisa';
     const related = catalog.products.filter(p => p.id !== product.id);
 
     return (
         <>
             <section className="max-w-[1400px] mx-auto md:px-10 md:pt-8 grid md:grid-cols-12 gap-6 md:gap-12 items-start">
                 <div className="md:col-span-7 grid gap-1">
-                    <Photo product={product} className="aspect-[3/4] animate-fade-in" eager />
+                    <div className="relative">
+                        <Photo product={product} className={`aspect-[3/4] animate-fade-in ${soldOut(product) ? 'is-out' : ''}`} eager />
+                        {soldOut(product) && <SoldOutTag />}
+                    </div>
                     {product.detail_image && (
                         <figure className="relative">
                             <Photo product={product} src={product.detail_image} className="aspect-[4/3]" alt={`Detalle de la tela y el forro: ${product.name}`} />
@@ -336,12 +353,12 @@ const ProductPage = () => {
                         <ol className="flex flex-wrap gap-1.5">
                             <li><a href={`${ROOT}brands/justo/`} className="link">Justo</a></li>
                             <li aria-hidden="true">/</li>
-                            <li><a href={`${SHOP}/`} className="link">Sacos</a></li>
+                            <li><a href={`${SHOP}/`} className="link">Esenciales</a></li>
                         </ol>
                     </nav>
                     <h1 className="text-3xl md:text-5xl">{product.name}</h1>
                     <p className="label text-ink-500 mt-3">Corte {product.cut.toLowerCase()} &middot; {product.sku}</p>
-                    <p className="text-2xl mt-6">{size ? formatPrice(unitPrice(product, size)) : priceRange(product)} <span className="label text-ink-500">IVA incluido{size ? ` · talla ${size}` : ''}</span></p>
+                    <p className="text-2xl mt-6">{size && product.price_mxn != null ? formatPrice(unitPrice(product, size)) : priceRange(product)} {product.price_mxn != null && <span className="label text-ink-500">IVA incluido{size ? ` · talla ${size}` : ''}</span>}</p>
                     <p className="text-ink-700 mt-6 max-w-md">{product.description}</p>
 
                     <div className="mt-10">
@@ -355,32 +372,32 @@ const ProductPage = () => {
                     {size && <div className="mt-5"><SizeSpecs product={product} catalog={catalog} size={size} /></div>}
 
                     <div className="mt-8 max-w-md">
-                        {stripeLink(product, size) ? (
+                        {(size ? !inStock(product, size) : soldOut(product)) ? (
+                            <button className="btn btn-off w-full" type="button" disabled aria-disabled="true">Agotado{size ? ` · talla ${size}` : ''}</button>
+                        ) : size && !stripeLink(product, size) ? (
+                            <a className="btn btn-rust w-full" href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Justo · ${product.name} · talla ${size}`)}`}>Comprar por correo · talla {size}</a>
+                        ) : stripeLink(product, size) ? (
                             <a className="btn btn-rust w-full" href={stripeLink(product, size)} rel="noopener">Pagar con Stripe · talla {size} · {formatPrice(unitPrice(product, size))}</a>
                         ) : (
                             <button className="btn btn-rust w-full" type="button" onClick={() => setNeedSize(true)}>{size ? 'Pago no disponible en esta talla: escríbenos' : 'Elige tu talla para pagar'}</button>
                         )}
-                        <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, un saco por pago, en pesos mexicanos (MXN). Incluye ajuste de mangas (±{tolerances.sleeve_cm} cm) y cintura (±{tolerances.waist_cm} cm) en el taller. Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
+                        <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, una pieza por pago, en pesos mexicanos (MXN).{!isShirt && ` Incluye ajuste de mangas (±${tolerances.sleeve_cm} cm) y cintura (±${tolerances.waist_cm} cm) en el taller.`} Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
                     </div>
 
                     <div className="mt-10 max-w-md border-b border-line">
-                        <Disclosure title="Especificaciones del saco" open>
+                        <Disclosure title={isShirt ? 'Especificaciones de la camisa' : 'Especificaciones del saco'} open>
                             <dl className="grid grid-cols-[7.5rem_1fr] gap-x-4 gap-y-2">
-                                <dt className="label text-ink-500 pt-1">Tela</dt><dd>{product.fabric}</dd>
-                                <dt className="label text-ink-500 pt-1">Forro</dt><dd>{product.lining}</dd>
-                                <dt className="label text-ink-500 pt-1">Construcción</dt><dd>{product.construction}</dd>
-                                <dt className="label text-ink-500 pt-1">Botones</dt><dd>{product.buttons}</dd>
-                                <dt className="label text-ink-500 pt-1">Bolsillos</dt><dd>{product.pockets}</dd>
-                                <dt className="label text-ink-500 pt-1">Aberturas</dt><dd>{product.vents}</dd>
-                                <dt className="label text-ink-500 pt-1">Corte</dt><dd>{product.cut}</dd>
+                                {(isShirt ? SHIRT_ROWS : JACKET_ROWS).map(([k, label]) => <React.Fragment key={k}><dt className="label text-ink-500 pt-1">{label}</dt><dd>{product[k]}</dd></React.Fragment>)}
                             </dl>
                             <ul className="mt-4 space-y-1">{product.features.map(f => <li key={f}>— {f}</li>)}</ul>
                         </Disclosure>
-                        <Disclosure title="Medidas por talla: CH · M · G · XG">
-                            <SpecTable product={product} catalog={catalog} selected={size} />
-                            <p className="note text-ink-500 text-[15px] mt-3">Medidas de la prenda en plano, en centímetros (pecho, cintura y bajo: contorno completo). Tolerancia de confección ±1 cm.</p>
-                        </Disclosure>
-                        <Disclosure title="Ajustes incluidos"><p>{tolerances.note}</p></Disclosure>
+                        {product.specs && (
+                            <Disclosure title="Medidas por talla: CH · M · G · XG">
+                                <SpecTable product={product} catalog={catalog} selected={size} />
+                                <p className="note text-ink-500 text-[15px] mt-3">Medidas de la prenda en plano, en centímetros (pecho, cintura y bajo: contorno completo). Tolerancia de confección ±1 cm.</p>
+                            </Disclosure>
+                        )}
+                        {!isShirt && <Disclosure title="Ajustes incluidos"><p>{tolerances.note}</p></Disclosure>}
                         <Disclosure title="Cuidados"><p>{product.care}</p></Disclosure>
                         <Disclosure title="Entrega y pago">
                             {rules.shipping.map(s => <p key={s.id} className="mb-2"><strong className="font-semibold text-ink">{s.label}.</strong> {s.detail} {s.cost_mxn ? `${formatPrice(s.cost_mxn)}, gratis desde ${formatPrice(s.free_from_mxn)}.` : 'Sin costo.'}</p>)}
@@ -392,7 +409,7 @@ const ProductPage = () => {
 
             {related.length > 0 && (
                 <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20">
-                    <h2 className="label text-gold mb-6">Los otros sacos de la casa</h2>
+                    <h2 className="label text-gold mb-6">Más de la colección</h2>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{related.map(p => <ProductCard key={p.id} product={p} catalog={catalog} />)}</div>
                 </section>
             )}
@@ -421,7 +438,7 @@ const SizeFinder = ({ catalog }) => {
     const [height, setHeight] = useState('');
     const r = recommendSize(catalog.sizes, Number(chest) || 0, Number(height) || 0);
     return (
-        <div className="border border-ink p-6 md:p-8 max-w-xl">
+        <div className="border border-ink bg-white p-6 md:p-8 max-w-xl">
             <p className="label text-gold">Calculadora</p>
             <h2 className="text-2xl md:text-3xl mt-2">¿Qué talla soy?</h2>
             <div className="grid grid-cols-2 gap-6 mt-6">
