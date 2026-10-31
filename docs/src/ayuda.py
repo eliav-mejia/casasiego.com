@@ -246,6 +246,22 @@ ARTICLES = [
         ]),
     ], {'title': 'Uniformes ejecutivos a la medida para empresas | Casa Siego®',
         'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego en Roma Norte, CDMX. Cotiza para tu equipo.'}),
+    ('tiempos-de-entrega-pedidos-personalizados', 'politicas', '¿Cuánto tarda un pedido personalizado de menos de 10 piezas?',
+     'Consolidamos la demanda de varios clientes en un solo pedido a fábrica; el tiempo depende de la lista de espera.', [
+        ('Por qué consolidamos', [
+            'Los pedidos personalizados de menos de 10 piezas no se fabrican por separado. Reunimos la demanda de varios clientes en un solo pedido a fábrica: así cada pieza conserva la calidad de materiales y el precio de una producción completa, sin el costo de un corte aislado.',
+        ]),
+        ('Tiempos de entrega', [
+            'El tiempo de entrega depende de la lista de espera: el pedido a fábrica sale cuando se completa el lote, y después siguen la confección y las pruebas. Por eso estos tiempos pueden variar de un pedido a otro.',
+            'Consulta con tu representante de Casa Siego la fecha estimada de tu pedido y el lugar que ocupa en la lista de espera. Escríbenos a <a href="mailto:info@casasiego.com?subject=Tiempo%20de%20entrega">info@casasiego.com</a>.',
+        ]),
+        ('Plazo de entrega', [
+            'El plazo de entrega de un pedido consolidado puede ser de hasta 90 días naturales a partir de la confirmación de tu pedido. El plazo de tu pedido queda por escrito en tu cotización. Este plazo no limita los derechos que te reconoce la Ley Federal de Protección al Consumidor.',
+        ]),
+        ('Pedidos de 10 piezas o más', [
+            'Desde 10 piezas, tu pedido va a fábrica sin esperar a otros clientes. Lee <a href="../uniformes-ejecutivos-a-medida/">¿Cómo encargo uniformes ejecutivos a la medida?</a>',
+        ]),
+    ]),
     ('cambios-de-temporada', 'politicas', '¿Por qué cambian las telas o las locaciones?',
      'Es un servicio personalizado: las opciones varían por temporada, y siempre ofrecemos una alternativa equivalente.', [
         ('Un servicio por temporada', [
