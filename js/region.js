@@ -1,6 +1,6 @@
-/* Casa Siego — region.js (v1.2.0)
+/* Casa Siego — region.js (v1.3.0)
    Small flag: México or España. On pages with the shared menu (casa.js) it sits at the end of the
-   header links and, on mobile, at the foot of the side drawer; elsewhere (shop, 404) in the bottom-left corner.
+   header links and, on mobile and tablet, beside «Acceso de miembros» at the top of the side drawer; elsewhere (shop, 404) in the bottom-left corner.
    España swaps every "Ciudad de México" / "CDMX" for "Madrid" and shows the
    elements marked data-region="es" instead of data-region="mx".
 
@@ -165,7 +165,15 @@
     li.className = 'site-nav__region';
     li.appendChild(flag('region-flag region-flag--menu'));
     nav.insertBefore(li, nav.querySelector('.site-nav__perfil'));   // the profile avatar stays last
-    if (foot) {
+    // In the drawer: on the right of «Acceso de miembros» (one row at the top); at the foot if the drawer has no sign-in
+    var perfil = document.querySelector('.site-perfil--drawer');
+    if (perfil) {
+      var top = document.createElement('div');
+      top.className = 'site-drawer__top';
+      perfil.parentNode.insertBefore(top, perfil);
+      top.appendChild(perfil);
+      top.appendChild(flag('region-flag region-flag--drawer'));
+    } else if (foot) {
       var p = document.createElement('p');
       p.className = 'site-drawer__region';
       p.appendChild(flag('region-flag region-flag--drawer'));
@@ -248,6 +256,9 @@
       'background:none;box-shadow:none;opacity:.85;color:inherit;font:italic .95rem var(--font-meta,serif)}' +
       '.region-flag--drawer:hover,.region-flag--drawer:focus-visible{background:none;transform:none;opacity:1}' +
       '.region-flag--drawer svg{width:24px;height:16px}' +
+      '.site-drawer__top{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem 1.5rem;margin-bottom:1.75rem}' +
+      '.site-drawer__top .site-perfil--drawer{margin-bottom:0}' +
+      '.site-drawer__top .region-flag--drawer{opacity:0;transition:opacity .6s ease .3s}.menu-open .site-drawer__top .region-flag--drawer{opacity:.85}' +
       '@media print{.region-flag{display:none}}';
     document.head.appendChild(css);
   }
