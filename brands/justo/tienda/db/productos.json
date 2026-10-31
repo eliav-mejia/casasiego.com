@@ -66,7 +66,7 @@
       "focus": "50% 50%",
       "zoom": 1,
       "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 2, "M": 0, "G": 0, "XG": 0 },
+      "stock": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
       "specs": {
         "CH": { "chest": 104, "waist": 96,  "shoulder": 44.5, "sleeve": 62.5, "length": 74, "hem": 108, "lapel": 8.5, "drop": 5 },
         "M":  { "chest": 110, "waist": 102, "shoulder": 46.0, "sleeve": 64.0, "length": 76, "hem": 114, "lapel": 8.5, "drop": 5 },
