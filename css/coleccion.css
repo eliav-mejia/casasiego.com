@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Casa Siego — coleccion.css  (v1.0.0)
+   Justo · Diseña tu colección (brands/justo/): the seven steps and the Priority form.
+   Uses the tokens of site.css; square corners, no shadows, like the rest of the house.
+   ========================================================================== */
+
+/* Hero: a three-word title instead of one word, so it wraps and shrinks to fit a phone */
+.display--frase { font-size: clamp(2.1rem, 0.6rem + 6.4vw, 4.5rem); letter-spacing: 0.08em; }
+
+/* The seven steps: Cinzel numerals in brass, one rule between steps */
+.pasos { margin: var(--space-3) 0 var(--space-3); padding: 0; list-style: none; counter-reset: paso; max-width: 40rem; }
+.pasos li { counter-increment: paso; display: grid; grid-template-columns: 2.5rem 1fr; gap: 0 1rem; padding: 0.9em 0;
+            border-top: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent); }
+.pasos li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--hellenic-gold) 35%, transparent); }
+.pasos li::before { content: counter(paso); grid-row: span 2; font-family: var(--font-display); font-size: 1.1rem; color: var(--brass); line-height: 1.6; }
+.pasos strong { font-family: var(--font-section); font-weight: 600; }
+.incluye { max-width: 40rem; padding: var(--space-2) 0 0; font-family: var(--font-meta); font-style: italic; color: var(--taupe); }
+
+/* Form: one column of underlined fields on the beige band */
+.coleccion { padding: var(--space-6) 10% var(--space-6); background: var(--beige); scroll-margin-top: 5rem; }
+.coleccion__inner { max-width: 40rem; margin: 0 auto; }
+.coleccion__intro { color: var(--taupe); margin-bottom: var(--space-4); }
+.coleccion-form { display: grid; gap: var(--space-3); }
+.coleccion-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.campo { display: grid; gap: 0.4rem; margin: 0; padding: 0; border: 0; min-width: 0; }
+.campo__t { font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--taupe); }
+.campo__t em { font-family: var(--font-meta); font-style: italic; letter-spacing: 0; text-transform: none; }
+.campo input, .campo select, .campo textarea {
+  width: 100%; padding: 0.6rem 0; border: 0; border-bottom: 1px solid var(--wine-ink); border-radius: 0;
+  background: transparent; color: var(--wine-ink); font: inherit;
+}
+.campo textarea { resize: vertical; min-height: 6rem; }
+.campo input:focus, .campo select:focus, .campo textarea:focus { outline: none; border-bottom: 2px solid var(--wine); }
+.campo__opciones { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; padding-top: 0.3rem; }
+.campo__opciones label { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+.campo__opciones input { width: auto; accent-color: var(--wine); }
+.campo[hidden] { display: none; }
+.coleccion-form .button { justify-self: start; }
+.coleccion__error { margin: 0; color: var(--wine); font-family: var(--font-meta); font-style: italic; }
+.coleccion__done { padding: var(--space-3) 0; }
+.coleccion__done:focus { outline: none; }
+.coleccion__after { margin-top: var(--space-4); font-family: var(--font-meta); font-style: italic; color: var(--taupe); }
+
+@media (max-width: 720px) {
+  .coleccion { padding-inline: max(16px, 6%); }
+  .coleccion-form__row { grid-template-columns: 1fr; }
+}
