@@ -1,4 +1,4 @@
-/* Justo — a-medida.js (v1.1.0)
+/* Justo — a-medida.js (v1.2.0)
    Constructor de traje a medida. JavaScript puro, sin dependencias.
    El formulario se genera desde SCHEMA; cada cambio vuelve a dibujar el SVG
    (frente, espalda o interior) y la ficha técnica.
@@ -10,14 +10,17 @@
 (function () {
   'use strict';
 
+  // Ruta a la raíz del sitio desde la página que carga el constructor (<body data-root>): la misma copia sirve
+  // a brands/justo/a-medida/ (oculta) y a membresia/traje-a-medida/ (pública).
+  var ROOT = document.body.getAttribute('data-root') || '../../../';
   var CONFIG = {
     // Destino del botón «Enviar a la sastrería» (mailto con la ficha completa).
     contactEmail: 'info@casasiego.com',
     subject: 'Justo · Traje a medida',
     measureSubject: 'Justo · Toma de medidas',
     membershipSubject: 'Membresía Club Casa Siego',
-    signIn: '../../../',                       // portada con el acceso de miembros
-    photos: '../../../images/justo.esmx/'
+    signIn: ROOT,                              // portada con el acceso de miembros
+    photos: ROOT + 'images/justo.esmx/'
   };
 
   /* 1. Opciones ------------------------------------------------------------- */
