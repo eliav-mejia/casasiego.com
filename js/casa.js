@@ -29,10 +29,9 @@
   // [label, href, note, tone of the sidebar while the link is touched or hovered]
   var LINKS = [
     ['Inicio', ROOT, '', '#4A1621'],
-    ['Fiel', ROOT + 'brands/fiel/', 'mascotas', '#6B1E2C'],
-    ['Justo', ROOT + 'brands/justo/', 'sastrería', '#3B1A1F'],
-    ['Ayuda', ROOT + 'ayuda/', 'preguntas', '#6B1E2C'],
-    ['Contacto', 'mailto:info@casasiego.com', '', '#4A1621']
+    ['A medida', ROOT + 'brands/justo/', 'sastrería', '#3B1A1F'],
+    ['Ready to Wear', ROOT + 'brands/justo/tienda/', 'tienda', '#6B1E2C'],
+    ['Ayuda', ROOT + 'ayuda/', 'preguntas', '#4A1621']
   ];
 
   // Sections without their own background: the page tone shows through them
