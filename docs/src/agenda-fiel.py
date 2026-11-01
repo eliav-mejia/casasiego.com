@@ -42,7 +42,7 @@ PLANTILLA = """<!doctype html>
   <link rel="stylesheet" href="../../../../css/layout.css?v=1.1.7">
   <link rel="stylesheet" href="../../../../css/web.css?v=1.0.0">
   <link rel="stylesheet" href="../../../../css/agenda.css?v=2.0.0">
-  <script src="../../../../js/casa.js?v=1.1.9" defer></script>
+  <script src="../../../../js/casa.js?v=1.2.0" defer></script>
   <script src="../../../../js/agenda.js?v=2.0.1" defer></script>
 </head>
 <body>
