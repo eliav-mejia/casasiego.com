@@ -38,10 +38,13 @@ const loadJson = (name) => jsonCache[name] || (jsonCache[name] =
     fetch(`${SHOP}/db/${name}.json`, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(`${name}: ${r.status}`); return r.json(); }));
 
 // Converts every *_mxn amount to the visitor's currency (unchanged in México). Fields keep their names.
+// Stock is per country: México reads stock, España reads stock_es (missing = sold out in every size).
 const localPrices = (products, rules) => {
     const price = region() ? region().price : (n) => n;
+    const spain = region()?.region === 'es';
     return {
-        products: products.map(x => ({ ...x, price_mxn: x.price_mxn == null ? null : price(x.price_mxn),
+        products: products.map(x => ({ ...x, stock: spain ? (x.stock_es || {}) : x.stock,
+            price_mxn: x.price_mxn == null ? null : price(x.price_mxn),
             prices_mxn: x.prices_mxn && Object.fromEntries(Object.entries(x.prices_mxn).map(([k, v]) => [k, price(v)])) })),
         rules: {
             ...rules,
@@ -51,11 +54,12 @@ const localPrices = (products, rules) => {
 };
 
 const db = {
-    // Products with stock come first; sold-out ones go last, each group in the order of productos.json (stable sort).
-    catalog: () => Promise.all([loadJson('productos'), loadJson('tallas'), loadJson('tienda')]).then(([p, t, rules]) => ({
-        ...localPrices(p.products.filter(x => x.active !== false).sort((a, b) => soldOut(a) - soldOut(b)), rules),
-        sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances,
-    })),
+    // Products with stock (in the visitor's country) come first; sold-out ones go last, each group in the order of productos.json (stable sort).
+    catalog: () => Promise.all([loadJson('productos'), loadJson('tallas'), loadJson('tienda')]).then(([p, t, rules]) => {
+        const local = localPrices(p.products.filter(x => x.active !== false), rules);
+        return { ...local, products: local.products.sort((a, b) => soldOut(a) - soldOut(b)),
+            sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances };
+    }),
 };
 
 // Re-renders when the flag changes currency (js/region.js fires "casasiego:region").
