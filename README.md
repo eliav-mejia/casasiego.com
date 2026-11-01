@@ -5,7 +5,7 @@ Sitio de **Casa Siego®** (antes Synodé) y sus marcas: Fiel (retrato ejecutivo,
 - Repositorio: <https://github.com/eliav-mejia/casasiego.com> (antes `eliav-mejia/synode.space`; GitHub redirige el nombre viejo)
 - Dominio: <https://casasiego.com> (`CNAME`), `www` redirige al dominio raíz · correo público: `info@casasiego.com`
 - Versión: **1.1.0 — cambio de marca** · documentación: `docs/casasiego-v1.1.0.pdf` (fuente `docs/src/casasiego-v1.1.0.html`)
-- Última versión: **1.2.4 — medición con Google Tag Manager** · notas internas: `_interno/implementaciones/features/casasiego-v1.2.4.pdf` (`sh docs/src/build-pdf.sh interno-1.2.4`)
+- Última versión: **1.2.5 — existencias por modelo, talla y región (tienda Justo)** · notas internas: `_interno/implementaciones/features/casasiego-v1.2.5.pdf` (`sh docs/src/build-pdf.sh interno-1.2.5`)
 - Carpeta local: `Meyer/sites/casasiego.com/` (antes `sites/synode.space/`)
 
 ```
