@@ -13,7 +13,7 @@ DATE = '28 de octubre de 2026'
 
 # Topics of the blog menu, in order
 TOPICS = [
-    ('unirte', 'Unirte al Club'),
+    ('unirte', 'Cliente Priority'),
     ('citas', 'Citas y eventos'),
     ('empresas', 'Empresas y uniformes'),
     ('politicas', 'Cancelaciones y políticas'),
