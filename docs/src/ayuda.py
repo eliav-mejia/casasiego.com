@@ -223,6 +223,9 @@ ARTICLES = [
                 '<strong>De fábrica, en tallas.</strong> Los sacos de la <a href="../../brands/justo/tienda/">tienda en línea de Justo</a> vienen en tallas Chico, Mediano, Grande y Extra grande, listos para usarse. Sirven para reposiciones rápidas o nuevas contrataciones; la <a href="../../brands/justo/tienda/guia-de-tallas/">guía de tallas</a> explica cómo medirse.',
             ]),
         ]),
+        ('Pedidos con variantes de medida', [
+            'Un mismo pedido puede llevar variantes de medida: cada persona del equipo recibe su uniforme sobre sus propias medidas, sin salirse de la tela, el color y los detalles de tu empresa. También se pueden combinar cortes y patrones dentro del mismo pedido. Lee <a href="../variantes-de-un-pedido/">¿Cuánto puede variar un pedido?</a>',
+        ]),
         ('El proceso para tu empresa', [
             ('ul', [
                 '<strong>Cotización.</strong> Escríbenos a <a href="mailto:info@casasiego.com?subject=Justo%20%C2%B7%20Uniformes%20ejecutivos">info@casasiego.com</a> con el número de personas, las piezas que necesitas y la fecha en que las quieres estrenar.',
@@ -246,6 +249,25 @@ ARTICLES = [
         ]),
     ], {'title': 'Uniformes ejecutivos a la medida para empresas | Casa Siego®',
         'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego en Roma Norte, CDMX. Cotiza para tu equipo.'}),
+    ('variantes-de-un-pedido', 'empresas', '¿Cuánto puede variar un pedido?',
+     'Dentro de un mismo pedido, cada pieza puede cambiar de patrón, corte, medida y tela. Es un trabajo preciso: no necesita ajuste.', [
+        ('Lo que puede variar', [
+            'Un pedido de Casa Siego no obliga a que todas las piezas sean iguales. Cada una puede variar en:',
+            ('ul', [
+                '<strong>Patrón.</strong> Cada persona tiene el suyo, trazado a partir de sus medidas.',
+                '<strong>Corte.</strong> Regular o entallado, según el cuerpo y el uso de cada quien.',
+                '<strong>Medida.</strong> Pecho, cintura, hombro, manga y largo de cada persona, no una talla estándar.',
+                '<strong>Tela.</strong> La misma para todo el equipo o distinta por pieza o por área, dentro de la selección de tu cotización.',
+            ]),
+            'Las variantes de tu pedido se acuerdan contigo y quedan por escrito en tu cotización.',
+        ]),
+        ('Un trabajo preciso, sin ajuste', [
+            'Como cada pieza se corta sobre su propio patrón y sus propias medidas, llega lista para usarse. El servicio no incluye ajuste porque no es necesario: la precisión está en la toma de medidas y en el corte, no en corregir después.',
+        ]),
+        ('Cotiza tu pedido', [
+            'Escríbenos a <a href="mailto:info@casasiego.com?subject=Pedido%20con%20variantes">info@casasiego.com</a> con el número de personas y las variantes que necesitas. Para pedidos de menos de 10 piezas, lee <a href="../tiempos-de-entrega-pedidos-personalizados/">¿Cuánto tarda un pedido personalizado de menos de 10 piezas?</a>',
+        ]),
+    ]),
     ('tiempos-de-entrega-pedidos-personalizados', 'politicas', '¿Cuánto tarda un pedido personalizado de menos de 10 piezas?',
      'Consolidamos la demanda de varios clientes en un solo pedido a fábrica; el tiempo depende de la lista de espera.', [
         ('Por qué consolidamos', [
