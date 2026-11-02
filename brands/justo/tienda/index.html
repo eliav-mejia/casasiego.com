@@ -61,7 +61,10 @@
   <script type="text/babel">
     const Catalogue = () => {
         const catalog = useCatalog();
-        useReveal([catalog.status]);
+        // Checked on every visit (not remembered): only products with some size in stock in the visitor's region.
+        const [onlyAvailable, setOnlyAvailable] = useState(true);
+        const shown = onlyAvailable ? catalog.products.filter(p => !soldOut(p)) : catalog.products;
+        useReveal([catalog.status, onlyAvailable]);
         return (
             <>
                 <section className="relative bg-ink text-parchment overflow-hidden">
@@ -84,11 +87,23 @@
                             <p className="label text-gold">Capítulo I</p>
                             <h2 className="text-3xl md:text-4xl mt-2">La colección</h2>
                         </div>
-                        <p className="note text-ink-500 max-w-sm">Las tallas tachadas están agotadas.</p>
+                        <div className="max-w-sm">
+                            <label className="label flex items-center gap-3 cursor-pointer select-none">
+                                <input type="checkbox" className="w-4 h-4 cursor-pointer" style={{ accentColor: 'var(--rust)' }} checked={onlyAvailable} onChange={e => setOnlyAvailable(e.target.checked)} />
+                                Solo disponibles
+                            </label>
+                            <p className="note text-ink-500 mt-2">{onlyAvailable ? 'Quita la marca para ver también los agotados.' : 'Las tallas tachadas están agotadas.'}</p>
+                        </div>
                     </div>
                     {catalog.status === 'loading' && <Skeleton />}
                     {catalog.status === 'error' && <LoadError />}
-                    {catalog.status === 'ready' && <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{catalog.products.map(p => <ProductCard key={p.id} product={p} catalog={catalog} />)}</div>}
+                    {catalog.status === 'ready' && shown.length > 0 && <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{shown.map(p => <ProductCard key={p.id} product={p} catalog={catalog} />)}</div>}
+                    {catalog.status === 'ready' && shown.length === 0 && (
+                        <div className="border-t border-line pt-8 max-w-xl">
+                            <p className="text-ink-700">Por ahora no hay piezas disponibles en tu región.</p>
+                            <button type="button" className="btn btn-line mt-5" onClick={() => setOnlyAvailable(false)}>Ver toda la colección</button>
+                        </div>
+                    )}
                 </section>
 
                 {catalog.status === 'ready' && (
