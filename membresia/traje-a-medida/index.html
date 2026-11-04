@@ -8,12 +8,12 @@
   <script src="../../js/medicion.js?v=1.0.0" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Traje a medida — Justo by Casa Siego®</title>
-  <meta name="description" content="Diseña tu traje a medida con Justo, la sastrería de Casa Siego: tejido, saco, pantalón, medidas y acabados, con vista previa en tiempo real.">
-  <!-- Versión pública e indexada del constructor; la css y el js son los de brands/justo/a-medida/ -->
+  <meta name="description" content="Diseña con Justo, la sastrería de Casa Siego, tu traje personalizado con camisería a medida de cuello, largo y puño: fibra de la camisa, tela del saco y del pantalón, y traje a 2 o 3 piezas, con vista previa en tiempo real.">
+  <!-- Versión pública e indexada, simplificada: dibujo y estilos base de brands/justo/a-medida/, opciones propias en js/ y css/ -->
   <link rel="canonical" href="https://casasiego.com/membresia/traje-a-medida/">
   <meta property="og:site_name" content="Casa Siego">
   <meta property="og:title" content="Traje a medida — Justo by Casa Siego">
-  <meta property="og:description" content="Elige tejido, corte y acabados y mira tu traje tomar forma en tiempo real.">
+  <meta property="og:description" content="Elige fibra y telas y mira tu traje tomar forma en tiempo real.">
   <meta property="og:url" content="https://casasiego.com/membresia/traje-a-medida/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_MX">
@@ -33,9 +33,8 @@
 
   <link rel="stylesheet" href="../../css/site.css?v=1.1.1">
   <link rel="stylesheet" href="../../brands/justo/a-medida/css/a-medida.css?v=1.1.0">
-  <!-- Sesión de miembro (Supabase, la misma de la portada): sin ella el constructor queda en modo invitado -->
-  <script src="../../js/acceso-config.js?v=1.0.2" defer></script>
-  <script src="../../brands/justo/a-medida/js/a-medida.js?v=1.2.0" defer></script>
+  <link rel="stylesheet" href="css/traje-a-medida.css?v=1.0.0">
+  <script src="js/traje-a-medida.js?v=1.0.0" defer></script>
 </head>
 <body data-root="../../">
   <!-- Google Tag Manager (noscript) -->
@@ -55,12 +54,16 @@
       <div class="am-intro">
         <p class="eyebrow">Constructor de traje</p>
         <h1 class="am-intro__title" id="am-titulo">Diseña tu traje</h1>
-        <p class="am-intro__lede">Responde unas preguntas sencillas y mira cómo toma forma. En la prueba con el sastre afinamos medidas, caída y cada detalle.</p>
-        <label class="am-field am-field--preset">
-          <span class="am-field__label">Punto de partida</span>
-          <select id="am-preset" aria-describedby="am-preset-hint"></select>
-          <span class="am-field__hint" id="am-preset-hint">Carga un estilo completo y ajústalo a tu gusto.</span>
-        </label>
+        <p class="am-intro__lede">Tu traje personalizado con camisería a medida de cuello, largo y puño. Cuatro pasos sencillos y mira cómo toma forma.</p>
+        <fieldset class="am-medidas" id="am-medidas" aria-describedby="am-medidas-hint">
+          <legend>Punto de partida · medidas de camisería</legend>
+          <div class="am-medidas__row">
+            <label class="am-field"><span class="am-field__label">Largo</span><span class="am-unit"><input type="number" name="mLargo" inputmode="decimal" min="0" max="250" step="0.5" placeholder="—"></span></label>
+            <label class="am-field"><span class="am-field__label">Cuello</span><span class="am-unit"><input type="number" name="mCuello" inputmode="decimal" min="0" max="250" step="0.5" placeholder="—"></span></label>
+            <label class="am-field"><span class="am-field__label">Puño</span><span class="am-unit"><input type="number" name="mPuno" inputmode="decimal" min="0" max="250" step="0.5" placeholder="—"></span></label>
+          </div>
+          <p class="am-field__hint" id="am-medidas-hint">Opcionales: si no las conoces, las tomamos en la sesión.</p>
+        </fieldset>
       </div>
 
       <form id="am-form" class="am-form" autocomplete="off" novalidate></form>
@@ -98,7 +101,6 @@
 
       <section class="am-sheet" aria-labelledby="am-ficha-titulo">
         <h2 class="am-sheet__title" id="am-ficha-titulo">Ficha técnica</h2>
-        <div id="am-notes" class="am-notes" aria-live="polite"></div>
         <div id="am-summary" class="am-summary"></div>
         <div class="am-actions">
           <a class="am-btn am-btn--primary" id="am-send" href="#">Enviar a la sastrería</a>
