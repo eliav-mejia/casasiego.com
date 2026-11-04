@@ -1,7 +1,8 @@
-/* Justo — traje-a-medida.js (v1.0.0)
+/* Justo — traje-a-medida.js (v1.1.0)
    Constructor simplificado de membresia/traje-a-medida/. JavaScript puro, sin dependencias.
    Punto de partida: tres medidas de camisería (largo, cuello y puño). Después:
-     01 Camisa    · tipo de fibra (desplegable en cuadrícula con muestra textil)
+     01 Camisa    · color y tipo de fibra; el color tiñe las muestras de fibra y la tabla STOCK
+                    decide qué fibras vienen en ese color (las demás quedan deshabilitadas)
      02 Saco      · tela: raya diplomática, negro liso o gris carbón
      03 Pantalón  · las mismas tres telas
      04 Piezas    · traje a 2 o 3 piezas; con 3 se habilita el chaleco, con las mismas telas
@@ -44,29 +45,63 @@
       { fibra: 's100', peso: 'pesado', patron: 'liso', color: 'carbon', acabado: 'texturizado' }, 'plata', 'SacoGris_CorbataPlata_CamisaAzul_tweed.jpg']
   ];
   // Fibras de la camisa: [valor, etiqueta, nota, tono de la camisa en la vista previa]
+  // (el tono es el de la camisa blanca; los demás colores lo toman de COLORES_CAMISA)
   var FIBRAS = [
     ['algodon', 'Algodón', 'Suave y transpirable; el estándar de camisería.', { fill: '#F4F1EA', hi: '#FBF9F4', st: '#CFC8BB' }],
-    ['lino', 'Lino', 'Fresco, con textura y arrugas naturales.', { fill: '#ECE5D6', hi: '#F3EEE3', st: '#C9BFA9' }],
     ['algodon_lino', 'Algodón y lino', 'La frescura del lino con menos arrugas.', { fill: '#F0EBE0', hi: '#F7F3EB', st: '#CDC5B4' }],
+    ['lino', 'Lino', 'Fresco, con textura y arrugas naturales.', { fill: '#ECE5D6', hi: '#F3EEE3', st: '#C9BFA9' }],
     ['seda', 'Seda', 'Brillo natural, para ocasiones.', { fill: '#F5F0E4', hi: '#FFFDF7', st: '#D6CCB6' }]
   ];
+  // Colores de la camisa: [valor, etiqueta, nota, tono en algodón]
+  var COLORES_CAMISA = [
+    ['blanco', 'Blanco', 'El clásico: va con las tres telas de la casa.', { fill: '#F4F1EA', hi: '#FBF9F4', st: '#CFC8BB' }],
+    ['cielo', 'Azul cielo', 'Luminoso y discreto, de diario.', { fill: '#BFD3EA', hi: '#D2E1F1', st: '#90A9C6' }],
+    ['navy', 'Azul navy', 'Profundo, para un conjunto tono sobre tono.', { fill: '#28344F', hi: '#36435F', st: '#1A2236' }]
+  ];
+  // Existencias de camisería: fibra × color. true = disponible, false = no viene en ese color.
+  // 'agotado' = la fibra entera sin existencias. Editar aquí; el selector y la tabla se actualizan solos.
+  var STOCK = {
+    algodon:      { blanco: true, cielo: true, navy: true },
+    algodon_lino: { blanco: true, cielo: true, navy: true },
+    lino:         { blanco: true, cielo: true, navy: true },
+    seda:         'agotado'
+  };
+  // 'ok' | 'agotado' | 'no'
+  function stock(fibra, color) {
+    var row = STOCK[fibra];
+    if (row === 'agotado') return 'agotado';
+    return row && row[color] ? 'ok' : 'no';
+  }
+  function fibrasDisponibles(color) {
+    return FIBRAS.filter(function (f) { return stock(f[0], color) === 'ok'; }).map(function (f) { return f[0]; });
+  }
+  // Tono de la camisa en la vista previa y en las muestras: el color, matizado por la fibra
+  function shirtTone(color, fibra) {
+    if (color === 'blanco') return find(FIBRAS, fibra)[3];
+    var c = find(COLORES_CAMISA, color)[3];
+    var k = { lino: 0.12, algodon_lino: 0.06 }[fibra];
+    if (k) return { fill: mix(c.fill, '#C9BFA9', k), hi: mix(c.hi, '#D8CFBB', k), st: mix(c.st, '#8E8572', k) };
+    if (fibra === 'seda') return { fill: c.fill, hi: mix(c.hi, '#FFFFFF', 0.15), st: c.st };
+    return c;
+  }
 
   var MEDIDAS = [['mLargo', 'Largo'], ['mCuello', 'Cuello'], ['mPuno', 'Puño']];
 
   // Selectores en cuadrícula: [id, etiqueta, opciones, sección]
   var PICKS = {
+    colorCamisa: { label: 'Color', options: COLORES_CAMISA, tile: colorTile },
     fibraCamisa: { label: 'Tipo de fibra', options: FIBRAS, tile: fibraTile },
     tSaco: { label: 'Tela del saco', options: TELAS, tile: telaTile },
     tPantalon: { label: 'Tela del pantalón', options: TELAS, tile: telaTile },
     tChaleco: { label: 'Tela del chaleco', options: TELAS, tile: telaTile }
   };
   var LABELS = {
-    mLargo: 'Largo', mCuello: 'Cuello', mPuno: 'Puño', fibraCamisa: 'Fibra de la camisa',
+    mLargo: 'Largo', mCuello: 'Cuello', mPuno: 'Puño', colorCamisa: 'Color de la camisa', fibraCamisa: 'Fibra de la camisa',
     tSaco: 'Tela del saco', tPantalon: 'Tela del pantalón', tChaleco: 'Tela del chaleco', piezas: 'Piezas'
   };
 
   var SECTIONS = [
-    { id: 'camisa', num: '01', stage: 'saco', title: 'Camisa', lead: 'La fibra de tu camisa. Las medidas van arriba, en el punto de partida.', picks: ['fibraCamisa'] },
+    { id: 'camisa', num: '01', stage: 'saco', title: 'Camisa', lead: 'El color y la fibra de tu camisa: cada color viene en ciertas fibras. Las medidas van arriba, en el punto de partida.', picks: ['colorCamisa', 'fibraCamisa'] },
     { id: 'saco', num: '02', stage: 'saco', title: 'Saco', lead: 'Elige una de las tres telas de la casa.', picks: ['tSaco'] },
     { id: 'pantalon', num: '03', stage: 'pantalon', title: 'Pantalón', lead: 'Las mismas tres telas: a juego con el saco o en contraste.', picks: ['tPantalon'] },
     { id: 'piezas', num: '04', stage: 'traje', title: 'Piezas', lead: 'Saco y pantalón, o el tres piezas con chaleco.', picks: [] }
@@ -83,7 +118,7 @@
   var VEST = [118, 40, 164, 330];
   var FOCUS = {
     mLargo: ['front', 1, [88, 40, 224, 330]], mCuello: ['front', 1, [164, 38, 72, 56]], mPuno: ['front', 1, [56, 322, 56, 50]],
-    fibraCamisa: ['front', 1, [160, 70, 80, 80]],
+    colorCamisa: ['front', 1, [160, 70, 80, 80]], fibraCamisa: ['front', 1, [160, 70, 80, 80]],
     tSaco: ['front', 0, [254, 180, 42, 42]], tPantalon: ['front', 1, [128, 470, 70, 70]],
     piezas: ['front', 1, VEST, 1], tChaleco: ['front', 1, VEST, 1]
   };
@@ -558,7 +593,7 @@
   function scene(s, view, hide, vest) {
     var sj = garment(s, s.tSaco), sp = garment(s, s.tPantalon), sv = garment(s, s.tChaleco);
     var g = geo(sj), cj = palette(sj), cp = palette(sp), cv = palette(sv), back = view === 'back';
-    var shirt = find(FIBRAS, s.fibraCamisa)[3];
+    var shirt = shirtTone(s.colorCamisa, s.fibraCamisa);
     cj.shirt = cp.shirt = cv.shirt = shirt;
     var three = s.piezas === '3';
     sj._vest = three ? cv : null;
@@ -638,8 +673,15 @@
     }
     return svgURL(o);
   }
+  // Muestra de color: algodón liso con su trama fina
+  function colorTile(v) {
+    var c = find(COLORES_CAMISA, v)[3], o = '<rect width="48" height="48" fill="' + c.fill + '"/><g stroke="' + c.st + '" stroke-width=".45" opacity=".5">';
+    for (var i = 1; i < 48; i += 2) o += '<path d="M0 ' + i + 'H48M' + i + ' 0V48"/>';
+    return svgURL(o + '</g>');
+  }
+  // Muestra de fibra, teñida con el color de camisa elegido
   function fibraTile(v) {
-    var c = find(FIBRAS, v)[3], o = '<rect width="48" height="48" fill="' + c.fill + '"/>', i;
+    var c = shirtTone(state.colorCamisa, v), o = '<rect width="48" height="48" fill="' + c.fill + '"/>', i;
     var hatch = function (step, op) {
       var h = '<g stroke="' + c.st + '" stroke-width=".45" opacity="' + op + '">';
       for (i = 1; i < 48; i += step) h += '<path d="M0 ' + i + 'H48M' + i + ' 0V48"/>';
@@ -674,7 +716,7 @@
           '<span class="am-pick__tile" aria-hidden="true"></span><span class="am-pick__val" id="val-' + id + '"></span></button>' +
         '<div class="am-pick__grid" role="listbox" aria-labelledby="lbl-' + id + '" style="--cols:' + cols + '" hidden>' +
           p.options.map(function (o) {
-            return '<button type="button" class="am-pick__opt" role="option" tabindex="-1" data-value="' + o[0] + '" aria-label="' + o[1] + '" style="background-image:' + p.tile(o[0]).replace(/"/g, '&quot;') + '"></button>';
+            return '<button type="button" class="am-pick__opt" role="option" tabindex="-1" data-value="' + o[0] + '" aria-label="' + o[1] + '" style="background-image:' + p.tile(o[0]).replace(/"/g, '&quot;') + '"><span class="am-pick__tag" aria-hidden="true"></span></button>';
           }).join('') +
         '</div></div>' +
       '<span class="am-field__hint" data-hint="' + id + '"></span></div>';
@@ -683,6 +725,7 @@
   function buildForm() {
     $('#am-form').innerHTML = SECTIONS.map(function (sec) {
       var body = sec.picks.map(pickHTML).join('');
+      if (sec.id === 'camisa') body += stockHTML();
       if (sec.id === 'piezas') {
         body = '<fieldset class="am-addons am-piezas"><legend>Traje</legend>' +
           [['2', 'Traje a 2 piezas', 'Saco y pantalón.'], ['3', 'Traje a 3 piezas', 'Saco, pantalón y chaleco.']].map(function (o) {
@@ -694,6 +737,49 @@
         '<summary><span class="am-sec__num">' + sec.num + '</span><span class="am-sec__title">' + sec.title + '</span><span class="am-sec__chev" aria-hidden="true"></span></summary>' +
         '<div class="am-sec__body"><p class="am-sec__lead">' + sec.lead + '</p><div class="am-fields">' + body + '</div></div></details>';
     }).join('');
+  }
+
+  // Tabla de disponibilidad de camisería (fibra × color), generada desde STOCK
+  function stockHTML() {
+    return '<div class="am-stock-wrap"><table class="am-stock">' +
+      '<caption>Disponibilidad de camisería</caption>' +
+      '<thead><tr><th scope="col">Fibra</th>' + COLORES_CAMISA.map(function (c) {
+        return '<th scope="col" data-col="' + c[0] + '"><span class="am-stock__dot" style="background:' + c[3].fill + '" aria-hidden="true"></span>' + c[1] + '</th>';
+      }).join('') + '</tr></thead><tbody>' +
+      FIBRAS.map(function (f) {
+        var cells = STOCK[f[0]] === 'agotado'
+          ? '<td colspan="' + COLORES_CAMISA.length + '" class="am-stock__out">Agotado</td>'
+          : COLORES_CAMISA.map(function (c) {
+            return stock(f[0], c[0]) === 'ok'
+              ? '<td data-col="' + c[0] + '"><span aria-hidden="true">✓</span><span class="sr-only">Disponible</span></td>'
+              : '<td data-col="' + c[0] + '" class="is-no"><span aria-hidden="true">—</span><span class="sr-only">No disponible</span></td>';
+          }).join('');
+        return '<tr data-row="' + f[0] + '"><th scope="row">' + f[1] + '</th>' + cells + '</tr>';
+      }).join('') + '</tbody></table></div>';
+  }
+
+  // Marca en las muestras de fibra lo que no viene en el color elegido o está agotado
+  function refreshFibras() {
+    var color = state.colorCamisa, cName = find(COLORES_CAMISA, color)[1];
+    $$('[data-pick="fibraCamisa"] .am-pick__opt').forEach(function (b) {
+      var v = b.getAttribute('data-value'), f = find(FIBRAS, v), st = stock(v, color);
+      b.style.backgroundImage = fibraTile(v);
+      b.disabled = st !== 'ok';
+      b.setAttribute('aria-disabled', String(st !== 'ok'));
+      b.setAttribute('aria-label', f[1] + (st === 'agotado' ? ', agotado' : st === 'no' ? ', no disponible en ' + cName.toLowerCase() : ''));
+      b.querySelector('.am-pick__tag').textContent = st === 'agotado' ? 'Agotado' : st === 'no' ? 'No en ' + cName.toLowerCase() : '';
+    });
+    $$('.am-stock [data-col]').forEach(function (td) { td.classList.toggle('is-col', td.getAttribute('data-col') === color); });
+    $$('.am-stock tbody tr').forEach(function (tr) { tr.classList.toggle('is-row', tr.getAttribute('data-row') === state.fibraCamisa); });
+  }
+
+  // Si la fibra elegida no viene en el color, pasa a la primera disponible. Devuelve el aviso, si hubo cambio.
+  function fitFibra() {
+    var ok = fibrasDisponibles(state.colorCamisa);
+    if (!ok.length || ok.indexOf(state.fibraCamisa) > -1) return '';
+    var antes = find(FIBRAS, state.fibraCamisa)[1];
+    state.fibraCamisa = ok[0];
+    return antes + ' no viene en ' + find(COLORES_CAMISA, state.colorCamisa)[1].toLowerCase() + ': cambiamos a ' + find(FIBRAS, ok[0])[1].toLowerCase();
   }
 
   function syncForm() {
@@ -709,6 +795,7 @@
       $$('[data-pick="' + id + '"] .am-pick__opt').forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-value') === o[0])); });
       $('[data-hint="' + id + '"]').textContent = o[2];
     });
+    refreshFibras();
     // Chaleco: solo con traje a 3 piezas
     var off = state.piezas !== '3', vest = $('[data-field="tChaleco"]');
     vest.classList.toggle('is-off', off);
@@ -742,13 +829,16 @@
     box.querySelector('.am-pick__grid').hidden = false;
     box.querySelector('.am-pick__btn').setAttribute('aria-expanded', 'true');
     openPick = id;
-    (box.querySelector('.am-pick__opt[aria-selected="true"]') || box.querySelector('.am-pick__opt')).focus();
+    (box.querySelector('.am-pick__opt[aria-selected="true"]:not(:disabled)') || box.querySelector('.am-pick__opt:not(:disabled)')).focus();
     focusField(id);
   }
   function choose(id, value) {
+    if (id === 'fibraCamisa' && stock(value, state.colorCamisa) !== 'ok') return;
     state[id] = value;
+    var aviso = id === 'colorCamisa' ? fitFibra() : '';
     closePick(true);
     focusField(id);
+    if (aviso) toast(aviso);
   }
 
   /* 8. Ficha técnica -------------------------------------------------------- */
@@ -757,7 +847,7 @@
     var med = MEDIDAS.filter(function (m) { return state[m[0]] !== ''; }).map(function (m) { return [m[1], cm(state[m[0]])]; });
     var three = state.piezas === '3';
     return [
-      { num: '01', title: 'Camisa', rows: (med.length ? med : [['Medidas', 'Se toman en la sesión']]).concat([['Fibra', find(FIBRAS, state.fibraCamisa)[1]]]) },
+      { num: '01', title: 'Camisa', rows: (med.length ? med : [['Medidas', 'Se toman en la sesión']]).concat([['Color', find(COLORES_CAMISA, state.colorCamisa)[1]], ['Fibra', find(FIBRAS, state.fibraCamisa)[1]]]) },
       { num: '02', title: 'Saco', rows: [['Tela', find(TELAS, state.tSaco)[1]]] },
       { num: '03', title: 'Pantalón', rows: [['Tela', find(TELAS, state.tPantalon)[1]]] },
       { num: '04', title: 'Piezas', rows: [['Traje', three ? '3 piezas (saco, pantalón y chaleco)' : '2 piezas (saco y pantalón)']]
@@ -786,7 +876,7 @@
 
   /* 9. Estado y enlace para compartir (estado en el hash) ------------------- */
   function defaults() {
-    return { mLargo: '', mCuello: '', mPuno: '', fibraCamisa: 'algodon', tSaco: 'diplomatica', tPantalon: 'diplomatica', piezas: '2', tChaleco: 'diplomatica' };
+    return { mLargo: '', mCuello: '', mPuno: '', colorCamisa: 'blanco', fibraCamisa: 'algodon', tSaco: 'diplomatica', tPantalon: 'diplomatica', piezas: '2', tChaleco: 'diplomatica' };
   }
   var state = defaults();
   var ui = { view: 'front', hideJacket: false, stage: 'traje', focus: null, vb: null, vbTarget: null };
@@ -818,6 +908,7 @@
       var diff = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
       Object.keys(diff).forEach(function (k) { if (valid(k, diff[k])) state[k] = String(diff[k]); });
     } catch (e) { /* enlace dañado: se ignora */ }
+    fitFibra(); // enlaces viejos con una fibra agotada o que ya no viene en ese color
   }
 
   /* 10. Acciones ------------------------------------------------------------ */
@@ -861,7 +952,7 @@
   }
 
   /* 11. Etapas, foco y modal ------------------------------------------------ */
-  var FIELD_STAGE = { fibraCamisa: 'saco', tSaco: 'saco', tPantalon: 'pantalon', piezas: 'traje', tChaleco: 'traje' };
+  var FIELD_STAGE = { colorCamisa: 'saco', fibraCamisa: 'saco', tSaco: 'saco', tPantalon: 'pantalon', piezas: 'traje', tChaleco: 'traje' };
   function setStage(stage) {
     if (ui.stage === stage) return;
     ui.stage = stage;
@@ -922,12 +1013,19 @@
     form.addEventListener('keydown', function (e) {
       var opt = e.target.closest && e.target.closest('.am-pick__opt');
       if (!opt) return;
-      var all = $$('[data-pick="' + openPick + '"] .am-pick__opt'), i = all.indexOf(opt);
-      var cols = all.length === 4 ? 2 : 3;
+      var all = $$('[data-pick="' + openPick + '"] .am-pick__opt'), i = all.indexOf(opt), n = all.length;
+      var on = all.filter(function (b) { return !b.disabled; });
+      var cols = n === 4 ? 2 : 3;
       var step = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: cols, ArrowUp: -cols }[e.key];
-      if (step) { e.preventDefault(); all[(i + step + all.length) % all.length].focus(); }
-      else if (e.key === 'Home') { e.preventDefault(); all[0].focus(); }
-      else if (e.key === 'End') { e.preventDefault(); all[all.length - 1].focus(); }
+      if (step) {
+        // salta las muestras deshabilitadas (agotadas o sin ese color)
+        e.preventDefault();
+        var j = i;
+        do { j = (j + step + n) % n; } while (all[j].disabled && j !== i);
+        all[j].focus();
+      }
+      else if (e.key === 'Home') { e.preventDefault(); on[0].focus(); }
+      else if (e.key === 'End') { e.preventDefault(); on[on.length - 1].focus(); }
       else if (e.key === 'Tab') closePick(false);
     });
     document.addEventListener('click', function (e) {
