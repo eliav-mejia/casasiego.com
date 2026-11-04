@@ -1,4 +1,4 @@
-/* Justo — traje-a-medida.js (v1.1.0)
+/* Justo — traje-a-medida.js (v1.2.0)
    Constructor simplificado de membresia/traje-a-medida/. JavaScript puro, sin dependencias.
    Punto de partida: tres medidas de camisería (largo, cuello y puño). Después:
      01 Camisa    · color y tipo de fibra; el color tiñe las muestras de fibra y la tabla STOCK
@@ -101,19 +101,24 @@
   };
 
   var SECTIONS = [
-    { id: 'camisa', num: '01', stage: 'saco', title: 'Camisa', lead: 'El color y la fibra de tu camisa: cada color viene en ciertas fibras. Las medidas van arriba, en el punto de partida.', picks: ['colorCamisa', 'fibraCamisa'] },
+    { id: 'camisa', num: '01', stage: 'camisa', title: 'Camisa', lead: 'El color y la fibra de tu camisa: cada color viene en ciertas fibras. Las medidas van arriba, en el punto de partida.', picks: ['colorCamisa', 'fibraCamisa'] },
     { id: 'saco', num: '02', stage: 'saco', title: 'Saco', lead: 'Elige una de las tres telas de la casa.', picks: ['tSaco'] },
     { id: 'pantalon', num: '03', stage: 'pantalon', title: 'Pantalón', lead: 'Las mismas tres telas: a juego con el saco o en contraste.', picks: ['tPantalon'] },
     { id: 'piezas', num: '04', stage: 'traje', title: 'Piezas', lead: 'Saco y pantalón, o el tres piezas con chaleco.', picks: [] }
   ];
 
-  /* Etapas de la vista previa: encuadre (viewBox) por etapa y vista */
-  var FULL = [40, 30, 320, 736], INSIDE = [50, 36, 300, 440];
+  /* Etapas de la vista previa: encuadre (viewBox) por etapa y vista.
+     Recorrido: Camisa (zoom in, cuello a cintura, sin saco) → Saco (mismo encuadre, con saco)
+     → Pantalón (zoom out a la figura completa, sin saco) → Traje (figura completa con saco). */
+  var FULL = [40, 30, 320, 736], INSIDE = [50, 36, 300, 440], TORSO = [44, 36, 312, 392];
   var STAGES = {
-    traje: { label: 'Traje completo', box: { front: FULL, back: FULL, inside: INSIDE }, focus: 'tSaco' },
-    saco: { label: 'Saco · primer plano', box: { front: [44, 36, 312, 392], back: [44, 36, 312, 392], inside: INSIDE }, focus: 'tSaco' },
-    pantalon: { label: 'Pantalón · primer plano', box: { front: [96, 304, 208, 462], back: [96, 304, 208, 462], inside: [110, 404, 180, 64] }, focus: 'tPantalon' }
+    camisa: { label: 'Camisa · primer plano', box: { front: TORSO, back: TORSO, inside: INSIDE }, focus: 'fibraCamisa' },
+    saco: { label: 'Saco · primer plano', box: { front: TORSO, back: TORSO, inside: INSIDE }, focus: 'tSaco' },
+    pantalon: { label: 'Pantalón', box: { front: FULL, back: FULL, inside: FULL }, focus: 'tPantalon' },
+    traje: { label: 'Traje completo', box: { front: FULL, back: FULL, inside: INSIDE }, focus: 'tSaco' }
   };
+  // Etapas sin saco: la camisa (o el pantalón) queda a la vista; tampoco se dibuja el chaleco encima
+  function sinSaco(stage) { return stage === 'camisa' || stage === 'pantalon'; }
   // Recuadro de detalle por campo: [vista, sin saco, recorte del viewBox, con chaleco]
   var VEST = [118, 40, 164, 330];
   var FOCUS = {
@@ -607,15 +612,15 @@
   }
 
   // En la etapa Pantalón el saco se quita para ver pretina, pinzas y bolsillos
-  function hidden() { return ui.stage === 'pantalon' || ui.hideJacket; }
+  function hidden() { return sinSaco(ui.stage) || ui.hideJacket; }
 
   function draw() {
     var svg = $('#am-suit');
-    svg.innerHTML = scene(state, ui.view, hidden(), ui.stage !== 'pantalon');
+    svg.innerHTML = scene(state, ui.view, hidden(), !sinSaco(ui.stage));
     zoomTo(STAGES[ui.stage].box[ui.view]);
     $('#am-caption').textContent = STAGES[ui.stage].label + ' · ' + {
-      front: 'frente' + (hidden() ? ', sin saco' : ''),
-      back: 'espalda' + (hidden() ? ', sin saco' : ''),
+      front: 'frente' + (hidden() && ui.stage !== 'camisa' ? ', sin saco' : ''),
+      back: 'espalda' + (hidden() && ui.stage !== 'camisa' ? ', sin saco' : ''),
       inside: 'interior: forro y fieltro'
     }[ui.view];
     drawDetail();
@@ -673,15 +678,12 @@
     }
     return svgURL(o);
   }
-  // Muestra de color: algodón liso con su trama fina
-  function colorTile(v) {
-    var c = find(COLORES_CAMISA, v)[3], o = '<rect width="48" height="48" fill="' + c.fill + '"/><g stroke="' + c.st + '" stroke-width=".45" opacity=".5">';
-    for (var i = 1; i < 48; i += 2) o += '<path d="M0 ' + i + 'H48M' + i + ' 0V48"/>';
-    return svgURL(o + '</g>');
-  }
-  // Muestra de fibra, teñida con el color de camisa elegido
-  function fibraTile(v) {
-    var c = shirtTone(state.colorCamisa, v), o = '<rect width="48" height="48" fill="' + c.fill + '"/>', i;
+  // Las muestras de camisa se cruzan: el color tiñe las fibras y la fibra da textura a los colores
+  function colorTile(v) { return shirtTile(v, state.fibraCamisa); }
+  function fibraTile(v) { return shirtTile(state.colorCamisa, v); }
+  // Muestra de camisa: color × fibra
+  function shirtTile(color, v) {
+    var c = shirtTone(color, v), o = '<rect width="48" height="48" fill="' + c.fill + '"/>', i;
     var hatch = function (step, op) {
       var h = '<g stroke="' + c.st + '" stroke-width=".45" opacity="' + op + '">';
       for (i = 1; i < 48; i += step) h += '<path d="M0 ' + i + 'H48M' + i + ' 0V48"/>';
@@ -758,9 +760,18 @@
       }).join('') + '</tbody></table></div>';
   }
 
-  // Marca en las muestras de fibra lo que no viene en el color elegido o está agotado
+  // Muestras cruzadas de camisa. Fibras: lo agotado o lo que no viene en el color queda deshabilitado.
+  // Colores: toman la textura de la fibra; si uno no viene en ella se marca, pero se puede elegir
+  // (al elegirlo, fitFibra pasa a una fibra en la que sí viene).
   function refreshFibras() {
     var color = state.colorCamisa, cName = find(COLORES_CAMISA, color)[1];
+    var fName = find(FIBRAS, state.fibraCamisa)[1];
+    $$('[data-pick="colorCamisa"] .am-pick__opt').forEach(function (b) {
+      var v = b.getAttribute('data-value'), no = stock(state.fibraCamisa, v) !== 'ok';
+      b.style.backgroundImage = colorTile(v);
+      b.setAttribute('aria-label', find(COLORES_CAMISA, v)[1] + (no ? ', no viene en ' + fName.toLowerCase() : ''));
+      b.querySelector('.am-pick__tag').textContent = no ? 'No en ' + fName.toLowerCase() : '';
+    });
     $$('[data-pick="fibraCamisa"] .am-pick__opt').forEach(function (b) {
       var v = b.getAttribute('data-value'), f = find(FIBRAS, v), st = stock(v, color);
       b.style.backgroundImage = fibraTile(v);
@@ -803,7 +814,7 @@
     if (off) $('[data-hint="tChaleco"]').textContent = 'Marca «Traje a 3 piezas» para habilitar el chaleco.';
 
     var toggle = $('.am-toggle');
-    toggle.classList.toggle('is-disabled', ui.view === 'inside' || ui.stage === 'pantalon');
+    toggle.classList.toggle('is-disabled', ui.view === 'inside' || sinSaco(ui.stage));
     $('#am-hide-jacket').checked = hidden();
     $$('.am-stages button').forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-stage') === ui.stage)); });
     var t = find(TELAS, state.tSaco), photo = $('#am-photo');
@@ -879,7 +890,7 @@
     return { mLargo: '', mCuello: '', mPuno: '', colorCamisa: 'blanco', fibraCamisa: 'algodon', tSaco: 'diplomatica', tPantalon: 'diplomatica', piezas: '2', tChaleco: 'diplomatica' };
   }
   var state = defaults();
-  var ui = { view: 'front', hideJacket: false, stage: 'traje', focus: null, vb: null, vbTarget: null };
+  var ui = { view: 'front', hideJacket: false, stage: 'camisa', focus: null, vb: null, vbTarget: null };
 
   function valid(k, v) {
     if (k === 'piezas') return v === '2' || v === '3';
@@ -952,11 +963,14 @@
   }
 
   /* 11. Etapas, foco y modal ------------------------------------------------ */
-  var FIELD_STAGE = { colorCamisa: 'saco', fibraCamisa: 'saco', tSaco: 'saco', tPantalon: 'pantalon', piezas: 'traje', tChaleco: 'traje' };
+  var FIELD_STAGE = {
+    mLargo: 'camisa', mCuello: 'camisa', mPuno: 'camisa', colorCamisa: 'camisa', fibraCamisa: 'camisa',
+    tSaco: 'saco', tPantalon: 'pantalon', piezas: 'traje', tChaleco: 'traje'
+  };
   function setStage(stage) {
     if (ui.stage === stage) return;
     ui.stage = stage;
-    if (stage === 'pantalon' && ui.view === 'inside') ui.view = 'front';
+    if (sinSaco(stage) && ui.view === 'inside') ui.view = 'front';
     syncViewTabs();
   }
   function syncViewTabs() {
@@ -1045,7 +1059,7 @@
     });
     function setView(v) {
       ui.view = v;
-      if (v === 'inside' && ui.stage === 'pantalon') ui.stage = 'saco';
+      if (v === 'inside' && sinSaco(ui.stage)) ui.stage = 'saco';
       syncViewTabs();
     }
     $$('.am-views button').forEach(function (b) {
@@ -1054,7 +1068,7 @@
     var vista = { frente: 'front', espalda: 'back', interior: 'inside' }[new URLSearchParams(location.search).get('vista')];
     if (vista) setView(vista);
     $('#am-hide-jacket').addEventListener('change', function (e) {
-      if (ui.stage === 'pantalon') { e.target.checked = true; return; }
+      if (sinSaco(ui.stage)) { e.target.checked = true; return; }
       ui.hideJacket = e.target.checked; update();
     });
 
@@ -1090,9 +1104,9 @@
       toast('Configuración reiniciada');
     });
 
-    // Al iniciar: del saco al traje completo
+    // Al iniciar: zoom in de la figura completa a la camisa
     ui.vbTarget = null;
-    setBox(STAGES.saco.box[ui.view].slice());
+    setBox(FULL.slice());
     setTimeout(update, 250);
   }
 
