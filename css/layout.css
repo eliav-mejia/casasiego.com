@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — layout.css  (v1.1.8)
+   Casa Siego — layout.css  (v1.1.9)
    Page structure, sticky sections and parallax layers.
    Depends on tokens declared in site.css.
    ========================================================================== */
@@ -178,6 +178,10 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   z-index: -1;
   background: color-mix(in srgb, var(--wine-deep) 64%, transparent);
 }
+/* Dark variant: black, lighter veil so the photograph reads through (Justo). */
+.interlude:has(.interlude__veil--dark) { background: #000; }
+.interlude__veil--dark { background: rgba(0, 0, 0, 0.38); }
+.interlude__veil--dark ~ .inscription { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 2px 18px rgba(0, 0, 0, 0.55); }
 .inscription {
   margin: 0;
   padding: 0 16px;
