@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — atelier.css  (v1.0.0)
+   Casa Siego — atelier.css  (v1.0.1)
    Opening of visitante.html: two portraits in tweed on cream (justo.esmx/…_fcrema_medium_brushed.jpg)
    melt into each other in a 4:5 frame. CSS only: a 12 s loop of two layers that cross-fade while
    each image drifts 2 % closer. Hover pauses the loop, lifts the frame and draws a thin gold rule.
@@ -40,9 +40,10 @@
   animation: atelier-drift 12s linear infinite;
   will-change: transform;
 }
-/* The second layer runs half a loop behind: one fades out while the other fades in */
-.atelier__layer--prenda,
-.atelier__layer--prenda img { animation-delay: -6s; }
+/* The fabric layer (woman) runs half a loop behind, so the garment (man) opens the loop;
+   one fades out while the other fades in */
+.atelier__layer--textura,
+.atelier__layer--textura img { animation-delay: -6s; }
 
 /* Each layer is visible from 92 % to 50 % of the loop (with 8 % of cross-fade at each end) */
 @keyframes atelier-fade {
