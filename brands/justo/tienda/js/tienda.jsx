@@ -3,7 +3,9 @@
 // so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Casa Siego).
 //
 // Contents: BRAND · data layer (db) · useCatalog · prices and Stripe links · Photo · Header/Footer ·
-// ProductCard · SizeChips · SizeSpecs · SpecTable · ProductPage · SizeFinder · renderPage()
+// ProductCard · StepSelector · OrderSummary · SizeSpecs · SpecTable · ProductPage · SizeFinder · renderPage()
+// Variant logic (steps pecho → cuello → manga, stock per combination, button state) lives in js/variantes.js
+// (window.JustoVariantes, plain JS, tested with node); this file only draws it.
 // Payment is Stripe only: each size of each jacket has its own Stripe Payment Link (db/productos.json). No bag, no cart.
 
 const { useState, useEffect, useMemo, useRef } = React;
@@ -44,6 +46,7 @@ const localPrices = (products, rules) => {
     const spain = region()?.region === 'es';
     return {
         products: products.map(x => ({ ...x, stock: spain ? (x.stock_es || {}) : x.stock,
+            variants: x.variants && x.variants.map(v => ({ ...v, stock: spain ? (v.stock_es || 0) : v.stock, price_mxn: v.price_mxn == null ? null : price(v.price_mxn) })),
             price_mxn: x.price_mxn == null ? null : price(x.price_mxn),
             prices_mxn: x.prices_mxn && Object.fromEntries(Object.entries(x.prices_mxn).map(([k, v]) => [k, price(v)])) })),
         rules: {
@@ -104,8 +107,8 @@ const stockText = (product, size) => inStock(product, size)
 // Small grey «Agotado» tag over the photo of a sold-out product
 const SoldOutTag = () => <span className="tag-out absolute top-3 left-3 z-10">Agotado</span>;
 
-// Shirts are sized by collar (cm, "37"…"42"): they have no row in tallas.json, the chip reads «Cuello 37 cm».
-const sizeLabel = (catalog, s) => catalog.size[s]?.label || (/^\d+$/.test(s) ? `Cuello ${s} cm` : '');
+// Shirts are sized by chest (37…42, then collar style and sleeve: see js/variantes.js); they have no row in tallas.json.
+const sizeLabel = (catalog, s) => catalog.size[s]?.label || (/^\d+$/.test(s) ? `Pecho ${s}` : '');
 
 // --- PRICING ---
 // Prices include IVA. Each size has its own price (prices_mxn); price_mxn is the lowest one, shown as «desde» before a size is chosen.
@@ -116,8 +119,7 @@ const priceRange = (product) => {
     const all = Object.values(product.prices_mxn || {});
     return all.length && Math.max(...all) > Math.min(...all) ? `Desde ${formatPrice(Math.min(...all))}` : formatPrice(product.price_mxn);
 };
-// Stripe Payment Link of the size (one jacket, charged in MXN). null when the size has none.
-const stripeLink = (product, size) => (product.stripe && product.stripe[size]) || null;
+// Stripe Payment Links live on each variant (variants[].stripe, with ?client_reference_id=<SKU>); see js/variantes.js.
 
 
 // --- REVEAL ON SCROLL ---
@@ -232,14 +234,47 @@ const ProductCard = ({ product, catalog }) => (
 );
 
 // --- SIZE UI ---
-const SizeChips = ({ product, catalog, value, onChange }) => (
-    <div className={`grid ${product.sizes.length > 4 ? 'grid-cols-3' : 'grid-cols-4'} gap-1 max-w-md`} role="radiogroup" aria-label="Talla">
-        {product.sizes.map(s => (
-            <button key={s} type="button" role="radio" aria-checked={value === s} data-out={!inStock(product, s)} className="chip" onClick={() => onChange(s)}>
-                <span className="label-strong">{s}</span>
-                <span className="text-[13px] leading-tight">{sizeLabel(catalog, s)}</span>
-            </button>
+const V = window.JustoVariantes;
+
+// One chip row per step. Every configured option is drawn; options without stock (given the earlier picks) are struck through.
+// A step only appears when the previous pick has stock; changing a step clears the ones after it.
+const StepSelector = ({ m, picks, onPick, catalog, nudge }) => (
+    <div className="space-y-6 max-w-md">
+        {m.axes.slice(0, V.visibleSteps(m, picks)).map((axis, k) => (
+            <fieldset key={axis.id} id={`paso-${axis.id}`} className="animate-fade-in">
+                <legend className={`label-strong mb-3 ${nudge === k && picks[k] == null ? 'text-rust' : ''}`}>
+                    <span className="text-gold mr-2">{m.axes.length > 1 ? `${k + 1}/${m.axes.length}` : ''}</span>{axis.label}
+                    {picks[k] != null && <span className="label text-ink-500 ml-2">· {axis.options.find(o => o.id === picks[k])?.label}</span>}
+                </legend>
+                <div className={`grid ${axis.options.length > 4 ? 'grid-cols-3' : axis.options.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-1`} role="radiogroup" aria-label={axis.label}>
+                    {axis.options.map(o => {
+                        const ok = V.available(m, picks, k, o.id);
+                        const sub = o.sub || (axis.id === 'talla' ? sizeLabel(catalog, o.id) : '');
+                        return (
+                            <button key={o.id} type="button" role="radio" aria-checked={picks[k] === o.id} data-out={!ok} className="chip"
+                                title={ok ? `${axis.label} ${o.label}: en existencia` : `${axis.label} ${o.label}: sin stock`} onClick={() => onPick(k, o.id)}>
+                                <span className="label-strong">{o.label}</span>
+                                <span className="text-[13px] leading-tight">{ok ? sub : 'Sin stock'}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+            </fieldset>
         ))}
+    </div>
+);
+
+// Shown once every step is chosen and in stock: what will be charged.
+const OrderSummary = ({ product, m, picks, variant }) => (
+    <div className="border border-line bg-parchment-100/60 p-5 max-w-md animate-fade-in" aria-live="polite">
+        <p className="label text-gold">Resumen de tu pedido</p>
+        <p className="text-xl mt-2">{product.name}</p>
+        <dl className="grid grid-cols-[7.5rem_1fr] gap-x-4 gap-y-1 mt-3 text-[15px]">
+            {m.axes.map((a, k) => <React.Fragment key={a.id}><dt className="label text-ink-500 pt-1">{a.label}</dt><dd>{a.options.find(o => o.id === picks[k])?.label}</dd></React.Fragment>)}
+            <dt className="label text-ink-500 pt-1">SKU</dt><dd className="font-mono text-[13px] pt-0.5">{variant.sku}</dd>
+            <dt className="label text-ink-500 pt-1">Total</dt><dd>{variant.price_mxn == null ? 'Precio por confirmar' : `${formatPrice(variant.price_mxn)} · IVA incluido`}</dd>
+        </dl>
+        <p className="label text-ink-500 mt-3">{variant.stock} en existencia · listo en 48 h hábiles</p>
     </div>
 );
 
@@ -326,12 +361,14 @@ const ProductPage = () => {
     const catalog = useCatalog();
     const slug = window.location.pathname.split('/').filter(Boolean).pop();
     const product = catalog.bySlug[slug];
-    const [size, setSize] = useState(null);
-    const [needSize, setNeedSize] = useState(false);
+    const [picks, setPicks] = useState(null);   // one option id per step, in order (null = not read from ?sku= yet)
+    const [nudge, setNudge] = useState(-1);     // step highlighted after pressing «Continuar»
     useReveal([catalog.status]);
+    const m = useMemo(() => product && V.model(product, s => sizeLabel(catalog, s)), [product, catalog]);
 
     useEffect(() => { if (product) document.title = `${product.name} · Tienda Justo · Casa Siego®`; }, [product]);
-    useEffect(() => { if (product && oneSize(product)) setSize(product.sizes[0]); }, [product]);
+    // ?sku=JUS-CAM-01-37-CR-ML preselects those steps (links from Odoo, Stripe or the dashboard).
+    useEffect(() => { if (m && picks == null) setPicks(V.picksFromSku(m, product.sku, new URLSearchParams(window.location.search).get('sku'))); }, [m]);
 
     if (catalog.status === 'loading') return <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16"><Skeleton n={2} /></div>;
     if (catalog.status === 'error') return <LoadError />;
@@ -346,6 +383,11 @@ const ProductPage = () => {
     const isTie = product.kind === 'corbata';
     const isJacket = !product.kind;
     const single = oneSize(product);
+    const chosen = V.autoPicks(m, picks || []);
+    const size = chosen[0] ?? null;             // first step: jacket size / shirt chest size / «U»
+    const st = V.status(m, chosen);
+    const onPick = (k, id) => { setPicks(V.pick(chosen, k, id)); setNudge(-1); };
+    const goToStep = () => { setNudge(st.step); document.getElementById(`paso-${m.axes[st.step].id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
     const related = catalog.products.filter(p => p.id !== product.id);
 
     return (
@@ -374,29 +416,33 @@ const ProductPage = () => {
                     </nav>
                     <h1 className="text-3xl md:text-5xl">{product.name}</h1>
                     <p className="label text-ink-500 mt-3">{single ? 'Talla única' : `Corte ${product.cut.toLowerCase()}`} &middot; {product.sku}</p>
-                    <p className="text-2xl mt-6">{size && product.price_mxn != null ? formatPrice(unitPrice(product, size)) : priceRange(product)} {product.price_mxn != null && <span className="label text-ink-500">IVA incluido{size && !single ? ` · talla ${size}` : ''}</span>}</p>
+                    <p className="text-2xl mt-6">{st.variant && st.variant.price_mxn != null ? formatPrice(st.variant.price_mxn) : size && product.price_mxn != null ? formatPrice(unitPrice(product, size)) : priceRange(product)} {product.price_mxn != null && <span className="label text-ink-500">IVA incluido{size && !single ? ` · talla ${size}` : ''}</span>}</p>
                     <p className="text-ink-700 mt-6 max-w-md">{product.description}</p>
 
                     {!single && <div className="mt-10">
-                        <div className="flex justify-between items-baseline mb-3 max-w-md">
-                            <p className={`label-strong ${needSize && !size ? 'text-rust' : ''}`}>{needSize && !size ? 'Elige una talla' : 'Talla'}</p>
+                        <div className="flex justify-end mb-3 max-w-md">
                             <a href={`${SHOP}/guia-de-tallas/`} className="label link text-ink-500">Guía de tallas</a>
                         </div>
-                        <SizeChips product={product} catalog={catalog} value={size} onChange={(s) => { setSize(s); setNeedSize(false); }} />
+                        <StepSelector m={m} picks={chosen} onPick={onPick} catalog={catalog} nudge={nudge} />
                     </div>}
 
-                    {size && <div className="mt-5"><SizeSpecs product={product} catalog={catalog} size={size} /></div>}
+                    {isJacket && size && <div className="mt-5"><SizeSpecs product={product} catalog={catalog} size={size} /></div>}
+                    {st.variant && !isJacket && <div className="mt-6"><OrderSummary product={product} m={m} picks={chosen} variant={st.variant} /></div>}
 
-                    <div className="mt-8 max-w-md">
-                        {(size ? !inStock(product, size) : soldOut(product)) ? (
-                            <button className="btn btn-off w-full" type="button" disabled aria-disabled="true">Agotado{size && !single ? ` · talla ${size}` : ''}</button>
-                        ) : size && !stripeLink(product, size) ? (
-                            <a className="btn btn-rust w-full" href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Justo · ${product.name} · talla ${size}`)}`}>Comprar por correo · talla {size}</a>
-                        ) : stripeLink(product, size) ? (
-                            <a className="btn btn-rust w-full" href={stripeLink(product, size)} rel="noopener">Pagar con Stripe{single ? '' : ` · talla ${size}`} · {formatPrice(unitPrice(product, size))}</a>
+                    {/* Bottom button: Continuar (next step) · disabled + reason (no stock) · Pagar (Stripe) · Comprar por correo (no link yet) */}
+                    <div className="mt-8 max-w-md" aria-live="polite">
+                        {soldOut(product) && chosen.length === 0 || (single && st.state === 'blocked') ? (
+                            <button className="btn btn-off w-full" type="button" disabled aria-disabled="true">Agotado</button>
+                        ) : st.state === 'blocked' ? (
+                            <button className="btn btn-off w-full" type="button" disabled aria-disabled="true">{st.button}</button>
+                        ) : st.state === 'choose' ? (
+                            <button className="btn btn-rust w-full" type="button" onClick={goToStep}>{st.button}</button>
+                        ) : st.state === 'pay' ? (
+                            <a className="btn btn-rust w-full" href={st.variant.stripe} rel="noopener">Pagar con Stripe · {formatPrice(st.variant.price_mxn)}</a>
                         ) : (
-                            <button className="btn btn-rust w-full" type="button" onClick={() => setNeedSize(true)}>{size ? 'Pago no disponible en esta talla: escríbenos' : 'Elige tu talla para pagar'}</button>
+                            <a className="btn btn-rust w-full" href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`Justo · ${product.name} · ${st.variant.sku}`)}`}>Comprar por correo · {st.variant.sku}</a>
                         )}
+                        {st.legend && !(single && st.state === 'blocked') && <p className={`label mt-3 ${st.state === 'blocked' ? 'text-rust' : 'text-ink-500'}`}>{st.legend}</p>}
                         <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, una pieza por pago, en pesos mexicanos (MXN).{isJacket && ` Incluye ajuste de mangas (±${tolerances.sleeve_cm} cm) y cintura (±${tolerances.waist_cm} cm) en el taller.`} Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
                     </div>
 
