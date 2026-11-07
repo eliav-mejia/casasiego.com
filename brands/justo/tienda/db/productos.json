@@ -1,7 +1,7 @@
 {
-  "_schema": "products: id, kind? (camisa: sin specs, con collar y cuffs, tallas por cuello en cm 37–42; corbata: sizes [U] talla única, con pattern y size_note; price_mxn null = precio por confirmar), slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n} (México; 0 = agotado: sin pago), stock_es{size: n} (España; sin el campo = agotado), specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], active, featured",
+  "_schema": "products: id, kind? (camisa: sin specs, con collar y cuffs, talla de pecho 37–42 × cuello × manga en axes/variants; corbata: sizes [U] talla única, con pattern y size_note; price_mxn null = precio por confirmar), slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n} (México; 0 = agotado: sin pago), stock_es{size: n} (España; sin el campo = agotado), specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], active, featured · axes[{ id, label, step, options[{ id, label }] }] y variants[{ sku, o[opción por eje], price_mxn, stock, stock_es, stripe }] (camisas y corbatas): los escribe builds/Odoo/Odoo_catalogues/exportar_tienda.py desde el catálogo serializado; no editar a mano. sizes/stock/stock_es/prices_mxn de esos productos son el resumen por el primer eje. Sin axes (sacos): el selector usa sizes como único paso.",
   "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/justo.esmx/.",
-  "updated_at": "2026-11-01",
+  "updated_at": "2026-11-07",
   "products": [
     {
       "id": "ju-001",
@@ -11,7 +11,12 @@
       "short": "Raya diplomática fina, dos botones, solapa de muesca.",
       "description": "El azul marino de oficina con carácter: lana merino Super 110s con una raya diplomática fina gris claro que alarga la figura. Dos botones, solapa de muesca de 8 cm, bolsas con cartera y hombro natural con hombrera ligera. Corte regular que deja moverse sin perder la línea; pide camisa blanca y corbata a rayas, o se suelta con un pantalón gris liso.",
       "price_mxn": 7650,
-      "prices_mxn": { "CH": 7650, "M": 7650, "G": 9229, "XG": 9229 },
+      "prices_mxn": {
+        "CH": 7650,
+        "M": 7650,
+        "G": 9229,
+        "XG": 9229
+      },
       "stripe": {
         "CH": "https://buy.stripe.com/fZu3cx4zFfWrbnScSMcMM02",
         "M": "https://buy.stripe.com/6oU4gBc2711x63y060cMM0c",
@@ -22,14 +27,65 @@
       "image": "images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg",
       "focus": "50% 50%",
       "zoom": 1,
-      "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
-      "stock_es": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
+      "sizes": [
+        "CH",
+        "M",
+        "G",
+        "XG"
+      ],
+      "stock": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      },
+      "stock_es": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      },
       "specs": {
-        "CH": { "chest": 102, "waist": 92,  "shoulder": 44.0, "sleeve": 62.0, "length": 73, "hem": 104, "lapel": 8, "drop": 6 },
-        "M":  { "chest": 108, "waist": 98,  "shoulder": 45.5, "sleeve": 63.5, "length": 75, "hem": 110, "lapel": 8, "drop": 6 },
-        "G":  { "chest": 116, "waist": 106, "shoulder": 47.0, "sleeve": 65.0, "length": 77, "hem": 118, "lapel": 8, "drop": 6 },
-        "XG": { "chest": 126, "waist": 116, "shoulder": 48.5, "sleeve": 66.0, "length": 79, "hem": 128, "lapel": 8, "drop": 6 }
+        "CH": {
+          "chest": 102,
+          "waist": 92,
+          "shoulder": 44.0,
+          "sleeve": 62.0,
+          "length": 73,
+          "hem": 104,
+          "lapel": 8,
+          "drop": 6
+        },
+        "M": {
+          "chest": 108,
+          "waist": 98,
+          "shoulder": 45.5,
+          "sleeve": 63.5,
+          "length": 75,
+          "hem": 110,
+          "lapel": 8,
+          "drop": 6
+        },
+        "G": {
+          "chest": 116,
+          "waist": 106,
+          "shoulder": 47.0,
+          "sleeve": 65.0,
+          "length": 77,
+          "hem": 118,
+          "lapel": 8,
+          "drop": 6
+        },
+        "XG": {
+          "chest": 126,
+          "waist": 116,
+          "shoulder": 48.5,
+          "sleeve": 66.0,
+          "length": 79,
+          "hem": 128,
+          "lapel": 8,
+          "drop": 6
+        }
       },
       "fabric": "100 % lana merino Super 110s, sarga con raya diplomática, 260 g/m², tejida en Biella (Italia)",
       "lining": "Forro de cupro (Bemberg) azul marino, respirable y antiestático; mangas con forro rayado",
@@ -42,7 +98,7 @@
         "Raya casada en costuras, bolsas y solapa",
         "Ojales de manga funcionales (se abren)",
         "Solapa con ojal Milanés hecho a mano",
-                "Margen de costura para ajustar 4 cm de cintura"
+        "Margen de costura para ajustar 4 cm de cintura"
       ],
       "active": true,
       "featured": true
@@ -55,7 +111,12 @@
       "short": "Gris carbón con textura tipo tweed, dos botones.",
       "description": "Gris carbón en lana con textura tipo tweed: de lejos se lee liso y de cerca tiene grano, así que luce serio sin verse plano. Dos botones, solapa de muesca y bolsas con cartera, con la etiqueta Tailor's Blend de la casa. Va con camisa azul cielo y corbata plateada para la oficina, o con suéter de cuello alto el fin de semana.",
       "price_mxn": 8797,
-      "prices_mxn": { "CH": 8797, "M": 8797, "G": 11932, "XG": 11932 },
+      "prices_mxn": {
+        "CH": 8797,
+        "M": 8797,
+        "G": 11932,
+        "XG": 11932
+      },
       "stripe": {
         "CH": "https://buy.stripe.com/5kQcN74zFfWrajO6uocMM01",
         "M": "https://buy.stripe.com/5kQeVf7LR7pV8bG3iccMM06",
@@ -66,14 +127,65 @@
       "image": "images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg",
       "focus": "50% 50%",
       "zoom": 1,
-      "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
-      "stock_es": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
+      "sizes": [
+        "CH",
+        "M",
+        "G",
+        "XG"
+      ],
+      "stock": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      },
+      "stock_es": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      },
       "specs": {
-        "CH": { "chest": 104, "waist": 96,  "shoulder": 44.5, "sleeve": 62.5, "length": 74, "hem": 108, "lapel": 8.5, "drop": 5 },
-        "M":  { "chest": 110, "waist": 102, "shoulder": 46.0, "sleeve": 64.0, "length": 76, "hem": 114, "lapel": 8.5, "drop": 5 },
-        "G":  { "chest": 118, "waist": 110, "shoulder": 47.5, "sleeve": 65.5, "length": 78, "hem": 122, "lapel": 8.5, "drop": 5 },
-        "XG": { "chest": 128, "waist": 120, "shoulder": 49.0, "sleeve": 66.5, "length": 80, "hem": 132, "lapel": 8.5, "drop": 5 }
+        "CH": {
+          "chest": 104,
+          "waist": 96,
+          "shoulder": 44.5,
+          "sleeve": 62.5,
+          "length": 74,
+          "hem": 108,
+          "lapel": 8.5,
+          "drop": 5
+        },
+        "M": {
+          "chest": 110,
+          "waist": 102,
+          "shoulder": 46.0,
+          "sleeve": 64.0,
+          "length": 76,
+          "hem": 114,
+          "lapel": 8.5,
+          "drop": 5
+        },
+        "G": {
+          "chest": 118,
+          "waist": 110,
+          "shoulder": 47.5,
+          "sleeve": 65.5,
+          "length": 78,
+          "hem": 122,
+          "lapel": 8.5,
+          "drop": 5
+        },
+        "XG": {
+          "chest": 128,
+          "waist": 120,
+          "shoulder": 49.0,
+          "sleeve": 66.5,
+          "length": 80,
+          "hem": 132,
+          "lapel": 8.5,
+          "drop": 5
+        }
       },
       "fabric": "100 % lana virgen con textura tipo tweed, 340 g/m², tejida en Escocia",
       "lining": "Medio forro de viscosa gris humo (espalda libre para que respire); mangas forradas",
@@ -84,7 +196,7 @@
       "care": "Solo tintorería en seco. Cepillar en el sentido del tejido; guardar con cedro o lavanda. La lana recupera su forma colgada una noche.",
       "features": [
         "Etiqueta interior Tailor's Blend",
-                "Full canvas: la solapa toma la forma de tu pecho con el uso",
+        "Full canvas: la solapa toma la forma de tu pecho con el uso",
         "Ojal de solapa para pin o flor"
       ],
       "active": true,
@@ -98,7 +210,12 @@
       "short": "Negro liso, dos botones, corte entallado.",
       "description": "El negro que no falla: paño liso, sin brillo, para la boda, la noche y el escenario. Dos botones, solapa de muesca de 8 cm y corte entallado con cintura marcada y manga angosta. Con chaleco del mismo tono se arma un tres piezas; con camisa blanca y corbata de color, el saco se vuelve el fondo que hace lucir todo lo demás.",
       "price_mxn": 6450,
-      "prices_mxn": { "CH": 6450, "M": 6450, "G": 8632, "XG": 8632 },
+      "prices_mxn": {
+        "CH": 6450,
+        "M": 6450,
+        "G": 8632,
+        "XG": 8632
+      },
       "stripe": {
         "CH": "https://buy.stripe.com/9B64gB8PV9y34Zu3iccMM00",
         "M": "https://buy.stripe.com/8x200ld6bbGb3Vq9GAcMM03",
@@ -109,14 +226,65 @@
       "image": "images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg",
       "focus": "50% 50%",
       "zoom": 1,
-      "sizes": ["CH", "M", "G", "XG"],
-      "stock": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
-      "stock_es": { "CH": 0, "M": 0, "G": 0, "XG": 0 },
+      "sizes": [
+        "CH",
+        "M",
+        "G",
+        "XG"
+      ],
+      "stock": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      },
+      "stock_es": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      },
       "specs": {
-        "CH": { "chest": 100, "waist": 88,  "shoulder": 43.5, "sleeve": 62.0, "length": 72, "hem": 100, "lapel": 8, "drop": 7 },
-        "M":  { "chest": 106, "waist": 94,  "shoulder": 45.0, "sleeve": 63.5, "length": 74, "hem": 106, "lapel": 8, "drop": 7 },
-        "G":  { "chest": 114, "waist": 102, "shoulder": 46.5, "sleeve": 65.0, "length": 76, "hem": 114, "lapel": 8, "drop": 7 },
-        "XG": { "chest": 124, "waist": 112, "shoulder": 48.0, "sleeve": 66.0, "length": 78, "hem": 124, "lapel": 8, "drop": 7 }
+        "CH": {
+          "chest": 100,
+          "waist": 88,
+          "shoulder": 43.5,
+          "sleeve": 62.0,
+          "length": 72,
+          "hem": 100,
+          "lapel": 8,
+          "drop": 7
+        },
+        "M": {
+          "chest": 106,
+          "waist": 94,
+          "shoulder": 45.0,
+          "sleeve": 63.5,
+          "length": 74,
+          "hem": 106,
+          "lapel": 8,
+          "drop": 7
+        },
+        "G": {
+          "chest": 114,
+          "waist": 102,
+          "shoulder": 46.5,
+          "sleeve": 65.0,
+          "length": 76,
+          "hem": 114,
+          "lapel": 8,
+          "drop": 7
+        },
+        "XG": {
+          "chest": 124,
+          "waist": 112,
+          "shoulder": 48.0,
+          "sleeve": 66.0,
+          "length": 78,
+          "hem": 124,
+          "lapel": 8,
+          "drop": 7
+        }
       },
       "fabric": "Lana fría 98 % / elastano 2 %, Super 120s, 240 g/m², con caída y recuperación",
       "lining": "Forro completo de cupro (Bemberg) negro con vivos en satén",
@@ -134,11 +302,1891 @@
       "active": true,
       "featured": true
     },
-    {"id": "ju-004", "kind": "camisa", "slug": "camisa-azul-cielo", "sku": "JUS-CAM-01", "name": "Camisa Azul Cielo", "short": "Azul cielo, cuello italiano, puño sencillo.", "description": "El azul de oficina que acompaña a todo: al gris carbón, al azul marino y a la corbata plata. Cuello italiano semiabierto que deja ver el nudo, puño sencillo de un botón y faldón curvo para llevarla fajada.", "price_mxn": 550, "prices_mxn": {"37": 550, "38": 550, "39": 550, "40": 550, "41": 550, "42": 550}, "stripe": {"37": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i", "39": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p", "41": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q"}, "cut": "Regular", "image": "images/justo.esmx/Azul-Celeste_camiseria_fgris.jpg", "focus": "50% 50%", "zoom": 1, "sizes": ["37", "38", "39", "40", "41", "42"], "stock": {"37": 1, "38": 0, "39": 1, "40": 0, "41": 1, "42": 0}, "stock_es": {"37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0}, "fabric": "[confirmar con el taller]", "collar": "Italiano, semiabierto", "cuffs": "Sencillo de un botón", "buttons": "Botones blancos", "care": "[confirmar con el taller]", "features": ["Faldón curvo para llevarse fajada"], "active": true, "featured": true},
-    {"id": "ju-005", "kind": "camisa", "slug": "camisa-azul-indigo", "sku": "JUS-CAM-02", "name": "Camisa Azul Índigo", "short": "Índigo profundo, botones al tono.", "description": "Índigo profundo con botones al tono: más carácter que el azul cielo sin dejar la oficina. Con saco gris y corbata clara para el día; sola, con pantalón beige, para la tarde. Cuello italiano semiabierto y puño sencillo.", "price_mxn": 550, "prices_mxn": {"37": 550, "38": 550, "39": 550, "40": 550, "41": 550, "42": 550}, "stripe": {"37": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h", "39": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r", "41": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s"}, "cut": "Regular", "image": "images/justo.esmx/Azul-Indigo_camiseria_fgris.jpg", "focus": "50% 50%", "zoom": 1, "sizes": ["37", "38", "39", "40", "41", "42"], "stock": {"37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0}, "stock_es": {"37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0}, "fabric": "[confirmar con el taller]", "collar": "Italiano, semiabierto", "cuffs": "Sencillo de un botón", "buttons": "Botones azules al tono", "care": "[confirmar con el taller]", "features": ["Faldón curvo para llevarse fajada"], "active": true, "featured": true},
-    {"id": "ju-006", "kind": "camisa", "slug": "camisa-blanca", "sku": "JUS-CAM-03", "name": "Camisa Blanca", "short": "Blanca, cuello italiano, puño sencillo.", "description": "La blanca de la casa: la base de la raya diplomática y del negro de noche. Cuello italiano semiabierto que sostiene cualquier corbata, puño sencillo de un botón y faldón curvo.", "price_mxn": 550, "prices_mxn": {"37": 550, "38": 550, "39": 550, "40": 550, "41": 550, "42": 550}, "stripe": {"37": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j", "39": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n", "41": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o"}, "cut": "Regular", "image": "images/justo.esmx/Blanco_camiseria_fgris.jpg", "focus": "50% 50%", "zoom": 1, "sizes": ["37", "38", "39", "40", "41", "42"], "stock": {"37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0}, "stock_es": {"37": 0, "38": 0, "39": 0, "40": 0, "41": 0, "42": 0}, "fabric": "[confirmar con el taller]", "collar": "Italiano, semiabierto", "cuffs": "Sencillo de un botón", "buttons": "Botones blancos", "care": "[confirmar con el taller]", "features": ["Faldón curvo para llevarse fajada"], "active": true, "featured": true},
-    {"id": "ju-007", "kind": "corbata", "slug": "corbata-roja", "sku": "JUS-COR-01", "name": "Corbata Roja", "short": "Rojo profundo con microdiseño.", "description": "Rojo profundo con un microdiseño discreto que, de lejos, se lee liso. Le da carácter a la camisa blanca y al saco negro o gris carbón sin restar formalidad.", "price_mxn": 249, "prices_mxn": {"U": 249}, "stripe": {"U": "https://buy.stripe.com/3cI6oJc277pVfE8060cMM0k"}, "cut": "Única", "image": "images/justo.esmx/Corbata_Rojo_fblanco.jpg", "focus": "50% 40%", "zoom": 1, "sizes": ["U"], "stock": {"U": 0}, "stock_es": {"U": 0}, "fabric": "[confirmar con el taller]", "pattern": "Microdiseño sobre rojo profundo", "size_note": "Talla única", "care": "[confirmar con el taller]", "features": ["Se anuda igual con camisa de cuello italiano o clásico"], "active": true, "featured": true},
-    {"id": "ju-008", "kind": "corbata", "slug": "corbata-azul-indigo", "sku": "JUS-COR-02", "name": "Corbata Azul Índigo", "short": "Índigo con textura, para el día.", "description": "Índigo con textura de grano visible: luce seria de lejos y tiene profundidad de cerca. Va con camisa blanca o azul cielo y con el saco azul marino o gris.", "price_mxn": 249, "prices_mxn": {"U": 249}, "stripe": {"U": "https://buy.stripe.com/7sY14p1ntcKf0Je060cMM0l"}, "cut": "Única", "image": "images/justo.esmx/Corbata_Indigo_fblanco.jpg", "focus": "50% 40%", "zoom": 1, "sizes": ["U"], "stock": {"U": 0}, "stock_es": {"U": 0}, "fabric": "[confirmar con el taller]", "pattern": "Índigo texturizado", "size_note": "Talla única", "care": "[confirmar con el taller]", "features": ["Se anuda igual con camisa de cuello italiano o clásico"], "active": true, "featured": true},
-    {"id": "ju-009", "kind": "corbata", "slug": "corbata-beige-a-cuadros", "sku": "JUS-COR-03", "name": "Corbata Beige a Cuadros", "short": "Beige con cuadros en café y crema.", "description": "Beige con cuadros en café y crema: la corbata para el traje gris de tweed, el fin de semana y los eventos de día. Menos formal, más estilo.", "price_mxn": 249, "prices_mxn": {"U": 249}, "stripe": {"U": "https://buy.stripe.com/3cIdRb3vB9y3fE88CwcMM0m"}, "cut": "Única", "image": "images/justo.esmx/Corbata_BeigeCuadros_fblanco.jpg", "focus": "50% 40%", "zoom": 1, "sizes": ["U"], "stock": {"U": 0}, "stock_es": {"U": 0}, "fabric": "[confirmar con el taller]", "pattern": "Cuadros café y crema sobre beige", "size_note": "Talla única", "care": "[confirmar con el taller]", "features": ["Se anuda igual con camisa de cuello italiano o clásico"], "active": true, "featured": true}
-  ]
+    {
+      "id": "ju-004",
+      "kind": "camisa",
+      "slug": "camisa-azul-cielo",
+      "sku": "JUS-CAM-01",
+      "name": "Camisa Azul Cielo",
+      "short": "Azul cielo, puño sencillo; eliges cuello y manga.",
+      "description": "El azul de oficina que acompaña a todo: al gris carbón, al azul marino y a la corbata plata. Cuello regular o largo en punta abierta, manga corta, regular o larga, puño sencillo de un botón y faldón curvo para llevarla fajada.",
+      "price_mxn": 550,
+      "prices_mxn": {
+        "37": 550,
+        "38": 550,
+        "39": 550,
+        "40": 550,
+        "41": 550,
+        "42": 550
+      },
+      "stripe": {
+        "37": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i",
+        "39": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p",
+        "41": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q"
+      },
+      "cut": "Regular",
+      "image": "images/justo.esmx/Azul-Celeste_camiseria_fgris.jpg",
+      "focus": "50% 50%",
+      "zoom": 1,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "stock": {
+        "37": 6,
+        "38": 6,
+        "39": 6,
+        "40": 6,
+        "41": 6,
+        "42": 0
+      },
+      "stock_es": {
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0
+      },
+      "fabric": "[confirmar con el taller]",
+      "collar": "Regular o largo en punta abierta (lo eliges al comprar)",
+      "cuffs": "Sencillo de un botón (manga regular y larga)",
+      "buttons": "Botones blancos",
+      "care": "[confirmar con el taller]",
+      "features": [
+        "Faldón curvo para llevarse fajada"
+      ],
+      "active": true,
+      "featured": true,
+      "axes": [
+        {
+          "id": "talla",
+          "label": "Talla de pecho",
+          "step": "tu talla de pecho",
+          "options": [
+            {
+              "id": "37",
+              "label": "37"
+            },
+            {
+              "id": "38",
+              "label": "38"
+            },
+            {
+              "id": "39",
+              "label": "39"
+            },
+            {
+              "id": "40",
+              "label": "40"
+            },
+            {
+              "id": "41",
+              "label": "41"
+            },
+            {
+              "id": "42",
+              "label": "42"
+            }
+          ]
+        },
+        {
+          "id": "cuello",
+          "label": "Cuello",
+          "step": "el cuello",
+          "options": [
+            {
+              "id": "CR",
+              "label": "Regular"
+            },
+            {
+              "id": "CL",
+              "label": "Largo en punta abierta"
+            }
+          ]
+        },
+        {
+          "id": "manga",
+          "label": "Manga",
+          "step": "la manga",
+          "options": [
+            {
+              "id": "MC",
+              "label": "Corta"
+            },
+            {
+              "id": "MR",
+              "label": "Regular"
+            },
+            {
+              "id": "ML",
+              "label": "Larga"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JUS-CAM-01-37-CR-MC",
+          "o": [
+            "37",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-01-37-CR-MR",
+          "o": [
+            "37",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-01-37-CR-ML",
+          "o": [
+            "37",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-01-37-CL-MC",
+          "o": [
+            "37",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-01-37-CL-MR",
+          "o": [
+            "37",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-01-37-CL-ML",
+          "o": [
+            "37",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-01-38-CR-MC",
+          "o": [
+            "38",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-38-CR-MR",
+          "o": [
+            "38",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-38-CR-ML",
+          "o": [
+            "38",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-38-CL-MC",
+          "o": [
+            "38",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-38-CL-MR",
+          "o": [
+            "38",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-38-CL-ML",
+          "o": [
+            "38",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-39-CR-MC",
+          "o": [
+            "39",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-01-39-CR-MR",
+          "o": [
+            "39",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-01-39-CR-ML",
+          "o": [
+            "39",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-01-39-CL-MC",
+          "o": [
+            "39",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-01-39-CL-MR",
+          "o": [
+            "39",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-01-39-CL-ML",
+          "o": [
+            "39",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-01-40-CR-MC",
+          "o": [
+            "40",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-40-CR-MR",
+          "o": [
+            "40",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-40-CR-ML",
+          "o": [
+            "40",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-40-CL-MC",
+          "o": [
+            "40",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-40-CL-MR",
+          "o": [
+            "40",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-40-CL-ML",
+          "o": [
+            "40",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-41-CR-MC",
+          "o": [
+            "41",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-01-41-CR-MR",
+          "o": [
+            "41",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-01-41-CR-ML",
+          "o": [
+            "41",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-01-41-CL-MC",
+          "o": [
+            "41",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-01-41-CL-MR",
+          "o": [
+            "41",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-01-41-CL-ML",
+          "o": [
+            "41",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 1,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-01-42-CR-MC",
+          "o": [
+            "42",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-42-CR-MR",
+          "o": [
+            "42",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-42-CR-ML",
+          "o": [
+            "42",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-42-CL-MC",
+          "o": [
+            "42",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-42-CL-MR",
+          "o": [
+            "42",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-01-42-CL-ML",
+          "o": [
+            "42",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        }
+      ],
+      "sizes_note": "Talla de pecho 37 a 42, cuello regular o largo en punta abierta y manga corta, regular o larga. Disponible en pecho 37 a 41.",
+      "sleeves": "Corta, regular o larga (la eliges al comprar)"
+    },
+    {
+      "id": "ju-005",
+      "kind": "camisa",
+      "slug": "camisa-azul-indigo",
+      "sku": "JUS-CAM-02",
+      "name": "Camisa Azul Índigo",
+      "short": "Índigo profundo, botones al tono.",
+      "description": "Índigo profundo con botones al tono: más carácter que el azul cielo sin dejar la oficina. Con saco gris y corbata clara para el día; sola, con pantalón beige, para la tarde. Cuello regular o largo en punta abierta, manga corta, regular o larga y puño sencillo.",
+      "price_mxn": 550,
+      "prices_mxn": {
+        "37": 550,
+        "38": 550,
+        "39": 550,
+        "40": 550,
+        "41": 550,
+        "42": 550
+      },
+      "stripe": {
+        "37": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h",
+        "39": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r",
+        "41": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s"
+      },
+      "cut": "Regular",
+      "image": "images/justo.esmx/Azul-Indigo_camiseria_fgris.jpg",
+      "focus": "50% 50%",
+      "zoom": 1,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "stock": {
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0
+      },
+      "stock_es": {
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0
+      },
+      "fabric": "[confirmar con el taller]",
+      "collar": "Regular o largo en punta abierta (lo eliges al comprar)",
+      "cuffs": "Sencillo de un botón (manga regular y larga)",
+      "buttons": "Botones azules al tono",
+      "care": "[confirmar con el taller]",
+      "features": [
+        "Faldón curvo para llevarse fajada"
+      ],
+      "active": true,
+      "featured": true,
+      "axes": [
+        {
+          "id": "talla",
+          "label": "Talla de pecho",
+          "step": "tu talla de pecho",
+          "options": [
+            {
+              "id": "37",
+              "label": "37"
+            },
+            {
+              "id": "38",
+              "label": "38"
+            },
+            {
+              "id": "39",
+              "label": "39"
+            },
+            {
+              "id": "40",
+              "label": "40"
+            },
+            {
+              "id": "41",
+              "label": "41"
+            },
+            {
+              "id": "42",
+              "label": "42"
+            }
+          ]
+        },
+        {
+          "id": "cuello",
+          "label": "Cuello",
+          "step": "el cuello",
+          "options": [
+            {
+              "id": "CR",
+              "label": "Regular"
+            },
+            {
+              "id": "CL",
+              "label": "Largo en punta abierta"
+            }
+          ]
+        },
+        {
+          "id": "manga",
+          "label": "Manga",
+          "step": "la manga",
+          "options": [
+            {
+              "id": "MC",
+              "label": "Corta"
+            },
+            {
+              "id": "MR",
+              "label": "Regular"
+            },
+            {
+              "id": "ML",
+              "label": "Larga"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JUS-CAM-02-37-CR-MC",
+          "o": [
+            "37",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-02-37-CR-MR",
+          "o": [
+            "37",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-02-37-CR-ML",
+          "o": [
+            "37",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-02-37-CL-MC",
+          "o": [
+            "37",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-02-37-CL-MR",
+          "o": [
+            "37",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-02-37-CL-ML",
+          "o": [
+            "37",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-02-38-CR-MC",
+          "o": [
+            "38",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-38-CR-MR",
+          "o": [
+            "38",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-38-CR-ML",
+          "o": [
+            "38",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-38-CL-MC",
+          "o": [
+            "38",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-38-CL-MR",
+          "o": [
+            "38",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-38-CL-ML",
+          "o": [
+            "38",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-39-CR-MC",
+          "o": [
+            "39",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-02-39-CR-MR",
+          "o": [
+            "39",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-02-39-CR-ML",
+          "o": [
+            "39",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-02-39-CL-MC",
+          "o": [
+            "39",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-02-39-CL-MR",
+          "o": [
+            "39",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-02-39-CL-ML",
+          "o": [
+            "39",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-02-40-CR-MC",
+          "o": [
+            "40",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-40-CR-MR",
+          "o": [
+            "40",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-40-CR-ML",
+          "o": [
+            "40",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-40-CL-MC",
+          "o": [
+            "40",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-40-CL-MR",
+          "o": [
+            "40",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-40-CL-ML",
+          "o": [
+            "40",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-41-CR-MC",
+          "o": [
+            "41",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-02-41-CR-MR",
+          "o": [
+            "41",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-02-41-CR-ML",
+          "o": [
+            "41",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-02-41-CL-MC",
+          "o": [
+            "41",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-02-41-CL-MR",
+          "o": [
+            "41",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-02-41-CL-ML",
+          "o": [
+            "41",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-02-42-CR-MC",
+          "o": [
+            "42",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-42-CR-MR",
+          "o": [
+            "42",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-42-CR-ML",
+          "o": [
+            "42",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-42-CL-MC",
+          "o": [
+            "42",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-42-CL-MR",
+          "o": [
+            "42",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-02-42-CL-ML",
+          "o": [
+            "42",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        }
+      ],
+      "sizes_note": "Talla de pecho 37 a 42, cuello regular o largo en punta abierta y manga corta, regular o larga. Agotada por ahora.",
+      "sleeves": "Corta, regular o larga (la eliges al comprar)"
+    },
+    {
+      "id": "ju-006",
+      "kind": "camisa",
+      "slug": "camisa-blanca",
+      "sku": "JUS-CAM-03",
+      "name": "Camisa Blanca",
+      "short": "Blanca, puño sencillo; eliges cuello y manga.",
+      "description": "La blanca de la casa: la base de la raya diplomática y del negro de noche. Cuello regular o largo en punta abierta que sostiene cualquier corbata, manga corta, regular o larga, puño sencillo de un botón y faldón curvo.",
+      "price_mxn": 550,
+      "prices_mxn": {
+        "37": 550,
+        "38": 550,
+        "39": 550,
+        "40": 550,
+        "41": 550,
+        "42": 550
+      },
+      "stripe": {
+        "37": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j",
+        "39": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n",
+        "41": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o"
+      },
+      "cut": "Regular",
+      "image": "images/justo.esmx/Blanco_camiseria_fgris.jpg",
+      "focus": "50% 50%",
+      "zoom": 1,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "stock": {
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0
+      },
+      "stock_es": {
+        "37": 0,
+        "38": 0,
+        "39": 0,
+        "40": 0,
+        "41": 0,
+        "42": 0
+      },
+      "fabric": "[confirmar con el taller]",
+      "collar": "Regular o largo en punta abierta (lo eliges al comprar)",
+      "cuffs": "Sencillo de un botón (manga regular y larga)",
+      "buttons": "Botones blancos",
+      "care": "[confirmar con el taller]",
+      "features": [
+        "Faldón curvo para llevarse fajada"
+      ],
+      "active": true,
+      "featured": true,
+      "axes": [
+        {
+          "id": "talla",
+          "label": "Talla de pecho",
+          "step": "tu talla de pecho",
+          "options": [
+            {
+              "id": "37",
+              "label": "37"
+            },
+            {
+              "id": "38",
+              "label": "38"
+            },
+            {
+              "id": "39",
+              "label": "39"
+            },
+            {
+              "id": "40",
+              "label": "40"
+            },
+            {
+              "id": "41",
+              "label": "41"
+            },
+            {
+              "id": "42",
+              "label": "42"
+            }
+          ]
+        },
+        {
+          "id": "cuello",
+          "label": "Cuello",
+          "step": "el cuello",
+          "options": [
+            {
+              "id": "CR",
+              "label": "Regular"
+            },
+            {
+              "id": "CL",
+              "label": "Largo en punta abierta"
+            }
+          ]
+        },
+        {
+          "id": "manga",
+          "label": "Manga",
+          "step": "la manga",
+          "options": [
+            {
+              "id": "MC",
+              "label": "Corta"
+            },
+            {
+              "id": "MR",
+              "label": "Regular"
+            },
+            {
+              "id": "ML",
+              "label": "Larga"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JUS-CAM-03-37-CR-MC",
+          "o": [
+            "37",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-03-37-CR-MR",
+          "o": [
+            "37",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-03-37-CR-ML",
+          "o": [
+            "37",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-03-37-CL-MC",
+          "o": [
+            "37",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-03-37-CL-MR",
+          "o": [
+            "37",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-03-37-CL-ML",
+          "o": [
+            "37",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-03-38-CR-MC",
+          "o": [
+            "38",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-38-CR-MR",
+          "o": [
+            "38",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-38-CR-ML",
+          "o": [
+            "38",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-38-CL-MC",
+          "o": [
+            "38",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-38-CL-MR",
+          "o": [
+            "38",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-38-CL-ML",
+          "o": [
+            "38",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-39-CR-MC",
+          "o": [
+            "39",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-03-39-CR-MR",
+          "o": [
+            "39",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-03-39-CR-ML",
+          "o": [
+            "39",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-03-39-CL-MC",
+          "o": [
+            "39",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-03-39-CL-MR",
+          "o": [
+            "39",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-03-39-CL-ML",
+          "o": [
+            "39",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-03-40-CR-MC",
+          "o": [
+            "40",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-40-CR-MR",
+          "o": [
+            "40",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-40-CR-ML",
+          "o": [
+            "40",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-40-CL-MC",
+          "o": [
+            "40",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-40-CL-MR",
+          "o": [
+            "40",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-40-CL-ML",
+          "o": [
+            "40",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-41-CR-MC",
+          "o": [
+            "41",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CR-MC"
+        },
+        {
+          "sku": "JUS-CAM-03-41-CR-MR",
+          "o": [
+            "41",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CR-MR"
+        },
+        {
+          "sku": "JUS-CAM-03-41-CR-ML",
+          "o": [
+            "41",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CR-ML"
+        },
+        {
+          "sku": "JUS-CAM-03-41-CL-MC",
+          "o": [
+            "41",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CL-MC"
+        },
+        {
+          "sku": "JUS-CAM-03-41-CL-MR",
+          "o": [
+            "41",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CL-MR"
+        },
+        {
+          "sku": "JUS-CAM-03-41-CL-ML",
+          "o": [
+            "41",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CL-ML"
+        },
+        {
+          "sku": "JUS-CAM-03-42-CR-MC",
+          "o": [
+            "42",
+            "CR",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-42-CR-MR",
+          "o": [
+            "42",
+            "CR",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-42-CR-ML",
+          "o": [
+            "42",
+            "CR",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-42-CL-MC",
+          "o": [
+            "42",
+            "CL",
+            "MC"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-42-CL-MR",
+          "o": [
+            "42",
+            "CL",
+            "MR"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        },
+        {
+          "sku": "JUS-CAM-03-42-CL-ML",
+          "o": [
+            "42",
+            "CL",
+            "ML"
+          ],
+          "price_mxn": 550,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": null
+        }
+      ],
+      "sizes_note": "Talla de pecho 37 a 42, cuello regular o largo en punta abierta y manga corta, regular o larga. Agotada por ahora.",
+      "sleeves": "Corta, regular o larga (la eliges al comprar)"
+    },
+    {
+      "id": "ju-007",
+      "kind": "corbata",
+      "slug": "corbata-roja",
+      "sku": "JUS-COR-01",
+      "name": "Corbata Roja",
+      "short": "Rojo profundo con microdiseño.",
+      "description": "Rojo profundo con un microdiseño discreto que, de lejos, se lee liso. Le da carácter a la camisa blanca y al saco negro o gris carbón sin restar formalidad.",
+      "price_mxn": 249,
+      "prices_mxn": {
+        "U": 249
+      },
+      "stripe": {
+        "U": "https://buy.stripe.com/3cI6oJc277pVfE8060cMM0k"
+      },
+      "cut": "Única",
+      "image": "images/justo.esmx/Corbata_Rojo_fblanco.jpg",
+      "focus": "50% 40%",
+      "zoom": 1,
+      "sizes": [
+        "U"
+      ],
+      "stock": {
+        "U": 0
+      },
+      "stock_es": {
+        "U": 0
+      },
+      "fabric": "[confirmar con el taller]",
+      "pattern": "Microdiseño sobre rojo profundo",
+      "size_note": "Talla única",
+      "care": "[confirmar con el taller]",
+      "features": [
+        "Se anuda igual con camisa de cuello italiano o clásico"
+      ],
+      "active": true,
+      "featured": true,
+      "axes": [
+        {
+          "id": "talla",
+          "label": "Talla",
+          "step": "la talla",
+          "options": [
+            {
+              "id": "U",
+              "label": "Única"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JUS-COR-01-U",
+          "o": [
+            "U"
+          ],
+          "price_mxn": 249,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/3cI6oJc277pVfE8060cMM0k?client_reference_id=JUS-COR-01-U"
+        }
+      ],
+      "sizes_note": "Talla única. Agotada por ahora."
+    },
+    {
+      "id": "ju-008",
+      "kind": "corbata",
+      "slug": "corbata-azul-indigo",
+      "sku": "JUS-COR-02",
+      "name": "Corbata Azul Índigo",
+      "short": "Índigo con textura, para el día.",
+      "description": "Índigo con textura de grano visible: luce seria de lejos y tiene profundidad de cerca. Va con camisa blanca o azul cielo y con el saco azul marino o gris.",
+      "price_mxn": 249,
+      "prices_mxn": {
+        "U": 249
+      },
+      "stripe": {
+        "U": "https://buy.stripe.com/7sY14p1ntcKf0Je060cMM0l"
+      },
+      "cut": "Única",
+      "image": "images/justo.esmx/Corbata_Indigo_fblanco.jpg",
+      "focus": "50% 40%",
+      "zoom": 1,
+      "sizes": [
+        "U"
+      ],
+      "stock": {
+        "U": 0
+      },
+      "stock_es": {
+        "U": 0
+      },
+      "fabric": "[confirmar con el taller]",
+      "pattern": "Índigo texturizado",
+      "size_note": "Talla única",
+      "care": "[confirmar con el taller]",
+      "features": [
+        "Se anuda igual con camisa de cuello italiano o clásico"
+      ],
+      "active": true,
+      "featured": true,
+      "axes": [
+        {
+          "id": "talla",
+          "label": "Talla",
+          "step": "la talla",
+          "options": [
+            {
+              "id": "U",
+              "label": "Única"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JUS-COR-02-U",
+          "o": [
+            "U"
+          ],
+          "price_mxn": 249,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/7sY14p1ntcKf0Je060cMM0l?client_reference_id=JUS-COR-02-U"
+        }
+      ],
+      "sizes_note": "Talla única. Agotada por ahora."
+    },
+    {
+      "id": "ju-009",
+      "kind": "corbata",
+      "slug": "corbata-beige-a-cuadros",
+      "sku": "JUS-COR-03",
+      "name": "Corbata Beige a Cuadros",
+      "short": "Beige con cuadros en café y crema.",
+      "description": "Beige con cuadros en café y crema: la corbata para el traje gris de tweed, el fin de semana y los eventos de día. Menos formal, más estilo.",
+      "price_mxn": 249,
+      "prices_mxn": {
+        "U": 249
+      },
+      "stripe": {
+        "U": "https://buy.stripe.com/3cIdRb3vB9y3fE88CwcMM0m"
+      },
+      "cut": "Única",
+      "image": "images/justo.esmx/Corbata_BeigeCuadros_fblanco.jpg",
+      "focus": "50% 40%",
+      "zoom": 1,
+      "sizes": [
+        "U"
+      ],
+      "stock": {
+        "U": 0
+      },
+      "stock_es": {
+        "U": 0
+      },
+      "fabric": "[confirmar con el taller]",
+      "pattern": "Cuadros café y crema sobre beige",
+      "size_note": "Talla única",
+      "care": "[confirmar con el taller]",
+      "features": [
+        "Se anuda igual con camisa de cuello italiano o clásico"
+      ],
+      "active": true,
+      "featured": true,
+      "axes": [
+        {
+          "id": "talla",
+          "label": "Talla",
+          "step": "la talla",
+          "options": [
+            {
+              "id": "U",
+              "label": "Única"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JUS-COR-03-U",
+          "o": [
+            "U"
+          ],
+          "price_mxn": 249,
+          "stock": 0,
+          "stock_es": 0,
+          "stripe": "https://buy.stripe.com/3cIdRb3vB9y3fE88CwcMM0m?client_reference_id=JUS-COR-03-U"
+        }
+      ],
+      "sizes_note": "Talla única. Agotada por ahora."
+    }
+  ],
+  "catalogo_hash": "d296cce031f3b6bf049d8bf2016000e3bae2a5c29d859afa9236a53b30316725",
+  "existencias_actualizadas": "2026-11-07"
 }
