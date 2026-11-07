@@ -42,8 +42,9 @@ t('completo con liga → pay con client_reference_id', () => {
     assert.equal(s.state, 'pay'); assert.equal(s.variant.sku, 'JUS-CAM-01-37-CL-ML');
     assert.match(s.variant.stripe, /client_reference_id=JUS-CAM-01-37-CL-ML$/);
 });
-t('completo con stock pero sin liga (38) → comprar por correo', () => {
-    assert.equal(V.status(cielo, ['38', 'CR', 'MR']).state, 'mail');
+t('completo con stock pero sin liga (40) → comprar por correo', () => {
+    assert.equal(V.status(cielo, ['40', 'CR', 'MR']).state, 'mail');
+    assert.equal(V.status(cielo, ['39']).state, 'blocked');   // 39 tiene liga pero sin stock
 });
 t('índigo agotado: tallas visibles, todas bloquean', () => {
     assert.equal(indigo.axes[0].options.length, 6);
@@ -60,8 +61,8 @@ t('saco sin axes: un paso «Talla»', () => {
     assert.equal(jacket.axes.length, 1); assert.equal(jacket.axes[0].id, 'talla');
 });
 t('?sku= preselecciona pasos válidos', () => {
-    assert.deepEqual(V.picksFromSku(cielo, 'JUS-CAM-01', 'JUS-CAM-01-39-CL-MC'), ['39', 'CL', 'MC']);
-    assert.deepEqual(V.picksFromSku(cielo, 'JUS-CAM-01', 'JUS-CAM-01-39-XX'), ['39']);
+    assert.deepEqual(V.picksFromSku(cielo, 'JUS-CAM-01', 'JUS-CAM-01-40-CL-MC'), ['40', 'CL', 'MC']);
+    assert.deepEqual(V.picksFromSku(cielo, 'JUS-CAM-01', 'JUS-CAM-01-40-XX'), ['40']);
     assert.deepEqual(V.picksFromSku(cielo, 'JUS-CAM-01', 'JUS-CAM-02-39'), []);
 });
 console.log(`${n} pruebas OK`);
