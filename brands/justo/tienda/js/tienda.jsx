@@ -104,6 +104,9 @@ const stockText = (product, size) => inStock(product, size)
 // Small grey «Agotado» tag over the photo of a sold-out product
 const SoldOutTag = () => <span className="tag-out absolute top-3 left-3 z-10">Agotado</span>;
 
+// Shirts are sized by collar (cm, "37"…"42"): they have no row in tallas.json, the chip reads «Cuello 37 cm».
+const sizeLabel = (catalog, s) => catalog.size[s]?.label || (/^\d+$/.test(s) ? `Cuello ${s} cm` : '');
+
 // --- PRICING ---
 // Prices include IVA. Each size has its own price (prices_mxn); price_mxn is the lowest one, shown as «desde» before a size is chosen.
 const unitPrice = (product, size) => (product.prices_mxn && product.prices_mxn[size]) || product.price_mxn;
@@ -220,7 +223,7 @@ const ProductCard = ({ product, catalog }) => (
                 <p className="label text-ink-500 mt-3">
                     {oneSize(product) ? <span className={inStock(product, product.sizes[0]) ? '' : 'text-ink-300 line-through'}>Talla única</span> : <>
                     Corte {product.cut.toLowerCase()} &middot; {product.sizes.map(s => (
-                        <span key={s} className={inStock(product, s) ? '' : 'text-ink-300 line-through'} title={inStock(product, s) ? `${catalog.size[s]?.label}: en existencia` : `${catalog.size[s]?.label}: agotado`}>{s} </span>
+                        <span key={s} className={inStock(product, s) ? '' : 'text-ink-300 line-through'} title={inStock(product, s) ? `${sizeLabel(catalog, s)}: en existencia` : `${sizeLabel(catalog, s)}: agotado`}>{s} </span>
                     ))}</>}
                 </p>
             </div>
@@ -230,11 +233,11 @@ const ProductCard = ({ product, catalog }) => (
 
 // --- SIZE UI ---
 const SizeChips = ({ product, catalog, value, onChange }) => (
-    <div className="grid grid-cols-4 gap-1 max-w-md" role="radiogroup" aria-label="Talla">
+    <div className={`grid ${product.sizes.length > 4 ? 'grid-cols-3' : 'grid-cols-4'} gap-1 max-w-md`} role="radiogroup" aria-label="Talla">
         {product.sizes.map(s => (
             <button key={s} type="button" role="radio" aria-checked={value === s} data-out={!inStock(product, s)} className="chip" onClick={() => onChange(s)}>
                 <span className="label-strong">{s}</span>
-                <span className="text-[13px] leading-tight">{catalog.size[s]?.label}</span>
+                <span className="text-[13px] leading-tight">{sizeLabel(catalog, s)}</span>
             </button>
         ))}
     </div>
