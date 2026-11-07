@@ -7,8 +7,8 @@
    3. Section tones: the page background eases between white and vintage beige as sections pass.
    4. A thin wine progress line at the top.
    5. «Inicio» and the wordmark: with a saved member session they open index.html (js/acceso.js lets the member in);
-      without one they go straight to visitante.html. The sign-in card only appears for the avatar link (#acceso) and
-      for visits typed into the address bar (see acceso.js).
+      without one they go straight to visitante.html. The sign-in card only appears for the avatar link (#acceso);
+      visitors without a session who type the address also land on visitante.html (see acceso.js).
    Links are built from this script's own URL, so the same file works at any folder depth. */
 (function () {
   'use strict';
