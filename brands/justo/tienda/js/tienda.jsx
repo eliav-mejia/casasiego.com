@@ -236,31 +236,40 @@ const ProductCard = ({ product, catalog }) => (
 // --- SIZE UI ---
 const V = window.JustoVariantes;
 
-// One chip row per step. Every configured option is drawn; options without stock (given the earlier picks) are struck through.
-// A step only appears when the previous pick has stock; changing a step clears the ones after it.
-const StepSelector = ({ m, picks, onPick, catalog, nudge }) => (
-    <div className="space-y-6 max-w-md">
-        {m.axes.slice(0, V.visibleSteps(m, picks)).map((axis, k) => (
-            <fieldset key={axis.id} id={`paso-${axis.id}`} className="animate-fade-in">
-                <legend className={`label-strong mb-3 ${nudge === k && picks[k] == null ? 'text-rust' : ''}`}>
-                    <span className="text-gold mr-2">{m.axes.length > 1 ? `${k + 1}/${m.axes.length}` : ''}</span>{axis.label}
-                    {picks[k] != null && <span className="label text-ink-500 ml-2">· {axis.options.find(o => o.id === picks[k])?.label}</span>}
-                </legend>
-                <div className={`grid ${axis.options.length > 4 ? 'grid-cols-3' : axis.options.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-1`} role="radiogroup" aria-label={axis.label}>
-                    {axis.options.map(o => {
-                        const ok = V.available(m, picks, k, o.id);
-                        const sub = o.sub || (axis.id === 'talla' ? sizeLabel(catalog, o.id) : '');
-                        return (
-                            <button key={o.id} type="button" role="radio" aria-checked={picks[k] === o.id} data-out={!ok} className="chip"
-                                title={ok ? `${axis.label} ${o.label}: en existencia` : `${axis.label} ${o.label}: sin stock`} onClick={() => onPick(k, o.id)}>
-                                <span className="label-strong">{o.label}</span>
-                                <span className="text-[13px] leading-tight">{ok ? sub : 'Sin stock'}</span>
-                            </button>
-                        );
-                    })}
+// Step form: a vertical list of full-width rows (pecho → cuello → manga). The open row shows every configured option
+// below its header (out of stock: dashed + «Sin stock»); a chosen row closes to one line with its value and reopens on tap.
+// A row only appears when the previous pick has stock; changing a row clears the ones after it (variantes.js).
+const StepSelector = ({ m, picks, onPick, catalog, open, onOpen, nudge }) => (
+    <div className="steps">
+        {m.axes.slice(0, V.visibleSteps(m, picks)).map((axis, k) => {
+            const isOpen = open === k;
+            const chosen = axis.options.find(o => o.id === picks[k]);
+            return (
+                <div key={axis.id} id={`paso-${axis.id}`} className={`step ${isOpen ? 'is-open' : ''} ${nudge === k && picks[k] == null ? 'is-need' : ''}`}>
+                    <button type="button" className="step-head" aria-expanded={isOpen} aria-controls={`opciones-${axis.id}`} onClick={() => onOpen(isOpen ? -1 : k)}>
+                        <span className="label-strong">{m.axes.length > 1 && <span className="n">{k + 1}/{m.axes.length}</span>}{axis.label}</span>
+                        <span className="label val">{chosen ? chosen.label : 'Elegir'}<span className="chev" aria-hidden="true">▾</span></span>
+                    </button>
+                    {isOpen && (
+                        <div className="step-body" id={`opciones-${axis.id}`}>
+                            <div className={`step-options ${axis.options.length === 2 ? 'cols-2' : ''}`} role="radiogroup" aria-label={axis.label}>
+                                {axis.options.map(o => {
+                                    const ok = V.available(m, picks, k, o.id);
+                                    const sub = o.sub || (axis.id === 'talla' ? sizeLabel(catalog, o.id) : '');
+                                    return (
+                                        <button key={o.id} type="button" role="radio" aria-checked={picks[k] === o.id} data-out={!ok} className="chip"
+                                            title={ok ? `${axis.label} ${o.label}: en existencia` : `${axis.label} ${o.label}: sin stock`} onClick={() => onPick(k, o.id)}>
+                                            <span className="label-strong">{o.label}</span>
+                                            <span className="text-[13px] leading-tight">{ok ? sub : 'Sin stock'}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
                 </div>
-            </fieldset>
-        ))}
+            );
+        })}
     </div>
 );
 
@@ -363,6 +372,7 @@ const ProductPage = () => {
     const product = catalog.bySlug[slug];
     const [picks, setPicks] = useState(null);   // one option id per step, in order (null = not read from ?sku= yet)
     const [nudge, setNudge] = useState(-1);     // step highlighted after pressing «Continuar»
+    const [openStep, setOpenStep] = useState(null); // row the visitor opened by hand (null = the next one to choose)
     useReveal([catalog.status]);
     const m = useMemo(() => product && V.model(product, s => sizeLabel(catalog, s)), [product, catalog]);
 
@@ -386,14 +396,16 @@ const ProductPage = () => {
     const chosen = V.autoPicks(m, picks || []);
     const size = chosen[0] ?? null;             // first step: jacket size / shirt chest size / «U»
     const st = V.status(m, chosen);
-    const onPick = (k, id) => { setPicks(V.pick(chosen, k, id)); setNudge(-1); };
-    const goToStep = () => { setNudge(st.step); document.getElementById(`paso-${m.axes[st.step].id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+    // Open row: the one tapped, else the next to choose, else the one whose pick has no stock; none when complete.
+    const openRow = openStep != null ? openStep : st.state === 'choose' || st.state === 'blocked' ? st.step : -1;
+    const onPick = (k, id) => { setPicks(V.pick(chosen, k, id)); setNudge(-1); setOpenStep(null); };
+    const goToStep = () => { setNudge(st.step); setOpenStep(null); document.getElementById(`paso-${m.axes[st.step].id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
     const related = catalog.products.filter(p => p.id !== product.id);
 
     return (
         <>
-            <section className="max-w-[1400px] mx-auto md:px-10 md:pt-8 grid md:grid-cols-12 gap-6 md:gap-12 items-start">
-                <div className="md:col-span-7 grid gap-1">
+            <section className="pdp max-w-[1400px] mx-auto md:px-10 md:pt-8">
+                <div className="pdp-media grid gap-1">
                     <div className="relative">
                         <Photo product={product} className={`aspect-[3/4] animate-fade-in ${soldOut(product) ? 'is-out' : ''}`} eager />
                         {soldOut(product) && <SoldOutTag />}
@@ -406,7 +418,7 @@ const ProductPage = () => {
                     )}
                 </div>
 
-                <div className="md:col-span-5 md:sticky md:top-28 px-4 md:px-0 pb-10 animate-fade-in">
+                <div className="pdp-buy px-4 md:px-0 pb-10 animate-fade-in">
                     <nav className="label text-ink-500 mb-6" aria-label="Ruta">
                         <ol className="flex flex-wrap gap-1.5">
                             <li><a href={`${ROOT}brands/justo/`} className="link">Justo</a></li>
@@ -423,10 +435,12 @@ const ProductPage = () => {
                         <div className="flex justify-end mb-3 max-w-md">
                             <a href={`${SHOP}/guia-de-tallas/`} className="label link text-ink-500">Guía de tallas</a>
                         </div>
-                        <StepSelector m={m} picks={chosen} onPick={onPick} catalog={catalog} nudge={nudge} />
+                        <StepSelector m={m} picks={chosen} onPick={onPick} catalog={catalog} nudge={nudge} open={openRow} onOpen={setOpenStep} />
                     </div>}
 
                     {isJacket && size && <div className="mt-5"><SizeSpecs product={product} catalog={catalog} size={size} /></div>}
+                    {/* Summary + button: one block, always below the steps */}
+                    <div className="buy-box">
                     {st.variant && !isJacket && <div className="mt-6"><OrderSummary product={product} m={m} picks={chosen} variant={st.variant} /></div>}
 
                     {/* Bottom button: Continuar (next step) · disabled + reason (no stock) · Pagar (Stripe) · Comprar por correo (no link yet) */}
@@ -444,6 +458,7 @@ const ProductPage = () => {
                         )}
                         {st.legend && !(single && st.state === 'blocked') && <p className={`label mt-3 ${st.state === 'blocked' ? 'text-rust' : 'text-ink-500'}`}>{st.legend}</p>}
                         <p className="note text-ink-500 mt-3 text-[15px]">Pago seguro en la página de Stripe, una pieza por pago, en pesos mexicanos (MXN).{isJacket && ` Incluye ajuste de mangas (±${tolerances.sleeve_cm} cm) y cintura (±${tolerances.waist_cm} cm) en el taller.`} Antes de pagar, lee la <a href={`${ROOT}devoluciones.html`} className="link">política de devoluciones</a>.</p>
+                    </div>
                     </div>
 
                     <div className="mt-10 max-w-md border-b border-line">
