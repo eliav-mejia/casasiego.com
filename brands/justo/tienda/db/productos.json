@@ -310,14 +310,14 @@
       "name": "Camisa Azul Cielo",
       "short": "Azul cielo, puño sencillo; eliges cuello y manga.",
       "description": "El azul de oficina que acompaña a todo: al gris carbón, al azul marino y a la corbata plata. Cuello regular o largo en punta abierta, manga corta, regular o larga, puño sencillo de un botón y faldón curvo para llevarla fajada.",
-      "price_mxn": 550,
+      "price_mxn": 750,
       "prices_mxn": {
-        "37": 550,
-        "38": 550,
-        "39": 550,
-        "40": 550,
-        "41": 550,
-        "42": 550
+        "37": 750,
+        "38": 750,
+        "39": 750,
+        "40": 750,
+        "41": 750,
+        "42": 750
       },
       "stripe": {
         "37": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i",
@@ -437,7 +437,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-MC"
@@ -449,7 +449,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-MR"
@@ -461,7 +461,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-ML"
@@ -473,7 +473,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-MC"
@@ -485,7 +485,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-MR"
@@ -497,7 +497,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-ML"
@@ -509,7 +509,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -521,7 +521,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -533,7 +533,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -545,7 +545,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -557,7 +557,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -569,7 +569,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -581,7 +581,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CR-MC"
@@ -593,7 +593,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CR-MR"
@@ -605,7 +605,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CR-ML"
@@ -617,7 +617,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CL-MC"
@@ -629,7 +629,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CL-MR"
@@ -641,7 +641,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cxgin4dJ8bGaKEcMM0p?client_reference_id=JUS-CAM-01-39-CL-ML"
@@ -653,7 +653,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": null
@@ -665,7 +665,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": null
@@ -677,7 +677,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": null
@@ -689,7 +689,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": null
@@ -701,7 +701,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": null
@@ -713,7 +713,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 1,
           "stock_es": 0,
           "stripe": null
@@ -725,7 +725,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CR-MC"
@@ -737,7 +737,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CR-MR"
@@ -749,7 +749,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CR-ML"
@@ -761,7 +761,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CL-MC"
@@ -773,7 +773,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CL-MR"
@@ -785,7 +785,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/8x29AVd6b7pV77C4mgcMM0q?client_reference_id=JUS-CAM-01-41-CL-ML"
@@ -797,7 +797,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -809,7 +809,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -821,7 +821,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -833,7 +833,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -845,7 +845,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -857,7 +857,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -874,14 +874,14 @@
       "name": "Camisa Azul Índigo",
       "short": "Índigo profundo, botones al tono.",
       "description": "Índigo profundo con botones al tono: más carácter que el azul cielo sin dejar la oficina. Con saco gris y corbata clara para el día; sola, con pantalón beige, para la tarde. Cuello regular o largo en punta abierta, manga corta, regular o larga y puño sencillo.",
-      "price_mxn": 550,
+      "price_mxn": 750,
       "prices_mxn": {
-        "37": 550,
-        "38": 550,
-        "39": 550,
-        "40": 550,
-        "41": 550,
-        "42": 550
+        "37": 750,
+        "38": 750,
+        "39": 750,
+        "40": 750,
+        "41": 750,
+        "42": 750
       },
       "stripe": {
         "37": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h",
@@ -1001,7 +1001,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CR-MC"
@@ -1013,7 +1013,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CR-MR"
@@ -1025,7 +1025,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CR-ML"
@@ -1037,7 +1037,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CL-MC"
@@ -1049,7 +1049,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CL-MR"
@@ -1061,7 +1061,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/7sY3cx4zF7pV9fK6uocMM0h?client_reference_id=JUS-CAM-02-37-CL-ML"
@@ -1073,7 +1073,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1085,7 +1085,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1097,7 +1097,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1109,7 +1109,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1121,7 +1121,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1133,7 +1133,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1145,7 +1145,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CR-MC"
@@ -1157,7 +1157,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CR-MR"
@@ -1169,7 +1169,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CR-ML"
@@ -1181,7 +1181,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CL-MC"
@@ -1193,7 +1193,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CL-MR"
@@ -1205,7 +1205,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/28E6oJ9TZ8tZ4Zu9GAcMM0r?client_reference_id=JUS-CAM-02-39-CL-ML"
@@ -1217,7 +1217,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1229,7 +1229,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1241,7 +1241,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1253,7 +1253,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1265,7 +1265,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1277,7 +1277,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1289,7 +1289,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CR-MC"
@@ -1301,7 +1301,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CR-MR"
@@ -1313,7 +1313,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CR-ML"
@@ -1325,7 +1325,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CL-MC"
@@ -1337,7 +1337,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CL-MR"
@@ -1349,7 +1349,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/4gMdRbgin8tZ1Ni8CwcMM0s?client_reference_id=JUS-CAM-02-41-CL-ML"
@@ -1361,7 +1361,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1373,7 +1373,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1385,7 +1385,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1397,7 +1397,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1409,7 +1409,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1421,7 +1421,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1438,14 +1438,14 @@
       "name": "Camisa Blanca",
       "short": "Blanca, puño sencillo; eliges cuello y manga.",
       "description": "La blanca de la casa: la base de la raya diplomática y del negro de noche. Cuello regular o largo en punta abierta que sostiene cualquier corbata, manga corta, regular o larga, puño sencillo de un botón y faldón curvo.",
-      "price_mxn": 550,
+      "price_mxn": 750,
       "prices_mxn": {
-        "37": 550,
-        "38": 550,
-        "39": 550,
-        "40": 550,
-        "41": 550,
-        "42": 550
+        "37": 750,
+        "38": 750,
+        "39": 750,
+        "40": 750,
+        "41": 750,
+        "42": 750
       },
       "stripe": {
         "37": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j",
@@ -1565,7 +1565,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-MC"
@@ -1577,7 +1577,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-MR"
@@ -1589,7 +1589,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-ML"
@@ -1601,7 +1601,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CL-MC"
@@ -1613,7 +1613,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CL-MR"
@@ -1625,7 +1625,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CL-ML"
@@ -1637,7 +1637,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1649,7 +1649,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1661,7 +1661,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1673,7 +1673,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1685,7 +1685,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1697,7 +1697,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1709,7 +1709,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CR-MC"
@@ -1721,7 +1721,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CR-MR"
@@ -1733,7 +1733,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CR-ML"
@@ -1745,7 +1745,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CL-MC"
@@ -1757,7 +1757,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CL-MR"
@@ -1769,7 +1769,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B69AV1ntbGbcrWf0UcMM0n?client_reference_id=JUS-CAM-03-39-CL-ML"
@@ -1781,7 +1781,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1793,7 +1793,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1805,7 +1805,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1817,7 +1817,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1829,7 +1829,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1841,7 +1841,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1853,7 +1853,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CR-MC"
@@ -1865,7 +1865,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CR-MR"
@@ -1877,7 +1877,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CR-ML"
@@ -1889,7 +1889,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CL-MC"
@@ -1901,7 +1901,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CL-MR"
@@ -1913,7 +1913,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/9B6eVfginfWrdw02e8cMM0o?client_reference_id=JUS-CAM-03-41-CL-ML"
@@ -1925,7 +1925,7 @@
             "CR",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1937,7 +1937,7 @@
             "CR",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1949,7 +1949,7 @@
             "CR",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1961,7 +1961,7 @@
             "CL",
             "MC"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1973,7 +1973,7 @@
             "CL",
             "MR"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -1985,7 +1985,7 @@
             "CL",
             "ML"
           ],
-          "price_mxn": 550,
+          "price_mxn": 750,
           "stock": 0,
           "stock_es": 0,
           "stripe": null
@@ -2187,6 +2187,6 @@
       "sizes_note": "Talla única. Agotada por ahora."
     }
   ],
-  "catalogo_hash": "d296cce031f3b6bf049d8bf2016000e3bae2a5c29d859afa9236a53b30316725",
+  "catalogo_hash": "3f9a8254f05ea6c9c940b46704377ccdd0a3a2bc206f3b919d847514ec841f5a",
   "existencias_actualizadas": "2026-11-07"
 }
