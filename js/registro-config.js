@@ -3,10 +3,10 @@
    Empty supabaseUrl / publishableKey = Supabase not configured yet: the letter can be written but is not sent (demo).
    avisos / campos below are the DEMO fallback; with Supabase the page reads public.formulario_registro(marca, campana). */
 window.CASASIEGO_REGISTRO = {
-  supabaseUrl: '',                 // https://<ref>.supabase.co
-  publishableKey: '',              // sb_publishable_…
+  supabaseUrl: (window.CASASIEGO_SUPABASE || {}).url || '',            // js/supabase-config.js (from .env)
+  publishableKey: (window.CASASIEGO_SUPABASE || {}).publishableKey || '',
   supabaseJs: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js',
-  turnstileSiteKey: '',            // Cloudflare Turnstile (public). Empty = no captcha (only for the test project)
+  turnstileSiteKey: (window.CASASIEGO_SUPABASE || {}).turnstileSiteKey || '', // Cloudflare Turnstile (public). Empty = no captcha
   bitacoraBorde: '/api/acceso/evento', // Worker acceso-borde (D1). '' = off (GitHub Pages without Cloudflare in front)
   proveedores: ['google', 'facebook', 'apple', 'azure'], // azure = Microsoft in Supabase Auth
   redirectOnSuccess: 'index.html',

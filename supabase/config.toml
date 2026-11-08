@@ -1,0 +1,108 @@
+# casasiego.com · proyecto Supabase de Casa Siego (pendiente de crear: uno por cliente, Etapa 7)
+# Fuente para la CLI local (`supabase start`) y para las ramas de vista previa (Branching, una por pull request).
+# Los valores de producción TAMBIÉN se fijan en el panel: compararlos con este archivo después de cada despliegue
+# (lista de control: _interno/deployed/features/casasiego-v1.3.1.pdf §4). Ningún secreto aquí: solo env(...).
+# Base: _interno/acceso/config.toml.ejemplo + sites/Lameyer.net/supabase/config.toml (v1.1.0).
+project_id = "casasiego-com"
+
+[api]
+enabled = true
+schemas = ["public", "graphql_public"]           # identidad e inventario NO se exponen
+extra_search_path = ["public", "extensions"]
+max_rows = 200
+
+[db]
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "https://casasiego.com"
+# Lista EXACTA de retornos, sin comodines. OAuth vuelve a /cuenta/; invitación y recuperación a /acceso/contrasena/.
+additional_redirect_urls = [
+  "https://casasiego.com/cuenta/",                 # retorno de Google / Microsoft / LinkedIn tras autenticarse
+  "https://casasiego.com/acceso/contrasena/",      # invitación (registrar-cliente) y recuperación de contraseña
+  "https://casasiego.com/registro/",               # personal
+]
+jwt_expiry = 900                                 # 15 min: un rol retirado deja de valer pronto
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = false                            # SIN registro público: las cuentas las crea un representante en /registro/
+enable_anonymous_sign_ins = false
+enable_manual_linking = false
+minimum_password_length = 12
+password_requirements = "lower_upper_letters_digits"
+
+[auth.rate_limit]                                # por IP
+email_sent = 2                                   # SMTP de prueba de Supabase; subir a 30 con SMTP propio
+sms_sent = 0
+token_refresh = 150
+sign_in_sign_ups = 20                            # protege la tarjeta de acceso contra fuerza bruta (5 min)
+token_verifications = 20
+
+[auth.captcha]                                   # PENDIENTE: Turnstile (clave de sitio en .env → js/supabase-config.js)
+enabled = false
+provider = "turnstile"
+secret = "env(TURNSTILE_SECRET_KEY)"
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
+double_confirm_changes = true
+secure_password_change = true
+max_frequency = "60s"
+otp_length = 6
+otp_expiry = 3600                                # vida del enlace de invitación (1 h); bajar a 900 con SMTP propio
+
+# PENDIENTE: SMTP propio (no-responder@casasiego.com) con SPF, DKIM y DMARC antes de invitar clientes reales.
+# [auth.email.smtp]
+# enabled = true
+# host = "env(SMTP_HOST)"
+# port = 587
+# user = "env(SMTP_USER)"
+# pass = "env(SMTP_PASS)"
+# admin_email = "no-responder@casasiego.com"
+# sender_name = "Casa Siego"
+
+[auth.sms]
+enable_signup = false
+
+[auth.mfa]
+max_enrolled_factors = 10
+
+[auth.mfa.totp]                                  # representantes y admin_cliente: is_admin() exige aal2
+enroll_enabled = true
+verify_enabled = true
+
+[auth.mfa.phone]
+enroll_enabled = false
+verify_enabled = false
+
+# Proveedores sociales: solo para cuentas que YA existen (enable_signup = false). Callback a registrar en cada proveedor:
+#   https://<ref>.supabase.co/auth/v1/callback        Guía: _interno/deployed/cyberseguridad/guia-supabase-proveedores-v1.0.0.pdf
+[auth.external.google]
+enabled = false
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
+skip_nonce_check = false
+
+[auth.external.azure]                            # Microsoft Entra ID · claims opcionales email + xms_edov · el sitio pide scopes 'email'
+enabled = false
+client_id = "env(AZURE_CLIENT_ID)"
+secret = "env(AZURE_CLIENT_SECRET)"
+url = "https://login.microsoftonline.com/common"
+
+[auth.external.linkedin_oidc]                    # «LinkedIn (OIDC)»; el proveedor «LinkedIn» antiguo está retirado
+enabled = false
+client_id = "env(LINKEDIN_CLIENT_ID)"
+secret = "env(LINKEDIN_CLIENT_SECRET)"
+
+# Hook de JWT (0001): app_roles y registro_completo en el token
+[auth.hook.custom_access_token]
+enabled = true
+uri = "pg-functions://postgres/public/custom_access_token_hook"
+
+[functions.registrar-cliente]
+verify_jwt = true                                # solo con sesión; la función exige rol representante o admin_cliente
+
+[functions.odoo-existencias]
+verify_jwt = false                               # Odoo no tiene JWT de Supabase: la función exige x-odoo-secreto

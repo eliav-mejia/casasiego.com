@@ -1,7 +1,7 @@
 {
   "_schema": "products: id, kind? (camisa: sin specs, con collar y cuffs, talla de pecho 37–42 × cuello × manga en axes/variants; corbata: sizes [U] talla única, con pattern y size_note; price_mxn null = precio por confirmar), slug, sku, name, short, description, price_mxn (desde: la talla más barata), prices_mxn{size}, stripe{size} (liga de pago de Stripe por talla, cobra en MXN, sin monograma), cut, image (desde la raíz del sitio), focus, zoom, detail_image?, sizes[], stock{size: n} (México; 0 = agotado: sin pago), stock_es{size: n} (España; sin el campo = agotado), specs{size: { chest, waist, shoulder, sleeve, length, hem, lapel, drop }} (cm, prenda en plano ×2 donde aplica), fabric, lining, construction, buttons, pockets, vents, care, features[], active, featured · axes[{ id, label, step, options[{ id, label }] }] y variants[{ sku, o[opción por eje], price_mxn, stock, stock_es, stripe }] (camisas y corbatas): los escribe builds/Odoo/Odoo_catalogues/exportar_tienda.py desde el catálogo serializado; no editar a mano. sizes/stock/stock_es/prices_mxn de esos productos son el resumen por el primer eje. Sin axes (sacos): el selector usa sizes como único paso.",
   "_note": "Catálogo de ejemplo (Etapa 1) de Justo by Casa Siego. Precios con IVA, medidas y existencias: confirmar con el taller. Cada saco tiene su foto en images/justo.esmx/.",
-  "updated_at": "2026-11-07",
+  "updated_at": "2026-11-08",
   "products": [
     {
       "id": "ju-001",
@@ -337,10 +337,10 @@
         "42"
       ],
       "stock": {
-        "37": 6,
+        "37": 1,
         "38": 0,
         "39": 0,
-        "40": 6,
+        "40": 1,
         "41": 0,
         "42": 0
       },
@@ -438,7 +438,7 @@
             "MC"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-MC"
         },
@@ -462,7 +462,7 @@
             "ML"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-ML"
         },
@@ -474,7 +474,7 @@
             "MC"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-MC"
         },
@@ -486,7 +486,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-MR"
         },
@@ -498,7 +498,7 @@
             "ML"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CL-ML"
         },
@@ -654,7 +654,7 @@
             "MC"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -678,7 +678,7 @@
             "ML"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -690,7 +690,7 @@
             "MC"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -702,7 +702,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -714,7 +714,7 @@
             "ML"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -1465,10 +1465,10 @@
         "42"
       ],
       "stock": {
-        "37": 0,
+        "37": 1,
         "38": 0,
         "39": 0,
-        "40": 0,
+        "40": 1,
         "41": 0,
         "42": 0
       },
@@ -1578,7 +1578,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 0,
+          "stock": 1,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-MR"
         },
@@ -1794,7 +1794,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 0,
+          "stock": 1,
           "stock_es": 0,
           "stripe": null
         },
@@ -1991,7 +1991,7 @@
           "stripe": null
         }
       ],
-      "sizes_note": "Talla de pecho 37 a 42, cuello regular o largo en punta abierta y manga corta, regular o larga. Agotada por ahora.",
+      "sizes_note": "Talla de pecho 37 a 42, cuello regular o largo en punta abierta y manga corta, regular o larga. Disponible en pecho 37 y 40.",
       "sleeves": "Corta, regular o larga (la eliges al comprar)"
     },
     {
@@ -2188,5 +2188,5 @@
     }
   ],
   "catalogo_hash": "3f9a8254f05ea6c9c940b46704377ccdd0a3a2bc206f3b919d847514ec841f5a",
-  "existencias_actualizadas": "2026-11-07"
+  "existencias_actualizadas": "2026-11-08"
 }

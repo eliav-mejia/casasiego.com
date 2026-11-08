@@ -37,3 +37,16 @@ cargando/fonts/*
 
 # Python bytecode of the generators in docs/src/
 __pycache__/
+
+# Secretos: claves de Supabase, Odoo y Turnstile. Solo .env.example (sin valores) entra al repositorio.
+# Los valores públicos que necesita el navegador los copia tools/env-a-config.py a js/supabase-config.js.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+supabase/.temp/
+supabase/.branches/
+
+# Dependencias de las herramientas locales (package.json sí entra)
+node_modules/

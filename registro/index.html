@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de cliente · Casa Siego®</title>
+  <!-- Registro de clientes POR un representante de Casa Siego (v1.3.1). No hay botón ni enlace público a esta página:
+       el representante entra con el avatar de la barra superior y abre /registro/. Sin sesión de personal, el formulario no aparece.
+       La Edge Function registrar-cliente invita al cliente por correo y guarda datos, medidas y consentimientos (migración 0002). -->
+  <meta name="robots" content="noindex, nofollow, noai, noimageai">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#4A1621">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=Spectral:ital@1&display=swap">
+  <link rel="stylesheet" href="../css/site.css?v=1.1.1">
+  <link rel="stylesheet" href="../css/layout.css?v=1.1.9">
+  <link rel="stylesheet" href="../css/registro-cliente.css?v=1.0.0">
+  <script src="../js/casa.js?v=1.2.1" defer></script>
+  <script src="../js/supabase-config.js?v=1.0.0" defer></script>
+  <script src="../js/acceso-config.js?v=1.0.4" defer></script>
+  <script src="../js/registro-cliente.js?v=1.0.0" defer></script>
+</head>
+<body>
+  <header class="terms-head">
+    <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
+    <p class="eyebrow eyebrow--gold">Uso del personal</p>
+    <h1 class="display">Registro de cliente</h1>
+    <p class="meta meta--gold">Datos, medidas y avisos. El cliente recibe un correo para elegir su contraseña.</p>
+  </header>
+
+  <main class="folio terms rc">
+    <!-- Estados: data-estado = cargando · sin-sesion · sin-permiso · listo · enviando · hecho · sin-config -->
+    <div class="rc__aviso" id="rc-aviso" role="status" aria-live="polite">Comprobando tu sesión&hellip;</div>
+
+    <form class="rc__form" id="rc-form" novalidate hidden>
+      <fieldset>
+        <legend class="section-title">1. Cliente</legend>
+        <div class="rc__grid">
+          <label>Nombre <input name="nombre" required maxlength="120" autocomplete="off"></label>
+          <label>Apellidos <input name="apellidos" maxlength="120" autocomplete="off"></label>
+          <label>Correo <input name="email" type="email" required maxlength="254" autocomplete="off"></label>
+          <label>Teléfono <input name="telefono" type="tel" placeholder="+52 55 1234 5678" autocomplete="off"></label>
+          <label>Fecha de nacimiento <input name="fecha_nacimiento" type="date"></label>
+          <label>Ciudad <input name="ciudad" maxlength="80"></label>
+          <label>País
+            <select name="pais"><option value="MX">México</option><option value="ES">España</option><option value="">Otro</option></select></label>
+          <label>Contacto preferido
+            <select name="contacto_preferido"><option value="correo">Correo</option><option value="telefono">Teléfono</option><option value="whatsapp">WhatsApp</option></select></label>
+          <label>Marca
+            <select name="marca"><option value="justo">Justo</option><option value="casa">Casa Siego</option><option value="fiel">Fiel</option></select></label>
+        </div>
+      </fieldset>
+
+      <fieldset data-grupo="medidas">
+        <legend class="section-title">2. Toma de medidas</legend>
+        <div class="rc__grid">
+          <label>Lugar
+            <select name="lugar"><option value="domicilio">Domicilio</option><option value="oficina">Oficina</option><option value="casa_siego">Casa Siego</option><option value="remota">Remota (el cliente se midió)</option></select></label>
+          <label>Estatura <span class="rc__u">cm</span> <input name="estatura_cm" type="number" step="0.5" min="120" max="230" inputmode="decimal"></label>
+          <label>Peso <span class="rc__u">kg</span> <input name="peso_kg" type="number" step="0.5" min="30" max="250" inputmode="decimal"></label>
+        </div>
+        <h3 class="rc__sub">Camisa</h3>
+        <div class="rc__grid">
+          <label>Cuello <span class="rc__u">cm · obligatorio</span> <input name="cuello" type="number" step="0.5" min="28" max="60" required inputmode="decimal"></label>
+          <label>Pecho <span class="rc__u">cm · obligatorio</span> <input name="pecho" type="number" step="0.5" min="70" max="160" required inputmode="decimal"></label>
+          <label>Largo de manga <span class="rc__u">cm · obligatorio</span> <input name="largo_manga" type="number" step="0.5" min="40" max="80" required inputmode="decimal"></label>
+          <label>Cintura <span class="rc__u">cm</span> <input name="cintura" type="number" step="0.5" min="50" max="170" inputmode="decimal"></label>
+          <label>Cadera <span class="rc__u">cm</span> <input name="cadera" type="number" step="0.5" min="60" max="180" inputmode="decimal"></label>
+          <label>Hombros <span class="rc__u">cm · costura a costura</span> <input name="hombros" type="number" step="0.5" min="30" max="65" inputmode="decimal"></label>
+          <label>Bíceps <span class="rc__u">cm</span> <input name="biceps" type="number" step="0.5" min="20" max="60" inputmode="decimal"></label>
+          <label>Muñeca <span class="rc__u">cm · puño</span> <input name="muneca" type="number" step="0.5" min="12" max="30" inputmode="decimal"></label>
+          <label>Largo de camisa <span class="rc__u">cm</span> <input name="largo_camisa" type="number" step="0.5" min="60" max="100" inputmode="decimal"></label>
+        </div>
+        <h3 class="rc__sub">Saco y pantalón</h3>
+        <div class="rc__grid">
+          <label>Largo de saco <span class="rc__u">cm</span> <input name="largo_saco" type="number" step="0.5" min="60" max="95" inputmode="decimal"></label>
+          <label>Cintura de pantalón <span class="rc__u">cm</span> <input name="cintura_pantalon" type="number" step="0.5" min="55" max="160" inputmode="decimal"></label>
+          <label>Tiro <span class="rc__u">cm</span> <input name="tiro" type="number" step="0.5" min="20" max="45" inputmode="decimal"></label>
+          <label>Entrepierna <span class="rc__u">cm</span> <input name="entrepierna" type="number" step="0.5" min="60" max="100" inputmode="decimal"></label>
+          <label>Muslo <span class="rc__u">cm</span> <input name="muslo" type="number" step="0.5" min="40" max="90" inputmode="decimal"></label>
+          <label>Bajo de pantalón <span class="rc__u">cm</span> <input name="bajo_pantalon" type="number" step="0.5" min="30" max="60" inputmode="decimal"></label>
+        </div>
+        <h3 class="rc__sub">Forma y preferencias</h3>
+        <div class="rc__grid">
+          <label>Hombros <select name="hombros_forma"><option value="">—</option><option value="normales">Normales</option><option value="caidos">Caídos</option><option value="altos">Altos</option><option value="asimetricos">Asimétricos</option></select></label>
+          <label>Postura <select name="postura"><option value="">—</option><option value="erguida">Erguida</option><option value="normal">Normal</option><option value="encorvada">Encorvada</option></select></label>
+          <label>Abdomen <select name="abdomen"><option value="">—</option><option value="plano">Plano</option><option value="normal">Normal</option><option value="prominente">Prominente</option></select></label>
+          <label>Ajuste <select name="ajuste"><option value="">—</option><option value="entallado">Entallado</option><option value="regular">Regular</option><option value="holgado">Holgado</option></select></label>
+          <label>Cuello <select name="cuello_preferido"><option value="">—</option><option value="CR">Regular</option><option value="CL">Largo en punta abierta</option></select></label>
+          <label>Manga <select name="manga_preferida"><option value="">—</option><option value="MC">Corta</option><option value="MR">Regular</option><option value="ML">Larga</option></select></label>
+          <label>Puño <select name="puno"><option value="">—</option><option value="sencillo">Sencillo</option><option value="doble">Doble</option><option value="mancuernas">Para mancuernas</option></select></label>
+        </div>
+        <label class="rc__full">Notas de la toma <textarea name="notas_medidas" maxlength="2000" rows="3"></textarea></label>
+      </fieldset>
+
+      <fieldset>
+        <legend class="section-title">3. Avisos</legend>
+        <label class="rc__check"><input type="checkbox" name="privacidad" required> El cliente leyó y aceptó el <a href="../terms.html#privacidad" target="_blank" rel="noopener">aviso de privacidad</a> (obligatorio).</label>
+        <label class="rc__check"><input type="checkbox" name="terminos" required> El cliente aceptó los <a href="../terms.html" target="_blank" rel="noopener">términos</a> (obligatorio).</label>
+        <label class="rc__check"><input type="checkbox" name="marketing"> Quiere recibir novedades de la Casa (opcional).</label>
+        <label class="rc__full">Notas del cliente <textarea name="notas" maxlength="2000" rows="3"></textarea></label>
+      </fieldset>
+
+      <p class="rc__error" id="rc-error" role="alert" hidden></p>
+      <button class="button" type="submit">Registrar e invitar &rarr;</button>
+    </form>
+  </main>
+</body>
+</html>

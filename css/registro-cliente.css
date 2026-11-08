@@ -1,0 +1,21 @@
+/* Casa Siego — registro-cliente.css (v1.0.0) · /registro/ (personal) y /acceso/contrasena/ */
+.rc { display: block; max-width: 960px; margin-inline: auto; padding: 0 16px 96px; }
+.rc__aviso { font-family: var(--font-body, 'EB Garamond', Georgia, serif); font-size: 1.15rem; padding: 18px 20px;
+  border-left: 2px solid var(--wine, #6B1E2C); background: rgba(238, 228, 211, .45); margin: 0 0 32px; }
+.rc__aviso:empty { display: none; }
+.rc__form fieldset { border: 0; border-top: 1px solid rgba(176, 144, 94, .45); margin: 0 0 32px; padding: 20px 0 0; min-width: 0; }
+.rc__form legend { padding: 0; margin-bottom: 12px; }
+.rc__sub { font: 400 .8rem/1.3 'Cinzel', serif; letter-spacing: .18em; text-transform: uppercase; color: var(--wine, #6B1E2C); margin: 28px 0 12px; }
+.rc__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px 20px; }
+.rc__form label { display: flex; flex-direction: column; gap: 6px; font: 400 .78rem/1.3 'Cinzel', serif; letter-spacing: .08em; color: #3B1A1F; }
+.rc__u { font: italic .85rem 'Spectral', Georgia, serif; letter-spacing: 0; color: #6F5E57; }
+.rc__form input, .rc__form select, .rc__form textarea {
+  font: 1.05rem/1.3 'EB Garamond', Georgia, serif; color: #3B1A1F; background: #fff; border: 1px solid rgba(59, 26, 31, .3);
+  border-radius: 0; padding: 10px 12px; width: 100%; box-sizing: border-box; }
+.rc__form input:focus-visible, .rc__form select:focus-visible, .rc__form textarea:focus-visible { outline: 2px solid #B0905E; outline-offset: 1px; }
+.rc__form input[aria-invalid="true"] { border-color: #8E2A1F; }
+.rc__full { margin-top: 16px; }
+.rc__form .rc__check { flex-direction: row; align-items: flex-start; gap: 10px; font: 1.05rem/1.4 'EB Garamond', Georgia, serif; letter-spacing: 0; margin: 0 0 10px; }
+.rc__check input { width: auto; margin-top: 4px; }
+.rc__error { color: #8E2A1F; font: 1.05rem/1.4 'EB Garamond', Georgia, serif; margin: 0 0 16px; }
+.rc__form .button[disabled] { opacity: .5; cursor: progress; }

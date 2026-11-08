@@ -26,6 +26,9 @@ Disallow: /
 User-agent: *
 Disallow: /docs/
 Disallow: /brands/fiel/agenda/
+Disallow: /registro/
+Disallow: /acceso/
+Disallow: /cuenta/
 Allow: /
 
 Sitemap: https://casasiego.com/sitemap.xml

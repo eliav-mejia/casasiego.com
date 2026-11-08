@@ -26,7 +26,7 @@ grant usage on schema identidad to authenticated, service_role;
 
 -- Sitios del proyecto. Casa Siego es el principal; Fiel y Justo son marcas de la misma casa.
 create table identidad.sitios (
-    sitio     text    primary key check (sitio ~ '^[a-z0-9.-]+$'),
+    sitio     text    primary key check (sitio ~ '^[a-z0-9./-]+$'),   -- '/' para las marcas (corregido en v1.3.1; 0001 nunca se aplicó)
     marca     text    not null unique check (marca ~ '^[a-z_]+$'),
     principal boolean not null default false
 );
