@@ -1,6 +1,6 @@
 // Casa Siego · prueba de las migraciones de supabase/ en PostgreSQL real (PGlite, WebAssembly), sin proyecto ni Docker.
 // Uso (desde la raíz del sitio):  npm install   y luego   node tools/probar-migraciones.mjs supabase
-// Aplica 0001 → 0003 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
+// Aplica 0001 → 0004 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
 // y comprueba RLS, la proyección Odoo → catalogo_publico, el registro atómico y las medidas inmutables. Sale 1 si algo falla.
 import { PGlite } from '@electric-sql/pglite';
 import { citext } from '@electric-sql/pglite/contrib/citext';
@@ -19,7 +19,7 @@ create function auth.uid() returns uuid language sql stable as $$ select nullif(
 grant usage on schema auth, public to anon, authenticated, service_role;
 grant execute on all functions in schema auth to anon, authenticated, service_role;
 `);
-for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql']) {
+for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql']) {
   try { await db.exec(fs.readFileSync(`${D}/migrations/${f}`, 'utf8')); ok(true, `migración ${f}`); }
   catch (e) { ok(false, `migración ${f}: ${e.message}`); process.exit(1); }
 }
@@ -94,3 +94,49 @@ ok(err === null, `borrar la cuenta borra medidas y contacto en cascada ${err ?? 
 ok((await q(`select count(*)::int n from public.medidas`))[0].n === 0, `0 medidas tras la baja`);
 err = await q(`delete from public.medidas`).then(() => null, e => e.message);
 ok(true, `delete directo de medidas: ${err ? 'bloqueado' : 'sin filas'}`);
+
+// --- 0004 · panel del miembro (mi_panel)
+const [ana] = await q(`insert into auth.users (email) values ('ana@ejemplo.com') returning id`);
+const [beto] = await q(`insert into auth.users (email) values ('beto@ejemplo.com') returning id`);
+await q(`update public.profiles set nombre = 'Ana María' where id = $1`, [ana.id]);
+await db.exec(`
+insert into public.telas (codigo, nombre, composicion, peso_g_m2, imagen, llegada_estimada) values
+  ('TEL-LINO-OLIVO', 'Lino olivo', '100 % lino', 220, 'images/telas/lino-olivo.jpg', current_date + 20),
+  ('TEL-TWEED-GRIS', 'Tweed espiga gris', 'Lana', 340, 'images/telas/tweed-espiga-gris.jpg', current_date + 5),
+  ('TEL-VIEJA', 'Tela pasada', null, null, 'images/telas/lino-olivo.jpg', current_date - 60);
+insert into public.lotes (id, capacidad, piezas, cierre_estimado) values ('LOTE-2026-12', 100, 64, current_date + 30);
+insert into public.conjuntos (id, nombre, orden) values ('diplomatico', 'Ejecutivo diplomático', 1), ('tweed', 'Tweed de oficina', 2), ('noche', 'Negro de noche', 3);
+insert into public.conjunto_piezas (conjunto_id, orden, tipo, modelo, etiqueta) values
+  ('diplomatico', 1, 'saco', 'JUS-SAC-01', 'Saco marino diplomático'), ('diplomatico', 2, 'camisa', 'JUS-CAM-03', 'Camisa Blanca'),
+  ('diplomatico', 3, 'corbata', 'JUS-COR-02', 'Corbata Azul Índigo'), ('diplomatico', 4, 'pantalon', 'JUS-PAN-01', 'Pantalón marino'),
+  ('tweed', 1, 'saco', 'JUS-SAC-02', 'Saco gris tweed'), ('tweed', 2, 'camisa', 'JUS-CAM-01', 'Camisa Azul Cielo'),
+  ('noche', 1, 'saco', 'JUS-SAC-03', 'Saco negro'), ('noche', 2, 'chaleco', 'JUS-CHA-01', 'Chaleco negro'), ('noche', 3, 'camisa', 'JUS-CAM-03', 'Camisa Blanca'),
+  ('noche', 4, 'corbata', 'JUS-COR-01', 'Corbata Roja');
+`);
+await q(`insert into public.pedidos_cliente (odoo_ref, user_id, estado, lote_id, piezas, entrega_estimada) values
+  ('S00041', $1, 'en_lote', 'LOTE-2026-12', 3, current_date + 45), ('S00012', $1, 'entregado', null, 2, current_date - 90)`, [ana.id]);
+await q(`insert into public.prendas_cliente (user_id, tipo, modelo, estado) values
+  ($1, 'saco', 'JUS-SAC-01', 'adquirida'), ($1, 'camisa', 'JUS-CAM-03', 'adquirida'), ($1, 'corbata', 'JUS-COR-02', 'en_pedido'),
+  ($1, 'camisa', 'JUS-CAM-01', 'adquirida')`, [ana.id]);
+await q(`insert into public.recomendaciones (user_id, titulo, prioridad) values ($1, 'Lino olivo para verano', 5), ($1, 'Vencida', 9)`, [ana.id]);
+await q(`update public.recomendaciones set vigente_hasta = current_date - 1 where titulo = 'Vencida'`);
+const panel = (await as('authenticated', { sub: ana.id, role: 'authenticated' }, () => q(`select public.mi_panel() p`)))[0].p;
+ok(panel.nombre === 'Ana María', `panel: «Hola, ${panel.nombre}»`);
+ok(panel.entrega && panel.entrega.pedido === 'S00041', `entrega: el pedido sin entregar más cercano (${panel.entrega && panel.entrega.pedido})`);
+ok(panel.lote && panel.lote.piezas === 64 && panel.lote.capacidad === 100 && panel.lote.mis_piezas === 3, `lote: 64/100, mis piezas 3`);
+ok(panel.telas.map(t => t.codigo).join(',') === 'TEL-TWEED-GRIS,TEL-LINO-OLIVO', `telas próximas por fecha, sin la pasada (${panel.telas.map(t => t.codigo)})`);
+ok(panel.conjuntos.map(c => c.id).join(',') === 'diplomatico,tweed', `conjuntos ≥ 50 %: diplomático 3/4, tweed 1/2; noche 1/4 fuera (${panel.conjuntos.map(c => c.id + ' ' + c.tengo + '/' + c.total)})`);
+const dip = panel.conjuntos[0].piezas;
+ok(dip.map(x => (x.tiene ? '✓' : '✗')).join('') === '✓✓✓✗', `diplomático: ✓ saco, ✓ camisa, ✓ corbata (en camino), ✗ pantalón`);
+ok(dip[2].en_camino === true && dip[0].en_camino === false, `corbata marcada «en camino»`);
+const titulos = panel.recomendaciones.map(r => r.titulo);
+ok(titulos.includes('Lino olivo para verano') && !titulos.includes('Vencida'), `recomendación de la Casa vigente; la vencida no`);
+ok(titulos.includes('Pantalón marino') && titulos.includes('Saco gris tweed'), `recomendaciones «completa tu conjunto»: ${titulos.join(' · ')}`);
+const pb = (await as('authenticated', { sub: beto.id, role: 'authenticated' }, () => q(`select public.mi_panel() p`)))[0].p;
+ok(pb.entrega === null && pb.conjuntos.length === 0 && pb.recomendaciones.length === 0 && pb.telas.length === 2, `otro miembro: nada de Ana; sí ve las telas`);
+err = await as('anon', {}, () => q(`select public.mi_panel()`).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `anon no ejecuta mi_panel`);
+err = await as('anon', {}, () => q(`select * from public.telas`).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `anon no ve las telas próximas`);
+err = await as('authenticated', { sub: beto.id, role: 'authenticated' }, () => q(`insert into public.recomendaciones (user_id, titulo) values ($1, 'x')`, [beto.id]).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `un miembro no escribe recomendaciones`);
