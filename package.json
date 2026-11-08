@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "description": "Casa Siego · solo herramientas locales (el sitio no tiene build)",
+  "scripts": { "probar-migraciones": "node tools/probar-migraciones.mjs supabase" },
+  "devDependencies": { "@electric-sql/pglite": "0.2.17" }
+}

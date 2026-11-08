@@ -1,4 +1,4 @@
-/* Casa Siego — casa.js (v1.1.9)
+/* Casa Siego — casa.js (v1.2.1)
    Shared chrome for the public pages (not the shop or the suit builder, which have their own):
    1. Header with the CASA Siego® wordmark: transparent over a dark hero, white once you scroll,
       tucked away while scrolling down and back on the way up.
@@ -66,6 +66,8 @@
   }
 
   function build() {
+    // Avatar: with a saved session it opens the member's account page; without one, the sign-in card (v1.3.1).
+    ACCESO = sesionGuardada() ? ROOT + 'cuenta/' : ROOT + 'index.html#acceso';
     var head = document.createElement('header');
     head.className = 'site-head';
     head.innerHTML =

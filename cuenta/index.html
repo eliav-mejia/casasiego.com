@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tu cuenta · Casa Siego®</title>
+  <!-- Cuenta del miembro (v1.3.1): destino tras iniciar sesión con el avatar de la barra superior y tras elegir contraseña.
+       Sin sesión válida → visitante.html. El panel personalizado (telas, entrega, lote, conjuntos) llega en v1.3.2. -->
+  <meta name="robots" content="noindex, nofollow, noai, noimageai">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#4A1621">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=Spectral:ital@1&display=swap">
+  <link rel="stylesheet" href="../css/site.css?v=1.1.1">
+  <link rel="stylesheet" href="../css/layout.css?v=1.1.9">
+  <link rel="stylesheet" href="../css/registro-cliente.css?v=1.0.0">
+  <script src="../js/casa.js?v=1.2.1" defer></script>
+  <script src="../js/supabase-config.js?v=1.0.0" defer></script>
+  <script src="../js/acceso-config.js?v=1.0.4" defer></script>
+  <!-- Sin sesión guardada no se pinta nada: directo a visitante (como la portada) -->
+  <script>(function(){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(/^sb-[a-z0-9]+-auth-token$/.test(k)&&(JSON.parse(localStorage.getItem(k))||{}).refresh_token)return;}}catch(e){}location.replace('../visitante.html');})();</script>
+</head>
+<body>
+  <header class="terms-head">
+    <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
+    <p class="eyebrow eyebrow--gold">Cliente Priority</p>
+    <h1 class="display" id="cuenta-hola">Tu cuenta</h1>
+  </header>
+  <main class="folio terms rc">
+    <div class="rc__aviso" id="cuenta-aviso" role="status" aria-live="polite">Abriendo tu cuenta&hellip;</div>
+    <p><button class="button" type="button" id="cuenta-salir" hidden>Cerrar sesión</button></p>
+  </main>
+  <script>
+  window.addEventListener('DOMContentLoaded', function () {
+    'use strict';
+    var CFG = window.CASASIEGO_ACCESO || {};
+    var aviso = document.getElementById('cuenta-aviso'), hola = document.getElementById('cuenta-hola'), salir = document.getElementById('cuenta-salir');
+    var fuera = function () { location.replace('../visitante.html'); };
+    if (!CFG.supabaseUrl || !CFG.publishableKey) return fuera();
+    var s = document.createElement('script');
+    s.src = CFG.supabaseJs; s.crossOrigin = 'anonymous'; s.onerror = function () { aviso.textContent = 'No se pudo abrir tu cuenta. Revisa tu conexión y recarga.'; };
+    s.onload = function () {
+      var client = window.supabase.createClient(CFG.supabaseUrl, CFG.publishableKey, {
+        auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+      });
+      client.auth.getUser().then(function (r) {                       // valida el token con Supabase
+        var u = r.data && r.data.user;
+        if (!u) return fuera();
+        return client.from('profiles').select('nombre').eq('id', u.id).maybeSingle().then(function (p) {
+          var nombre = (p.data && p.data.nombre) || (u.user_metadata && u.user_metadata.nombre) || '';
+          hola.textContent = nombre ? 'Hola, ' + nombre.split(' ')[0] : 'Hola';
+          document.title = hola.textContent + ' · Casa Siego®';
+          aviso.textContent = 'Encantados de volvernos a encontrar.';
+          salir.hidden = false;
+        });
+      }).catch(function () { aviso.textContent = 'No se pudo abrir tu cuenta. Recarga la página.'; });
+      salir.addEventListener('click', function () {
+        salir.disabled = true;
+        client.auth.signOut().then(fuera, fuera);
+      });
+    };
+    document.head.appendChild(s);
+  });
+  </script>
+</body>
+</html>

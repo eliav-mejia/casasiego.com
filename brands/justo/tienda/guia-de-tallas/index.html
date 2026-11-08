@@ -59,16 +59,48 @@
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para hacer tu pedido.</p></noscript>
 
   <script src="../../../../brands/justo/tienda/js/variantes.js?v=1.0.0"></script>
-  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.5.1"></script>
+  <script src="../../../../js/supabase-config.js?v=1.0.0"></script>
+  <script type="text/babel" src="../../../../brands/justo/tienda/js/tienda.jsx?v=1.6.0"></script>
   <script type="text/babel">
-    // Size guide: body sizes (db/tallas.json), how to measure, finder, and each jacket's garment table (db/productos.json).
+    // Size guide: body sizes (db/tallas.json), how to measure, finder, each jacket's garment table and the shirts in stock.
+    // Stock comes from the same node as the rest of the shop (useCatalog → db.catalog: Odoo via Supabase, else productos.json).
+
+    // Shirts × chest: which collar · sleeve combinations are in stock (México or España, as the flag says).
+    const ShirtStock = ({ catalog }) => {
+        const shirts = catalog.products.filter(p => p.kind === 'camisa' && p.axes && p.variants);
+        if (!shirts.length) return null;
+        const chest = shirts[0].axes[0].options;
+        const label = (p, axis, id) => (p.axes[axis].options.find(o => o.id === id) || {}).label || id;
+        const cell = (p, size) => {
+            const ok = p.variants.filter(v => v.o[0] === size && v.stock > 0);
+            if (!ok.length) return <span className="text-ink-300">Agotado</span>;
+            return ok.map(v => <span key={v.sku} className="block whitespace-nowrap">Cuello {label(p, 1, v.o[1]).toLowerCase()} · manga {label(p, 2, v.o[2]).toLowerCase()} <span className="text-ink-500">({v.stock})</span></span>);
+        };
+        return (
+            <div className="overflow-x-auto -mx-1 px-1">
+                <table className="spec">
+                    <thead><tr><th scope="col">Camisa</th>{chest.map(o => <th key={o.id} scope="col">Pecho {o.label}</th>)}</tr></thead>
+                    <tbody>
+                        {shirts.map(p => (
+                            <tr key={p.id}>
+                                <td><a className="link" href={`${SHOP}/${p.slug}/`}>{p.name.replace('Camisa ', '')}</a></td>
+                                {chest.map(o => <td key={o.id}>{cell(p, o.id)}</td>)}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
     const GuidePage = () => {
         const catalog = useCatalog();
         const [tab, setTab] = useState(0);
         useReveal([catalog.status]);
         if (catalog.status === 'loading') return <div className="max-w-[1400px] mx-auto px-4 md:px-10 py-16"><Skeleton n={2} /></div>;
         if (catalog.status === 'error') return <LoadError />;
-        const product = catalog.products[tab];
+        const jackets = catalog.products.filter(p => p.sizes.some(s => catalog.size[s]));   // CH · M · G · XG (not shirts or ties)
+        const product = jackets[Math.min(tab, jackets.length - 1)];
         return (
             <>
                 <PageHero kicker="Tienda Justo" title="Guía de tallas"
@@ -117,7 +149,7 @@
                     <h2 className="text-3xl md:text-4xl mt-2">El mismo M no mide igual en los tres cortes</h2>
                     <p className="text-ink-700 mt-4 max-w-2xl">El negro es entallado, con cintura marcada; el gris carbón deja más holgura para llevar suéter debajo. Compara la prenda, no solo la letra.</p>
                     <div className="flex flex-wrap gap-1 mt-8" role="tablist" aria-label="Saco">
-                        {catalog.products.map((p, i) => <button key={p.id} role="tab" aria-selected={tab === i} className={`btn ${tab === i ? 'btn-rust' : 'btn-line'}`} onClick={() => setTab(i)}>{p.name.replace('Saco ', '')}</button>)}
+                        {jackets.map((p, i) => <button key={p.id} role="tab" aria-selected={tab === i} className={`btn ${tab === i ? 'btn-rust' : 'btn-line'}`} onClick={() => setTab(i)}>{p.name.replace('Saco ', '')}</button>)}
                     </div>
                     <div className="grid lg:grid-cols-12 gap-10 mt-8 items-start" role="tabpanel">
                         <div className="lg:col-span-8 min-w-0">
@@ -132,6 +164,14 @@
                     </div>
                 </section>
 
+                <section id="camiseria" className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20 scroll-mt-24">
+                    <hr className="rule-gold mb-12" />
+                    <p className="label text-gold">Camisería · existencias</p>
+                    <h2 className="text-3xl md:text-4xl mt-2">Camisas listas para llevar, por talla de pecho</h2>
+                    <p className="text-ink-700 mt-4 max-w-2xl">Cada camisa se elige por pecho, cuello y manga. Aquí ves las combinaciones disponibles hoy; las demás aparecen como agotadas en la ficha de cada camisa.</p>
+                    <div className="mt-8 reveal"><ShirtStock catalog={catalog} /></div>
+                    <p className="note text-ink-500 text-[15px] mt-3">{catalog.stockSource === 'odoo' ? 'Existencias al momento, del inventario de la Casa.' : `Existencias actualizadas el ${catalog.stockDate ? new Date(catalog.stockDate + 'T12:00:00').toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }) : 'último corte'}.`}</p>
+                </section>
                 <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20">
                     <div className="bg-ink text-parchment p-8 md:p-12 grid md:grid-cols-2 gap-8">
                         <div>

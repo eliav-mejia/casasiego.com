@@ -1,9 +1,9 @@
-/* Casa Siego — acceso.js (v1.2.0)
+/* Casa Siego — acceso.js (v1.3.0)
    Sign-in gate of the home page (index.html only; brand pages, terms and the shop have no gate).
    1. A login card covers the page (no sign-up: accounts are created by Casa Siego in Supabase).
    2. On submit the card flips to a white card with a script message:
-        success → «Encantados de volvernos a encontrar» → the card fades out and the page opens
-        error   → «Esperamos tener el honor de conocerte pronto» → redirect to brands/fiel/
+        success → «Encantados de volvernos a encontrar» → cuenta/ (the member's account page, v1.3.1)
+        error   → «Esperamos tener el honor de conocerte pronto» → visitante.html (v1.3.1; before: brands/fiel/)
       Any failure counts as an error: wrong credentials, Supabase not configured, network, timeout.
    3. A valid Supabase session skips the gate on later visits.
    3b. Without a session, every visit goes straight to visitante.html (no «Omitir» click needed); an inline script in
@@ -160,11 +160,11 @@
       signIn(email, password).then(function () {
         form.password.value = '';
         if (window.casaMedir) window.casaMedir('casa_acceso', { paso: 'exito' });
-        flip(MSG_OK, function () { openPage(gate); });
+        flip(MSG_OK, function () { window.location.assign(CFG.redirectOnSuccess || 'cuenta/'); });
       }).catch(function () {
         form.password.value = '';
         if (window.casaMedir) window.casaMedir('casa_acceso', { paso: 'error' });
-        flip(MSG_ERROR, function () { window.location.replace(CFG.redirectOnError || 'brands/fiel/'); });
+        flip(MSG_ERROR, function () { window.location.replace(CFG.redirectOnError || 'visitante.html'); });
       });
     });
 

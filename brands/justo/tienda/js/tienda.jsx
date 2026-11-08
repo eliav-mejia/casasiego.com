@@ -1,4 +1,5 @@
-// Justo by Casa Siego · tienda de sacos, camisas y corbatas (variante C/D: React + Tailwind por CDN, sin build, datos simulados en ../db).
+// Justo by Casa Siego · tienda de sacos, camisas y corbatas (variante C/D: React + Tailwind por CDN, sin build) · v1.6.0
+// Data: ../db JSON + live stock from Odoo via Supabase (public.catalogo_publico), read on every page open (v1.3.1 of the site).
 // Every shop page loads this file. Each page sets <body data-root="…"> = relative path to the site root (casasiego.com/),
 // so the shop works on GitHub Pages and from any local server without absolute paths (same rule as the rest of Casa Siego).
 //
@@ -33,8 +34,7 @@ const cm = (n) => `${String(n).replace('.', ',')} cm`;
 const range = ([a, b], unit) => `${a}–${b} ${unit}`;
 
 // --- DATA LAYER ---
-// The ONLY place that knows where data comes from. Today: static JSON in ../db (Etapa 1).
-// Etapa 2: replace the bodies of db.* with Supabase queries (supabase/0001_esquema_tienda.sql) and keep the same shapes.
+// The ONLY place that knows where data comes from: static JSON in ../db, with stock overlaid from Odoo via Supabase (below).
 const jsonCache = {};
 const loadJson = (name) => jsonCache[name] || (jsonCache[name] =
     fetch(`${SHOP}/db/${name}.json`, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(`${name}: ${r.status}`); return r.json(); }));
@@ -56,12 +56,40 @@ const localPrices = (products, rules) => {
     };
 };
 
+// --- LIVE STOCK (v1.3.1) ---
+// Odoo Inventario → Edge Function odoo-existencias → PostgreSQL public.catalogo_publico → here, every time a shop page opens.
+// One node for every page (shop, product pages, size guide): db.catalog() is the only reader. URL and publishable key come from
+// js/supabase-config.js (written from .env). Not configured, slow (> 4 s) or failing → the stock in db/productos.json stays.
+// Only `apikey` is sent: sb_publishable_… keys are not JWTs. RLS returns active SKUs only; a SKU it doesn't return keeps its JSON value.
+const SB = window.CASASIEGO_SUPABASE || {};
+const loadLiveStock = () => (SB.url && SB.publishableKey
+    ? fetch(`${SB.url}/rest/v1/catalogo_publico?select=sku,stock,stock_es,actualizado&sitio=eq.casasiego.com`,
+        { headers: { apikey: SB.publishableKey }, cache: 'no-store', signal: AbortSignal.timeout(4000) })
+        .then(r => r.ok ? r.json() : Promise.reject(new Error(`catalogo_publico ${r.status}`)))
+        .then(rows => Object.fromEntries(rows.map(r => [r.sku, r])))
+        .catch(err => { console.warn('[tienda] Existencias en vivo no disponibles; se usa db/productos.json:', err.message); return null; })
+    : Promise.resolve(null));
+
+// Overwrites stock per SKU and rebuilds the per-size summary (first axis) that cards and the size guide read.
+const applyLiveStock = (products, live) => !live ? products : products.map(x => {
+    if (x.variants) {
+        const variants = x.variants.map(v => live[v.sku] ? { ...v, stock: live[v.sku].stock, stock_es: live[v.sku].stock_es } : v);
+        const sum = (key) => Object.fromEntries(x.sizes.map(s => [s, variants.filter(v => v.o[0] === s).reduce((n, v) => n + (v[key] || 0), 0)]));
+        return { ...x, variants, stock: sum('stock'), stock_es: sum('stock_es') };
+    }
+    const hit = (s) => live[`${x.sku}-${s}`];                    // jackets: SKU per size once they are in Odoo
+    if (!x.sizes.some(hit)) return x;
+    return { ...x, stock: Object.fromEntries(x.sizes.map(s => [s, hit(s) ? hit(s).stock : (x.stock?.[s] ?? 0)])),
+        stock_es: Object.fromEntries(x.sizes.map(s => [s, hit(s) ? hit(s).stock_es : (x.stock_es?.[s] ?? 0)])) };
+});
+
 const db = {
     // Products with stock (in the visitor's country) come first; sold-out ones go last, each group in the order of productos.json (stable sort).
-    catalog: () => Promise.all([loadJson('productos'), loadJson('tallas'), loadJson('tienda')]).then(([p, t, rules]) => {
-        const local = localPrices(p.products.filter(x => x.active !== false), rules);
+    catalog: () => Promise.all([loadJson('productos'), loadJson('tallas'), loadJson('tienda'), loadLiveStock()]).then(([p, t, rules, live]) => {
+        const local = localPrices(applyLiveStock(p.products.filter(x => x.active !== false), live), rules);
         return { ...local, products: local.products.sort((a, b) => soldOut(a) - soldOut(b)),
-            sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances };
+            sizes: t.sizes, howToMeasure: t.how_to_measure, tolerances: t.tolerances,
+            stockSource: live ? 'odoo' : 'json', stockDate: live ? null : p.existencias_actualizadas || null };
     }),
 };
 
@@ -77,7 +105,7 @@ const useCurrency = () => {
 };
 
 const useCatalog = () => {
-    const [state, setState] = useState({ status: 'loading', products: [], sizes: [], howToMeasure: [], tolerances: null, rules: null });
+    const [state, setState] = useState({ status: 'loading', products: [], sizes: [], howToMeasure: [], tolerances: null, rules: null, stockSource: 'json', stockDate: null });
     const regionKey = useCurrency();
     useEffect(() => {
         let alive = true;
