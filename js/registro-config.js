@@ -1,4 +1,4 @@
-/* Casa Siego — registro-config.js (Variante D · registro e inicio de sesión)
+/* Casa Siego — registro-config.js 1.1.0 (crear cuenta · registro.html, v1.3.3)
    Public values only. Same Supabase project as acceso-config.js; Auth settings in _interno/acceso/variante-d/config.toml.ejemplo.
    Empty supabaseUrl / publishableKey = Supabase not configured yet: the letter can be written but is not sent (demo).
    avisos / campos below are the DEMO fallback; with Supabase the page reads public.formulario_registro(marca, campana). */
@@ -8,8 +8,8 @@ window.CASASIEGO_REGISTRO = {
   supabaseJs: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js',
   turnstileSiteKey: (window.CASASIEGO_SUPABASE || {}).turnstileSiteKey || '', // Cloudflare Turnstile (public). Empty = no captcha
   bitacoraBorde: '/api/acceso/evento', // Worker acceso-borde (D1). '' = off (GitHub Pages without Cloudflare in front)
-  proveedores: ['google', 'facebook', 'apple', 'azure'], // azure = Microsoft in Supabase Auth
-  redirectOnSuccess: 'index.html',
+  proveedores: ['google', 'azure', 'linkedin_oidc', 'facebook'], // azure = Microsoft · linkedin_oidc = LinkedIn (OIDC)
+  redirectOnSuccess: 'cuenta/',     // user rule: success → https://casasiego.com/cuenta/
   messageMs: 3200,
   timeoutMs: 10000,
 
