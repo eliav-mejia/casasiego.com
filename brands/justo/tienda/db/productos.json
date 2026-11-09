@@ -337,10 +337,10 @@
         "42"
       ],
       "stock": {
-        "37": 1,
+        "37": 0,
         "38": 0,
         "39": 0,
-        "40": 1,
+        "40": 0,
         "41": 0,
         "42": 0
       },
@@ -450,7 +450,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/cNibJ38PV39FgIcdWQcMM0i?client_reference_id=JUS-CAM-01-37-CR-MR"
         },
@@ -666,7 +666,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -1465,10 +1465,10 @@
         "42"
       ],
       "stock": {
-        "37": 1,
+        "37": 0,
         "38": 0,
         "39": 0,
-        "40": 1,
+        "40": 0,
         "41": 0,
         "42": 0
       },
@@ -1578,7 +1578,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": "https://buy.stripe.com/14A14pd6bbGb3Vq4mgcMM0j?client_reference_id=JUS-CAM-03-37-CR-MR"
         },
@@ -1794,7 +1794,7 @@
             "MR"
           ],
           "price_mxn": 750,
-          "stock": 1,
+          "stock": 0,
           "stock_es": 0,
           "stripe": null
         },
@@ -2187,6 +2187,6 @@
       "sizes_note": "Talla única. Agotada por ahora."
     }
   ],
-  "catalogo_hash": "3f9a8254f05ea6c9c940b46704377ccdd0a3a2bc206f3b919d847514ec841f5a",
-  "existencias_actualizadas": "2026-11-08"
+  "catalogo_hash": "d9b908cce803df6c6376aaac69ec0c916b6211ffa1ef4b9d7d051548937ca603",
+  "existencias_actualizadas": "2026-11-09"
 }

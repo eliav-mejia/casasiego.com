@@ -1,9 +1,9 @@
-/* Casa Siego — registro.js (Variante D · registro e inicio de sesión)
-   The page is a letter to the House; its fields live in a drop-down form (<details>) inside the sheet.
-   Two letters share the sheet:
-     · «Carta de presentación» (sign-up): name, country, language, e-mail, brand attributes, consents.
-     · «Carta de regreso» (sign-in): e-mail only, or a social account.
-   Ways in: e-mail with a 6-digit code (P. D.), Google, Facebook, Apple, Microsoft (Supabase provider «azure»).
+/* Casa Siego — registro.js 2.0.0 (crear cuenta · registro.html, v1.3.3)
+   Account creation on its own URL. The home pop-up (js/acceso.js) only signs in and never links here.
+   Step 1: name, country, language, brand attributes, consents. Step 2: Google, Microsoft (Supabase «azure»),
+   LinkedIn (Supabase «linkedin_oidc») or Facebook. Back from the provider, public.completar_registro() closes the
+   profile and the visitor goes to /cuenta/. The e-mail + 6-digit code path stays in the code (pedirCodigo / verificar)
+   but is not offered until Casa Siego has its own SMTP. Style: css/registro.css 2.0.0 (same as the pop-up).
    Hybrid model: identity, consents and provider go to typed columns through public.completar_registro();
    brand / campaign fields (?marca=fiel&campana=…) go to profiles.atributos (jsonb), validated by the database.
    Access attempts are reported to the edge Worker (D1), which adds hashed IP/UA and forwards them to Supabase.
@@ -15,8 +15,9 @@
   var configured = Boolean(CFG.supabaseUrl && CFG.publishableKey);
   var MSG_OK = 'Encantados de volvernos a encontrar';
   var MSG_NUEVO = 'Bienvenido a la Casa';
+  var TEXTO_ENVIAR = 'Completar registro';
   var DRAFT_KEY = 'casasiego.carta';
-  var PROVEEDORES = { google: 'Google', facebook: 'Facebook', apple: 'Apple', azure: 'Microsoft' };
+  var PROVEEDORES = { google: 'Google', azure: 'Microsoft', linkedin_oidc: 'LinkedIn', facebook: 'Facebook' };
   var MARCAS = ['casa', 'fiel', 'justo'];
   var VALORES = { retrato: 'el retrato', sastreria: 'la sastrería', mascotas: 'mis mascotas', perro: 'perro', gato: 'gato',
                   otro: 'otro', boda: 'una boda', trabajo: 'el trabajo', gala: 'una gala', diario: 'el día a día' };
@@ -39,7 +40,7 @@
   var marca = MARCAS.indexOf(params.get('marca')) >= 0 ? params.get('marca') : 'casa';
   var campana = slug(params.get('campana'));
 
-  var state = { modo: params.get('modo') === 'acceso' ? 'acceso' : 'registro', etapa: 'carta', email: '',
+  var state = { modo: 'registro', etapa: 'carta', email: '',   // sign-in lives only in the home pop-up
                 avisos: [], campos: [], sesion: null, busy: false, captcha: '' };
   var clientPromise = null;
 
@@ -205,8 +206,8 @@
     Array.prototype.forEach.call(document.querySelectorAll('.sobre'), function (b) {
       b.setAttribute('aria-pressed', String(b.getAttribute('data-modo') === modo));
     });
-    enviarTexto.textContent = 'Sellar y entrar';
-    $('#desplegable-texto').textContent = modo === 'acceso' ? 'Formulario de acceso' : 'Formulario de registro';
+    enviarTexto.textContent = TEXTO_ENVIAR;
+    $('#desplegable-texto').textContent = 'Tus datos';
     form.email.setAttribute('autocomplete', modo === 'acceso' ? 'username' : 'email');
     setEtapa('carta');
     setNota('');
@@ -295,7 +296,7 @@
   // Requirements before an account may exist: mandatory consents, required brand fields, and a name if asked.
   function validarRegistro(conNombre) {
     var d = collect();
-    if (conNombre && d.nombre.length < 2) return marcar(form.nombre, 'Falta firmar con su nombre.');
+    if (conNombre && d.nombre.length < 2) return marcar(form.nombre, 'Escribe tu nombre y apellido.');
     for (var i = 0; i < state.campos.length; i++) {
       var c = state.campos[i];
       if (c.obligatorio && d.atributos[c.clave] === undefined) {
@@ -305,7 +306,7 @@
     for (var j = 0; j < state.avisos.length; j++) {
       var a = state.avisos[j];
       if (a.obligatorio && !d.consentimientos[j].otorgado) {
-        return marcar(form.elements['c_' + a.tipo], 'Para presentarse ante la Casa hace falta aceptar ' +
+        return marcar(form.elements['c_' + a.tipo], 'Para crear tu cuenta hace falta aceptar ' +
           (TEXTO_AVISO[a.tipo] && TEXTO_AVISO[a.tipo][1] ? (a.tipo === 'terminos' ? 'los ' : 'el ') + TEXTO_AVISO[a.tipo][1] : a.tipo) + '.');
       }
     }
@@ -337,14 +338,14 @@
       if (!form.nombre.value.trim()) form.nombre.value = String(meta.full_name || meta.name || '').slice(0, 120);
       firmar();
       Array.prototype.forEach.call(form.querySelectorAll('input.t'), ajustar);
-      if (sesion.user.email) { form.email.value = sesion.user.email; ajustar(form.email); }
+      if (sesion.user.email) { form.email.value = sesion.user.email; $('#campo-email').hidden = false; }
       if (state.modo !== 'registro') setModo('registro');
       form.email.readOnly = true;
-      $('#desplegable').open = true;
       var listo = validarRegistro(true);
       if (!listo) {
-        setNota('Ya le reconocemos por ' + (PROVEEDORES[proveedor] || 'su correo') +
-                '. Termine su carta de presentación y séllela para entrar.', true);
+        enviar.hidden = false;
+        setNota('Ya te reconocemos por ' + (PROVEEDORES[proveedor] || 'tu correo') +
+                '. Completa tus datos para terminar.', true);
         return;
       }
       return completar(listo, proveedor);
@@ -368,9 +369,10 @@
     }).catch(function (err) {
       setBusy(false);
       var m = String((err && err.message) || '');
-      setNota(/atributo|opción|fecha|tipo/.test(m) ? 'Algo de lo que nos cuenta no lo pudimos leer: revise los datos de la carta.'
-            : /aceptar|aviso/.test(m) ? 'Los avisos cambiaron mientras escribía. Recargue la página y vuelva a marcarlos.'
-            : 'No pudimos guardar su carta. Intente de nuevo en un momento.');
+      enviar.hidden = false;
+      setNota(/atributo|opción|fecha|tipo/.test(m) ? 'Algo de lo que nos cuentas no lo pudimos leer: revisa tus datos.'
+            : /aceptar|aviso/.test(m) ? 'Los avisos cambiaron mientras escribías. Recarga la página y vuelve a marcarlos.'
+            : 'No pudimos guardar tu registro. Intenta de nuevo en un momento.');
     });
   }
 
@@ -401,6 +403,8 @@
     }
 
     if (state.etapa === 'codigo') return verificar();
+    // Account creation is by provider only (no own SMTP yet): the button shows up only with an open session.
+    return setNota('Elige cómo continuar: Google, Microsoft, LinkedIn o Facebook.');
 
     var email = validEmail();
     if (!email) return marcar(form.email, 'La dirección de correo no parece completa.');
@@ -470,8 +474,8 @@
 
     writeDraft({ pendiente: proveedor });
     if (!configured) {
-      setNota('Demostración: la Casa aún no abre la entrada con ' + PROVEEDORES[proveedor] +
-              '. Su carta quedó guardada en este navegador.', true);
+      setNota('Demostración: Supabase aún no está conectado, así que no se abre ' + PROVEEDORES[proveedor] +
+              '. Tus datos quedaron guardados en este navegador.', true);
       return;
     }
     setBusy(true);
@@ -486,7 +490,7 @@
     }).catch(function () {
       setBusy(false);
       bitacora('oauth_fallido', { proveedor: proveedor, resultado: 'error' });
-      setNota('No pudimos abrir la entrada con ' + PROVEEDORES[proveedor] + '. Intente de nuevo.');
+      setNota('No pudimos abrir ' + PROVEEDORES[proveedor] + '. Intenta de nuevo.');
     });
   }
 
@@ -554,18 +558,18 @@
       if (oauthError) {
         var p = d && d.pendiente;
         bitacora('oauth_fallido', { proveedor: PROVEEDORES[p] ? p : null, resultado: 'denegado' });
-        setNota('La entrada con ' + (PROVEEDORES[p] || 'su cuenta') + ' no se completó. Puede intentarlo de nuevo o usar su correo.');
+        setNota('La cuenta de ' + (PROVEEDORES[p] || 'tu proveedor') + ' no se conectó. Puedes intentarlo de nuevo o elegir otra.');
         limpiarURL();
         return;
       }
       if (!configured) return;
-      // Returning from Google / Facebook / Apple / Microsoft (PKCE code in the URL) or an existing session.
+      // Returning from Google / Microsoft / LinkedIn / Facebook (PKCE code in the URL) or an existing session.
       return call(function (c) { return c.auth.getSession(); }).then(function (data) {
         limpiarURL();
         if (data && data.session) return terminar(data.session);
       });
     }).catch(function () {
-      setNota('No pudimos abrir el registro en este momento. Intente de nuevo en unos minutos.');
+      setNota('No pudimos abrir el registro en este momento. Intenta de nuevo en unos minutos.');
     });
   }
 

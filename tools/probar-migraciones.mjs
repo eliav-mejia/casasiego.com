@@ -1,6 +1,6 @@
 // Casa Siego · prueba de las migraciones de supabase/ en PostgreSQL real (PGlite, WebAssembly), sin proyecto ni Docker.
 // Uso (desde la raíz del sitio):  npm install   y luego   node tools/probar-migraciones.mjs supabase
-// Aplica 0001 → 0004 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
+// Aplica 0001 → 0005 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
 // y comprueba RLS, la proyección Odoo → catalogo_publico, el registro atómico y las medidas inmutables. Sale 1 si algo falla.
 import { PGlite } from '@electric-sql/pglite';
 import { citext } from '@electric-sql/pglite/contrib/citext';
@@ -19,7 +19,7 @@ create function auth.uid() returns uuid language sql stable as $$ select nullif(
 grant usage on schema auth, public to anon, authenticated, service_role;
 grant execute on all functions in schema auth to anon, authenticated, service_role;
 `);
-for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql']) {
+for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql', '0005_alta_proveedores.sql']) {
   try { await db.exec(fs.readFileSync(`${D}/migrations/${f}`, 'utf8')); ok(true, `migración ${f}`); }
   catch (e) { ok(false, `migración ${f}: ${e.message}`); process.exit(1); }
 }
@@ -140,3 +140,33 @@ err = await as('anon', {}, () => q(`select * from public.telas`).then(() => null
 ok(err && /permission denied/.test(err), `anon no ve las telas próximas`);
 err = await as('authenticated', { sub: beto.id, role: 'authenticated' }, () => q(`insert into public.recomendaciones (user_id, titulo) values ($1, 'x')`, [beto.id]).then(() => null, e => e.message));
 ok(err && /permission denied/.test(err), `un miembro no escribe recomendaciones`);
+
+// --- 0005 · crear cuenta en registro.html con Google / Microsoft / LinkedIn / Facebook
+const hook = async (prov) => (await q(`select public.antes_de_crear_usuario($1::jsonb) r`, [JSON.stringify({ user: { app_metadata: { provider: prov, providers: [prov] } } })]))[0].r;
+const pasan = [];
+for (const pv of ['google', 'azure', 'linkedin_oidc', 'facebook', 'email']) if (JSON.stringify(await hook(pv)) === '{}') pasan.push(pv);
+ok(pasan.length === 5, `hook deja pasar ${pasan.join(', ')}`);
+const rech = await hook('phone'), rechA = await hook('apple'), rechN = await hook('anonymous');
+ok(rech.error && rech.error.http_code === 403 && rechA.error && rechN.error, `hook rechaza phone, apple y anónimo (403)`);
+err = await as('authenticated', { sub: ana.id, role: 'authenticated' }, () => q(`select public.antes_de_crear_usuario('{}'::jsonb)`).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `el navegador no ejecuta el hook`);
+const [li] = await q(`insert into auth.users (email, raw_app_meta_data) values ('li@ejemplo.com', '{"provider":"linkedin_oidc","providers":["linkedin_oidc"]}') returning id`);
+ok((await q(`select proveedor_alta from public.profiles where id = $1`, [li.id]))[0].proveedor_alta === 'linkedin_oidc', `alta con LinkedIn: perfil con proveedor linkedin_oidc`);
+ok((await q(`select count(*)::int n from identidad.membresias where user_id = $1 and rol = 'cliente'`, [li.id]))[0].n === 1, `alta con LinkedIn: membresía cliente`);
+const cons = [{ tipo: 'privacidad', version: '2026-10', otorgado: true }, { tipo: 'terminos', version: '2026-10', otorgado: true }, { tipo: 'marketing', version: '2026-10', otorgado: false }];
+const jwtLi = { sub: li.id, role: 'authenticated', app_metadata: { provider: 'linkedin_oidc' } };
+err = await as('authenticated', jwtLi, () => q(`select public.completar_registro('Luis Ibarra', 'es', 'MX', 'justo', '', '{}'::jsonb, $1::jsonb)`, [JSON.stringify(cons.slice(1))]).then(() => null, e => e.message));
+ok(err && /privacidad/.test(err), `sin aviso de privacidad → no se completa`);
+err = await as('authenticated', jwtLi, () => q(`select public.completar_registro('Luis Ibarra', 'es', 'MX', 'justo', '', '{}'::jsonb, $1::jsonb)`, [JSON.stringify(cons)]).then(() => null, e => e.message));
+ok(err === null, `completar_registro con LinkedIn ${err ?? ''}`);
+const [pl] = await q(`select nombre, registro_completo, marca_origen from public.profiles where id = $1`, [li.id]);
+ok(pl.nombre === 'Luis Ibarra' && pl.registro_completo && pl.marca_origen === 'justo', `perfil completo (Luis Ibarra, justo)`);
+const provs = (await q(`select distinct proveedor from identidad.consentimientos where user_id = $1`, [li.id])).map(r => r.proveedor).join();
+ok(provs === 'linkedin_oidc', `consentimientos con proveedor linkedin_oidc (${provs})`);
+ok((await q(`select count(*)::int n from identidad.eventos_acceso where user_id = $1 and evento = 'registro_ok' and proveedor = 'linkedin_oidc'`, [li.id]))[0].n === 1, `evento registro_ok con linkedin_oidc`);
+err = await as('authenticated', jwtLi, () => q(`select public.completar_registro('Luis', 'es', 'MX', 'justo', '', '{}'::jsonb, $1::jsonb)`, [JSON.stringify(cons)]).then(() => null, e => e.message));
+ok(err && /ya completado/.test(err), `no se completa dos veces`);
+const [fb] = await q(`insert into auth.users (email, raw_app_meta_data) values ('fb@ejemplo.com', '{"provider":"facebook"}') returning id`);
+ok((await q(`select count(*)::int n from public.medidas where user_id = $1`, [fb.id]))[0].n === 0, `cuenta propia sin medidas: las toma un representante`);
+const nofb = await as('authenticated', { sub: fb.id, role: 'authenticated' }, () => q(`select public.soy_personal() s`));
+ok(nofb[0].s === false, `cuenta propia no es personal`);

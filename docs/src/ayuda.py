@@ -91,10 +91,45 @@ ARTICLES = [
             'No te pueden cobrar el acceso a ser Priority. Es un servicio intransferible que puede ser agregado a tu cotización en el <a href="../clientes-priority/">diseño de tu colección</a>.',
         ]),
     ]),
+    ('adquirir-traje-a-la-medida', 'citas', '¿Cómo agendar una cita para toma de medidas?',
+     'Tu traje a la medida forma parte del diseño de tu colección, a partir de 10 trajes.', [
+        ('Diseña tu colección', [
+            'Los trajes a la medida de Justo se encargan al <a href="../clientes-priority/">diseñar tu colección</a> como cliente Priority. La colección se confecciona a partir de un mínimo de 10 trajes, para ti y para tu equipo.',
+        ]),
+        ('El proceso', [
+            ('ul', [
+                '<strong>Conversación.</strong> Nos cuentas cómo vistes, a qué te dedicas y qué quieres proyectar, tú y tu gente.',
+                '<strong>Propuesta.</strong> Preparamos tu colección: piezas, telas y el orden en que conviene hacerlas.',
+                '<strong>Medidas y confección.</strong> Tomamos medidas en tu visita y confeccionamos cada traje con sus pruebas.',
+                '<strong>Retrato.</strong> Estrenas tu colección frente a la cámara de Fiel; lee <a href="../reservar-sesion-de-retrato/">¿Cómo agendar una sesión de retrato fotográfico?</a>',
+            ]),
+        ]),
+        ('Piezas listas para usarse', [
+            'Si buscas una pieza individual, conoce los <a href="../../brands/justo/tienda/">esenciales de Justo</a>, en tallas Chico a Extra grande.',
+        ]),
+    ]),
+    ('cancelar-o-mover-una-cita', 'citas', '¿Cómo cancelo o muevo una cita?',
+     'Avísanos con anticipación para no perder tu sesión o tu prueba.', [
+        ('Sesiones de Justo Sastrería', [
+            'Las sesiones de Justo Sastrería son la visita para toma de medidas y las pruebas de tu traje a la medida: vamos a donde estés y cada pieza se ajusta sobre tu patrón. Para mover tu sesión, escríbenos con al menos <span class="fill">[horas]</span> horas de anticipación a <a href="mailto:info@casasiego.com?subject=Justo%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a> y te proponemos otro horario. Para agendarla, lee <a href="../adquirir-traje-a-la-medida/">¿Cómo agendar una cita para toma de medidas?</a>',
+        ]),
+        ('Sesiones de Fiel Fotografía', [
+            'Las sesiones de Fiel Fotografía son los retratos con luz natural de perfil ejecutivo, familiar o de pareja y de mascota, en sus sesiones Esencial, Clásica y Legado. Para mover tu sesión, escríbenos con al menos 24 horas de anticipación a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>: te proponemos otro horario libre del calendario y tu anticipo pasa a la nueva fecha. Las reglas de cancelación y del anticipo están en los <a href="../../brands/fiel/terminos/">términos de Fiel</a>.',
+        ]),
+        ('Citas del Club', [
+            'Puedes cancelar o mover tu cita de sastrería avisando con al menos <span class="fill">[horas]</span> horas de anticipación a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>.',
+        ]),
+        ('Si no llegas', [
+            'Una cita que no se cancela a tiempo puede contarse como utilizada.',
+        ]),
+        ('Puntualidad', [
+            'Llega unos minutos antes. Las sesiones y pruebas tienen un horario reservado para ti y para los siguientes miembros.',
+        ]),
+    ]),
     ('sesiones-de-retrato', 'citas', '¿Cómo contratar una sesión de retrato fotográfico para mascotas?',
      'Pagas el anticipo en línea y eliges tu fecha en el calendario de tu sesión, esta semana o la próxima.', [
         ('Elige tu sesión', [
-            'Fiel fotografía mascotas con luz natural: Esencial, Clásica y Legado. Compáralas en <a href="../../brands/fiel/mascota/">Fiel Mascotas</a> y pulsa «Reservar» en la tuya.',
+            'Fiel fotografía mascotas con luz natural: Esencial, Clásica y Legado. Compáralas en <a href="../../brands/fiel/mascota/">Fiel Fotografía</a> y pulsa «Reservar» en la tuya.',
         ]),
         ('Paga el anticipo', [
             'El anticipo es el 50&nbsp;% del precio y se paga con tarjeta en la página segura de Stripe. Casa Siego no recibe ni guarda los datos de tu tarjeta. El resto se paga el día de la sesión.',
@@ -145,32 +180,6 @@ ARTICLES = [
             'Lee los <a href="../../brands/fiel/terminos/">términos y condiciones de Fiel</a>. Puedes mover tu cita una vez, sin costo, con al menos 24 horas de anticipación; lee <a href="../cancelar-o-mover-una-cita/">¿Cómo cancelo o muevo una cita?</a>',
         ]),
     ]),
-    ('adquirir-traje-a-la-medida', 'citas', '¿Cómo agendar una cita para toma de medidas?',
-     'Tu traje a la medida forma parte del diseño de tu colección, a partir de 10 trajes.', [
-        ('Diseña tu colección', [
-            'Los trajes a la medida de Justo se encargan al <a href="../clientes-priority/">diseñar tu colección</a> como cliente Priority. La colección se confecciona a partir de un mínimo de 10 trajes, para ti y para tu equipo.',
-        ]),
-        ('El proceso', [
-            ('ul', [
-                '<strong>Conversación.</strong> Nos cuentas cómo vistes, a qué te dedicas y qué quieres proyectar, tú y tu gente.',
-                '<strong>Propuesta.</strong> Preparamos tu colección: piezas, telas y el orden en que conviene hacerlas.',
-                '<strong>Medidas y confección.</strong> Tomamos medidas en tu visita y confeccionamos cada traje con sus pruebas.',
-                '<strong>Retrato.</strong> Estrenas tu colección frente a la cámara de Fiel; lee <a href="../reservar-sesion-de-retrato/">¿Cómo agendar una sesión de retrato fotográfico?</a>',
-            ]),
-        ]),
-        ('Piezas listas para usarse', [
-            'Si buscas una pieza individual, conoce los <a href="../../brands/justo/tienda/">esenciales de Justo</a>, en tallas Chico a Extra grande.',
-        ]),
-    ]),
-    ('reserva-prioritaria', 'citas', '¿Cómo funciona la reserva prioritaria?',
-     'Como miembro, apartas el estudio y tus citas de sastrería antes que el público general.', [
-        ('Qué es', [
-            'Los miembros reservan el estudio y las citas de sastrería con anticipación sobre el público general. Así aseguras tu horario en fechas de alta demanda.',
-        ]),
-        ('Cómo usarla', [
-            'Escríbenos a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Reserva%20prioritaria">info@casasiego.com</a> o pide tu cita en atención a clientes indicando que eres miembro del Club.',
-        ]),
-    ]),
     ('eventos-y-vestimenta', 'citas', 'Eventos especiales y código de vestimenta',
      'Cómo funcionan las invitaciones, el cupo, los acompañantes y el código de vestimenta.', [
         ('Invitaciones y cupo', [
@@ -181,21 +190,6 @@ ARTICLES = [
         ]),
         ('Convivencia', [
             'Pedimos respeto a las demás personas y no fotografiar ni grabar a otros miembros o invitados sin su consentimiento. Te avisamos cuando en un evento haya fotografía o video.',
-        ]),
-    ]),
-    ('cancelar-o-mover-una-cita', 'citas', '¿Cómo cancelo o muevo una cita?',
-     'Avísanos con anticipación para no perder tu sesión o tu prueba.', [
-        ('Sesiones de Fiel Mascotas', [
-            'Para mover tu sesión, escríbenos con al menos 24 horas de anticipación a <a href="mailto:info@casasiego.com?subject=Fiel%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>: te proponemos otro horario libre del calendario y tu anticipo pasa a la nueva fecha. Las reglas de cancelación y del anticipo están en los <a href="../../brands/fiel/terminos/">términos de Fiel</a>.',
-        ]),
-        ('Citas del Club', [
-            'Puedes cancelar o mover tu cita de sastrería avisando con al menos <span class="fill">[horas]</span> horas de anticipación a <a href="mailto:info@casasiego.com?subject=Club%20%C2%B7%20Cambio%20de%20cita">info@casasiego.com</a>.',
-        ]),
-        ('Si no llegas', [
-            'Una cita que no se cancela a tiempo puede contarse como utilizada.',
-        ]),
-        ('Puntualidad', [
-            'Llega unos minutos antes. Las sesiones y pruebas tienen un horario reservado para ti y para los siguientes miembros.',
         ]),
     ]),
     ('uniformes-ejecutivos-a-medida', 'empresas', '¿Cómo encargo uniformes ejecutivos a la medida?',
