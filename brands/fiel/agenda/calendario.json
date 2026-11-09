@@ -1,6 +1,6 @@
 {
  "version": "2.0.0",
- "nota": "Reglas del calendario de Fiel Mascotas (Esencial, Clásica y Legado). js/agenda.js genera con ellas los horarios de la semana actual y de la siguiente; el azar depende de la semilla y del lunes de cada semana, así que todos ven las mismas fechas. Ver la nota interna Calendar (calendario-fiel-v2.0.0-evaluacion.pdf).",
+ "nota": "Reglas del calendario de Fiel Fotografía (Esencial, Clásica y Legado). js/agenda.js genera con ellas los horarios de la semana actual y de la siguiente; el azar depende de la semilla y del lunes de cada semana, así que todos ven las mismas fechas. Ver la nota interna Calendar (calendario-fiel-v2.0.0-evaluacion.pdf).",
  "zona": "America/Mexico_City",
  "utc": "-06:00",
  "semilla": "casasiego-fiel-mascotas",

@@ -1,5 +1,5 @@
 /* Casa Siego — agenda.js (v2.0.1)
-   Fiel Mascotas · calendar of Esencial, Clásica and Legado (brands/fiel/agenda/<sesión>/), opened by Stripe
+   Fiel Fotografía · calendar of Esencial, Clásica and Legado (brands/fiel/agenda/<sesión>/), opened by Stripe
    after the deposit.
    1. Without ?pago=cs_… the calendar stays closed and the page points back to the sessions.
    2. Only two weeks exist: the current one (Monday to Sunday, Mexico City time) and the next. The rules in
@@ -201,7 +201,7 @@
 
   function letter() {
     var lines = [
-      'FIEL · MASCOTAS · SOLICITUD DE CITA', '',
+      'FIEL · FOTOGRAFÍA · SOLICITUD DE CITA', '',
       'Sesión: ' + S.nombre + (S.duracion ? ' (' + S.duracion + ')' : ''),
       'Fecha: ' + longDate(chosen.fecha),
       'Horario: ' + FRANJA[chosen.franja].toLowerCase() + ', ' + chosen.inicio.replace(/^0/, '') + ' h (hora de la Ciudad de México)',

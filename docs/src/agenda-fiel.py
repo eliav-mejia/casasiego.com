@@ -1,5 +1,5 @@
 """Builds brands/fiel/agenda/{esencial,clasica,legado}/index.html (v1.2.3): the page Stripe opens after the
-deposit of each Fiel Mascotas session. One template, so the three pages stay in step; the calendar itself
+deposit of each Fiel Fotografía session. One template, so the three pages stay in step; the calendar itself
 is drawn by js/agenda.js from the rules in brands/fiel/agenda/calendario.json: this week and the next only.
 Run:  python3 docs/src/agenda-fiel.py"""
 from html import escape
