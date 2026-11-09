@@ -1,0 +1,107 @@
+/* Casa Siego — eventos.css (v1.0.0)
+   membresia/eventos/: the cartelera, two event posters side by side (one column on phones).
+   Hover / focus: the photo drifts in slowly, the veil deepens, a brass frame draws in and the invitation line rises. */
+
+.carteles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 0.4rem + 1.2vw, 1.5rem);
+  max-width: 78rem;
+  margin: var(--space-4) auto var(--space-5);
+  padding: 0 clamp(1rem, 0.5rem + 2vw, 2.5rem);
+}
+
+.poster {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--beige-soft);
+  text-decoration: none;
+  background: var(--wine-deep);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--brass) 40%, transparent);
+  transition: box-shadow var(--dur-slow) var(--ease-silk), transform var(--dur-slow) var(--ease-silk);
+}
+
+.poster__image, .poster__veil, .poster__frame { position: absolute; inset: 0; }
+.poster__image img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transform: scale(1.02);
+  filter: saturate(0.85);
+  transition: transform 1600ms var(--ease-out-expo), filter var(--dur-slow) var(--ease-silk);
+}
+.poster__veil {
+  background: linear-gradient(180deg, rgba(74, 22, 33, 0) 25%, rgba(74, 22, 33, 0.6) 52%, rgba(59, 26, 31, 0.96) 100%);
+  transition: opacity var(--dur-slow) var(--ease-silk), background-color var(--dur-slow) var(--ease-silk);
+}
+/* Brass hairline frame: drawn from the corners on hover */
+.poster__frame {
+  inset: clamp(0.6rem, 0.4rem + 0.8vw, 1.1rem);
+  border: 1px solid var(--brass-light);
+  opacity: 0;
+  clip-path: inset(0 50% 100% 50%);
+  transition: clip-path 1100ms var(--ease-out-expo), opacity 500ms var(--ease-silk);
+  z-index: 1;
+}
+
+.poster__body {
+  position: absolute; inset: auto 0 0 0; z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-start;
+  padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+  text-shadow: 0 1px 12px rgba(30, 10, 14, 0.55);
+}
+.poster__no {
+  position: absolute; z-index: 2; top: clamp(1.25rem, 0.8rem + 2vw, 2.25rem); right: clamp(1.25rem, 0.8rem + 2vw, 2.25rem);
+  font-family: var(--font-display); font-size: clamp(1rem, 0.8rem + 0.8vw, 1.5rem); letter-spacing: var(--track-display);
+  color: var(--brass-light); opacity: 0.85;
+}
+.poster__eyebrow { margin: 0 0 var(--space-1); }
+.poster__title {
+  font-family: var(--font-section); font-weight: 600; line-height: 1.05;
+  font-size: clamp(1.6rem, 1rem + 2.6vw, 3.25rem);
+  transform: translateY(0.35rem);
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+.poster__rule {
+  display: block; width: 2.5rem; height: 1px; margin: var(--space-2) 0 var(--space-1);
+  background: var(--brass-light);
+  transform-origin: left; transition: width var(--dur-slow) var(--ease-out-expo);
+}
+.poster__sub { font-family: var(--font-body); font-size: var(--step-body); max-width: 28ch; color: var(--beige); }
+.poster__date { font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--brass-light); margin-top: var(--space-1); }
+.poster__cta {
+  font-family: var(--font-display); font-size: var(--step-meta); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-top: var(--space-2); padding-bottom: 0.2rem; border-bottom: 1px solid var(--brass-light);
+  opacity: 0; transform: translateY(0.75rem);
+  transition: opacity 700ms var(--ease-silk), transform var(--dur-slow) var(--ease-out-expo);
+}
+.poster__cta span { display: inline-block; transition: transform 700ms var(--ease-out-expo); }
+
+/* Hover and keyboard focus share the same reveal */
+.poster:hover, .poster:focus-visible { box-shadow: 0 1.5rem 3rem -1.5rem rgba(59, 26, 31, 0.55); transform: translateY(-4px); }
+.poster:hover .poster__image img, .poster:focus-visible .poster__image img { transform: scale(1.08); filter: saturate(1); }
+.poster:hover .poster__frame, .poster:focus-visible .poster__frame { opacity: 1; clip-path: inset(0 0 0 0); }
+.poster:hover .poster__title, .poster:focus-visible .poster__title { transform: translateY(0); }
+.poster:hover .poster__rule, .poster:focus-visible .poster__rule { width: 5rem; }
+.poster:hover .poster__cta, .poster:focus-visible .poster__cta { opacity: 1; transform: none; }
+.poster:hover .poster__cta span, .poster:focus-visible .poster__cta span { transform: translateX(0.3rem); }
+.poster:focus-visible { outline: 2px solid var(--brass); outline-offset: 4px; }
+
+/* Touch screens have no hover: keep the invitation line visible */
+@media (hover: none) {
+  .poster__cta { opacity: 1; transform: none; }
+  .poster__frame { opacity: 0.6; clip-path: inset(0 0 0 0); }
+}
+
+@media (max-width: 40rem) {
+  .carteles { grid-template-columns: 1fr; padding: 0 1rem; }
+  .poster { aspect-ratio: 3 / 4; }
+  .poster__no { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster, .poster *, .poster__image img { transition: none !important; }
+  .poster:hover, .poster:focus-visible { transform: none; }
+  .poster:hover .poster__image img, .poster:focus-visible .poster__image img { transform: scale(1.02); }
+}
