@@ -1,6 +1,6 @@
 // Casa Siego · prueba de las migraciones de supabase/ en PostgreSQL real (PGlite, WebAssembly), sin proyecto ni Docker.
 // Uso (desde la raíz del sitio):  npm install   y luego   node tools/probar-migraciones.mjs supabase
-// Aplica 0001 → 0005 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
+// Aplica 0001 → 0006 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
 // y comprueba RLS, la proyección Odoo → catalogo_publico, el registro atómico y las medidas inmutables. Sale 1 si algo falla.
 import { PGlite } from '@electric-sql/pglite';
 import { citext } from '@electric-sql/pglite/contrib/citext';
@@ -19,7 +19,7 @@ create function auth.uid() returns uuid language sql stable as $$ select nullif(
 grant usage on schema auth, public to anon, authenticated, service_role;
 grant execute on all functions in schema auth to anon, authenticated, service_role;
 `);
-for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql', '0005_alta_proveedores.sql']) {
+for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql', '0005_alta_proveedores.sql', '0006_alta_correo_medidas_propias.sql']) {
   try { await db.exec(fs.readFileSync(`${D}/migrations/${f}`, 'utf8')); ok(true, `migración ${f}`); }
   catch (e) { ok(false, `migración ${f}: ${e.message}`); process.exit(1); }
 }
@@ -170,3 +170,46 @@ const [fb] = await q(`insert into auth.users (email, raw_app_meta_data) values (
 ok((await q(`select count(*)::int n from public.medidas where user_id = $1`, [fb.id]))[0].n === 0, `cuenta propia sin medidas: las toma un representante`);
 const nofb = await as('authenticated', { sub: fb.id, role: 'authenticated' }, () => q(`select public.soy_personal() s`));
 ok(nofb[0].s === false, `cuenta propia no es personal`);
+
+// --- 0006 · alta con correo y contraseña + medidas que declara el propio cliente (pop-up de la portada)
+const [em] = await q(`insert into auth.users (email, raw_app_meta_data) values ('correo@ejemplo.com', '{"provider":"email","providers":["email"]}') returning id`);
+const jwtEm = { sub: em.id, role: 'authenticated', app_metadata: { provider: 'email' } };
+const mm = (a) => as('authenticated', jwtEm, () => q(
+  `select public.registrar_mis_medidas(p_cuello => $1, p_pecho => $2, p_largo_manga => $3, p_cintura => $4, p_ajuste => $5, p_cuello_preferido => $6) id`,
+  [a.cuello ?? null, a.pecho ?? null, a.manga ?? null, a.cintura ?? null, a.ajuste ?? null, a.cp ?? null]).then(() => null, e => e.message));
+err = await mm({ cuello: 39, pecho: 100, manga: 64 });
+ok(err && /registro incompleto/.test(err), `medidas antes de completar el registro → rechazado`);
+err = await as('authenticated', jwtEm, () => q(`select public.completar_registro('Elena Correa', 'es', '', 'casa', '', '{}'::jsonb, $1::jsonb)`, [JSON.stringify(cons)]).then(() => null, e => e.message));
+ok(err === null, `completar_registro con correo ${err ?? ''}`);
+ok((await q(`select proveedor_alta from public.profiles where id = $1`, [em.id]))[0].proveedor_alta === 'email', `alta con correo: proveedor email`);
+err = await mm({ cuello: 39.5, pecho: 101, manga: 64.5, cintura: 88, ajuste: 'regular', cp: 'CL' });
+ok(err === null, `el cliente guarda sus medidas ${err ?? ''}`);
+const [mv] = await as('authenticated', jwtEm, () => q(`select cuello, pecho, largo_manga, lugar, tomadas_por = user_id propio from public.medidas_vigentes`));
+ok(Number(mv.cuello) === 39.5 && mv.lugar === 'remota' && mv.propio, `medidas vigentes: 39.5 · remota · tomadas por el propio cliente`);
+err = await mm({ pecho: 100, manga: 64 });
+ok(err && /cuello/.test(err), `falta cuello → rechazado`);
+err = await mm({ cuello: 39, pecho: 900, manga: 64 });
+ok(err && /rango: pecho/.test(err), `pecho 900 → fuera de rango`);
+err = await mm({ cuello: 39, pecho: 100, manga: 64, ajuste: 'x' });
+ok(err && /opción inválida: ajuste/.test(err), `opción fuera de lista → rechazada`);
+// Inyección SQL: los valores llegan como parámetros tipados, nunca como texto SQL.
+err = await mm({ cuello: 39, pecho: 100, manga: 64, ajuste: "regular'); delete from public.medidas; --" });
+ok(err && /opción inválida/.test(err), `inyección en una opción → tratada como texto y rechazada`);
+err = await mm({ cuello: "39; drop table public.medidas", pecho: 100, manga: 64 });
+ok(err && /invalid input syntax/.test(err), `inyección en un número → error de tipo numeric, nada se ejecuta`);
+err = await mm({ cuello: 39, pecho: 100, manga: 64, cp: "CR' or '1'='1" });
+ok(err && /opción inválida/.test(err), `«' or '1'='1» → rechazado`);
+ok((await q(`select count(*)::int n from public.medidas where user_id = $1`, [em.id]))[0].n === 1 &&
+   (await q(`select to_regclass('public.medidas') t`))[0].t === 'medidas', `tras los intentos: la tabla sigue y hay 1 toma`);
+// Nadie guarda medidas a nombre de otro: la función no recibe user_id; el insert directo no está permitido.
+err = await as('authenticated', jwtEm, () => q(`insert into public.medidas (user_id, lugar, cuello, pecho, largo_manga) values ($1, 'remota', 40, 100, 64)`, [fb.id]).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `insert directo en medidas → permission denied`);
+ok((await q(`select count(*)::int n from public.medidas where user_id = $1`, [fb.id]))[0].n === 0, `la otra cuenta sigue sin medidas`);
+const ajenas = await as('authenticated', { sub: fb.id, role: 'authenticated' }, () => q(`select count(*)::int n from public.medidas_vigentes`));
+ok(ajenas[0].n === 0, `otro cliente no ve las medidas de Elena (RLS)`);
+err = await as('anon', {}, () => q(`select public.registrar_mis_medidas(39, 100, 64)`).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `anon no ejecuta registrar_mis_medidas`);
+for (let i = 0; i < 4; i++) await mm({ cuello: 39, pecho: 100, manga: 64 });
+err = await mm({ cuello: 39, pecho: 100, manga: 64 });
+ok(err && /demasiadas/.test(err), `sexta toma en un día → rechazada`);
+

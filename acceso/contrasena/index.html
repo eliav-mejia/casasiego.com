@@ -31,10 +31,10 @@
     <form class="rc__form" id="rc-form" novalidate hidden>
       <fieldset>
         <div class="rc__grid">
-          <label>Contraseña nueva <span class="rc__u">12 caracteres o más, con mayúscula, minúscula y número</span>
-            <input name="pw" type="password" autocomplete="new-password" required minlength="12"></label>
+          <label>Contraseña nueva <span class="rc__u">8 caracteres o más, con mayúscula, minúscula y número</span>
+            <input name="pw" type="password" autocomplete="new-password" required minlength="8"></label>
           <label>Repítela <span class="rc__u">&nbsp;</span>
-            <input name="pw2" type="password" autocomplete="new-password" required minlength="12"></label>
+            <input name="pw2" type="password" autocomplete="new-password" required minlength="8"></label>
         </div>
       </fieldset>
       <p class="rc__error" id="rc-error" role="alert" hidden></p>
@@ -48,7 +48,7 @@
     'use strict';
     var CFG = window.CASASIEGO_ACCESO || {};
     var aviso = document.getElementById('rc-aviso'), form = document.getElementById('rc-form'), err = document.getElementById('rc-error');
-    var REGLA = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
+    var REGLA = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!CFG.supabaseUrl || !CFG.publishableKey) { aviso.textContent = 'El acceso de clientes aún no está activo.'; return; }
     var s = document.createElement('script');
     s.src = CFG.supabaseJs; s.crossOrigin = 'anonymous';
@@ -71,7 +71,7 @@
         e.preventDefault();
         var a = form.elements.pw.value, b = form.elements.pw2.value;
         err.hidden = true;
-        if (!REGLA.test(a)) { err.textContent = 'Usa 12 caracteres o más, con al menos una mayúscula, una minúscula y un número.'; err.hidden = false; return; }
+        if (!REGLA.test(a)) { err.textContent = 'Usa 8 caracteres o más, con al menos una mayúscula, una minúscula y un número.'; err.hidden = false; return; }
         if (a !== b) { err.textContent = 'Las contraseñas no coinciden.'; err.hidden = false; return; }
         form.querySelector('button').disabled = true;
         client.auth.updateUser({ password: a }).then(function (r) {

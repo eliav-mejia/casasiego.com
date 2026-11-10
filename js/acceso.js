@@ -1,4 +1,4 @@
-/* Casa Siego — acceso.js (v1.3.0)
+/* Casa Siego — acceso.js (v1.4.0)
    Sign-in gate of the home page (index.html only; brand pages, terms and the shop have no gate).
    1. A login card covers the page (no sign-up: accounts are created by Casa Siego in Supabase).
    2. On submit the card flips to a white card with a script message:
@@ -10,6 +10,8 @@
        index.html's <head> does it before anything paints. The card only appears for the persona/avatar link (#acceso).
    4. «Omitir», in light grey under the login, goes to visitante.html (copy of the home page without the gate,
       version 1.0.0 «Unrecognized visitor»).
+   5. v1.4.0: with a session the page opens and fires «casa:sesion» on document with { cliente, sesion }, so
+      js/medidas.js reuses this Supabase client (one client per page: two would race on refresh-token rotation).
    Deterrent only on a static host: the HTML is still downloadable. Real protection: _interno/acceso/acceso-casasiego.md. */
 (function () {
   'use strict';
@@ -173,7 +175,12 @@
 
   function start() {
     existingSession().then(function (session) {
-      if (session) return openPage(null);
+      if (session) {
+        openPage(null);
+        return getClient().then(function (cliente) {
+          document.dispatchEvent(new CustomEvent('casa:sesion', { detail: { cliente: cliente, sesion: session } }));
+        });
+      }
       if (location.hash === '#acceso') return buildGate();
       window.location.replace((CFG.redirectOnSkip || 'visitante.html') + location.search);
     });
