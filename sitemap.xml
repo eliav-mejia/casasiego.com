@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>https://casasiego.com/</loc><lastmod>2026-10-29</lastmod>
+  <!-- Portada «Casa Siego - Imagen y estilo.» y sus subtítulos: Camisas & Trajes a Medida · Ready to Wear (Tienda) · Centro de Ayuda -->
+  <url><loc>https://casasiego.com/</loc><lastmod>2026-11-10</lastmod>
     <image:image><image:loc>https://casasiego.com/images/casa/portada.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/traje-01.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/foto-mascotas.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/casa/interlude-servicios.jpg</image:loc></image:image>
   </url>
+  <url><loc>https://casasiego.com/brands/justo/</loc><lastmod>2026-11-10</lastmod>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fejecutivosastre.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fvirreinal_ejecutivo.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/casa/traje-02.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://casasiego.com/ayuda/</loc><lastmod>2026-10-30</lastmod></url>
+  <!-- Resto del sitio -->
   <url><loc>https://casasiego.com/brands/fiel/</loc><lastmod>2026-10-29</lastmod>
     <image:image><image:loc>https://casasiego.com/images/fiel.esmx/web/hero-anillos.jpg</image:loc></image:image>
     <image:image><image:loc>https://casasiego.com/images/fiel.esmx/web/perfil-ejecutivo.jpg</image:loc></image:image>
@@ -18,16 +30,7 @@
   </url>
   <url><loc>https://casasiego.com/brands/fiel/blog/organiza-tu-sesion/</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://casasiego.com/brands/fiel/terminos/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://casasiego.com/brands/justo/</loc><lastmod>2026-11-05</lastmod>
-    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fejecutivosastre.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fvirreinal_ejecutivo.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/casa/traje-02.jpg</image:loc></image:image>
-  </url>
   <url><loc>https://casasiego.com/brands/justo/blog/pedido-priority/</loc><lastmod>2026-11-05</lastmod></url>
-  <url><loc>https://casasiego.com/brands/justo/tienda/</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/guia-de-tallas/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/saco-azul-marino-raya-diplomatica/</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/saco-gris-carbon-textura-tweed/</loc><lastmod>2026-10-27</lastmod></url>
@@ -38,7 +41,6 @@
   <url><loc>https://casasiego.com/brands/justo/tienda/corbata-roja/</loc><lastmod>2026-10-31</lastmod></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/corbata-azul-indigo/</loc><lastmod>2026-10-31</lastmod></url>
   <url><loc>https://casasiego.com/brands/justo/tienda/corbata-beige-a-cuadros/</loc><lastmod>2026-10-31</lastmod></url>
-  <url><loc>https://casasiego.com/ayuda/</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://casasiego.com/ayuda/clientes-priority/</loc><lastmod>2026-10-30</lastmod></url>
   <url><loc>https://casasiego.com/ayuda/meses-sin-intereses/</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://casasiego.com/ayuda/actualizacion-de-politicas/</loc><lastmod>2026-10-29</lastmod></url>
