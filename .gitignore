@@ -50,3 +50,8 @@ supabase/.branches/
 
 # Dependencias de las herramientas locales (package.json sí entra)
 node_modules/
+
+# Fijo: originales de Gemini fuera del repo; solo web/ y el README
+images/fijo/*
+!images/fijo/web/
+!images/fijo/README.md
