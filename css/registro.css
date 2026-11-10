@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — registro.css 2.0.0 (crear cuenta · registro.html)
+   Casa Siego — registro.css 2.1.0 (crear cuenta o iniciar sesión · registro.html, v1.4.0)
    Same language as the sign-in pop-up of the home page (css/acceso.css): colonial façade behind,
    parchment card with a double gold frame, Cinzel labels, underlined inputs, wine button,
    and the white card with the message in script. Uses site.css tokens.
@@ -194,6 +194,26 @@ select.t {
 @keyframes llegar { from { opacity: 0; transform: perspective(1600px) rotateY(-90deg); } }
 
 .sin-js { color: var(--thera-white); text-align: center; font-family: var(--font-body); }
+
+
+/* ---- v1.4.0: tabs, password hint, «o continúa con» ---------------------- */
+.pestanas { display: grid; grid-template-columns: 1fr 1fr; margin-top: 1.4rem; border-bottom: 1px solid rgba(176, 144, 94, 0.45); }
+.pestana {
+  padding: 0.75rem 0.5rem; margin-bottom: -1px; border: 0; border-bottom: 2px solid transparent; background: none; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--laurel-leaf); transition: color 250ms ease, border-color 250ms ease;
+}
+.pestana[aria-selected="true"] { color: var(--wine); border-bottom-color: var(--wine); }
+.pestana:hover { color: var(--wine); }
+.pestana:focus-visible { outline: 1px solid var(--wine); outline-offset: 2px; }
+.pestana:disabled { cursor: progress; }
+.campo__ayuda { font-family: var(--font-meta); font-style: italic; font-size: 0.8125rem; color: var(--laurel-leaf); }
+.campo__ayuda[hidden], .consentimientos[hidden] { display: none; }
+.separador {
+  display: flex; align-items: center; gap: 0.9rem; margin: 1.6rem 0 1rem;
+  font-family: var(--font-display); font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--laurel-leaf);
+}
+.separador::before, .separador::after { content: ""; flex: 1; border-top: 1px solid rgba(176, 144, 94, 0.45); }
 
 /* ---- small screens: façade frames the card, as in the pop-up ------------ */
 @media (max-width: 600px) {

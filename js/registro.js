@@ -1,13 +1,19 @@
-/* Casa Siego — registro.js 2.0.0 (crear cuenta · registro.html, v1.3.3)
-   Account creation on its own URL. The home pop-up (js/acceso.js) only signs in and never links here.
-   Step 1: name, country, language, brand attributes, consents. Step 2: Google, Microsoft (Supabase «azure»),
-   LinkedIn (Supabase «linkedin_oidc») or Facebook. Back from the provider, public.completar_registro() closes the
-   profile and the visitor goes to /cuenta/. The e-mail + 6-digit code path stays in the code (pedirCodigo / verificar)
-   but is not offered until Casa Siego has its own SMTP. Style: css/registro.css 2.0.0 (same as the pop-up).
-   Hybrid model: identity, consents and provider go to typed columns through public.completar_registro();
-   brand / campaign fields (?marca=fiel&campana=…) go to profiles.atributos (jsonb), validated by the database.
-   Access attempts are reported to the edge Worker (D1), which adds hashed IP/UA and forwards them to Supabase.
-   Without Supabase configured the letter works as a labelled demo (code 000000) and nothing is sent. */
+/* Casa Siego — registro.js 3.0.0 (crear cuenta o iniciar sesión · registro.html, v1.4.0)
+   Simplified: one card, two tabs.
+     Crear cuenta   → name, e-mail, password, one box for the mandatory notices (+ optional news) → supabase.auth.signUp
+     Iniciar sesión → e-mail and password → supabase.auth.signInWithPassword
+     Either tab     → Google, Microsoft («azure»), LinkedIn («linkedin_oidc») or Facebook → signInWithOAuth (PKCE)
+   With a session, public.completar_registro() closes the profile (once) and the visitor goes to the main index
+   (CFG.redirectOnSuccess = index.html?bienvenida=1), where js/medidas.js asks for the current measurements.
+
+   Security (front end; the real enforcement is Supabase Auth + RLS + typed RPCs, see migrations 0001, 0005, 0006):
+   - No SQL is ever built here. supabase-js sends JSON to PostgREST / GoTrue, which pass values as typed parameters.
+   - Same password rule as config.toml (12+, upper, lower, digit), checked before sending; Auth checks it again.
+   - Passwords are never stored (not in the draft, not in logs, not in GTM) and the field is cleared after each try.
+   - No account enumeration: sign-up always answers «check your e-mail»; failed sign-in is always the same message.
+   - PKCE flow; tokens and codes are removed from the address bar. Turnstile token sent when a site key is set.
+   - Everything shown to the visitor goes through textContent, never innerHTML with their data.
+   Without Supabase configured the card works as a labelled demo and nothing is sent. */
 (function () {
   'use strict';
 
@@ -15,51 +21,43 @@
   var configured = Boolean(CFG.supabaseUrl && CFG.publishableKey);
   var MSG_OK = 'Encantados de volvernos a encontrar';
   var MSG_NUEVO = 'Bienvenido a la Casa';
-  var TEXTO_ENVIAR = 'Completar registro';
-  var DRAFT_KEY = 'casasiego.carta';
+  var DRAFT_KEY = 'casasiego.registro';
+  var DRAFT_MS = 3600000;                     // = otp_expiry of the confirmation link
   var PROVEEDORES = { google: 'Google', azure: 'Microsoft', linkedin_oidc: 'LinkedIn', facebook: 'Facebook' };
   var MARCAS = ['casa', 'fiel', 'justo'];
-  var VALORES = { retrato: 'el retrato', sastreria: 'la sastrería', mascotas: 'mis mascotas', perro: 'perro', gato: 'gato',
-                  otro: 'otro', boda: 'una boda', trabajo: 'el trabajo', gala: 'una gala', diario: 'el día a día' };
-  var TEXTO_AVISO = {
-    privacidad: ['He leído el ', 'aviso de privacidad', ' y lo acepto'],
-    terminos: ['Acepto los ', 'términos de la Casa', ''],
-    marketing: ['Deseo recibir sus novedades por correo', '', ''],
-    cookies_analitica: ['Permito la ', 'analítica de visitas', '']
-  };
+  var REGLA = new RegExp(CFG.reglaContrasena || '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,72}$');
+  var EMAIL = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
 
   var $ = function (sel) { return document.querySelector(sel); };
   var form = $('#formulario');
   var nota = $('#nota');
   var enviar = $('#enviar');
   var enviarTexto = $('#enviar-texto');
-  var posdata = $('#posdata');
 
   var params = new URLSearchParams(location.search);
   var slug = function (v) { return /^[a-z0-9-]{1,40}$/.test(v || '') ? v : ''; };
   var marca = MARCAS.indexOf(params.get('marca')) >= 0 ? params.get('marca') : 'casa';
   var campana = slug(params.get('campana'));
 
-  var state = { modo: 'registro', etapa: 'carta', email: '',   // sign-in lives only in the home pop-up
-                avisos: [], campos: [], sesion: null, busy: false, captcha: '' };
+  var state = { modo: params.get('modo') === 'acceso' ? 'acceso' : 'registro', avisos: CFG.avisos || [],
+                sesion: null, completando: false, busy: false, captcha: '' };
   var clientPromise = null;
 
-  // --- storage (sessionStorage may be blocked) -------------------------------
+  // --- draft: survives the trip to the provider or to the e-mail link. Never the password. ----------
   function readDraft() {
     try {
-      var d = JSON.parse(sessionStorage.getItem(DRAFT_KEY) || 'null');
-      return d && Date.now() - d.ts < 3600000 ? d : null;
+      var d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+      return d && Date.now() - d.ts < DRAFT_MS ? d : null;
     } catch (e) { return null; }
   }
-  function writeDraft(extra) {
-    var d = collect();
-    d.ts = Date.now();
-    for (var k in extra) d[k] = extra[k];
-    try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify(d)); } catch (e) { /* draft is a convenience */ }
+  function writeDraft() {
+    var d = { nombre: form.nombre.value.trim().slice(0, 120), acepto: form.acepto.checked,
+              novedades: form.novedades.checked, marca: marca, campana: campana, ts: Date.now() };
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); } catch (e) { /* convenience only */ }
   }
-  function clearDraft() { try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ } }
+  function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ } }
 
-  // --- Supabase ----------------------------------------------------------------
+  // --- Supabase --------------------------------------------------------------------------------
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       var s = document.createElement('script');
@@ -84,6 +82,7 @@
       setTimeout(function () { reject(new Error('Tiempo de espera agotado')); }, CFG.timeoutMs || 10000);
     })]);
   }
+  // Runs a supabase-js call and returns data, or throws the Supabase error (with .status / .code).
   function call(fn) {
     return withTimeout(getClient().then(fn)).then(function (res) {
       if (res && res.error) throw res.error;
@@ -91,10 +90,10 @@
     });
   }
 
-  // --- edge log (Worker + D1): fire and forget ---------------------------------
+  // --- edge log (Worker + D1) and GTM: step and provider only, never the e-mail or the password ------
   function bitacora(evento, extra) {
-    // Same step to Google Tag Manager (js/medicion.js): only the step and the provider, never the e-mail.
-    if (window.casaMedir) window.casaMedir('casa_registro', { paso: evento, proveedor: (extra && extra.proveedor) || '', modo: state.modo });
+    extra = extra || {};
+    if (window.casaMedir) window.casaMedir('casa_registro', { paso: evento, proveedor: extra.proveedor || '', modo: state.modo });
     if (!CFG.bitacoraBorde || !configured) return;
     var body = { evento: evento };
     for (var k in extra) body[k] = extra[k];
@@ -103,132 +102,47 @@
     try {
       fetch(CFG.bitacoraBorde, { method: 'POST', keepalive: true, credentials: 'same-origin', headers: headers,
                                  body: JSON.stringify(body) }).catch(function () {});
-    } catch (e) { /* never block the letter */ }
+    } catch (e) { /* never block the card */ }
   }
 
-  // --- letter: hand and typewriter ---------------------------------------------
-  function escribirFecha() {
-    var hoy = new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
-    $('#fecha').textContent = 'Ciudad de México, a ' + hoy.replace(/ de (\d{4})$/, ' de $1');
+  // --- UI ----------------------------------------------------------------------------------------
+  function setNota(texto, tranquila) {
+    nota.textContent = texto;
+    nota.classList.toggle('es-tranquila', Boolean(tranquila));
   }
-
-  function ajustar(input) {
-    if (input.tagName !== 'INPUT' || input.type === 'date' || input.type === 'checkbox') return;
-    var min = Number(input.getAttribute('data-min')) || 8;
-    input.size = Math.max(min, (input.value || '').length + 1);
+  function textoBoton() {
+    return state.completando ? 'Completar registro' : state.modo === 'acceso' ? 'Entrar' : 'Crear cuenta';
   }
-
-  function teclear(e) {
-    var t = e.target;
-    if (!t.classList || !t.classList.contains('t')) return;
-    t.classList.remove('golpe');
-    void t.offsetWidth;                       // restart the strike animation
-    t.classList.add('golpe');
-    t.removeAttribute('aria-invalid');
-    ajustar(t);
-    if (t.name === 'nombre') firmar();
+  function setBusy(b, texto) {
+    state.busy = b;
+    enviar.disabled = b;
+    enviarTexto.textContent = texto || textoBoton();
+    Array.prototype.forEach.call(document.querySelectorAll('.social, .pestana'), function (el) { el.disabled = b; });
   }
-
-  function firmar() {
-    var n = form.nombre.value.trim();
-    $('#firma').textContent = n || ' ';
-  }
-
-  function etiquetaValor(v) { return VALORES[v] || String(v).replace(/_/g, ' '); }
-
-  function campoHTML(c) {
-    var name = 'a_' + c.clave;
-    var aria = '';
-    if (c.tipo === 'opcion' || c.tipo === 'booleano') {
-      var ops = c.tipo === 'booleano' ? ['true', 'false'] : c.opciones || [];
-      return '<select class="t" name="' + name + '"' + aria + '><option value="">—</option>' +
-        ops.map(function (o) {
-          var label = c.tipo === 'booleano' ? (o === 'true' ? 'sí' : 'no') : etiquetaValor(o);
-          return '<option value="' + o + '">' + label + '</option>';
-        }).join('') + '</select>';
-    }
-    var type = c.tipo === 'fecha' ? 'date' : c.tipo === 'numero' ? 'number' : 'text';
-    return '<input class="t" type="' + type + '" name="' + name + '" maxlength="' + (c.max_largo || 80) + '" data-min="10"' + aria + '>';
-  }
-
-  function pintarAtributos() {
-    var box = $('#atributos');
-    if (!state.campos.length) { box.innerHTML = ''; box.setAttribute('data-vacio', ''); return; }
-    box.removeAttribute('data-vacio');
-    box.innerHTML = state.campos.map(function (c) {
-      var etiqueta = c.etiqueta.replace(/[<>&"]/g, '');
-      return '<label class="campo"><span class="campo__etiqueta">' + etiqueta.charAt(0).toUpperCase() + etiqueta.slice(1) +
-        '</span>' + campoHTML(c) + '</label>';
-    }).join('');
-    Array.prototype.forEach.call(box.querySelectorAll('input.t'), ajustar);
-  }
-
-  function pintarConsentimientos() {
-    var fs = $('#consentimientos');
-    Array.prototype.forEach.call(fs.querySelectorAll('.consentimiento'), function (el) { el.remove(); });
-    state.avisos.forEach(function (a) {
-      var txt = TEXTO_AVISO[a.tipo] || [a.tipo, '', ''];
-      var label = document.createElement('label');
-      label.className = 'consentimiento';
-      var input = document.createElement('input');
-      input.type = 'checkbox';
-      input.name = 'c_' + a.tipo;
-      input.setAttribute('data-version', a.version);
-      if (a.obligatorio) input.required = true;
-      var span = document.createElement('span');
-      span.appendChild(document.createTextNode(txt[0]));
-      if (txt[1]) {
-        var link = document.createElement('a');
-        link.href = a.url; link.target = '_blank'; link.rel = 'noopener';
-        link.textContent = txt[1];
-        span.appendChild(link);
-      }
-      span.appendChild(document.createTextNode(txt[2] + ' '));
-      var v = document.createElement('span');
-      v.className = 'version'; v.textContent = '(v. ' + a.version + ')';
-      span.appendChild(v);
-      if (!a.obligatorio) {
-        var o = document.createElement('span');
-        o.className = 'opcional'; o.textContent = ' — opcional';
-        span.appendChild(o);
-      }
-      label.appendChild(input);
-      label.appendChild(span);
-      fs.appendChild(label);
-    });
+  function marcar(el, msg) {
+    if (el) { el.setAttribute('aria-invalid', 'true'); el.focus(); }
+    setNota(msg);
+    return false;
   }
 
   function setModo(modo) {
     state.modo = modo;
     Array.prototype.forEach.call(document.querySelectorAll('[data-solo]'), function (el) {
-      el.hidden = el.getAttribute('data-solo') !== modo || (el.id === 'atributos' && el.hasAttribute('data-vacio'));
+      el.hidden = el.getAttribute('data-solo') !== modo;
     });
-    Array.prototype.forEach.call(document.querySelectorAll('.sobre'), function (b) {
-      b.setAttribute('aria-pressed', String(b.getAttribute('data-modo') === modo));
+    Array.prototype.forEach.call(document.querySelectorAll('.pestana'), function (b) {
+      var on = b.getAttribute('data-modo') === modo;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
     });
-    enviarTexto.textContent = TEXTO_ENVIAR;
-    $('#desplegable-texto').textContent = 'Tus datos';
-    form.email.setAttribute('autocomplete', modo === 'acceso' ? 'username' : 'email');
-    setEtapa('carta');
+    form.setAttribute('aria-labelledby', modo === 'acceso' ? 'tab-acceso' : 'tab-registro');
+    form.password.setAttribute('autocomplete', modo === 'acceso' ? 'current-password' : 'new-password');
+    $('[data-requiere="contrasena"]').hidden = state.completando;
+    enviarTexto.textContent = textoBoton();
+    $('#pie').textContent = modo === 'acceso'
+      ? '¿Olvidaste tu contraseña? Escríbenos a info@casasiego.com.'
+      : 'Tu cuenta te da acceso a la portada de miembros y a tus medidas.';
     setNota('');
-  }
-
-  function setEtapa(etapa) {
-    state.etapa = etapa;
-    posdata.hidden = etapa !== 'codigo';
-    form.email.readOnly = etapa === 'codigo';
-    if (etapa === 'codigo') { form.codigo.value = ''; ajustar(form.codigo); setTimeout(function () { form.codigo.focus(); }, 60); }
-  }
-
-  function setNota(texto, tranquila) {
-    nota.textContent = texto;
-    nota.classList.toggle('es-tranquila', Boolean(tranquila));
-  }
-
-  function setBusy(b) {
-    state.busy = b;
-    enviar.disabled = b;
-    Array.prototype.forEach.call(document.querySelectorAll('.social'), function (s) { s.disabled = b; });
   }
 
   function responder(texto, destino) {
@@ -241,79 +155,36 @@
     if (destino) setTimeout(function () { location.assign(destino); }, CFG.messageMs || 3200);
   }
 
-  // --- data from the letter ------------------------------------------------------
-  function collect() {
-    var atributos = {};
-    state.campos.forEach(function (c) {
-      var el = form.elements['a_' + c.clave];
-      if (!el || el.value === '') return;
-      atributos[c.clave] = c.tipo === 'numero' ? Number(el.value) : c.tipo === 'booleano' ? el.value === 'true' : el.value;
+  // Mandatory notices go with «acepto»; marketing with «novedades»; anything else optional stays false.
+  function consentimientos() {
+    return state.avisos.map(function (a) {
+      var ok = a.obligatorio ? form.acepto.checked : a.tipo === 'marketing' ? form.novedades.checked : false;
+      return { tipo: a.tipo, version: a.version, otorgado: ok };
     });
-    return {
-      modo: state.modo, marca: marca, campana: campana,
-      nombre: form.nombre.value.trim(), pais: form.pais.value, idioma: form.idioma.value,
-      atributos: atributos,
-      consentimientos: state.avisos.map(function (a) {
-        var el = form.elements['c_' + a.tipo];
-        return { tipo: a.tipo, version: a.version, otorgado: Boolean(el && el.checked) };
-      })
-    };
   }
 
-  function restore(d) {
-    if (!d) return;
-    if (d.nombre) form.nombre.value = d.nombre;
-    if (d.pais !== undefined) form.pais.value = d.pais;
-    if (d.idioma) form.idioma.value = d.idioma;
-    Object.keys(d.atributos || {}).forEach(function (k) {
-      var el = form.elements['a_' + k];
-      if (el) el.value = String(d.atributos[k]);
-    });
-    (d.consentimientos || []).forEach(function (c) {
-      var el = form.elements['c_' + c.tipo];
-      if (el && el.getAttribute('data-version') === c.version) el.checked = c.otorgado;
-    });
-    Array.prototype.forEach.call(form.querySelectorAll('input.t'), ajustar);
-    firmar();
+  function leerEmail() {
+    var e = form.email.value.trim().toLowerCase();
+    return e.length <= 254 && EMAIL.test(e) ? e : '';
   }
 
-  function marcar(el, msg) {
-    if (el) {
-      var caja = el.closest('details');
-      if (caja) caja.open = true;
-      el.setAttribute('aria-invalid', 'true');
-      el.focus();
+  function errorTexto(err, modo) {
+    var status = err && err.status;
+    var code = String((err && (err.code || err.name)) || '');
+    var msg = String((err && err.message) || '');
+    if (status === 429 || /rate|too many/i.test(msg)) return 'Demasiados intentos. Espera unos minutos e intenta de nuevo.';
+    if (/captcha/i.test(code + msg)) return 'No pudimos confirmar que eres una persona. Recarga la página e intenta de nuevo.';
+    if (modo === 'registro' && (code === 'weak_password' || /password/i.test(msg))) {
+      return 'Esa contraseña no es válida: usa 8 caracteres o más, con mayúscula, minúscula y número, y evita contraseñas comunes.';
     }
-    setNota(msg);
-    return false;
-  }
-
-  function validEmail() {
-    var e = form.email.value.trim();
-    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254 ? e : '';
-  }
-
-  // Requirements before an account may exist: mandatory consents, required brand fields, and a name if asked.
-  function validarRegistro(conNombre) {
-    var d = collect();
-    if (conNombre && d.nombre.length < 2) return marcar(form.nombre, 'Escribe tu nombre y apellido.');
-    for (var i = 0; i < state.campos.length; i++) {
-      var c = state.campos[i];
-      if (c.obligatorio && d.atributos[c.clave] === undefined) {
-        return marcar(form.elements['a_' + c.clave], 'Falta contarnos ' + c.etiqueta + '.');
-      }
+    if (modo === 'acceso' && (code === 'email_not_confirmed' || /not confirmed/i.test(msg))) {
+      return 'Primero confirma tu correo con el enlace que te enviamos.';
     }
-    for (var j = 0; j < state.avisos.length; j++) {
-      var a = state.avisos[j];
-      if (a.obligatorio && !d.consentimientos[j].otorgado) {
-        return marcar(form.elements['c_' + a.tipo], 'Para crear tu cuenta hace falta aceptar ' +
-          (TEXTO_AVISO[a.tipo] && TEXTO_AVISO[a.tipo][1] ? (a.tipo === 'terminos' ? 'los ' : 'el ') + TEXTO_AVISO[a.tipo][1] : a.tipo) + '.');
-      }
-    }
-    return d;
+    if (modo === 'acceso') return 'Correo o contraseña incorrectos.';
+    return 'No pudimos crear tu cuenta en este momento. Intenta de nuevo en unos minutos.';
   }
 
-  // --- session finished (OTP or OAuth) ----------------------------------------------
+  // --- session: complete the profile once, then the main index ----------------------------------
   function proveedorDe(sesion) {
     var p = sesion && sesion.user && sesion.user.app_metadata && sesion.user.app_metadata.provider;
     return PROVEEDORES[p] || p === 'email' ? p : null;
@@ -323,165 +194,143 @@
     state.sesion = sesion;
     var proveedor = proveedorDe(sesion);
     return call(function (c) {
-      return c.from('profiles').select('registro_completo, nombre').eq('id', sesion.user.id).maybeSingle();
+      return c.from('profiles').select('registro_completo').eq('id', sesion.user.id).maybeSingle();
     }).then(function (perfil) {
       if (perfil && perfil.registro_completo) {
-        bitacora(proveedor === 'email' ? 'login_ok' : 'oauth_ok', { proveedor: proveedor });
         clearDraft();
+        bitacora(proveedor === 'email' ? 'login_ok' : 'oauth_ok', { proveedor: proveedor });
         responder(MSG_OK, CFG.redirectOnSuccess || 'index.html');
         return;
       }
-      // New account (or a social sign-in that never wrote its letter): finish the letter with the draft.
-      var d = readDraft();
+      // New account (e-mail confirmed, or first time with a provider): finish with the draft, or ask for what is missing.
+      var d = readDraft() || {};
       var meta = sesion.user.user_metadata || {};
-      if (d && d.modo === 'registro') restore(d);
-      if (!form.nombre.value.trim()) form.nombre.value = String(meta.full_name || meta.name || '').slice(0, 120);
-      firmar();
-      Array.prototype.forEach.call(form.querySelectorAll('input.t'), ajustar);
-      if (sesion.user.email) { form.email.value = sesion.user.email; $('#campo-email').hidden = false; }
-      if (state.modo !== 'registro') setModo('registro');
+      state.completando = true;
+      setModo('registro');
+      form.email.value = sesion.user.email || '';
       form.email.readOnly = true;
-      var listo = validarRegistro(true);
-      if (!listo) {
-        enviar.hidden = false;
-        setNota('Ya te reconocemos por ' + (PROVEEDORES[proveedor] || 'tu correo') +
-                '. Completa tus datos para terminar.', true);
-        return;
-      }
-      return completar(listo, proveedor);
+      form.nombre.value = String(d.nombre || meta.nombre || meta.full_name || meta.name || '').slice(0, 120);
+      form.acepto.checked = Boolean(d.acepto);
+      form.novedades.checked = Boolean(d.novedades);
+      if (form.nombre.value.trim().length >= 2 && form.acepto.checked) return completar(proveedor);
+      setNota('Ya te reconocemos' + (PROVEEDORES[proveedor] ? ' por ' + PROVEEDORES[proveedor] : '') +
+              '. Completa tu nombre y acepta los avisos para terminar.', true);
     });
   }
 
-  function completar(d, proveedor) {
-    setBusy(true);
+  function completar(proveedor) {
+    var nombre = form.nombre.value.trim();
+    if (nombre.length < 2) return marcar(form.nombre, 'Escribe tu nombre y apellido.');
+    if (!form.acepto.checked) return marcar(form.acepto, 'Para crear tu cuenta hace falta aceptar el aviso de privacidad y los términos.');
+    setBusy(true, 'Guardando…');
     return call(function (c) {
       return c.rpc('completar_registro', {
-        p_nombre: d.nombre, p_idioma: d.idioma, p_pais: d.pais, p_marca: d.marca, p_campana: d.campana,
-        p_atributos: d.atributos, p_consentimientos: d.consentimientos
+        p_nombre: nombre.slice(0, 120), p_idioma: 'es', p_pais: '', p_marca: marca, p_campana: campana,
+        p_atributos: {}, p_consentimientos: consentimientos()
       });
     }).then(function () {
       clearDraft();
-      if (window.casaMedir) window.casaMedir('casa_registro', { paso: 'registro_completo', proveedor: proveedor || '', modo: 'registro' });
-      bitacora(proveedor === 'email' ? 'login_ok' : 'oauth_ok', { proveedor: proveedor });
-      return call(function (c) { return c.auth.refreshSession(); }).catch(function () {}); // new claim registro_completo
+      bitacora('registro_ok', { proveedor: proveedor });
+      return call(function (c) { return c.auth.refreshSession(); }).catch(function () {}); // claim registro_completo
     }).then(function () {
       responder(MSG_NUEVO, CFG.redirectOnSuccess || 'index.html');
     }).catch(function (err) {
-      setBusy(false);
       var m = String((err && err.message) || '');
-      enviar.hidden = false;
-      setNota(/atributo|opción|fecha|tipo/.test(m) ? 'Algo de lo que nos cuentas no lo pudimos leer: revisa tus datos.'
-            : /aceptar|aviso/.test(m) ? 'Los avisos cambiaron mientras escribías. Recarga la página y vuelve a marcarlos.'
+      setBusy(false);
+      if (/ya completado/.test(m)) return responder(MSG_OK, CFG.redirectOnSuccess || 'index.html');
+      setNota(/aviso|aceptar/.test(m) ? 'Los avisos cambiaron hace un momento. Recarga la página y vuelve a aceptarlos.'
             : 'No pudimos guardar tu registro. Intenta de nuevo en un momento.');
     });
   }
 
-  // --- e-mail with code ----------------------------------------------------------------
-  function pedirCodigo(email) {
-    var opciones = { shouldCreateUser: state.modo === 'registro' };
-    if (state.captcha) opciones.captchaToken = state.captcha;
-    return call(function (c) { return c.auth.signInWithOtp({ email: email, options: opciones }); })
-      .then(function () { bitacora('otp_enviado', { proveedor: 'email' }); })
-      .catch(function (err) {
-        // Sign-in for an unknown address: same answer as success (no account enumeration).
-        if (state.modo === 'acceso' && /signup|not allowed|not found/i.test(String(err && err.message))) return;
-        throw err;
-      })
-      .then(function () { resetCaptcha(); });
-  }
-
+  // --- e-mail and password -----------------------------------------------------------------------
   function onSubmit(e) {
     e.preventDefault();
     if (state.busy) return;
     setNota('');
+    if (state.completando) return completar(proveedorDe(state.sesion));
 
-    // Signed in but the letter is unfinished: just complete it.
-    if (state.sesion) {
-      var d0 = validarRegistro(true);
-      if (d0) completar(d0, proveedorDe(state.sesion));
-      return;
+    var email = leerEmail();
+    var password = form.password.value;
+    if (!email) return marcar(form.email, 'Revisa tu correo: parece incompleto.');
+
+    if (state.modo === 'registro') {
+      if (form.nombre.value.trim().length < 2) return marcar(form.nombre, 'Escribe tu nombre y apellido.');
+      if (!REGLA.test(password)) return marcar(form.password, 'La contraseña necesita 8 caracteres o más, con mayúscula, minúscula y número.');
+      if (!form.acepto.checked) return marcar(form.acepto, 'Para crear tu cuenta hace falta aceptar el aviso de privacidad y los términos.');
+    } else if (!password) {
+      return marcar(form.password, 'Escribe tu contraseña.');
     }
-
-    if (state.etapa === 'codigo') return verificar();
-    // Account creation is by provider only (no own SMTP yet): the button shows up only with an open session.
-    return setNota('Elige cómo continuar: Google, Microsoft, LinkedIn o Facebook.');
-
-    var email = validEmail();
-    if (!email) return marcar(form.email, 'La dirección de correo no parece completa.');
-    if (state.modo === 'registro' && !validarRegistro(true)) return;
-    if (CFG.turnstileSiteKey && !state.captcha) return setNota('Un momento: la Casa confirma que la carta la escribe una persona.');
-
-    state.email = email;
-    writeDraft({ pendiente: 'email' });
-    setBusy(true);
-    enviarTexto.textContent = 'Enviando…';
+    if (CFG.turnstileSiteKey && !state.captcha) return setNota('Un momento: confirmamos que eres una persona.', true);
 
     if (!configured) {
-      setBusy(false);
-      setEtapa('codigo');
-      enviarTexto.textContent = 'Sellar con el código';
-      setNota('Demostración: la Casa aún no envía correos. Escriba 000000 para ver la respuesta.', true);
+      form.password.value = '';
+      return setNota('Demostración: Supabase aún no está conectado, así que no se creó ni abrió ninguna cuenta.', true);
+    }
+
+    var opciones = {};
+    if (state.captcha) opciones.captchaToken = state.captcha;
+
+    if (state.modo === 'registro') {
+      writeDraft();
+      setBusy(true, 'Creando tu cuenta…');
+      opciones.emailRedirectTo = new URL(CFG.emailRedirect || 'registro.html', location.href).href +
+        '?' + new URLSearchParams({ marca: marca, campana: campana }).toString();
+      opciones.data = { nombre: form.nombre.value.trim().slice(0, 120) };
+      call(function (c) { return c.auth.signUp({ email: email, password: password, options: opciones }); })
+        .then(function (data) {
+          form.password.value = '';
+          resetCaptcha();
+          setBusy(false);
+          if (data && data.session) return terminar(data.session);    // confirmations off: already signed in
+          // Same answer whether the address is new or already registered (no enumeration).
+          bitacora('otp_enviado', { proveedor: 'email' });
+          setNota('Te enviamos un enlace a ' + email + '. Ábrelo en este navegador para activar tu cuenta y entrar.', true);
+        })
+        .catch(function (err) {
+          form.password.value = '';
+          resetCaptcha();
+          setBusy(false);
+          setNota(errorTexto(err, 'registro'));
+        });
       return;
     }
 
-    pedirCodigo(email).then(function () {
-      setBusy(false);
-      setEtapa('codigo');
-      enviarTexto.textContent = 'Sellar con el código';
-      setNota(state.modo === 'acceso'
-        ? 'Si su correo está en nuestros registros, recibirá un código de 6 dígitos en unos instantes.'
-        : 'Le enviamos un código de 6 dígitos. Escríbalo en la posdata.', true);
-    }).catch(function () {
-      setBusy(false);
-      enviarTexto.textContent = 'Sellar y entrar';
-      setNota('No pudimos enviar el código. Espere un minuto e intente de nuevo.');
-    });
-  }
-
-  function verificar() {
-    var codigo = form.codigo.value.replace(/\D/g, '');
-    if (codigo.length !== 6) return marcar(form.codigo, 'El código tiene 6 dígitos.');
-    setBusy(true);
-
-    if (!configured) {
-      setBusy(false);
-      if (codigo !== '000000') return marcar(form.codigo, 'El código no coincide (en la demostración es 000000).');
-      clearDraft();
-      responder(state.modo === 'acceso' ? MSG_OK : MSG_NUEVO, null);
-      return;
-    }
-
-    call(function (c) { return c.auth.verifyOtp({ email: state.email, token: codigo, type: 'email' }); })
+    setBusy(true, 'Verificando…');
+    call(function (c) { return c.auth.signInWithPassword({ email: email, password: password, options: opciones }); })
       .then(function (data) {
+        form.password.value = '';
         if (!data || !data.session) throw new Error('Sin sesión');
         setBusy(false);
         return terminar(data.session);
       })
-      .catch(function () {
+      .catch(function (err) {
+        form.password.value = '';
+        resetCaptcha();
         setBusy(false);
-        bitacora('otp_fallido', { proveedor: 'email', resultado: 'denegado' });
-        marcar(form.codigo, 'El código no coincide o ya venció. Puede pedir otro.');
+        bitacora('login_fallido', { proveedor: 'email', resultado: 'denegado' });
+        marcar(form.password, errorTexto(err, 'acceso'));
       });
   }
 
-  // --- social accounts ---------------------------------------------------------------------
+  // --- Google, Microsoft, LinkedIn, Facebook ------------------------------------------------------
   function onSocial(e) {
     var btn = e.target.closest('.social');
     if (!btn || state.busy) return;
     var proveedor = btn.getAttribute('data-proveedor');
+    if (!PROVEEDORES[proveedor]) return;
     setNota('');
-    if (state.modo === 'registro' && !validarRegistro(false)) return;
-
-    writeDraft({ pendiente: proveedor });
+    if (state.modo === 'registro' && !form.acepto.checked) {
+      return marcar(form.acepto, 'Para crear tu cuenta hace falta aceptar el aviso de privacidad y los términos.');
+    }
+    writeDraft();
     if (!configured) {
-      setNota('Demostración: Supabase aún no está conectado, así que no se abre ' + PROVEEDORES[proveedor] +
-              '. Tus datos quedaron guardados en este navegador.', true);
-      return;
+      return setNota('Demostración: Supabase aún no está conectado, así que no se abre ' + PROVEEDORES[proveedor] + '.', true);
     }
     setBusy(true);
     bitacora('oauth_iniciado', { proveedor: proveedor });
-    var back = location.origin + location.pathname + '?' + new URLSearchParams(
-      { modo: state.modo, marca: marca, campana: campana }).toString();
+    var back = location.origin + location.pathname + '?' +
+      new URLSearchParams({ modo: state.modo, marca: marca, campana: campana }).toString();
     call(function (c) {
       return c.auth.signInWithOAuth({
         provider: proveedor,
@@ -494,7 +343,7 @@
     });
   }
 
-  // --- Turnstile (optional) ---------------------------------------------------------------
+  // --- Turnstile (when a site key is configured) ---------------------------------------------------
   function iniciarCaptcha() {
     if (!CFG.turnstileSiteKey) return;
     var box = $('#turnstile');
@@ -505,71 +354,66 @@
         callback: function (t) { state.captcha = t; },
         'expired-callback': function () { state.captcha = ''; }
       });
-    }).catch(function () { /* Supabase will refuse without a token; the note explains */ });
+    }).catch(function () { /* Supabase refuses without a token; the error note explains */ });
   }
   function resetCaptcha() {
     state.captcha = '';
     if (window.turnstile && CFG.turnstileSiteKey) window.turnstile.reset($('#turnstile'));
   }
 
-  // --- start -------------------------------------------------------------------------------
-  function formulario() {
-    var fallback = { avisos: CFG.avisos || [], campos: (CFG.campos || {})[marca] || [] };
-    if (!configured) return Promise.resolve(fallback);
+  // --- start ---------------------------------------------------------------------------------------
+  function cargarAvisos() {
+    if (!configured) return Promise.resolve();
     return call(function (c) { return c.rpc('formulario_registro', { p_marca: marca, p_campana: campana }); })
-      .then(function (d) { return d && d.avisos ? d : fallback; })
-      .catch(function () { return fallback; });
+      .then(function (d) { if (d && d.avisos && d.avisos.length) state.avisos = d.avisos; })
+      .catch(function () { /* fallback: CFG.avisos */ });
   }
 
   function limpiarURL() {
     var keep = new URLSearchParams();
-    ['modo', 'marca', 'campana'].forEach(function (k) { if (params.get(k)) keep.set(k, params.get(k)); });
+    ['modo', 'marca', 'campana'].forEach(function (k) { if (slug(params.get(k))) keep.set(k, params.get(k)); });
     var q = keep.toString();
     history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
   }
 
+  function confirmadoEnOtroNavegador() {
+    setModo('acceso');
+    setNota('Tu correo quedó confirmado. Inicia sesión con tu contraseña.', true);
+  }
+
   function start() {
-    escribirFecha();
-    form.addEventListener('input', teclear);
     form.addEventListener('submit', onSubmit);
+    form.addEventListener('input', function (e) { if (e.target.removeAttribute) e.target.removeAttribute('aria-invalid'); });
+    form.addEventListener('change', function (e) { if (e.target.removeAttribute) e.target.removeAttribute('aria-invalid'); });
     $('.sociales').addEventListener('click', onSocial);
-    $('#reenviar').addEventListener('click', function () {
-      if (state.busy || !state.email) return;
-      if (!configured) return setNota('Demostración: el código es 000000.', true);
-      pedirCodigo(state.email).then(function () { setNota('Le enviamos un código nuevo.', true); })
-        .catch(function () { setNota('Espere un minuto antes de pedir otro código.'); });
+    Array.prototype.forEach.call(document.querySelectorAll('.pestana'), function (b) {
+      b.addEventListener('click', function () { if (!state.busy && !state.completando) setModo(b.getAttribute('data-modo')); });
     });
-    Array.prototype.forEach.call(document.querySelectorAll('.sobre'), function (b) {
-      b.addEventListener('click', function () { if (!state.busy && !state.sesion) setModo(b.getAttribute('data-modo')); });
-    });
-    Array.prototype.forEach.call(form.querySelectorAll('input.t'), ajustar);
+    var d = readDraft();
+    if (d) { form.nombre.value = d.nombre || ''; form.acepto.checked = Boolean(d.acepto); form.novedades.checked = Boolean(d.novedades); }
+    setModo(state.modo);
+    iniciarCaptcha();
 
     var oauthError = params.get('error_description') || params.get('error');
-    formulario().then(function (f) {
-      state.avisos = f.avisos || [];
-      state.campos = f.campos || [];
-      pintarAtributos();
-      pintarConsentimientos();
-      var d = readDraft();
-      if (d && d.marca === marca) { restore(d); $('#desplegable').open = true; }
-      setModo(d && d.pendiente && d.modo ? d.modo : state.modo);
-      iniciarCaptcha();
-
+    var traeCodigo = params.has('code');
+    cargarAvisos().then(function () {
       if (oauthError) {
-        var p = d && d.pendiente;
-        bitacora('oauth_fallido', { proveedor: PROVEEDORES[p] ? p : null, resultado: 'denegado' });
-        setNota('La cuenta de ' + (PROVEEDORES[p] || 'tu proveedor') + ' no se conectó. Puedes intentarlo de nuevo o elegir otra.');
         limpiarURL();
-        return;
+        bitacora('oauth_fallido', { resultado: 'denegado' });
+        return setNota('No se pudo conectar tu cuenta. Intenta de nuevo o elige otra forma de entrar.');
       }
       if (!configured) return;
-      // Returning from Google / Microsoft / LinkedIn / Facebook (PKCE code in the URL) or an existing session.
+      // Back from a provider or from the confirmation e-mail (PKCE code in the URL), or an open session.
       return call(function (c) { return c.auth.getSession(); }).then(function (data) {
         limpiarURL();
         if (data && data.session) return terminar(data.session);
+        // The link was opened in another browser (no PKCE verifier here): the e-mail is confirmed anyway.
+        if (traeCodigo) confirmadoEnOtroNavegador();
       });
     }).catch(function () {
-      setNota('No pudimos abrir el registro en este momento. Intenta de nuevo en unos minutos.');
+      limpiarURL();
+      if (traeCodigo) return confirmadoEnOtroNavegador();
+      setNota('No pudimos abrir el acceso en este momento. Intenta de nuevo en unos minutos.');
     });
   }
 

@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Casa Siego — medidas.css 1.0.0 (v1.4.0 · portada index.html)
+   Pop-up «¿Cuáles son tus medidas actuales?» (js/medidas.js). Same language as the sign-in card
+   (css/acceso.css): parchment card, gold frame, Cinzel labels, underlined inputs, wine button.
+   ========================================================================== */
+
+.medidas {
+  position: fixed; inset: 0; z-index: 1100;
+  display: grid; place-items: center;
+  padding: 1rem; overflow-y: auto;
+  background: rgba(30, 10, 14, 0.62);
+  animation: medidas-in 500ms ease both;
+}
+.medidas.is-leaving { animation: medidas-out 450ms ease forwards; }
+@keyframes medidas-in  { from { opacity: 0; } }
+@keyframes medidas-out { to { opacity: 0; visibility: hidden; } }
+
+.medidas__tarjeta {
+  width: min(32rem, 100%); box-sizing: border-box; margin: auto;
+  padding: clamp(1.75rem, 1.2rem + 2.5vw, 2.5rem) clamp(1.25rem, 0.9rem + 2.5vw, 2.25rem);
+  background: var(--parchment-marble, #F6F0E6); color: var(--aegean-ink, #3B1A1F);
+  border: 1px solid rgba(176, 144, 94, 0.55);
+  outline: 1px solid rgba(176, 144, 94, 0.35); outline-offset: -8px;
+  box-shadow: 0 40px 80px -40px rgba(30, 10, 14, 0.75);
+  animation: medidas-rise 800ms var(--ease-silk, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+@keyframes medidas-rise { from { opacity: 0; transform: translateY(14px); } }
+
+.medidas__tarjeta .eyebrow { margin: 0; text-align: center; }
+.medidas__titulo {
+  margin: 0.5rem 0 0; text-align: center;
+  font-family: var(--font-display); font-weight: 400; font-size: clamp(1.25rem, 1.05rem + 1vw, 1.6rem); line-height: 1.25;
+  color: var(--wine, #6B1E2C);
+}
+.medidas__lede {
+  margin: 0.8rem auto 0; max-width: 26rem; text-align: center;
+  font-family: var(--font-meta); font-style: italic; font-size: 0.95rem; line-height: 1.5; color: var(--laurel-leaf);
+}
+
+.medidas__form { display: grid; margin-top: 1.4rem; }
+.medidas__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.1rem; }
+.medidas__campo { display: grid; gap: 0.3rem; min-width: 0; }
+.medidas__etiqueta {
+  font-family: var(--font-display); font-size: 0.625rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--laurel-leaf);
+}
+.medidas__fila { display: flex; align-items: baseline; gap: 0.35rem; }
+.medidas__input {
+  width: 100%; min-width: 0; box-sizing: border-box; padding: 0.45rem 0; margin: 0;
+  border: 0; border-bottom: 1px solid var(--aegean-ink, #3B1A1F); border-radius: 0;
+  background: transparent; color: var(--aegean-ink, #3B1A1F);
+  font-family: var(--font-body); font-size: 1.05rem; font-variant-numeric: tabular-nums;
+}
+select.medidas__input { appearance: none; -webkit-appearance: none; cursor: pointer; font-size: 0.95rem; }
+.medidas__input:focus { outline: none; border-bottom: 2px solid var(--amphora-rust, #A0522D); padding-bottom: calc(0.45rem - 1px); }
+.medidas__input[aria-invalid="true"] { border-bottom: 2px solid #8E2A2A; padding-bottom: calc(0.45rem - 1px); }
+.medidas__unidad { font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; color: var(--laurel-leaf); }
+
+.medidas__mas { margin-top: 1.3rem; border-top: 1px solid rgba(176, 144, 94, 0.4); padding-top: 0.9rem; }
+.medidas__mas summary {
+  cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--wine, #6B1E2C);
+}
+.medidas__mas summary::-webkit-details-marker { display: none; }
+.medidas__mas summary::before { content: "+ "; }
+.medidas__mas[open] summary::before { content: "– "; }
+.medidas__mas[open] summary { margin-bottom: 1rem; }
+.medidas__mas summary:focus-visible { outline: 1px solid var(--wine); outline-offset: 3px; }
+
+.medidas__nota {
+  min-height: 1.4em; margin: 1rem 0 0; text-align: center;
+  font-family: var(--font-meta); font-style: italic; font-size: 0.9rem; line-height: 1.45; color: #8E2A2A;
+}
+.medidas__nota.es-tranquila { color: var(--laurel-leaf); }
+.medidas__guardar { width: 100%; margin-top: 0.6rem; cursor: pointer; }
+.medidas__guardar[disabled] { opacity: 0.6; cursor: progress; }
+.medidas__luego {
+  justify-self: center; margin-top: 0.9rem; padding: 0.3rem 0.6rem; border: 0; background: none; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: #a7a9ac;
+}
+.medidas__luego:hover, .medidas__luego:focus-visible { color: #7d8085; }
+
+@media (max-width: 520px) {
+  .medidas__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .medidas, .medidas.is-leaving, .medidas__tarjeta { animation-duration: 1ms; }
+}
