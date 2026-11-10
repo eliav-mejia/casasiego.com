@@ -1,4 +1,4 @@
-/* Casa Siego — eventos.css (v1.0.0)
+/* Casa Siego — eventos.css (v1.0.1)
    membresia/eventos/: the cartelera, two event posters side by side (one column on phones).
    Hover / focus: the photo drifts in slowly, the veil deepens, a brass frame draws in and the invitation line rises. */
 
@@ -17,7 +17,7 @@
   aspect-ratio: 4 / 5;
   overflow: hidden;
   isolation: isolate;
-  color: var(--beige-soft);
+  color: var(--thera-white);
   text-decoration: none;
   background: var(--wine-deep);
   box-shadow: 0 1px 0 color-mix(in srgb, var(--brass) 40%, transparent);
@@ -60,25 +60,32 @@
 .poster__title {
   font-family: var(--font-section); font-weight: 600; line-height: 1.05;
   font-size: clamp(1.6rem, 1rem + 2.6vw, 3.25rem);
+  color: var(--thera-white);
   transform: translateY(0.35rem);
-  transition: transform var(--dur-slow) var(--ease-out-expo);
+  transition: transform var(--dur-slow) var(--ease-out-expo), color var(--dur-slow) var(--ease-silk);
 }
 .poster__rule {
   display: block; width: 2.5rem; height: 1px; margin: var(--space-2) 0 var(--space-1);
   background: var(--brass-light);
   transform-origin: left; transition: width var(--dur-slow) var(--ease-out-expo);
 }
-.poster__sub { font-family: var(--font-body); font-size: var(--step-body); max-width: 28ch; color: var(--beige); }
+.poster__sub { font-family: var(--font-body); font-size: var(--step-body); max-width: 28ch; color: var(--beige); transition: color var(--dur-slow) var(--ease-silk); }
 .poster__date { font-family: var(--font-meta); font-style: italic; font-size: var(--step-meta); color: var(--brass-light); margin-top: var(--space-1); }
 .poster__cta {
   font-family: var(--font-display); font-size: var(--step-meta); letter-spacing: 0.12em; text-transform: uppercase;
   margin-top: var(--space-2); padding-bottom: 0.2rem; border-bottom: 1px solid var(--brass-light);
+  color: var(--thera-white);
   opacity: 0; transform: translateY(0.75rem);
-  transition: opacity 700ms var(--ease-silk), transform var(--dur-slow) var(--ease-out-expo);
+  transition: opacity 700ms var(--ease-silk), transform var(--dur-slow) var(--ease-out-expo), color var(--dur-slow) var(--ease-silk);
 }
 .poster__cta span { display: inline-block; transition: transform 700ms var(--ease-out-expo); }
 
-/* Hover and keyboard focus share the same reveal */
+/* Hover and keyboard focus share the same reveal. Colours swap: white text turns cream, cream text turns white
+   (overrides the site-wide a:hover wine). */
+.poster:hover, .poster:focus-visible { color: var(--thera-white); text-decoration: none; }
+.poster:hover .poster__title, .poster:focus-visible .poster__title,
+.poster:hover .poster__cta, .poster:focus-visible .poster__cta { color: var(--beige); }
+.poster:hover .poster__sub, .poster:focus-visible .poster__sub { color: var(--thera-white); }
 .poster:hover, .poster:focus-visible { box-shadow: 0 1.5rem 3rem -1.5rem rgba(59, 26, 31, 0.55); transform: translateY(-4px); }
 .poster:hover .poster__image img, .poster:focus-visible .poster__image img { transform: scale(1.08); filter: saturate(1); }
 .poster:hover .poster__frame, .poster:focus-visible .poster__frame { opacity: 1; clip-path: inset(0 0 0 0); }
