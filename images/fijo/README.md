@@ -28,3 +28,9 @@ Descartadas: 2 copias idénticas «(1)» (borradas) y `Gemini_Generated_Image_jg
 | `traje-azul-cobalto.jpg` | `Gemini_Generated_Image_ys6pj5…` |
 | `saco-marino-bordado.jpg` | `Gemini_Generated_Image_yvj3h0…` |
 | `saco-gris-con-chaleco.jpg` | `Gemini_Generated_Image_zjedzz…` |
+
+## Banner de la tienda
+
+`web/bellas-artes.jpg` (842 × 1264): copia de `images/justo.esmx/Bellas_Artes.jpg` para Fijo (2026-11-10). Ocupa todo el ancho del banner, sin velo (30:11 en escritorio, encuadre 50 % 44 % centrado en el traje); el texto lleva sombra vino.
+
+Banner anterior (retirado): recorte horizontal de `pavo.jpg` (5248 × 2944, fuera del repo), x 2391–4140, y 1469–2053, a 1800 × 600.
