@@ -1,4 +1,4 @@
-/* Casa Siego — medicion.js (v1.0.0)
+/* Casa Siego — medicion.js (v1.1.0)
    Measurement layer for Google Tag Manager (container GTM-WHTQ77F9, loaded by the snippet at the top of <head>).
    It only pushes events to window.dataLayer; tags, triggers and GA4 are set up in the GTM container.
    Never pushes personal data: no names, e-mails, phone numbers, payment ids or form answers.
@@ -12,7 +12,8 @@
    6. casa_salida       click on any other link to another domain: destino.
    7. casa_formulario   submit of a form: formulario (id or name).
    Page scripts push their own steps with the same shape:
-   acceso.js (casa_acceso), registro.js (casa_registro), agenda.js (casa_agenda), web.js (casa_consultoria). */
+   acceso.js (casa_acceso), registro.js (casa_registro), agenda.js (casa_agenda), web.js (casa_consultoria),
+   tienda.js (casa_tienda_ver, casa_tienda_cotizar, casa_tienda_filtro · v1.4.1). */
 (function () {
   'use strict';
 
@@ -20,7 +21,7 @@
   var path = location.pathname;
 
   // marca: first folder that names a brand or a section of the house.
-  var marca = (path.match(/\/brands\/(fiel|justo|libre)\//) || [])[1] ||
+  var marca = (path.match(/\/brands\/(fiel|justo|libre|fijo)\//) || [])[1] ||
     (path.match(/\/(membresia|ayuda)\//) || [])[1] ||
     (/registro\.html$/.test(path) ? 'registro' : 'casa');
   // seccion: the folder under the brand (tienda, agenda, ejecutivo…), or "portada".

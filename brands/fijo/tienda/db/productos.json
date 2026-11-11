@@ -1,13 +1,19 @@
 {
-  "_schema": "products: id, slug, sku, kind (saco | traje | conjunto), name, short, description, price_mxn (null = por confirmar), sizes[], image (web, desde la raíz del sitio), image_original, active",
-  "_note": "Catálogo de ejemplo de Fijo by Casa Siego, armado con las 22 fotos de images/fijo/ (2026-11-10). Precios, tallas, telas y existencias: confirmar antes de publicar. Sin ligas de Stripe: el pedido es por correo.",
+  "_schema": "v1.4.1 · catálogo limpio: products[] = id, slug, sku, kind (clave de kinds), name, short, description, image (desde la raíz del sitio), focus? (encuadre CSS), active, y detalles opcionales (fabric, lining, construction, collar, cuffs, pattern, care, features[]). Sin precios, tallas, existencias ni ligas de Stripe: todo producto activo se muestra y se cotiza (js/tienda.js).",
+  "_note": "Fijo by Casa Siego · sacos para dama. Fotos web en images/fijo/web/ (originales de Gemini fuera del repo).",
   "updated_at": "2026-11-10",
-  "sizes": [
-    "CH",
-    "M",
-    "G",
-    "XG"
-  ],
+  "marca": "fijo",
+  "marcaNombre": "Fijo by Siego",
+  "kinds": {
+    "saco": "Saco",
+    "traje": "Traje",
+    "conjunto": "Saco con chaleco"
+  },
+  "filtros": {
+    "saco": "Sacos",
+    "traje": "Trajes",
+    "conjunto": "Con chaleco"
+  },
   "products": [
     {
       "id": "fi-001",
@@ -17,15 +23,7 @@
       "name": "Saco Gris Perla Banda Negra",
       "short": "Gris perla con banda negra a la cintura y vivo negro en el cuello.",
       "description": "Un saco gris perla de cuello sin solapa, ribeteado en negro, con una banda que marca la cintura. Pide blusa lila o blanca y pantalón marino.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-gris-perla-banda-negra.jpg",
-      "image_original": "images/fijo/saco-gris-perla-banda-negra.jpg",
       "active": true
     },
     {
@@ -36,15 +34,7 @@
       "name": "Saco Azul Noche Raya Diplomática",
       "short": "Raya diplomática fina, un botón, solapa de muesca.",
       "description": "El azul noche de oficina con una raya fina que alarga la figura. Un botón, bolsas con cartera y hombro limpio; completo con su pantalón a juego.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-azul-noche-raya-diplomatica.jpg",
-      "image_original": "images/fijo/saco-azul-noche-raya-diplomatica.jpg",
       "active": true
     },
     {
@@ -55,15 +45,7 @@
       "name": "Saco Café Pata de Gallo",
       "short": "Pata de gallo café, cuello redondo sin solapa.",
       "description": "Tejido pata de gallo en café y crudo, cuello redondo y cierre al centro. Un clásico de textura que se lleva con pantalón chocolate o mezclilla oscura.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-cafe-pata-de-gallo-sin-solapa.jpg",
-      "image_original": "images/fijo/saco-cafe-pata-de-gallo-sin-solapa.jpg",
       "active": true
     },
     {
@@ -74,15 +56,7 @@
       "name": "Saco Negro con Chaleco",
       "short": "Saco negro de un botón con chaleco a juego.",
       "description": "Negro profundo en dos piezas: saco de solapa de muesca y chaleco de cinco botones. Para juntas, cenas y eventos de noche.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-negro-con-chaleco.jpg",
-      "image_original": "images/fijo/saco-negro-con-chaleco.jpg",
       "active": true
     },
     {
@@ -93,15 +67,7 @@
       "name": "Saco Durazno Canesú Marino",
       "short": "Durazno con canesú y vivos azul marino.",
       "description": "Color durazno con canesú marino en los hombros y vivos en las bolsas. Cuello sin solapa; luce con falda o pantalón marino.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-durazno-canesu-marino.jpg",
-      "image_original": "images/fijo/saco-durazno-canesu-marino.jpg",
       "active": true
     },
     {
@@ -112,15 +78,7 @@
       "name": "Saco Marino Texturizado",
       "short": "Marino de tejido texturizado, un botón.",
       "description": "Azul marino con textura fina que no marca arrugas en el día. Un botón, solapa de muesca y bolsas de vivo; con pantalón a juego.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-marino-texturizado.jpg",
-      "image_original": "images/fijo/saco-marino-texturizado.jpg",
       "active": true
     },
     {
@@ -131,15 +89,7 @@
       "name": "Saco Gris Jaspeado",
       "short": "Gris jaspeado, cruzado ligero, un botón.",
       "description": "Gris jaspeado de cuello amplio y cierre a un botón. Se luce con blusa de color: rojo, marfil o azul cielo.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-gris-jaspeado.jpg",
-      "image_original": "images/fijo/saco-gris-jaspeado.jpg",
       "active": true
     },
     {
@@ -150,15 +100,7 @@
       "name": "Saco Gris Azulado Corto",
       "short": "Gris azulado de largo corto, un botón.",
       "description": "Un largo corto que marca la cintura alta, en gris azulado con solapa de muesca. Pide pantalón negro de tiro alto.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-gris-azulado-corto.jpg",
-      "image_original": "images/fijo/saco-gris-azulado-corto.jpg",
       "active": true
     },
     {
@@ -169,15 +111,7 @@
       "name": "Saco Marino Ribete Camel",
       "short": "Marino con cierre ribeteado y chaleco camel.",
       "description": "Saco marino sin solapa con cierre de ribete crudo y bolsa de vivo, sobre chaleco camel. Combina con pantalón beige.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-marino-ribete-camel.jpg",
-      "image_original": "images/fijo/saco-marino-ribete-camel.jpg",
       "active": true
     },
     {
@@ -188,15 +122,7 @@
       "name": "Traje Arena Dos Botones",
       "short": "Saco y pantalón arena, dos botones.",
       "description": "Traje arena de saco a dos botones con solapa de muesca y pantalón recto. Ligero de color para el día y la temporada cálida.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/traje-arena-dos-botones.jpg",
-      "image_original": "images/fijo/traje-arena-dos-botones.jpg",
       "active": true
     },
     {
@@ -207,15 +133,7 @@
       "name": "Saco Negro Ribete Blanco",
       "short": "Negro con vivos blancos en bolsas y cierre.",
       "description": "Saco negro de cuello sin solapa con vivos blancos en las bolsas y el cierre. Gráfico, limpio, con pantalón gris o negro.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-negro-ribete-blanco.jpg",
-      "image_original": "images/fijo/saco-negro-ribete-blanco.jpg",
       "active": true
     },
     {
@@ -226,15 +144,7 @@
       "name": "Traje Gris Jaspeado con Falda",
       "short": "Saco y falda en gris jaspeado.",
       "description": "Saco de solapa amplia y falda recta en el mismo gris jaspeado. El conjunto de oficina por excelencia.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/traje-gris-jaspeado-con-falda.jpg",
-      "image_original": "images/fijo/traje-gris-jaspeado-con-falda.jpg",
       "active": true
     },
     {
@@ -245,15 +155,7 @@
       "name": "Saco Gris Tweed Espiga",
       "short": "Tweed gris en espiga, un botón.",
       "description": "Tweed gris con dibujo de espiga, solapa de muesca y bolsas con cartera. Se suelta con mezclilla y se formaliza con pantalón gris.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-gris-tweed-espiga.jpg",
-      "image_original": "images/fijo/saco-gris-tweed-espiga.jpg",
       "active": true
     },
     {
@@ -264,15 +166,7 @@
       "name": "Saco Azul Noche Tweed",
       "short": "Tweed azul noche, solapa de muesca.",
       "description": "Azul noche con textura tweed, cierre a un botón y bolsas con cartera. Con camisa blanca de cuello abierto y pantalón a juego.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-azul-noche-tweed.jpg",
-      "image_original": "images/fijo/saco-azul-noche-tweed.jpg",
       "active": true
     },
     {
@@ -283,15 +177,7 @@
       "name": "Traje Gris Claro Raya Fina",
       "short": "Saco y pantalón gris claro de raya fina.",
       "description": "Gris claro con raya fina en dos piezas: saco de un botón y pantalón de pierna recta. Luminoso y formal a la vez.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/traje-gris-claro-raya-fina.jpg",
-      "image_original": "images/fijo/traje-gris-claro-raya-fina.jpg",
       "active": true
     },
     {
@@ -302,15 +188,7 @@
       "name": "Saco Marfil Texturizado",
       "short": "Marfil de tejido texturizado, abierto.",
       "description": "Marfil con textura en relieve, solapa de chal suave y frente abierto. Sobre negro o con mezclilla, de día y de noche.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-marfil-texturizado.jpg",
-      "image_original": "images/fijo/saco-marfil-texturizado.jpg",
       "active": true
     },
     {
@@ -321,15 +199,7 @@
       "name": "Saco Cuadro Gris Tres Botones",
       "short": "Cuadro gris fino, tres botones.",
       "description": "Cuadro gris y crudo en tres botones con solapa de muesca. Pide falda recta negra o pantalón de vestir.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-cuadro-gris-tres-botones.jpg",
-      "image_original": "images/fijo/saco-cuadro-gris-tres-botones.jpg",
       "active": true
     },
     {
@@ -340,15 +210,7 @@
       "name": "Saco Gris Pata de Gallo",
       "short": "Micro pata de gallo gris, un botón.",
       "description": "Micro pata de gallo en gris y crudo, un botón y solapa de muesca. Discreto de lejos, con carácter de cerca.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-gris-pata-de-gallo.jpg",
-      "image_original": "images/fijo/saco-gris-pata-de-gallo.jpg",
       "active": true
     },
     {
@@ -359,15 +221,7 @@
       "name": "Chaqueta Durazno con Cierre",
       "short": "Chaqueta durazno con cierre y cuello a lunares.",
       "description": "Chaqueta durazno con cierre al frente, cuello y puños negros a lunares, con pantalón a juego. Moderna y sin solapa.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/chaqueta-durazno-con-cierre.jpg",
-      "image_original": "images/fijo/chaqueta-durazno-con-cierre.jpg",
       "active": true
     },
     {
@@ -378,15 +232,7 @@
       "name": "Traje Azul Cobalto",
       "short": "Saco y pantalón azul cobalto.",
       "description": "Azul cobalto en dos piezas: saco de un botón y pantalón recto. Color que se recuerda, con camisa blanca o azul cielo.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/traje-azul-cobalto.jpg",
-      "image_original": "images/fijo/traje-azul-cobalto.jpg",
       "active": true
     },
     {
@@ -397,15 +243,7 @@
       "name": "Saco Marino Bordado",
       "short": "Marino con bordado tono sobre tono.",
       "description": "Saco marino con bordado tono sobre tono en los delanteros, solapa de muesca y un botón. Con camisa blanca y mezclilla.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-marino-bordado.jpg",
-      "image_original": "images/fijo/saco-marino-bordado.jpg",
       "active": true
     },
     {
@@ -416,15 +254,7 @@
       "name": "Saco Gris con Chaleco",
       "short": "Saco gris de tres botones con chaleco a juego.",
       "description": "Gris medio en dos piezas: saco de tres botones y chaleco a juego. Con pantalón negro para la oficina o la ceremonia.",
-      "price_mxn": null,
-      "sizes": [
-        "CH",
-        "M",
-        "G",
-        "XG"
-      ],
       "image": "images/fijo/web/saco-gris-con-chaleco.jpg",
-      "image_original": "images/fijo/saco-gris-con-chaleco.jpg",
       "active": true
     }
   ]

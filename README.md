@@ -43,14 +43,11 @@ casasiego.com/
 │   ├── fiel/mascota/             redirige a fiel/ desde v1.2.3
 │   ├── fiel/ejecutivo/ · fiel/familiar/   OCULTAS desde v1.2.3 (en desarrollo): noindex, sin enlaces, fuera del sitemap
 │   ├── justo/index.html          marca nº 2 · Justo by Casa Siego, sastrería
-│   ├── justo/tienda/             TIENDA EN LÍNEA de Justo (variante C/D: React + Tailwind por CDN, sin build)
-│   │   ├── index.html            catálogo: 3 sacos, tallas CH · M · G · XG, calculadora de talla
-│   │   ├── <slug>/index.html     ficha de cada saco (especificaciones y precio por talla, botón «Pagar con Stripe»)
-│   │   ├── guia-de-tallas/       tallas del cuerpo, cómo medirse, medidas de cada saco
-│   │   ├── db/                   datos simulados: productos.json · tallas.json · tienda.json (envíos, pagos, descuentos)
-│   │   ├── js/tienda.jsx         capa db, precios por talla y ligas de Stripe, componentes (sin bolsa ni carrito) · js/tailwind.config.js
-│   │   ├── css/tienda.css        identidad Casa Siego para Tailwind
-│   │   └── supabase/             esquema Etapa 2 (no se ejecuta aún)
+│   ├── justo/tienda/             TIENDA de Justo (v1.4.1): sin precios, tallas ni pago; un «Cotizar» por pieza (motor compartido /js/tienda.js)
+│   │   ├── index.html            catálogo: 3 sacos, 3 camisas, 3 corbatas; ficha de cada pieza en <dialog> (#slug)
+│   │   ├── db/productos.json     base de datos limpia: id, slug, sku, kind, name, short, description, image, detalles
+│   │   └── <slug>/ · guia-de-tallas/   direcciones antiguas: redirigen a index.html#slug (noindex)
+│   ├── fijo/tienda/              TIENDA de Fijo by Siego (sacos para dama): misma estructura (index.html + db/productos.json)
 │   ├── libre/index.html          OCULTA desde v1.1.1: coworking y café; sin enlaces ni menú, fuera del sitemap, noindex
 │   └── reino_fiel/index.html     RETIRADA en v1.2.0: redirige a fiel/ (enlaces antiguos)
 ├── images/
@@ -92,6 +89,9 @@ Eventos en `dataLayer` (todos llevan `marca`, `seccion` y `region`; nunca nombre
 | `casa_registro` | carta de registro (`registro.js`) | `paso` (los de la bitácora + registro_completo), `proveedor`, `modo` |
 | `casa_agenda` | agenda de Fiel (`agenda.js`) | `paso`: anticipo_recibido · horario_elegido · solicitud_enviada, `sesion` |
 | `casa_consultoria` | cuestionario Web (`web.js`) | `paso`: enviado |
+| `casa_tienda_ver` | se abre la ficha de un producto (`tienda.js`, Justo y Fijo) | `sku`, `producto`, `tipo`, `origen`: tarjeta · enlace |
+| `casa_tienda_cotizar` | clic en «Cotizar» | `sku`, `producto`, `tipo`, `canal`: registro · whatsapp · correo, `sesion`, `origen`: tarjeta · ficha |
+| `casa_tienda_filtro` | filtro de tipo en la tienda | `tipo` |
 
 En GTM: una variable de capa de datos por cada dato, un activador «Evento personalizado» con `casa_.*` (regex) y una
 etiqueta de evento de GA4 que use `{{Event}}` como nombre. GTM solo detecta la etiqueta cuando el sitio publicado

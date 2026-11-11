@@ -5,17 +5,17 @@
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHTQ77F9');</script>
   <!-- End Google Tag Manager -->
-  <script src="../../../js/medicion.js?v=1.0.0" defer></script>
+  <script src="../../../js/medicion.js?v=1.1.0" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ready to Wear (Tienda) · Justo por Siego · Casa Siego®</title>
-  <meta name="description" content="Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Disponibles desde 1 pieza en tallas Chico a Extra Grande, acompañados de su tabla de medidas.">
+  <title>Esenciales · Tienda Justo por Siego · Casa Siego®</title>
+  <meta name="description" content="Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Cotiza cada pieza con tu cuenta de Casa Siego.">
   <meta name="keywords" content="trajes a medida, trajes personalizados, camisería, sastrería, trajes ejecutivos, Ciudad de México, Madrid">
   <link rel="canonical" href="https://casasiego.com/brands/justo/tienda/">
   <meta property="og:site_name" content="Casa Siego">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Casa Siego","item":"https://casasiego.com/"},{"@type":"ListItem","position":2,"name":"Justo","item":"https://casasiego.com/brands/justo/"},{"@type":"ListItem","position":3,"name":"Tienda","item":"https://casasiego.com/brands/justo/tienda/"}]}]}</script>
-  <meta property="og:title" content="Ready to Wear (Tienda) · Justo por Siego · Casa Siego">
-  <meta property="og:description" content="Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Disponibles desde 1 pieza en tallas Chico a Extra Grande, acompañados de su tabla de medidas.">
+  <meta property="og:title" content="Esenciales · Tienda Justo por Siego · Casa Siego">
+  <meta property="og:description" content="Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Cotiza cada pieza con tu cuenta de Casa Siego.">
   <meta property="og:url" content="https://casasiego.com/brands/justo/tienda/">
   <meta property="og:locale" content="es_MX">
   <meta property="og:image" content="https://casasiego.com/images/casa/traje-01.jpg">
@@ -28,116 +28,103 @@
   <meta name="tdm-policy" content="https://casasiego.com/terms.html">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="../../../brands/justo/tienda/js/tailwind.config.js"></script>
+  <script src="../../../js/tienda-tailwind.js?v=1.4.1"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:ital@1&display=swap">
-  <link rel="stylesheet" href="../../../brands/justo/tienda/css/tienda.css?v=1.2.0">
-
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-  <script src="../../../js/region.js?v=1.3.0" defer></script>
+  <link rel="stylesheet" href="../../../css/tienda.css?v=2.0.0">
 </head>
-<body data-root="../../../">
+<!-- Tienda v1.4.1: page + db/productos.json only; the engine is /js/tienda.js (shared with Fijo). -->
+<body data-root="../../../" class="bg-parchment text-ink font-serif">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHTQ77F9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <div id="root">
-    <noscript>
-      <h1>Esenciales de Justo por Siego</h1>
-      <p>Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Disponibles desde 1 pieza en tallas Chico a Extra Grande, acompañados de su tabla de medidas.</p>
-      <nav aria-label="Principal">
-        <ul>
-          <li><a href="guia-de-tallas/">Guía de tallas</a></li>
-          <li><a href="../">Justo, sastrería a medida</a></li>
-        </ul>
-      </nav>
-    </noscript>
-  </div>
-  <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para hacer tu pedido.</p></noscript>
+  <header class="sticky top-0 z-40 bg-parchment/95 backdrop-blur border-b border-line">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-10 h-16 md:h-20 flex items-center justify-between gap-4">
+      <a href="../" class="label link text-ink-500">&larr; Justo</a>
+      <a href="./" class="text-center leading-none">
+        <span class="font-display font-bold text-2xl md:text-3xl tracking-display">JUSTO</span>
+        <span class="block label text-gold mt-1">Tienda &middot; Casa Siego</span>
+      </a>
+      <a href="#coleccion" class="label link">Esenciales</a>
+    </div>
+  </header>
 
-  <script src="../../../brands/justo/tienda/js/variantes.js?v=1.0.0"></script>
+  <main>
+    <section class="relative bg-ink text-parchment overflow-hidden">
+      <img src="../../../images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fvirreinal2.jpg?v=1.0.0" alt="Hombre con traje azul marino de raya diplomática, camisa blanca y corbata plata, recargado en una columna roja de un claustro virreinal: tienda de Justo por Siego" class="absolute inset-0 w-full h-full object-cover" style="object-position: 60% 25%" draggable="false">
+      <div class="relative max-w-[1400px] mx-auto px-4 md:px-10 pt-32 pb-16 md:pt-48 md:pb-24 animate-fade-in [text-shadow:0_1px_2px_rgba(0,0,0,.35),0_2px_18px_rgba(0,0,0,.45)]">
+        <p class="label text-gold">Justo by Casa Siego &middot; Tienda</p>
+        <h1 class="font-display font-bold tracking-display text-4xl sm:text-5xl md:text-7xl mt-4 break-words">Esenciales<span class="sr-only"> de Justo por Siego</span></h1>
+        <p class="text-lg md:text-xl max-w-xl mt-5 text-parchment/90">Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Elige tu pieza y cotízala: te respondemos con precio y entrega.</p>
+        <div class="flex flex-wrap gap-2 mt-8">
+          <a href="#coleccion" class="btn btn-rust">Ver la colección</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="coleccion" class="max-w-[1400px] mx-auto px-4 md:px-10 pt-16 md:pt-24 scroll-mt-24">
+      <div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+        <div>
+          <p class="label text-gold">Capítulo I</p>
+          <h2 class="text-3xl md:text-4xl mt-2">La colección</h2>
+        </div>
+        <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Filtrar por tipo" id="filtros"></div>
+      </div>
+      <div id="aviso" class="aviso mb-8" aria-live="polite"></div>
+      <p id="estado" class="note text-ink-500 mb-4" aria-live="polite">Cargando la colección…</p>
+      <div id="rejilla" class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-x-6"></div>
+    </section>
+
+    <section class="max-w-[1400px] mx-auto px-4 md:px-10 pt-20 grid md:grid-cols-3 gap-8">
+      <div class="border-t border-ink pt-5"><p class="label-strong">Cotiza con tu cuenta</p><p class="text-ink-700 mt-3">Crea tu cuenta de Casa Siego en un minuto, con Google, Microsoft, LinkedIn o Facebook.</p></div>
+      <div class="border-t border-ink pt-5"><p class="label-strong">Por WhatsApp</p><p class="text-ink-700 mt-3">Con tu sesión abierta, cada pieza tiene su botón para cotizar por WhatsApp. Te respondemos con precio y entrega.</p></div>
+      <div class="border-t border-ink pt-5"><p class="label-strong">Vamos a ti</p><p class="text-ink-700 mt-3">Te entregamos en casa o en la oficina, en funda con gancho de madera.</p></div>
+    </section>
+  </main>
+
+  <footer class="bg-ink text-parchment mt-24">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-10 py-16 grid gap-10 md:grid-cols-3">
+      <div>
+        <p class="font-display font-bold text-2xl tracking-display">JUSTO</p>
+        <p class="label text-gold mt-2">Sastrería &middot; Marca nº 2 de Casa Siego</p>
+        <p class="note text-parchment/70 mt-4 max-w-xs">«La compostura empieza en los hombros.»</p>
+      </div>
+      <div class="space-y-2">
+        <p class="label text-gold">Contacto</p>
+        <a class="link" href="mailto:info@casasiego.com?subject=Justo%20%C2%B7%20Tienda">info@casasiego.com</a>
+      </div>
+      <div class="space-y-2">
+        <p class="label text-gold">Casa Siego</p>
+        <p><a class="link" href="../">Justo</a></p>
+        <p><a class="link" href="../../../registro.html">Crear mi cuenta</a></p>
+        <p><a class="link" href="../../../terms.html">Términos</a></p>
+      </div>
+    </div>
+    <p class="max-w-[1400px] mx-auto px-4 md:px-10 pb-10 label text-parchment/50">&copy; 2026 Casa Siego&reg;</p>
+  </footer>
+
+  <!-- Product sheet: opens over the grid; #slug in the address opens it directly -->
+  <dialog id="ficha" class="ficha" aria-labelledby="ficha-nombre">
+    <div class="ficha-cuerpo">
+      <div class="crop ficha-foto"><img id="ficha-img" src="" alt=""></div>
+      <div class="ficha-texto">
+        <button type="button" class="ficha-cerrar label" id="ficha-cerrar" aria-label="Cerrar">Cerrar &times;</button>
+        <p class="label text-gold" id="ficha-tipo"></p>
+        <h2 class="text-3xl md:text-4xl mt-2" id="ficha-nombre"></h2>
+        <p class="label text-ink-500 mt-3" id="ficha-sku"></p>
+        <p class="text-ink-700 mt-5" id="ficha-desc"></p>
+        <div id="ficha-detalles"></div>
+        <div class="mt-8 grid" id="ficha-cotizar"></div>
+        <p class="note text-ink-500 mt-3" id="ficha-nota"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para cotizar.</p></noscript>
   <script src="../../../js/supabase-config.js?v=1.0.0"></script>
-  <script type="text/babel" src="../../../brands/justo/tienda/js/tienda.jsx?v=1.6.0"></script>
-  <script type="text/babel">
-    const Catalogue = () => {
-        const catalog = useCatalog();
-        // Checked on every visit (not remembered): only products with some size in stock in the visitor's region.
-        const [onlyAvailable, setOnlyAvailable] = useState(true);
-        const shown = onlyAvailable ? catalog.products.filter(p => !soldOut(p)) : catalog.products;
-        useReveal([catalog.status, onlyAvailable]);
-        return (
-            <>
-                <section className="relative bg-ink text-parchment overflow-hidden">
-                    <img src={asset('images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fvirreinal2.jpg?v=1.0.0')} alt="Hombre con traje azul marino de raya diplomática, camisa blanca y corbata plata, recargado en una columna roja de un claustro virreinal: tienda de Justo por Siego" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: '60% 25%' }} draggable="false" />
-                    <div className="relative max-w-[1400px] mx-auto px-4 md:px-10 pt-32 pb-16 md:pt-48 md:pb-24 animate-fade-in [text-shadow:0_1px_2px_rgba(0,0,0,.35),0_2px_18px_rgba(0,0,0,.45)]">
-                        <p className="label text-gold">Justo by Casa Siego &middot; Tienda</p>
-                        <h1 className="font-display font-bold tracking-display text-5xl md:text-7xl mt-4">Esenciales<span className="sr-only">: Ready to Wear (Tienda) de Justo por Siego</span></h1>
-                        <p className="text-lg md:text-xl max-w-xl mt-5 text-parchment/90">Tres sacos distintivos de la casa, camisería de corte impecable y corbatas de selección premium. Disponibles desde 1 pieza en tallas Chico a Extra Grande, acompañados de su tabla de medidas.</p>
-                        <div className="flex flex-wrap gap-2 mt-8">
-                            <a href="#sacos" className="btn btn-rust">Ver la colección</a>
-                            <a href={`${SHOP}/guia-de-tallas/`} className="btn btn-light">¿Qué talla soy?</a>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="sacos" className="max-w-[1400px] mx-auto px-4 md:px-10 pt-16 md:pt-24 scroll-mt-24">
-                    <div className="flex flex-wrap justify-between items-end gap-4 mb-10">
-                        <div>
-                            <p className="label text-gold">Capítulo I</p>
-                            <h2 className="text-3xl md:text-4xl mt-2">La colección</h2>
-                        </div>
-                        <div className="max-w-sm">
-                            <label className="label flex items-center gap-3 cursor-pointer select-none">
-                                <input type="checkbox" className="w-4 h-4 cursor-pointer" style={{ accentColor: 'var(--rust)' }} checked={onlyAvailable} onChange={e => setOnlyAvailable(e.target.checked)} />
-                                Solo disponibles
-                            </label>
-                            <p className="note text-ink-500 mt-2">{onlyAvailable ? 'Quita la marca para ver también los agotados.' : 'Las tallas tachadas están agotadas.'}</p>
-                        </div>
-                    </div>
-                    {catalog.status === 'loading' && <Skeleton />}
-                    {catalog.status === 'error' && <LoadError />}
-                    {catalog.status === 'ready' && shown.length > 0 && <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{shown.map(p => <ProductCard key={p.id} product={p} catalog={catalog} />)}</div>}
-                    {catalog.status === 'ready' && shown.length === 0 && (
-                        <div className="border-t border-line pt-8 max-w-xl">
-                            <p className="text-ink-700">Por ahora no hay piezas disponibles en tu región.</p>
-                            <button type="button" className="btn btn-line mt-5" onClick={() => setOnlyAvailable(false)}>Ver toda la colección</button>
-                        </div>
-                    )}
-                </section>
-
-                {catalog.status === 'ready' && (
-                    <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-16">
-                        <hr className="rule-gold mb-12" />
-                        <div className="grid md:grid-cols-2 gap-12 items-start">
-                            <div className="reveal">
-                                <p className="label text-gold">Capítulo II</p>
-                                <h2 className="text-3xl md:text-4xl mt-2">Cuatro tallas, medidas completas</h2>
-                                <p className="text-ink-700 mt-5 max-w-lg">Cada ficha muestra, para CH, M, G y XG, a quién le queda (pecho, cintura, estatura, peso y cuello) y cuánto mide el saco (pecho, cintura, hombro, manga, largo, bajo y solapa). Elige por pecho y hombro; mangas y cintura las ajustamos nosotros.</p>
-                                <ul className="mt-6 space-y-2 text-ink-700">
-                                    {catalog.sizes.map(s => <li key={s.id} className="flex gap-4 border-b border-line pb-2"><span className="label-strong w-8">{s.id}</span><span className="flex-1">{s.label}</span><span className="text-ink-500">pecho {s.body.chest_cm.join('–')} cm · MX {s.mx}</span></li>)}
-                                </ul>
-                            </div>
-                            <div className="reveal"><SizeFinder catalog={catalog} /></div>
-                        </div>
-                    </section>
-                )}
-
-                {catalog.status === 'ready' && (
-                    <section className="max-w-[1400px] mx-auto px-4 md:px-10 pt-20 grid md:grid-cols-3 gap-8">
-                        {[
-                            ['Ajuste incluido', catalog.tolerances.note],
-                            ['Pago con Stripe', 'Eliges tu talla y pagas en la página segura de Stripe, en pesos mexicanos. Una pieza por pago.'],
-                            ['La entrega', 'Recoge en Casa Siego con prueba final y retrato en Fiel, o recíbelo en casa en funda con gancho de madera.'],
-                        ].map(([t, d]) => <div key={t} className="reveal border-t border-ink pt-5"><p className="label-strong">{t}</p><p className="text-ink-700 mt-3">{d}</p></div>)}
-                    </section>
-                )}
-            </>
-        );
-    };
-    renderPage(Catalogue, { current: 'sacos' });
-  </script>
+  <script src="../../../js/acceso-config.js"></script>
+  <script src="../../../js/tienda.js?v=2.0.0"></script>
 </body>
 </html>
