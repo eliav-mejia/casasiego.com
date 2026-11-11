@@ -1,0 +1,70 @@
+/* Casa Siego — cuenta.css 1.0.0 (v1.4.2 · /cuenta/): perfil del miembro.
+   Medidas sobre silueta punteada, contacto y entrega, últimas transacciones. Paleta de site.css (vino, latón, beige). */
+.perfil { max-width: 960px; margin-inline: auto; padding: 0 16px 96px; }
+.perfil__casa { color: inherit; text-decoration: none; }
+
+.perfil__bloque { border-top: 1px solid rgba(176, 144, 94, .45); padding: 28px 0 8px; margin: 0 0 32px; }
+.perfil__titulo { font: 600 clamp(1.5rem, 1.2rem + 1vw, 2rem)/1.15 var(--font-section, 'Bodoni Moda', Georgia, serif);
+  color: var(--wine-ink, #3B1A1F); margin: 0 0 8px; }
+.perfil__nota { font: italic 1rem/1.5 var(--font-meta, 'Spectral', Georgia, serif); color: var(--taupe, #6F5E57); margin: 0 0 20px; }
+.perfil__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin: 20px 0 0; }
+.perfil__enlace { background: none; border: 0; padding: 0; cursor: pointer; font: 1.05rem 'EB Garamond', Georgia, serif;
+  color: var(--wine, #6B1E2C); text-decoration: underline; text-underline-offset: 3px; }
+.perfil__salir { margin: 48px 0 0; display: flex; justify-content: center; }
+/* El ghost de site.css es para fondo vino; sobre blanco: texto vino, filete latón, se llena de beige. */
+.perfil .button--ghost { color: var(--wine, #6B1E2C); border-color: var(--brass, #B0905E); }
+.perfil .button--ghost:hover { color: var(--wine-ink, #3B1A1F); border-color: var(--brass, #B0905E); }
+.perfil [hidden] { display: none !important; }                /* .button y los flex no deben ganarle a hidden */
+
+/* ------------------------------------------------------------------ medidas */
+.perfil__medidas > * { min-width: 0; }
+.perfil__medidas { display: grid; grid-template-columns: minmax(180px, 280px) 1fr; gap: 24px 48px; align-items: center; }
+.silueta { margin: 0; }
+.silueta svg { display: block; width: 100%; height: auto; max-height: 520px; overflow: visible; }
+.silueta__cuerpo ellipse, .silueta__cuerpo path {
+  fill: none; stroke: var(--brass, #B0905E); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 0 5.5; }                                   /* puntos redondos: silueta punteada */
+.silueta__guia { opacity: .18; transition: opacity .25s ease; }
+.silueta__guia ellipse, .silueta__guia line { fill: none; stroke: var(--wine, #6B1E2C); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.silueta__guia circle { fill: var(--wine, #6B1E2C); }
+.silueta__guia.is-on { opacity: 1; }
+.silueta__guia.is-on ellipse, .silueta__guia.is-on line { stroke-dasharray: none; }
+.silueta__guia.is-foco ellipse, .silueta__guia.is-foco line { stroke-width: 2.6; }
+
+.medidas-lista { margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr)); gap: 0 28px; }
+.medidas-lista__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 10px 0; border-bottom: 1px dotted rgba(176, 144, 94, .7); }
+.medidas-lista dt { font: 400 .78rem/1.3 'Cinzel', serif; letter-spacing: .1em; text-transform: uppercase; color: var(--wine-ink, #3B1A1F); }
+.medidas-lista dd { margin: 0; font: 1.15rem/1.3 'EB Garamond', Georgia, serif; color: var(--wine, #6B1E2C); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.medidas-lista__fila.es-vacia dd { color: var(--taupe, #6F5E57); }
+.medidas-lista__pref { grid-column: 1 / -1; }
+.medidas-lista__pref dd { white-space: normal; text-align: right; font-size: 1.05rem; color: var(--wine-ink, #3B1A1F); }
+
+/* ------------------------------------------------------------------ contacto */
+.perfil__datos { margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 20px 32px; }
+.perfil__datos dt { font: 400 .78rem/1.3 'Cinzel', serif; letter-spacing: .1em; text-transform: uppercase; color: var(--taupe, #6F5E57); margin: 0 0 4px; }
+.perfil__datos dd { margin: 0; font: 1.15rem/1.45 'EB Garamond', Georgia, serif; color: var(--wine-ink, #3B1A1F); overflow-wrap: anywhere; }
+.perfil__form { margin-top: 8px; }
+
+/* ------------------------------------------------------------------ transacciones */
+.perfil__tabla-envoltura { overflow-x: auto; }
+.perfil__tabla { width: 100%; border-collapse: collapse; font: 1.05rem/1.4 'EB Garamond', Georgia, serif; color: var(--wine-ink, #3B1A1F); }
+.perfil__tabla th { font: 400 .74rem/1.3 'Cinzel', serif; letter-spacing: .1em; text-transform: uppercase; color: var(--taupe, #6F5E57);
+  text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid rgba(176, 144, 94, .7); }
+.perfil__tabla td { padding: 12px 12px 12px 0; border-bottom: 1px dotted rgba(176, 144, 94, .7); font-variant-numeric: tabular-nums; }
+.perfil__tabla td:first-child { font-family: 'Cinzel', serif; font-size: .9rem; letter-spacing: .06em; }
+.estado { color: var(--wine, #6B1E2C); }
+.estado--entregado { color: var(--taupe, #6F5E57); }
+
+@media (max-width: 680px) {
+  .perfil__medidas { grid-template-columns: 1fr; }
+  .silueta { max-width: 220px; margin-inline: auto; }
+  /* tabla → tarjetas apiladas */
+  .perfil__tabla thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .perfil__tabla tr { display: block; padding: 12px 0; border-bottom: 1px dotted rgba(176, 144, 94, .7); }
+  .perfil__tabla, .perfil__tabla tbody { display: block; }
+  .perfil__tabla td { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; border: 0; }
+  .perfil__tabla td::before { content: attr(data-etiqueta); font: 400 .72rem/1.6 'Cinzel', serif; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--taupe, #6F5E57); }
+}
+@media (prefers-reduced-motion: reduce) { .silueta__guia { transition: none; } }

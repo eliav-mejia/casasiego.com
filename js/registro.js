@@ -1,10 +1,12 @@
-/* Casa Siego — registro.js 3.0.0 (crear cuenta o iniciar sesión · registro.html, v1.4.0)
+/* Casa Siego — registro.js 3.1.0 (crear cuenta o iniciar sesión · registro.html, v1.4.0 · v1.4.2 «volver»)
    Simplified: one card, two tabs.
      Crear cuenta   → name, e-mail, password, one box for the mandatory notices (+ optional news) → supabase.auth.signUp
      Iniciar sesión → e-mail and password → supabase.auth.signInWithPassword
      Either tab     → Google, Microsoft («azure»), LinkedIn («linkedin_oidc») or Facebook → signInWithOAuth (PKCE)
    With a session, public.completar_registro() closes the profile (once) and the visitor goes to the main index
    (CFG.redirectOnSuccess = index.html?bienvenida=1), where js/medidas.js asks for the current measurements.
+   v1.4.2: ?volver=<ruta> (js/solo-miembros.js: Equipo, Eventos) sends the member back there instead. Only paths in
+   CFG.destinosVolver are accepted (no open redirect); the value survives the OAuth trip and the e-mail link.
 
    Security (front end; the real enforcement is Supabase Auth + RLS + typed RPCs, see migrations 0001, 0005, 0006):
    - No SQL is ever built here. supabase-js sends JSON to PostgREST / GoTrue, which pass values as typed parameters.
@@ -38,6 +40,9 @@
   var slug = function (v) { return /^[a-z0-9-]{1,40}$/.test(v || '') ? v : ''; };
   var marca = MARCAS.indexOf(params.get('marca')) >= 0 ? params.get('marca') : 'casa';
   var campana = slug(params.get('campana'));
+  var volver = (CFG.destinosVolver || []).indexOf(params.get('volver')) >= 0 ? params.get('volver') : '';
+  var destino = volver || CFG.redirectOnSuccess || 'index.html';
+  var extra = function (o) { if (volver) o.volver = volver; return o; };
 
   var state = { modo: params.get('modo') === 'acceso' ? 'acceso' : 'registro', avisos: CFG.avisos || [],
                 sesion: null, completando: false, busy: false, captcha: '' };
@@ -199,7 +204,7 @@
       if (perfil && perfil.registro_completo) {
         clearDraft();
         bitacora(proveedor === 'email' ? 'login_ok' : 'oauth_ok', { proveedor: proveedor });
-        responder(MSG_OK, CFG.redirectOnSuccess || 'index.html');
+        responder(MSG_OK, destino);
         return;
       }
       // New account (e-mail confirmed, or first time with a provider): finish with the draft, or ask for what is missing.
@@ -233,11 +238,11 @@
       bitacora('registro_ok', { proveedor: proveedor });
       return call(function (c) { return c.auth.refreshSession(); }).catch(function () {}); // claim registro_completo
     }).then(function () {
-      responder(MSG_NUEVO, CFG.redirectOnSuccess || 'index.html');
+      responder(MSG_NUEVO, destino);
     }).catch(function (err) {
       var m = String((err && err.message) || '');
       setBusy(false);
-      if (/ya completado/.test(m)) return responder(MSG_OK, CFG.redirectOnSuccess || 'index.html');
+      if (/ya completado/.test(m)) return responder(MSG_OK, destino);
       setNota(/aviso|aceptar/.test(m) ? 'Los avisos cambiaron hace un momento. Recarga la página y vuelve a aceptarlos.'
             : 'No pudimos guardar tu registro. Intenta de nuevo en un momento.');
     });
@@ -275,7 +280,7 @@
       writeDraft();
       setBusy(true, 'Creando tu cuenta…');
       opciones.emailRedirectTo = new URL(CFG.emailRedirect || 'registro.html', location.href).href +
-        '?' + new URLSearchParams({ marca: marca, campana: campana }).toString();
+        '?' + new URLSearchParams(extra({ marca: marca, campana: campana })).toString();
       opciones.data = { nombre: form.nombre.value.trim().slice(0, 120) };
       call(function (c) { return c.auth.signUp({ email: email, password: password, options: opciones }); })
         .then(function (data) {
@@ -330,7 +335,7 @@
     setBusy(true);
     bitacora('oauth_iniciado', { proveedor: proveedor });
     var back = location.origin + location.pathname + '?' +
-      new URLSearchParams({ modo: state.modo, marca: marca, campana: campana }).toString();
+      new URLSearchParams(extra({ modo: state.modo, marca: marca, campana: campana })).toString();
     call(function (c) {
       return c.auth.signInWithOAuth({
         provider: proveedor,
@@ -372,6 +377,7 @@
   function limpiarURL() {
     var keep = new URLSearchParams();
     ['modo', 'marca', 'campana'].forEach(function (k) { if (slug(params.get(k))) keep.set(k, params.get(k)); });
+    if (volver) keep.set('volver', volver);
     var q = keep.toString();
     history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
   }
@@ -392,6 +398,7 @@
     var d = readDraft();
     if (d) { form.nombre.value = d.nombre || ''; form.acepto.checked = Boolean(d.acepto); form.novedades.checked = Boolean(d.novedades); }
     setModo(state.modo);
+    if (volver && state.modo === 'acceso') setNota('Equipo y Eventos son solo para miembros. Inicia sesión para continuar.', true);
     iniciarCaptcha();
 
     var oauthError = params.get('error_description') || params.get('error');

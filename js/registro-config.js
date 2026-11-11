@@ -1,4 +1,4 @@
-/* Casa Siego — registro-config.js 1.2.0 (crear cuenta o iniciar sesión · registro.html, v1.4.0)
+/* Casa Siego — registro-config.js 1.3.0 (crear cuenta o iniciar sesión · registro.html, v1.4.0 · v1.4.2)
    Public values only. Same Supabase project as acceso-config.js; Auth settings in _interno/acceso/variante-d/config.toml.ejemplo.
    Empty supabaseUrl / publishableKey = Supabase not configured yet: the letter can be written but is not sent (demo).
    avisos / campos below are the DEMO fallback; with Supabase the page reads public.formulario_registro(marca, campana). */
@@ -10,6 +10,7 @@ window.CASASIEGO_REGISTRO = {
   bitacoraBorde: '/api/acceso/evento', // Worker acceso-borde (D1). '' = off (GitHub Pages without Cloudflare in front)
   proveedores: ['google', 'azure', 'linkedin_oidc', 'facebook'], // azure = Microsoft · linkedin_oidc = LinkedIn (OIDC)
   redirectOnSuccess: 'index.html?bienvenida=1', // v1.4.0: main index; js/medidas.js asks for current measurements
+  destinosVolver: ['membresia/equipo/', 'membresia/eventos/', 'cuenta/'], // v1.4.2 ?volver= whitelist (js/solo-miembros.js)
   emailRedirect: 'registro.html',  // confirmation link of the e-mail sign-up comes back here (in additional_redirect_urls)
   reglaContrasena: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,72}$', // mirror of config.toml (8, lower_upper_letters_digits)
   messageMs: 3200,

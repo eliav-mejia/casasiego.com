@@ -1,6 +1,6 @@
 // Casa Siego · prueba de las migraciones de supabase/ en PostgreSQL real (PGlite, WebAssembly), sin proyecto ni Docker.
 // Uso (desde la raíz del sitio):  npm install   y luego   node tools/probar-migraciones.mjs supabase
-// Aplica 0001 → 0006 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
+// Aplica 0001 → 0007 + seed.sql sobre un stub de Supabase (roles anon/authenticated/service_role, auth.users, auth.uid())
 // y comprueba RLS, la proyección Odoo → catalogo_publico, el registro atómico y las medidas inmutables. Sale 1 si algo falla.
 import { PGlite } from '@electric-sql/pglite';
 import { citext } from '@electric-sql/pglite/contrib/citext';
@@ -19,7 +19,7 @@ create function auth.uid() returns uuid language sql stable as $$ select nullif(
 grant usage on schema auth, public to anon, authenticated, service_role;
 grant execute on all functions in schema auth to anon, authenticated, service_role;
 `);
-for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql', '0005_alta_proveedores.sql', '0006_alta_correo_medidas_propias.sql']) {
+for (const f of ['0001_identidad_variante_d.sql', '0002_registro_medidas.sql', '0003_catalogo_publico.sql', '0004_panel_cliente.sql', '0005_alta_proveedores.sql', '0006_alta_correo_medidas_propias.sql', '0007_perfil_cliente.sql']) {
   try { await db.exec(fs.readFileSync(`${D}/migrations/${f}`, 'utf8')); ok(true, `migración ${f}`); }
   catch (e) { ok(false, `migración ${f}: ${e.message}`); process.exit(1); }
 }
@@ -213,3 +213,41 @@ for (let i = 0; i < 4; i++) await mm({ cuello: 39, pecho: 100, manga: 64 });
 err = await mm({ cuello: 39, pecho: 100, manga: 64 });
 ok(err && /demasiadas/.test(err), `sexta toma en un día → rechazada`);
 
+// --- 0007 · perfil del cliente en /cuenta/: medidas, dirección, correo, teléfono y últimas transacciones
+const jwtEmC = { ...jwtEm, email: 'correo@ejemplo.com' };
+const contacto = (a) => as('authenticated', jwtEmC, () => q(
+  `select public.actualizar_mi_contacto($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+  [a.tel ?? null, a.calle ?? null, a.interior ?? null, a.colonia ?? null, a.cp ?? null, a.ciudad ?? null, a.estado ?? null, a.pais ?? null, a.pref ?? 'correo']
+).then(() => null, e => e.message));
+let perfil = (await as('authenticated', jwtEmC, () => q(`select public.mi_perfil() p`)))[0].p;
+ok(perfil.correo === 'correo@ejemplo.com' && perfil.nombre === 'Elena Correa' && perfil.contacto === null &&
+   Number(perfil.medidas.cuello) === 39 && !('user_id' in perfil.medidas) && perfil.transacciones.length === 0,
+   `mi_perfil sin contacto: correo, nombre, medidas vigentes, 0 transacciones`);
+err = await contacto({ tel: '55 1234 5678' });
+ok(err && /telefono/.test(err), `teléfono sin +lada → rechazado`);
+err = await contacto({ cp: '0670' });
+ok(err && /codigo_postal/.test(err), `código postal de 4 dígitos → rechazado`);
+err = await contacto({ pref: 'whatsapp' });
+ok(err && /telefono requerido/.test(err), `WhatsApp sin teléfono → rechazado`);
+err = await contacto({ pais: "MX' or '1'='1" });
+ok(err && /pais/.test(err), `inyección en país → rechazada`);
+err = await contacto({ tel: '+52 55 1234-5678', calle: 'Colima 124', interior: 'Depto 3', colonia: 'Roma Norte', cp: '06700', ciudad: 'Ciudad de México', estado: 'CDMX', pais: 'MX', pref: 'whatsapp' });
+ok(err === null, `el cliente guarda teléfono y dirección ${err ?? ''}`);
+err = await contacto({ tel: '+525512345678' });
+ok(err && /demasiados/.test(err), `segundo cambio en el mismo minuto → rechazado`);
+await q(`update public.clientes set contacto_actualizado_en = now() - interval '2 minutes' where id = $1`, [em.id]);
+await q(`insert into public.pedidos_cliente (odoo_ref, user_id, estado, piezas, confirmado_en, entrega_estimada) values
+  ('S07031', $1, 'entregado', 2, '2026-09-01', '2026-10-01'), ('S07057', $1, 'confeccion', 3, '2026-10-20', '2026-11-30'),
+  ('S07058', $2, 'confirmado', 1, '2026-10-21', null)`, [em.id, fb.id]);
+perfil = (await as('authenticated', jwtEmC, () => q(`select public.mi_perfil() p`)))[0].p;
+ok(perfil.contacto.telefono === '+525512345678' && perfil.contacto.colonia === 'Roma Norte' && perfil.contacto.contacto_preferido === 'whatsapp',
+   `mi_perfil: teléfono normalizado a E.164 y dirección`);
+ok(perfil.transacciones.map(t => t.pedido).join(' ') === 'S07057 S07031', `transacciones propias, la más reciente primero (sin la de otro cliente)`);
+err = await as('authenticated', jwtEmC, () => q(`update public.clientes set telefono = '+5215555555555' where id = $1`, [fb.id]).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `update directo en clientes → permission denied`);
+const ajeno = (await as('authenticated', { sub: fb.id, role: 'authenticated' }, () => q(`select public.mi_perfil() p`)))[0].p;
+ok(ajeno.contacto === null && ajeno.transacciones.length === 1, `otro cliente no ve el contacto ni los pedidos de Elena`);
+err = await as('anon', {}, () => q(`select public.mi_perfil()`).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `anon no ejecuta mi_perfil`);
+err = await as('anon', {}, () => q(`select public.actualizar_mi_contacto('+525512345678', '', '', '', '', '', '', '', 'correo')`).then(() => null, e => e.message));
+ok(err && /permission denied/.test(err), `anon no ejecuta actualizar_mi_contacto`);

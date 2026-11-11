@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tu cuenta · Casa Siego®</title>
-  <!-- Cuenta del miembro (v1.3.1): destino tras iniciar sesión con el avatar de la barra superior y tras elegir contraseña.
-       Sin sesión válida → visitante.html. El panel personalizado (telas, entrega, lote, conjuntos) llega en v1.3.2. -->
+  <!-- Perfil del miembro (v1.4.2): medidas sobre una silueta punteada, correo, teléfono, dirección y últimas transacciones.
+       Destino tras iniciar sesión con el avatar de la barra superior. Sin sesión válida → visitante.html.
+       Datos: public.mi_perfil() y public.actualizar_mi_contacto() (migración 0007), RLS: solo lo propio. -->
   <meta name="robots" content="noindex, nofollow, noai, noimageai">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#4A1621">
@@ -18,53 +19,105 @@
   <link rel="stylesheet" href="../css/site.css?v=1.1.1">
   <link rel="stylesheet" href="../css/layout.css?v=1.1.9">
   <link rel="stylesheet" href="../css/registro-cliente.css?v=1.0.0">
+  <link rel="stylesheet" href="../css/cuenta.css?v=1.0.0">
   <script src="../js/casa.js?v=1.2.1" defer></script>
   <script src="../js/supabase-config.js?v=1.0.0" defer></script>
   <script src="../js/acceso-config.js?v=1.0.4" defer></script>
+  <script src="../js/cuenta.js?v=1.0.0" defer></script>
   <!-- Sin sesión guardada no se pinta nada: directo a visitante (como la portada) -->
   <script>(function(){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(/^sb-[a-z0-9]+-auth-token$/.test(k)&&(JSON.parse(localStorage.getItem(k))||{}).refresh_token)return;}}catch(e){}location.replace('../visitante.html');})();</script>
 </head>
 <body>
   <header class="terms-head">
-    <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
+    <p class="wordmark wordmark--colophon"><a href="../index.html" class="perfil__casa"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></a></p>
     <p class="eyebrow eyebrow--gold">Cliente Priority</p>
     <h1 class="display" id="cuenta-hola">Tu cuenta</h1>
   </header>
-  <main class="folio terms rc">
+
+  <main class="perfil">
     <div class="rc__aviso" id="cuenta-aviso" role="status" aria-live="polite">Abriendo tu cuenta&hellip;</div>
-    <p><button class="button" type="button" id="cuenta-salir" hidden>Cerrar sesión</button></p>
+
+    <div id="perfil" hidden>
+      <!-- ============================================================ medidas -->
+      <section class="perfil__bloque" aria-labelledby="t-medidas">
+        <h2 class="perfil__titulo" id="t-medidas">Tus medidas</h2>
+        <p class="perfil__nota" id="medidas-toma"></p>
+        <div class="perfil__medidas">
+          <figure class="silueta" aria-hidden="true">
+            <svg viewBox="0 0 240 520" role="presentation" focusable="false">
+              <g class="silueta__cuerpo">
+                <ellipse cx="120" cy="46" rx="21" ry="27"/>
+                <path d="M110,74 C106.5,76.7 111.3,86.3 109,90 C106.7,93.7 101.8,94.3 96,96 C90.2,97.7 79.7,98 74,100 C68.3,102 65.3,104.3 62,108 C58.7,111.7 55.8,115.7 54,122 C52.2,128.3 52.3,130.7 51,146 C49.7,161.3 47.8,191.3 46,214 C44.2,236.7 41.3,268.3 40,282 C38.7,295.7 37.8,291.3 38,296 C38.2,300.7 39.3,307.2 41,310 C42.7,312.8 45.8,313.7 48,313 C50.2,312.3 52.7,309.8 54,306 C55.3,302.2 54.7,304 56,290 C57.3,276 59.7,243.7 62,222 C64.3,200.3 68.2,166 70,160 C71.8,154 72,173.3 73,186 C74,198.7 76,223.3 76,236 C76,248.7 73.8,253.3 73,262 C72.2,270.7 70.8,266 71,288 C71.2,310 72.5,361 74,394 C75.5,427 79.7,468.3 80,486 C80.3,503.7 72,497.3 76,500 C80,502.7 99,504.7 104,502 C109,499.3 105,501.3 106,484 C107,466.7 108.7,427.7 110,398 C111.3,368.3 112.3,322.7 114,306 C115.7,289.3 118,298 120,298 C122,298 124.3,289.3 126,306 C127.7,322.7 128.7,368.3 130,398 C131.3,427.7 133,466.7 134,484 C135,501.3 131,499.3 136,502 C141,504.7 160,502.7 164,500 C168,497.3 159.7,503.7 160,486 C160.3,468.3 164.5,427 166,394 C167.5,361 168.8,310 169,288 C169.2,266 167.8,270.7 167,262 C166.2,253.3 164,248.7 164,236 C164,223.3 166,198.7 167,186 C168,173.3 168.2,154 170,160 C171.8,166 175.7,200.3 178,222 C180.3,243.7 182.7,276 184,290 C185.3,304 184.7,302.2 186,306 C187.3,309.8 189.8,312.3 192,313 C194.2,313.7 197.3,312.8 199,310 C200.7,307.2 201.8,300.7 202,296 C202.2,291.3 201.3,295.7 200,282 C198.7,268.3 195.8,236.7 194,214 C192.2,191.3 190.3,161.3 189,146 C187.7,130.7 187.8,128.3 186,122 C184.2,115.7 181.3,111.7 178,108 C174.7,104.3 171.7,102 166,100 C160.3,98 149.8,97.7 144,96 C138.2,94.3 133.3,93.7 131,90 C128.7,86.3 133.5,76.7 130,74 C126.5,71.3 113.5,71.3 110,74 Z"/>
+              </g>
+              <!-- Guías de medida: cada una se enciende cuando hay valor (data-medida) -->
+              <g class="silueta__guia" data-medida="cuello"><ellipse cx="120" cy="84" rx="13" ry="4"/></g>
+              <g class="silueta__guia" data-medida="hombros"><line x1="62" y1="104" x2="178" y2="104"/><circle cx="62" cy="104" r="2.5"/><circle cx="178" cy="104" r="2.5"/></g>
+              <g class="silueta__guia" data-medida="pecho"><ellipse cx="120" cy="150" rx="49" ry="7"/></g>
+              <g class="silueta__guia" data-medida="cintura"><ellipse cx="120" cy="236" rx="44" ry="6"/></g>
+              <g class="silueta__guia" data-medida="largo_manga"><line x1="58" y1="104" x2="30" y2="288"/><circle cx="58" cy="104" r="2.5"/><circle cx="30" cy="288" r="2.5"/></g>
+              <g class="silueta__guia" data-medida="muneca"><ellipse cx="44" cy="280" rx="9" ry="3" transform="rotate(-8 44 280)"/></g>
+              <g class="silueta__guia" data-medida="largo_camisa"><line x1="212" y1="92" x2="212" y2="300"/><line x1="206" y1="92" x2="218" y2="92"/><line x1="206" y1="300" x2="218" y2="300"/></g>
+            </svg>
+          </figure>
+          <dl class="medidas-lista" id="medidas-lista"></dl>
+        </div>
+        <p class="perfil__acciones"><a class="button button--ghost" href="../index.html#medidas" id="medidas-actualizar">Actualizar mis medidas</a></p>
+      </section>
+
+      <!-- ============================================================ contacto -->
+      <section class="perfil__bloque" aria-labelledby="t-contacto">
+        <h2 class="perfil__titulo" id="t-contacto">Contacto y entrega</h2>
+        <dl class="perfil__datos" id="contacto-datos">
+          <div><dt>Correo electrónico</dt><dd id="d-correo">—</dd></div>
+          <div><dt>Teléfono</dt><dd id="d-telefono">—</dd></div>
+          <div><dt>Dirección</dt><dd id="d-direccion">—</dd></div>
+          <div><dt>Te contactamos por</dt><dd id="d-preferido">—</dd></div>
+        </dl>
+        <p class="perfil__acciones"><button class="button button--ghost" type="button" id="contacto-editar">Editar teléfono y dirección</button></p>
+
+        <form class="rc__form perfil__form" id="contacto-form" novalidate hidden>
+          <div class="rc__grid">
+            <label>Teléfono <span class="rc__u">con lada, p. ej. +52 55 1234 5678</span>
+              <input name="telefono" type="tel" inputmode="tel" autocomplete="tel" maxlength="20"></label>
+            <label>Te contactamos por
+              <select name="contacto_preferido">
+                <option value="correo">Correo</option><option value="telefono">Teléfono</option><option value="whatsapp">WhatsApp</option>
+              </select></label>
+          </div>
+          <p class="rc__sub">Dirección de entrega</p>
+          <div class="rc__grid">
+            <label>Calle y número <input name="calle" autocomplete="address-line1" maxlength="160"></label>
+            <label>Interior <span class="rc__u">opcional</span> <input name="interior" autocomplete="address-line2" maxlength="60"></label>
+            <label>Colonia <input name="colonia" autocomplete="address-level3" maxlength="80"></label>
+            <label>Código postal <input name="codigo_postal" inputmode="numeric" autocomplete="postal-code" maxlength="5" pattern="[0-9]{5}"></label>
+            <label>Ciudad <input name="ciudad" autocomplete="address-level2" maxlength="80"></label>
+            <label>Estado o provincia <input name="estado_region" autocomplete="address-level1" maxlength="80"></label>
+            <label>País
+              <select name="pais" autocomplete="country"><option value="">—</option><option value="MX">México</option><option value="ES">España</option></select></label>
+          </div>
+          <p class="rc__error" id="contacto-nota" role="status" aria-live="polite"></p>
+          <p class="perfil__acciones">
+            <button class="button" type="submit" id="contacto-guardar">Guardar</button>
+            <button class="perfil__enlace" type="button" id="contacto-cancelar">Cancelar</button>
+          </p>
+          <p class="perfil__nota">Para cambiar tu correo escríbenos a <a href="mailto:info@casasiego.com?subject=Cambio%20de%20correo">info@casasiego.com</a>.</p>
+        </form>
+      </section>
+
+      <!-- ============================================================ transacciones -->
+      <section class="perfil__bloque" aria-labelledby="t-transacciones">
+        <h2 class="perfil__titulo" id="t-transacciones">Últimas transacciones</h2>
+        <div class="perfil__tabla-envoltura">
+          <table class="perfil__tabla" id="transacciones" hidden>
+            <thead><tr><th scope="col">Pedido</th><th scope="col">Fecha</th><th scope="col">Piezas</th><th scope="col">Estado</th><th scope="col">Entrega</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="perfil__nota" id="transacciones-vacio" hidden>Aún no tienes transacciones. Tus pedidos de Justo aparecerán aquí en cuanto se confirmen.</p>
+      </section>
+    </div>
+
+    <p class="perfil__salir"><button class="button" type="button" id="cuenta-salir" hidden>Cerrar sesión</button></p>
   </main>
-  <script>
-  window.addEventListener('DOMContentLoaded', function () {
-    'use strict';
-    var CFG = window.CASASIEGO_ACCESO || {};
-    var aviso = document.getElementById('cuenta-aviso'), hola = document.getElementById('cuenta-hola'), salir = document.getElementById('cuenta-salir');
-    var fuera = function () { location.replace('../visitante.html'); };
-    if (!CFG.supabaseUrl || !CFG.publishableKey) return fuera();
-    var s = document.createElement('script');
-    s.src = CFG.supabaseJs; s.crossOrigin = 'anonymous'; s.onerror = function () { aviso.textContent = 'No se pudo abrir tu cuenta. Revisa tu conexión y recarga.'; };
-    s.onload = function () {
-      var client = window.supabase.createClient(CFG.supabaseUrl, CFG.publishableKey, {
-        auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
-      });
-      client.auth.getUser().then(function (r) {                       // valida el token con Supabase
-        var u = r.data && r.data.user;
-        if (!u) return fuera();
-        return client.from('profiles').select('nombre').eq('id', u.id).maybeSingle().then(function (p) {
-          var nombre = (p.data && p.data.nombre) || (u.user_metadata && u.user_metadata.nombre) || '';
-          hola.textContent = nombre ? 'Hola, ' + nombre.split(' ')[0] : 'Hola';
-          document.title = hola.textContent + ' · Casa Siego®';
-          aviso.textContent = 'Encantados de volvernos a encontrar.';
-          salir.hidden = false;
-        });
-      }).catch(function () { aviso.textContent = 'No se pudo abrir tu cuenta. Recarga la página.'; });
-      salir.addEventListener('click', function () {
-        salir.disabled = true;
-        client.auth.signOut().then(fuera, fuera);
-      });
-    };
-    document.head.appendChild(s);
-  });
-  </script>
 </body>
 </html>
