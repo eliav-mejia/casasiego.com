@@ -1,4 +1,4 @@
-/* Casa Siego — tienda.js 2.0.1 (v1.4.1) · catálogo de las tiendas de marca (Justo, Fijo). Plain JS: no build, no React, no Babel.
+/* Casa Siego — tienda.js 2.0.2 (v1.4.1) · catálogo de las tiendas de marca (Justo, Atemporal). Plain JS: no build, no React, no Babel.
    One engine for every brands/<marca>/tienda/index.html. Each tienda folder is only its page + db/productos.json.
 
    1. Data: db/productos.json next to the page = { marca, marcaNombre, kinds{id: label}, filtros{id: plural label}, products[] }. No prices, sizes, stock or Stripe:
@@ -116,7 +116,7 @@
     const filtros = () => {
         const box = $('filtros');
         const kinds = Object.keys(data.kinds).filter(k => data.products.some(p => p.kind === k));
-        if (kinds.length < 2) { box.hidden = true; return; }
+        if (!kinds.length) { box.hidden = true; return; }   // 2.0.2: the bar shows even with one kind (Todo · Camisas)
         const chip = (id, label) => {
             const b = el('button', { type: 'button', className: 'chip label', textContent: label });
             b.setAttribute('role', 'radio');

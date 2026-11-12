@@ -1,4 +1,4 @@
-// Tailwind (CDN) theme for the brand shops (Justo, Fijo). Load right after https://cdn.tailwindcss.com. · v1.4.1
+// Tailwind (CDN) theme for the brand shops (Justo, Atemporal). Load right after https://cdn.tailwindcss.com. · v1.4.1
 // Casa Siego palette: white/beige page, wine ink, wine for actions, brass for ornaments (names kept from v1).
 // Mirrors :root in /css/tienda.css and the tokens of /css/site.css.
 tailwind.config = {

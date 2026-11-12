@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — site.css  (v1.1.1)
+   Casa Siego — site.css  (v1.2.0)
    Brand tokens, typography and small components.
    Layout, sticky sections and parallax live in layout.css.
    Style guide: "Casa Siego" — white pages, vintage beige and wine; wordmark CASA (Palacio) + Siego (Ledger).
@@ -393,6 +393,46 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 .site-nav a:hover::after,
 .site-nav a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
 .site-nav a:hover { color: inherit; }
+
+/* «A medida» dropdown (casa.js 1.3.0): Caballero · Dama. Opens on hover, click/tap or keyboard */
+.site-nav__grupo { position: relative; }
+.site-nav__abrir {
+  position: relative; display: inline-flex; align-items: center; gap: 0.5em; padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.24em; text-transform: uppercase; color: inherit;
+}
+.site-nav__abrir::after {
+  content: ""; width: 0.42em; height: 0.42em; margin-top: -0.25em;
+  border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg);
+  transition: transform 300ms var(--ease-out-expo);
+}
+.site-nav__abrir[data-current] { text-decoration: underline; text-underline-offset: 0.55em; text-decoration-thickness: 1px; }
+.site-nav .site-nav__sub {
+  position: absolute; top: 100%; left: 50%; z-index: 2;
+  display: flex; flex-direction: column; gap: 0.15rem; min-width: 11rem; margin: 0.9rem 0 0; padding: 0.6rem 0;
+  background: var(--thera-white); color: var(--wine-ink);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--brass) 45%, transparent), 0 14px 32px rgba(59, 26, 31, 0.14);
+  opacity: 0; visibility: hidden; transform: translate(-50%, -0.35rem);
+  transition: opacity 250ms var(--ease-silk), transform 250ms var(--ease-silk), visibility 0s linear 250ms;
+}
+.site-nav__sub::before { content: ""; position: absolute; inset: -0.9rem 0 auto; height: 0.9rem; }   /* hover bridge */
+.site-nav__sub li { display: block; }
+.site-nav__sub a { display: block; padding: 0.55rem 1.25rem; white-space: nowrap; }
+.site-nav__sub a::after { left: 1.25rem; right: 1.25rem; bottom: 0.25rem; }
+.site-nav .site-nav__grupo:hover .site-nav__sub, .site-nav .site-nav__grupo.is-open .site-nav__sub {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0); transition-delay: 0s;
+}
+.site-nav__grupo:hover .site-nav__abrir::after, .site-nav__grupo.is-open .site-nav__abrir::after { transform: rotate(225deg); margin-top: 0.2em; }
+.site-drawer__titulo {
+  display: flex; align-items: baseline; gap: 1rem; margin: 0; padding: 0.7rem 0 0.35rem;
+  font-family: var(--font-siego); font-size: 1.75rem; line-height: 1.15;
+}
+.site-drawer__titulo::before { content: counter(casa, decimal-leading-zero); font-family: var(--font-display); font-size: 0.625rem; letter-spacing: 0.2em; color: var(--brass); }
+.site-drawer__titulo span { margin-left: auto; font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; opacity: 0.7; }
+.site-drawer__sub { margin: 0; padding: 0 0 0 2.1rem; list-style: none; border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+.site-drawer .site-drawer__sub li { counter-increment: none; opacity: 1; transform: none; }
+.site-drawer .site-drawer__sub li a { font-size: 1.3rem; padding: 0.4rem 0; border-bottom: 0; }
+.site-drawer .site-drawer__sub li a::before { content: "—"; letter-spacing: 0; }
+.site-drawer .site-drawer__sub li:last-child a { padding-bottom: 0.8rem; }
 
 /* Members' sign-in: grey profile silhouette (casa.js). In the nav on desktop, beside the burger on mobile, atop the drawer */
 .site-nav__perfil { display: flex; align-items: center; }

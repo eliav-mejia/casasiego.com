@@ -47,9 +47,9 @@ casasiego.com/
 │   │   ├── index.html            catálogo: 3 sacos, 3 camisas, 3 corbatas; ficha de cada pieza en <dialog> (#slug)
 │   │   ├── db/productos.json     base de datos limpia: id, slug, sku, kind, name, short, description, image, detalles
 │   │   └── <slug>/ · guia-de-tallas/   direcciones antiguas: redirigen a index.html#slug (noindex)
-│   ├── fijo/tienda/              TIENDA de Fijo by Siego (sacos para dama): misma estructura (index.html + db/productos.json)
-│   ├── libre/index.html          OCULTA desde v1.1.1: coworking y café; sin enlaces ni menú, fuera del sitemap, noindex
-│   └── reino_fiel/index.html     RETIRADA en v1.2.0: redirige a fiel/ (enlaces antiguos)
+│   ├── atemporal/index.html      Atemporal by Siego (antes Fijo, 2026-11-12): saco y traje para dama, misma información que justo/
+│   ├── atemporal/tienda/         TIENDA de Atemporal by Siego (sacos para dama): misma estructura (index.html + db/productos.json)
+│   └── libre/index.html          OCULTA desde v1.1.1: coworking y café; sin enlaces ni menú, fuera del sitemap, noindex
 ├── images/
 │   ├── README.md                 índice de catálogos
 │   ├── casa/                     catálogo base de la portada (README.md)
@@ -69,7 +69,7 @@ Los precios de Fiel deben coincidir en `brands/fiel/index.html`, `SESIONES` de `
 
 ## Medición (Google Tag Manager)
 
-Contenedor **GTM-WHTQ77F9** en las 42 páginas públicas (todas menos `cargando/`, `docs/` y la redirección de `reino_fiel/`):
+Contenedor **GTM-WHTQ77F9** en las 42 páginas públicas (todas menos `cargando/`, `docs/`):
 el código estándar de Google justo después de `<meta charset>` y su `<noscript>` justo después de `<body>`, más
 `js/medicion.js`. Las páginas generadas lo reciben de `docs/src/medicion.py` (lo importan `ayuda.py` y `agenda-fiel.py`):
 al crear una página nueva a mano, copia los dos bloques de cualquier página y ajusta la ruta de `js/medicion.js`.
@@ -89,7 +89,7 @@ Eventos en `dataLayer` (todos llevan `marca`, `seccion` y `region`; nunca nombre
 | `casa_registro` | carta de registro (`registro.js`) | `paso` (los de la bitácora + registro_completo), `proveedor`, `modo` |
 | `casa_agenda` | agenda de Fiel (`agenda.js`) | `paso`: anticipo_recibido · horario_elegido · solicitud_enviada, `sesion` |
 | `casa_consultoria` | cuestionario Web (`web.js`) | `paso`: enviado |
-| `casa_tienda_ver` | se abre la ficha de un producto (`tienda.js`, Justo y Fijo) | `sku`, `producto`, `tipo`, `origen`: tarjeta · enlace |
+| `casa_tienda_ver` | se abre la ficha de un producto (`tienda.js`, Justo y Atemporal) | `sku`, `producto`, `tipo`, `origen`: tarjeta · enlace |
 | `casa_tienda_cotizar` | clic en «Cotizar» | `sku`, `producto`, `tipo`, `canal`: registro · whatsapp · correo, `sesion`, `origen`: tarjeta · ficha |
 | `casa_tienda_filtro` | filtro de tipo en la tienda | `tipo` |
 

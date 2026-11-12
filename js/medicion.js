@@ -21,7 +21,7 @@
   var path = location.pathname;
 
   // marca: first folder that names a brand or a section of the house.
-  var marca = (path.match(/\/brands\/(fiel|justo|libre|fijo)\//) || [])[1] ||
+  var marca = (path.match(/\/brands\/(fiel|justo|libre|atemporal)\//) || [])[1] ||
     (path.match(/\/(membresia|ayuda)\//) || [])[1] ||
     (/registro\.html$/.test(path) ? 'registro' : 'casa');
   // seccion: the folder under the brand (tienda, agenda, ejecutivo…), or "portada".

@@ -26,7 +26,7 @@ Desde la v1.0.6 la portada ya no usa `hero.jpg`, `recorrido-estudio.jpg` ni `int
 
 Las imágenes `plate-01.jpg` … `plate-04.jpg` ya no se usan en la portada (v1.0.5); se conservan como archivo. `plate-05.jpg` … `plate-10.jpg` se borraron en la v1.2.4.
 `Ave_Paraiso.jpg` y `Granada.jpg` (v1.2.4) ilustran el libro de la casa (`css/libro.css`, `docs/libro-casa-siego.pdf`).
-Los originales de cámara (`_DSC*`, `Antes_*`, `Después_*`, `Gemini_*`) viven en esta carpeta pero no se publican (ver `.gitignore`).
+Los originales de cámara (`_DSC*`, `Antes_*`, `Después_*`) viven en esta carpeta pero no se publican (ver `.gitignore`).
 La galería completa de Fiel está fuera del repositorio, en `OneDrive/Documents/Casa Siego/Fiel/Galeria/` (antes `Documents/Fiel/`); las rutas `Casa Siego/…` de la columna «Original» son relativas a `OneDrive/Documents/`.
 
 La tarjeta para compartir el sitio es `images/casa/share.jpg` (1200 × 630, v1.0.7 desde 2026-11-10), recortada de
