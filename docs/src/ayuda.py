@@ -30,7 +30,7 @@ ARTICLES = [
         ('Valores agregados', [
             'Diseñamos tu colección con los servicios de la casa a tu disposición:',
             ('ul', [
-                '<strong>Corte y confección de trajes a medida</strong> en el taller de Justo, con un patrón propio.',
+                '<strong>Traje personalizado con camisería a medida</strong> de Justo: cuello, talla larga y puño.',
                 '<strong>Visita para toma de medidas</strong>: vamos a tu oficina o a donde te acomode.',
                 '<strong>Acompañamiento</strong> en cada decisión: tela, corte, detalles y el momento de estrenar.',
                 '<strong>Fotografía de retrato</strong> en Fiel, para ti y para tu equipo.',
@@ -60,7 +60,7 @@ ARTICLES = [
                 '<strong>Conversación.</strong> Nos cuentas a qué te dedicas, cómo es tu semana y qué quieres que diga tu imagen.',
                 '<strong>Revisión de tu clóset.</strong> Vemos qué se queda, qué se ajusta y qué hace falta.',
                 '<strong>Propuesta.</strong> Preparamos tu colección: sacos, camisería y corbatas, telas y el orden en que conviene hacerlas.',
-                '<strong>Medidas y confección.</strong> Tomamos medidas en tu visita y confeccionamos cada pieza en el taller de <a href="../../brands/justo/">Justo</a>, con sus pruebas.',
+                '<strong>Medidas y confección.</strong> Vamos a ti: tomamos medidas en tu oficina o en tu casa y <a href="../../brands/justo/">Justo</a> confecciona cada pieza, con sus pruebas donde te acomode.',
                 '<strong>Retrato.</strong> Estrenas tu colección frente a la cámara de <a href="../../brands/fiel/">Fiel</a>, con fotografías para tu perfil profesional.',
             ]),
         ]),
@@ -74,7 +74,7 @@ ARTICLES = [
         ('Los beneficios', [
             'Como cliente Priority, Justo y Fiel trabajan juntos para tu colección. Tienes a tu disposición:',
             ('ul', [
-                '<strong>Corte y confección de trajes a medida</strong> en el taller de Justo, con un patrón propio.',
+                '<strong>Traje personalizado con camisería a medida</strong> de Justo: cuello, talla larga y puño.',
                 '<strong>Visita para toma de medidas</strong>: vamos a tu oficina o a donde te acomode.',
                 '<strong>Acompañamiento</strong> en cada decisión: tela, corte, detalles y el momento de estrenar.',
                 '<strong>Fotografía de retrato</strong> en Fiel, para ti y para tu equipo.',
@@ -193,16 +193,16 @@ ARTICLES = [
         ]),
     ]),
     ('uniformes-ejecutivos-a-medida', 'empresas', '¿Cómo encargo uniformes ejecutivos a la medida?',
-     'En Justo, la sastrería de Casa Siego, confeccionamos uniformes ejecutivos y trajes a la medida para caballero: un patrón por persona, pruebas en el taller y un retrato corporativo de todo el equipo.', [
+     'En Justo, la sastrería de Casa Siego, confeccionamos uniformes ejecutivos y trajes a la medida para caballero: vamos a tu oficina a tomar medidas y hacer las pruebas, y retratamos a todo el equipo.', [
         ('Uniformes ejecutivos a la medida', [
-            'Un uniforme ejecutivo a la medida es el traje de tu equipo cortado sobre las medidas de cada persona, con la tela, el color y los detalles de tu empresa. Todos visten igual y a cada uno le queda como propio. En Justo lo confeccionamos de principio a fin en nuestro taller de Roma Norte, Ciudad de México.',
+            'Un uniforme ejecutivo a la medida es el traje de tu equipo cortado sobre las medidas de cada persona, con la tela, el color y los detalles de tu empresa. Todos visten igual y a cada uno le queda como propio. En Justo vamos a ti: medimos y probamos en tu oficina, en Ciudad de México.',
         ]),
         ('Casa Siego: imagen y estilo', [
-            'Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir-faire artesanal con procesos sostenibles: la constancia de un taller que produce para equipos completos y el oficio de la sastrería que mide, corta y ajusta a mano.',
-            'La casa reúne dos oficios bajo un mismo techo de madera, concreto y luz natural: <a href="../../brands/justo/">Justo</a>, la sastrería, y <a href="../../brands/fiel/">Fiel</a>, el estudio de retrato. Por eso tu equipo puede estrenar su uniforme frente a la cámara el día de la entrega. Conoce a los asesores y fotógrafos en <a href="../../membresia/equipo/">el equipo de Casa Siego</a>.',
+            'Casa Siego redefine la indumentaria ejecutiva. Nuestra visión industrial integra un savoir-faire artesanal con procesos sostenibles: la constancia de producir para equipos completos y el oficio de la sastrería que mide y ajusta a mano, donde tú estés.',
+            'La casa reúne dos oficios que van a ti: <a href="../../brands/justo/">Justo</a>, la sastrería, y <a href="../../brands/fiel/">Fiel</a>, el estudio de retrato. Por eso tu equipo puede estrenar su uniforme frente a la cámara el día de la entrega. Conoce a los asesores y fotógrafos en <a href="../../membresia/equipo/">el equipo de Casa Siego</a>.',
         ]),
         ('Trajes a la medida para caballero', [
-            'Un traje justo es el que te queda: cortado sobre un patrón propio, con costuras que no se ven y la compostura de quien sabe que va bien vestido. En el taller confeccionamos:',
+            'Un traje justo es el que te queda: cortado sobre un patrón propio, con costuras que no se ven y la compostura de quien sabe que va bien vestido. Confeccionamos:',
             ('ul', [
                 '<strong>Trajes completos</strong> de saco y pantalón, con chaleco si la ocasión lo pide.',
                 '<strong>Sacos estructurados</strong>, la pieza que más dice de un uniforme ejecutivo.',
@@ -224,8 +224,8 @@ ARTICLES = [
             ('ul', [
                 '<strong>Cotización.</strong> Escríbenos a <a href="mailto:info@casasiego.com?subject=Justo%20%C2%B7%20Uniformes%20ejecutivos">info@casasiego.com</a> con el número de personas, las piezas que necesitas y la fecha en que las quieres estrenar.',
                 '<strong>Tela y detalles.</strong> Elegimos contigo la tela, el forro, los botones y el color de la temporada que mejor representan a tu marca.',
-                '<strong>Toma de medidas.</strong> Agendamos la cita de cada persona en la sastrería Justo.',
-                '<strong>Pruebas.</strong> Ajustamos cada prenda en una o más pruebas, hasta que el saco caiga como debe.',
+                '<strong>Toma de medidas.</strong> Vamos a ti: agendamos la cita de cada persona en tu oficina.',
+                '<strong>Pruebas.</strong> Ajustamos cada prenda en una o más pruebas en tu oficina, hasta que el saco caiga como debe.',
                 '<strong>Entrega y retrato.</strong> El ajuste final se hace sobre cada persona y, si lo quieres, retratamos a todo el equipo en Fiel para tu sitio web, LinkedIn o informe anual.',
             ]),
             'Encarga con tiempo: la confección a la medida requiere varias semanas y pruebas. La cotización llega por escrito, con el monto total, antes de que pagues.',
@@ -234,7 +234,7 @@ ARTICLES = [
             ('ul', [
                 '<strong>Sobre pedido.</strong> Cortamos lo que tu equipo va a usar, no inventario que espera en una bodega.',
                 '<strong>Un patrón por persona.</strong> Una prenda que queda bien se usa más y se reemplaza menos.',
-                '<strong>Mantenimiento en la casa.</strong> Ajustamos y cuidamos las prendas para alargar su vida.',
+                '<strong>Mantenimiento.</strong> Ajustamos y cuidamos las prendas para alargar su vida.',
                 '<strong>Reposiciones por pieza.</strong> Si una persona cambia de talla o se integra al equipo, confeccionamos solo lo que hace falta.',
             ]),
         ]),
@@ -242,7 +242,7 @@ ARTICLES = [
             'Si buscas un traje a la medida para ti, lee <a href="../adquirir-traje-a-la-medida/">¿Cómo agendar una cita para toma de medidas?</a> Para tu retrato profesional, lee <a href="../reservar-sesion-de-retrato/">¿Cómo agendar una sesión de retrato fotográfico?</a>',
         ]),
     ], {'title': 'Uniformes ejecutivos a la medida para empresas | Casa Siego®',
-        'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego en Roma Norte, CDMX. Cotiza para tu equipo.'}),
+        'desc': 'Uniformes ejecutivos y trajes a la medida para caballero, de fábrica a medida en Justo, la sastrería de Casa Siego que va a tu oficina en CDMX. Cotiza para tu equipo.'}),
     ('variantes-de-un-pedido', 'empresas', '¿Cuánto puede variar un pedido?',
      'Dentro de un mismo pedido, cada pieza puede cambiar de patrón, corte, medida y tela. Es un trabajo preciso: no necesita ajuste.', [
         ('Lo que puede variar', [
@@ -330,7 +330,7 @@ def head(title, desc, url, up, kind, ld):
   <meta property="og:url" content="{url}">
   <meta property="og:type" content="{kind}">
   <meta property="og:locale" content="es_MX">
-  <meta property="og:image" content="{SITE}/images/casa/share.jpg?v=1.0.6">
+  <meta property="og:image" content="{SITE}/images/casa/share.jpg?v=1.0.7">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
   <meta name="theme-color" content="#4A1621">

@@ -1,4 +1,4 @@
-/* Casa Siego — tienda.js 2.0.0 (v1.4.1) · catálogo de las tiendas de marca (Justo, Fijo). Plain JS: no build, no React, no Babel.
+/* Casa Siego — tienda.js 2.0.1 (v1.4.1) · catálogo de las tiendas de marca (Justo, Fijo). Plain JS: no build, no React, no Babel.
    One engine for every brands/<marca>/tienda/index.html. Each tienda folder is only its page + db/productos.json.
 
    1. Data: db/productos.json next to the page = { marca, marcaNombre, kinds{id: label}, filtros{id: plural label}, products[] }. No prices, sizes, stock or Stripe:
@@ -92,7 +92,7 @@
         box.dataset.sesion = String(sesion);
         box.replaceChildren(...[sesion
             ? el('p', { className: 'text-ink-700', textContent: WHATSAPP ? 'Tu sesión está abierta: cotiza cada pieza directamente por WhatsApp.' : 'Tu sesión está abierta: cotiza cada pieza y te respondemos por correo.' })
-            : el('p', { className: 'text-ink-700', textContent: 'Crea tu cuenta de Casa Siego y cotiza cada pieza directamente por WhatsApp.' }),
+            : el('p', { className: 'text-ink-700', textContent: 'Crea tu cuenta de Casa Siego y cotiza cada pieza directamente.' }),
             sesion ? null : el('a', { className: 'btn btn-rust', href: REGISTRO, textContent: 'Crear mi cuenta' })].filter(Boolean));
     };
 

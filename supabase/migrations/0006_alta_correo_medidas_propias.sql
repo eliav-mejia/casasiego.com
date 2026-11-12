@@ -38,7 +38,7 @@ begin
     if not exists (select 1 from public.profiles where id = v_uid and registro_completo) then
         raise exception 'registro incompleto' using errcode = '42501';
     end if;
-    -- Freno contra abuso: 5 tomas propias por día (las del taller no cuentan).
+    -- Freno contra abuso: 5 tomas propias por día (las del equipo de Justo no cuentan).
     if (select count(*) from public.medidas
          where user_id = v_uid and tomadas_por = v_uid and tomadas_en > now() - interval '1 day') >= 5 then
         raise exception 'demasiadas tomas hoy' using errcode = '54000';

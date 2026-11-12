@@ -1,4 +1,4 @@
-# Casa Siego v1.0.2 — https://casasiego.com/robots.txt
+# Casa Siego v1.0.3 — https://casasiego.com/robots.txt
 # Search engines may index the page. AI-training and dataset crawlers may not.
 # robots.txt is a request, not a lock: well-behaved crawlers obey it; scrapers may not.
 
@@ -32,3 +32,4 @@ Disallow: /cuenta/
 Allow: /
 
 Sitemap: https://casasiego.com/sitemap.xml
+Sitemap: https://casasiego.com/brands/justo/sitemap.xml
