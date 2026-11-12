@@ -168,7 +168,7 @@
         if (res.error) throw res.error;
         if (window.casaMedir) window.casaMedir('casa_medidas', { paso: 'guardadas' });
         nota.classList.add('es-tranquila');
-        nota.textContent = 'Gracias. Tus medidas quedaron guardadas y el taller ya puede verlas.';
+        nota.textContent = 'Gracias. Tus medidas quedaron guardadas y tu asesor de Justo ya puede verlas.';
         guardar.textContent = 'Guardadas';
         setTimeout(cerrar, 1800);
       }).catch(function (err) {

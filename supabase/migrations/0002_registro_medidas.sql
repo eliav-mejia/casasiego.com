@@ -96,7 +96,7 @@ end $$;
 create trigger medidas_solo_insercion before update or delete on public.medidas
     for each row when (pg_trigger_depth() = 0) execute function identidad.medidas_inmutables();
 
--- Últimas medidas de cada cliente (lo que lee el taller y, más adelante, el cliente).
+-- Últimas medidas de cada cliente (lo que lee el equipo de Justo y, más adelante, el cliente).
 create view public.medidas_vigentes with (security_invoker = true) as
     select distinct on (user_id) * from public.medidas order by user_id, tomadas_en desc;
 

@@ -5,78 +5,16 @@
   "marca": "justo",
   "marcaNombre": "Justo by Casa Siego",
   "kinds": {
-    "saco": "Saco",
     "camisa": "Camisa",
+    "saco": "Saco",
     "corbata": "Corbata"
   },
   "filtros": {
-    "saco": "Sacos",
     "camisa": "Camisas",
+    "saco": "Sacos",
     "corbata": "Corbatas"
   },
   "products": [
-    {
-      "id": "ju-001",
-      "slug": "saco-azul-marino-raya-diplomatica",
-      "sku": "JUS-SAC-01",
-      "kind": "saco",
-      "name": "Saco Azul Marino Raya Diplomática",
-      "short": "Raya diplomática fina, dos botones, solapa de muesca.",
-      "description": "El azul marino de oficina con carácter: lana merino Super 110s con una raya diplomática fina gris claro que alarga la figura. Dos botones, solapa de muesca de 8 cm, bolsas con cartera y hombro natural con hombrera ligera. Corte regular que deja moverse sin perder la línea; pide camisa blanca y corbata a rayas, o se suelta con un pantalón gris liso.",
-      "image": "images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg",
-      "fabric": "100 % lana merino Super 110s, sarga con raya diplomática, 260 g/m², tejida en Biella (Italia)",
-      "lining": "Forro de cupro (Bemberg) azul marino, respirable y antiestático; mangas con forro rayado",
-      "construction": "Semientretelado (half-canvas) de crin de caballo en pecho y solapa; resto termofijado",
-      "care": "Solo tintorería en seco, como máximo 2 veces por temporada. Cepillar tras cada uso y colgar en gancho ancho de madera; vaporizar en lugar de planchar.",
-      "features": [
-        "Raya casada en costuras, bolsas y solapa",
-        "Ojales de manga funcionales (se abren)",
-        "Solapa con ojal Milanés hecho a mano",
-        "Margen de costura para ajustar 4 cm de cintura"
-      ],
-      "active": true
-    },
-    {
-      "id": "ju-002",
-      "slug": "saco-gris-carbon-textura-tweed",
-      "sku": "JUS-SAC-02",
-      "kind": "saco",
-      "name": "Saco Gris Carbón Textura Tweed",
-      "short": "Gris carbón con textura tipo tweed, dos botones.",
-      "description": "Gris carbón en lana con textura tipo tweed: de lejos se lee liso y de cerca tiene grano, así que luce serio sin verse plano. Dos botones, solapa de muesca y bolsas con cartera, con la etiqueta Tailor's Blend de la casa. Va con camisa azul cielo y corbata plateada para la oficina, o con suéter de cuello alto el fin de semana.",
-      "image": "images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg",
-      "fabric": "100 % lana virgen con textura tipo tweed, 340 g/m², tejida en Escocia",
-      "lining": "Medio forro de viscosa gris humo (espalda libre para que respire); mangas forradas",
-      "construction": "Entretelado completo (full canvas) de crin de caballo; hombro natural con hombrera ligera",
-      "care": "Solo tintorería en seco. Cepillar en el sentido del tejido; guardar con cedro o lavanda. La lana recupera su forma colgada una noche.",
-      "features": [
-        "Etiqueta interior Tailor's Blend",
-        "Full canvas: la solapa toma la forma de tu pecho con el uso",
-        "Ojal de solapa para pin o flor"
-      ],
-      "active": true
-    },
-    {
-      "id": "ju-003",
-      "slug": "saco-negro-clasico-liso",
-      "sku": "JUS-SAC-03",
-      "kind": "saco",
-      "name": "Saco Negro Clásico Liso",
-      "short": "Negro liso, dos botones, corte entallado.",
-      "description": "El negro que no falla: paño liso, sin brillo, para la boda, la noche y el escenario. Dos botones, solapa de muesca de 8 cm y corte entallado con cintura marcada y manga angosta. Con chaleco del mismo tono se arma un tres piezas; con camisa blanca y corbata de color, el saco se vuelve el fondo que hace lucir todo lo demás.",
-      "image": "images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg",
-      "fabric": "Lana fría 98 % / elastano 2 %, Super 120s, 240 g/m², con caída y recuperación",
-      "lining": "Forro completo de cupro (Bemberg) negro con vivos en satén",
-      "construction": "Semientretelado (half-canvas) con hombrera media para una línea de hombro definida",
-      "care": "Solo tintorería en seco. El elastano no tolera plancha directa: vaporizar a 15 cm y dejar secar colgado.",
-      "features": [
-        "Negro profundo y mate: no brilla con flash ni con luz de escenario",
-        "Entalle con cintura marcada para una línea limpia abotonado",
-        "2 % elastano: se mueve contigo sin arrugar",
-        "Cuello y solapa planchados a mano"
-      ],
-      "active": true
-    },
     {
       "id": "ju-004",
       "slug": "camisa-azul-cielo",
@@ -126,6 +64,68 @@
       "active": true
     },
     {
+      "id": "ju-001",
+      "slug": "saco-azul-marino-raya-diplomatica",
+      "sku": "JUS-SAC-01",
+      "kind": "saco",
+      "name": "Saco Azul Marino Raya Diplomática",
+      "short": "Raya diplomática fina, dos botones, solapa de muesca.",
+      "description": "El azul marino de oficina con carácter: lana merino Super 110s con una raya diplomática fina gris claro que alarga la figura. Dos botones, solapa de muesca de 8 cm, bolsas con cartera y hombro natural con hombrera ligera. Corte regular que deja moverse sin perder la línea; pide camisa blanca y corbata a rayas, o se suelta con un pantalón gris liso.",
+      "image": "images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg",
+      "fabric": "100 % lana merino Super 110s, sarga con raya diplomática, 260 g/m², tejida en Biella (Italia)",
+      "lining": "Forro de cupro (Bemberg) azul marino, respirable y antiestático; mangas con forro rayado",
+      "construction": "Semientretelado (half-canvas) de crin de caballo en pecho y solapa; resto termofijado",
+      "care": "Solo tintorería en seco, como máximo 2 veces por temporada. Cepillar tras cada uso y colgar en gancho ancho de madera; vaporizar en lugar de planchar.",
+      "features": [
+        "Raya casada en costuras, bolsas y solapa",
+        "Ojales de manga funcionales (se abren)",
+        "Solapa con ojal Milanés hecho a mano",
+        "Margen de costura para ajustar 4 cm de cintura"
+      ],
+      "active": false
+    },
+    {
+      "id": "ju-002",
+      "slug": "saco-gris-carbon-textura-tweed",
+      "sku": "JUS-SAC-02",
+      "kind": "saco",
+      "name": "Saco Gris Carbón Textura Tweed",
+      "short": "Gris carbón con textura tipo tweed, dos botones.",
+      "description": "Gris carbón en lana con textura tipo tweed: de lejos se lee liso y de cerca tiene grano, así que luce serio sin verse plano. Dos botones, solapa de muesca y bolsas con cartera, con la etiqueta Tailor's Blend de la casa. Va con camisa azul cielo y corbata plateada para la oficina, o con suéter de cuello alto el fin de semana.",
+      "image": "images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg",
+      "fabric": "100 % lana virgen con textura tipo tweed, 340 g/m², tejida en Escocia",
+      "lining": "Medio forro de viscosa gris humo (espalda libre para que respire); mangas forradas",
+      "construction": "Entretelado completo (full canvas) de crin de caballo; hombro natural con hombrera ligera",
+      "care": "Solo tintorería en seco. Cepillar en el sentido del tejido; guardar con cedro o lavanda. La lana recupera su forma colgada una noche.",
+      "features": [
+        "Etiqueta interior Tailor's Blend",
+        "Full canvas: la solapa toma la forma de tu pecho con el uso",
+        "Ojal de solapa para pin o flor"
+      ],
+      "active": false
+    },
+    {
+      "id": "ju-003",
+      "slug": "saco-negro-clasico-liso",
+      "sku": "JUS-SAC-03",
+      "kind": "saco",
+      "name": "Saco Negro Clásico Liso",
+      "short": "Negro liso, dos botones, corte entallado.",
+      "description": "El negro que no falla: paño liso, sin brillo, para la boda, la noche y el escenario. Dos botones, solapa de muesca de 8 cm y corte entallado con cintura marcada y manga angosta. Con chaleco del mismo tono se arma un tres piezas; con camisa blanca y corbata de color, el saco se vuelve el fondo que hace lucir todo lo demás.",
+      "image": "images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg",
+      "fabric": "Lana fría 98 % / elastano 2 %, Super 120s, 240 g/m², con caída y recuperación",
+      "lining": "Forro completo de cupro (Bemberg) negro con vivos en satén",
+      "construction": "Semientretelado (half-canvas) con hombrera media para una línea de hombro definida",
+      "care": "Solo tintorería en seco. El elastano no tolera plancha directa: vaporizar a 15 cm y dejar secar colgado.",
+      "features": [
+        "Negro profundo y mate: no brilla con flash ni con luz de escenario",
+        "Entalle con cintura marcada para una línea limpia abotonado",
+        "2 % elastano: se mueve contigo sin arrugar",
+        "Cuello y solapa planchados a mano"
+      ],
+      "active": false
+    },
+    {
       "id": "ju-007",
       "slug": "corbata-roja",
       "sku": "JUS-COR-01",
@@ -139,7 +139,7 @@
       "features": [
         "Se anuda igual con camisa de cuello italiano o clásico"
       ],
-      "active": true
+      "active": false
     },
     {
       "id": "ju-008",
@@ -155,7 +155,7 @@
       "features": [
         "Se anuda igual con camisa de cuello italiano o clásico"
       ],
-      "active": true
+      "active": false
     },
     {
       "id": "ju-009",
@@ -171,7 +171,7 @@
       "features": [
         "Se anuda igual con camisa de cuello italiano o clásico"
       ],
-      "active": true
+      "active": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Justo por Siego · sitemap de la marca v1.0.0 (2026-11-10)
+     URL para Search Console: https://casasiego.com/brands/justo/sitemap.xml (declarada también en /robots.txt).
+     Solo URL indexables bajo /brands/justo/. Fuera: a-medida/ (noindex) y las direcciones antiguas de producto
+     y guía de tallas (noindex, redirigen a tienda/#slug). Cada producto va como imagen de la tienda, con su #slug.
+     Documentación: _interno/deployed/Marketing/sitemap-justo-v1.0.0.pdf -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://casasiego.com/brands/justo/</loc><lastmod>2026-11-10</lastmod>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Medicion_Camiseria_Becarios.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed_Mexicano_fvirreinal.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/rack_suits%26shirts_fpisomadera.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/muestrarios-disenos-carpetas-2.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe_fvirreinal_ejecutivo.jpg</image:loc></image:image>
+  </url>
+  <url><loc>https://casasiego.com/brands/justo/tienda/</loc><lastmod>2026-11-10</lastmod>
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoMarino_CorbataPlata_CamisaBlanca_diplomatica_pinstripe.jpg</image:loc></image:image> <!-- ju-001 · Saco Azul Marino Raya Diplomática · tienda/#saco-azul-marino-raya-diplomatica -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoGris_CorbataPlata_CamisaAzul_tweed.jpg</image:loc></image:image> <!-- ju-002 · Saco Gris Carbón Textura Tweed · tienda/#saco-gris-carbon-textura-tweed -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/SacoNegro_ChalecoNegro__CorbataRoja_CamisaBlanca_clasico.jpg</image:loc></image:image> <!-- ju-003 · Saco Negro Clásico Liso · tienda/#saco-negro-clasico-liso -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Azul-Celeste_camiseria_fgris.jpg</image:loc></image:image> <!-- ju-004 · Camisa Azul Cielo · tienda/#camisa-azul-cielo -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Azul-Indigo_camiseria_fgris.jpg</image:loc></image:image> <!-- ju-005 · Camisa Azul Índigo · tienda/#camisa-azul-indigo -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Blanco_camiseria_fgris.jpg</image:loc></image:image> <!-- ju-006 · Camisa Blanca · tienda/#camisa-blanca -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Corbata_Rojo_fblanco.jpg</image:loc></image:image> <!-- ju-007 · Corbata Roja · tienda/#corbata-roja -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Corbata_Indigo_fblanco.jpg</image:loc></image:image> <!-- ju-008 · Corbata Azul Índigo · tienda/#corbata-azul-indigo -->
+    <image:image><image:loc>https://casasiego.com/images/justo.esmx/Corbata_BeigeCuadros_fblanco.jpg</image:loc></image:image> <!-- ju-009 · Corbata Beige a Cuadros · tienda/#corbata-beige-a-cuadros -->
+  </url>
+  <url><loc>https://casasiego.com/brands/justo/blog/pedido-priority/</loc><lastmod>2026-11-09</lastmod></url>
+</urlset>
