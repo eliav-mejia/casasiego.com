@@ -1,4 +1,4 @@
-/* Casa Siego — region.js (v1.3.0)
+/* Casa Siego — region.js (v1.4.0)
    Small flag: México or España. On pages with the shared menu (casa.js) it sits at the end of the
    header links and, on mobile and tablet, beside «Acceso de miembros» at the top of the side drawer; elsewhere (shop, 404) in the bottom-left corner.
    España swaps every "Ciudad de México" / "CDMX" for "Madrid" and shows the
@@ -10,17 +10,12 @@
    Justo shop calls window.CasaSiegoRegion.price() / .format() itself and listens
    for the "casasiego:region" event.
 
-   Detection, once per browser and only when the visitor has not chosen:
-   1. The visitor's own choice (click on the flag) always wins.
-   2. Otherwise one request to get.geojs.io, which answers only the country
-      code. We keep that two-letter code, never the IP address.
-   3. If the request fails, the browser's time zone (Europe/Madrid → España).
-   Anything else, or no answer, stays México. */
+   México is the default for the whole site (v1.4.0): no IP or time-zone detection.
+   Only the visitor's own click on the flag switches to España, and that choice is kept. */
 (function () {
   'use strict';
 
-  var KEY = 'casasiego-region';            // 'mx' | 'es', chosen or detected
-  var GEO = 'https://get.geojs.io/v1/ip/country';
+  var KEY = 'casasiego-region-v2';         // 'mx' | 'es', chosen by the visitor (v2 drops old detected values)
 
   var FLAGS = {
     mx: '<svg viewBox="0 0 21 14" aria-hidden="true"><rect width="7" height="14" fill="#006847"/><rect x="7" width="7" height="14" fill="#fff"/><rect x="14" width="7" height="14" fill="#ce1126"/><circle cx="10.5" cy="7" r="1.6" fill="#8c6a3f"/></svg>',
@@ -225,18 +220,6 @@
     }).observe(document.body, { childList: true, subtree: true, characterData: true });
   }
 
-  function detect() {
-    var fromZone = function () {
-      try { return Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/Madrid' ? 'es' : 'mx'; }
-      catch (e) { return 'mx'; }
-    };
-    if (!window.fetch) return Promise.resolve(fromZone());
-    var timer = new Promise(function (_, reject) { setTimeout(reject, 3000); });
-    return Promise.race([fetch(GEO, { credentials: 'omit', referrerPolicy: 'no-referrer' }), timer])
-      .then(function (res) { return res.ok ? res.text() : Promise.reject(); })
-      .then(function (code) { return code.trim().toUpperCase() === 'ES' ? 'es' : 'mx'; })
-      .catch(fromZone);
-  }
 
   function style() {
     var css = document.createElement('style');
@@ -270,12 +253,7 @@
     window.addEventListener('casasiego:menu', dock);
     observe();
 
-    var saved = stored();
-    apply(saved || 'mx');
-    if (!saved) detect().then(function (found) {
-      store(found);
-      if (found !== region) apply(found);
-    });
+    apply(stored() || 'mx');
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -1,4 +1,4 @@
-/* Casa Siego — casa.js (v1.2.1)
+/* Casa Siego — casa.js (v1.3.0)
    Shared chrome for the public pages (not the shop or the suit builder, which have their own):
    1. Header with the CASA Siego® wordmark: transparent over a dark hero, white once you scroll,
       tucked away while scrolling down and back on the way up.
@@ -9,6 +9,8 @@
    5. «Inicio» and the wordmark: with a saved member session they open index.html (js/acceso.js lets the member in);
       without one they go straight to visitante.html. The sign-in card only appears for the avatar link (#acceso);
       visitors without a session who type the address also land on visitante.html (see acceso.js).
+   6. «A medida» is a dropdown (v1.3.0): Caballero (Justo) and Dama (Atemporal). Desktop: opens on hover, click or keyboard;
+      the drawer lists both under it.
    Links are built from this script's own URL, so the same file works at any folder depth. */
 (function () {
   'use strict';
@@ -26,10 +28,13 @@
   var AVATAR = '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#D5D6D8"/>' +
     '<circle cx="16" cy="12.5" r="5.5" fill="#9A9CA0"/><ellipse cx="16" cy="30" rx="11" ry="9" fill="#9A9CA0"/></svg>';
 
-  // [label, href, note, tone of the sidebar while the link is touched or hovered]
+  // [label, href, note, tone of the sidebar while the link is touched or hovered, sub-links [label, href]?]
   var LINKS = [
     ['Inicio', ROOT, '', '#4A1621'],
-    ['A medida', ROOT + 'brands/justo/', 'sastrería', '#3B1A1F'],
+    ['A medida', ROOT + 'brands/justo/', 'sastrería', '#3B1A1F', [
+      ['Caballero', ROOT + 'brands/justo/'],
+      ['Dama', ROOT + 'brands/atemporal/']
+    ]],
     ['Ready to Wear', ROOT + 'brands/justo/tienda/', 'tienda', '#6B1E2C'],
     ['Ayuda', ROOT + 'ayuda/', 'preguntas', '#4A1621']
   ];
@@ -65,6 +70,39 @@
     return a.protocol !== 'mailto:' && a.hash === '' && a.pathname.replace(/index\.html$/, '') === here;
   }
 
+  function enlace(href, label, extra) {
+    return '<a href="' + href + '"' + (href === ROOT ? ' data-inicio' : '') + (current(href) ? ' aria-current="page"' : '') + (extra || '') + '>' + label + '</a>';
+  }
+
+  // Desktop nav item: a plain link, or «A medida» with its dropdown
+  function navItem(l) {
+    if (!l[4]) return '<li>' + enlace(l[1], l[0]) + '</li>';
+    var here = l[4].some(function (s) { return current(s[1]); });
+    return '<li class="site-nav__grupo">' +
+      '<button class="site-nav__abrir" type="button" aria-expanded="false" aria-haspopup="true"' + (here ? ' data-current' : '') + '>' + l[0] + '</button>' +
+      '<ul class="site-nav__sub">' + l[4].map(function (s) { return '<li>' + enlace(s[1], s[0]) + '</li>'; }).join('') + '</ul></li>';
+  }
+
+  // Drawer item: numbered link, or «A medida» as a heading with its sub-links
+  function drawerItem(l, i) {
+    var note = l[2] ? '<span>' + l[2] + '</span>' : '';
+    if (!l[4]) return '<li style="--i:' + i + '">' + enlace(l[1], l[0] + note, ' data-tone="' + l[3] + '"') + '</li>';
+    return '<li class="site-drawer__grupo" style="--i:' + i + '"><p class="site-drawer__titulo">' + l[0] + note + '</p>' +
+      '<ul class="site-drawer__sub">' + l[4].map(function (s) { return '<li>' + enlace(s[1], s[0], ' data-tone="' + l[3] + '"') + '</li>'; }).join('') + '</ul></li>';
+  }
+
+  // Dropdown behaviour: hover (CSS), click/tap and keyboard (aria-expanded), Escape and outside click close it
+  function dropdowns(head) {
+    Array.prototype.forEach.call(head.querySelectorAll('.site-nav__grupo'), function (g) {
+      var b = g.querySelector('.site-nav__abrir');
+      var set = function (open) { b.setAttribute('aria-expanded', String(open)); g.classList.toggle('is-open', open); };
+      b.addEventListener('click', function () { set(b.getAttribute('aria-expanded') !== 'true'); });
+      g.addEventListener('keydown', function (e) { if (e.key === 'Escape') { set(false); b.focus(); } });
+      g.addEventListener('focusout', function (e) { if (!g.contains(e.relatedTarget)) set(false); });
+      document.addEventListener('click', function (e) { if (!g.contains(e.target)) set(false); });
+    });
+  }
+
   function build() {
     // Avatar: with a saved session it opens the member's account page; without one, the sign-in card (v1.3.1).
     ACCESO = sesionGuardada() ? ROOT + 'cuenta/' : ROOT + 'index.html#acceso';
@@ -72,9 +110,7 @@
     head.className = 'site-head';
     head.innerHTML =
       '<a class="site-head__mark wordmark" href="' + ROOT + '" data-inicio aria-label="Casa Siego, inicio">' + WORDMARK + '</a>' +
-      '<nav class="site-nav" aria-label="Principal"><ul>' + LINKS.map(function (l) {
-        return '<li><a href="' + l[1] + '"' + (l[1] === ROOT ? ' data-inicio' : '') + (current(l[1]) ? ' aria-current="page"' : '') + '>' + l[0] + '</a></li>';
-      }).join('') +
+      '<nav class="site-nav" aria-label="Principal"><ul>' + LINKS.map(navItem).join('') +
         '<li class="site-nav__perfil"><a class="site-perfil" href="' + ACCESO + '" aria-label="Acceso de miembros" title="Acceso de miembros">' + AVATAR + '</a></li>' +
       '</ul></nav>' +
       '<a class="site-perfil site-perfil--head" href="' + ACCESO + '" aria-label="Acceso de miembros">' + AVATAR + '</a>' +
@@ -92,10 +128,7 @@
     drawer.innerHTML =
       '<a class="site-perfil site-perfil--drawer" href="' + ACCESO + '">' + AVATAR + '<span>Acceso de miembros</span></a>' +
       '<a class="site-drawer__mark wordmark" href="' + ROOT + '" data-inicio>' + WORDMARK + '</a>' +
-      '<ol>' + LINKS.map(function (l, i) {
-        return '<li style="--i:' + i + '"><a href="' + l[1] + '" data-tone="' + l[3] + '"' + (l[1] === ROOT ? ' data-inicio' : '') + (current(l[1]) ? ' aria-current="page"' : '') + '>' +
-          l[0] + (l[2] ? '<span>' + l[2] + '</span>' : '') + '</a></li>';
-      }).join('') + '</ol>' +
+      '<ol>' + LINKS.map(drawerItem).join('') + '</ol>' +
       '<p class="site-drawer__foot"><a href="mailto:info@casasiego.com">info@casasiego.com</a><br>' +
         '&copy; 2026 Casa Siego&reg;. Todos los derechos reservados.</p>';
 
@@ -108,6 +141,7 @@
     document.body.insertBefore(scrim, document.body.firstChild);
     document.body.insertBefore(head, document.body.firstChild);
     root.classList.add('has-site-head');
+    dropdowns(head);
     window.dispatchEvent(new CustomEvent('casasiego:menu'));   // region.js moves its flag into the menu
 
     // Over a dark opening band the header starts transparent; otherwise it is white from the start

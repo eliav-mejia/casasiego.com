@@ -16,13 +16,13 @@
     <image:image><image:loc>https://casasiego.com/images/casa/traje-02.jpg</image:loc></image:image>
   </url>
   <url><loc>https://casasiego.com/brands/justo/tienda/</loc><lastmod>2026-11-10</lastmod></url>
-  <url><loc>https://casasiego.com/brands/fijo/</loc><lastmod>2026-11-11</lastmod>
-    <image:image><image:loc>https://casasiego.com/images/fijo/web/bellas-artes.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/fijo/web/saco-gris-con-chaleco.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/fijo/web/traje-gris-jaspeado-con-falda.jpg</image:loc></image:image>
-    <image:image><image:loc>https://casasiego.com/images/fijo/web/saco-marfil-texturizado.jpg</image:loc></image:image>
+  <url><loc>https://casasiego.com/brands/atemporal/</loc><lastmod>2026-11-12</lastmod>
+    <image:image><image:loc>https://casasiego.com/images/atemporal/web/toma-de-medidas-saco-rosa.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/atemporal/web/saco-gris-con-chaleco.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/atemporal/web/traje-gris-jaspeado-con-falda.jpg</image:loc></image:image>
+    <image:image><image:loc>https://casasiego.com/images/atemporal/web/saco-marfil-texturizado.jpg</image:loc></image:image>
   </url>
-  <url><loc>https://casasiego.com/brands/fijo/tienda/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://casasiego.com/brands/atemporal/tienda/</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://casasiego.com/ayuda/</loc><lastmod>2026-10-30</lastmod></url>
   <!-- Resto del sitio -->
   <url><loc>https://casasiego.com/brands/fiel/</loc><lastmod>2026-10-29</lastmod>

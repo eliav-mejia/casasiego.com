@@ -7,7 +7,6 @@ images/og/*
 images/casa/_DSC*
 images/casa/Antes_*
 images/casa/Después_*
-images/casa/Gemini_*
 images/casa/pexels-*
 images/brands/fiel.esmx/*
 !images/brands/fiel.esmx/web/
@@ -51,7 +50,7 @@ supabase/.branches/
 # Dependencias de las herramientas locales (package.json sí entra)
 node_modules/
 
-# Fijo: originales de Gemini fuera del repo; solo web/ y el README
-images/fijo/*
-!images/fijo/web/
-!images/fijo/README.md
+# Atemporal: originales fuera del repo; solo web/ y el README
+images/atemporal/*
+!images/atemporal/web/
+!images/atemporal/README.md
