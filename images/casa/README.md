@@ -29,5 +29,7 @@ Las imágenes `plate-01.jpg` … `plate-04.jpg` ya no se usan en la portada (v1.
 Los originales de cámara (`_DSC*`, `Antes_*`, `Después_*`, `Gemini_*`) viven en esta carpeta pero no se publican (ver `.gitignore`).
 La galería completa de Fiel está fuera del repositorio, en `OneDrive/Documents/Casa Siego/Fiel/Galeria/` (antes `Documents/Fiel/`); las rutas `Casa Siego/…` de la columna «Original» son relativas a `OneDrive/Documents/`.
 
-La tarjeta para compartir la portada es `images/casa/share.jpg` (1200 × 630), recortada de `og/1000028264.jpg`.
+La tarjeta para compartir el sitio es `images/casa/share.jpg` (1200 × 630, v1.0.7 desde 2026-11-10), recortada de
+`images/justo.esmx/Medicion_Camiseria_Becarios.jpg` (ancho completo, corte vertical al 35 %), con el EXIF de copyright de la Casa.
+Antes: recorte de `og/1000028264.jpg`. Al cambiarla, subir `?v=` en el `og:image` de todas las páginas que la usan.
 Versión de caché de esta página: `?v=1.0.6` en `index.html`.
