@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Casa Siego — site.css  (v1.2.0)
+   Casa Siego — site.css  (v1.2.1)
    Brand tokens, typography and small components.
    Layout, sticky sections and parallax live in layout.css.
    Style guide: "Casa Siego" — white pages, vintage beige and wine; wordmark CASA (Palacio) + Siego (Ledger).
@@ -422,14 +422,45 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
   opacity: 1; visibility: visible; transform: translate(-50%, 0); transition-delay: 0s;
 }
 .site-nav__grupo:hover .site-nav__abrir::after, .site-nav__grupo.is-open .site-nav__abrir::after { transform: rotate(225deg); margin-top: 0.2em; }
+/* Drawer groups (v1.2.1): the heading is a button; Dama / Caballero unfold under it on tap */
+.site-drawer__grupo { border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
 .site-drawer__titulo {
-  display: flex; align-items: baseline; gap: 1rem; margin: 0; padding: 0.7rem 0 0.35rem;
+  position: relative; overflow: hidden;
+  display: flex; align-items: baseline; gap: 1rem; width: 100%; margin: 0; padding: 0.7rem 0;
+  border: 0; background: none; color: inherit; cursor: pointer; text-align: left;
   font-family: var(--font-siego); font-size: 1.75rem; line-height: 1.15;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 350ms var(--ease-out-expo);
 }
+.site-drawer__titulo:active { transform: scale(0.97); }
+.site-drawer__titulo:focus-visible { outline: 1px solid var(--brass); outline-offset: 2px; }
 .site-drawer__titulo::before { content: counter(casa, decimal-leading-zero); font-family: var(--font-display); font-size: 0.625rem; letter-spacing: 0.2em; color: var(--brass); }
-.site-drawer__titulo span { margin-left: auto; font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; opacity: 0.7; }
-.site-drawer__sub { margin: 0; padding: 0 0 0 2.1rem; list-style: none; border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
-.site-drawer .site-drawer__sub li { counter-increment: none; opacity: 1; transform: none; }
+.site-drawer__titulo span:not(.site-drawer__onda) { margin-left: auto; font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; opacity: 0.7; }
+.site-drawer__titulo::after {
+  content: ""; flex: none; align-self: center; width: 0.45rem; height: 0.45rem; margin: -0.2rem 0.35rem 0 0;
+  border-right: 1px solid var(--brass); border-bottom: 1px solid var(--brass);
+  transform: rotate(45deg); transition: transform 500ms var(--ease-out-expo), margin 500ms var(--ease-out-expo);
+}
+.site-drawer__grupo.is-open .site-drawer__titulo::after { transform: rotate(225deg); margin-top: 0.3rem; }
+.site-drawer__onda {
+  position: absolute; width: 3rem; height: 3rem; margin: -1.5rem 0 0 -1.5rem; border-radius: 50%;
+  background: var(--brass); opacity: 0; pointer-events: none;
+  animation: casa-onda 650ms var(--ease-out-expo);
+}
+@keyframes casa-onda { from { transform: scale(0); opacity: 0.4; } to { transform: scale(9); opacity: 0; } }
+.site-drawer__panel {
+  display: grid; grid-template-rows: 0fr; visibility: hidden;
+  transition: grid-template-rows 550ms var(--ease-out-expo), visibility 0s linear 550ms;
+}
+.site-drawer__grupo.is-open .site-drawer__panel { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+.site-drawer__sub { min-height: 0; overflow: hidden; margin: 0; padding: 0 0 0 2.1rem; list-style: none; }
+.menu-open .site-drawer .site-drawer__sub li {
+  counter-increment: none; opacity: 0; transform: translateX(1.25rem);
+  transition: opacity 300ms var(--ease-silk), transform 300ms var(--ease-out-expo); transition-delay: 0s;
+}
+.menu-open .site-drawer .site-drawer__grupo.is-open .site-drawer__sub li {
+  opacity: 1; transform: none; transition-duration: 550ms; transition-delay: calc(var(--j, 0) * 80ms + 120ms);
+}
 .site-drawer .site-drawer__sub li a { font-size: 1.3rem; padding: 0.4rem 0; border-bottom: 0; }
 .site-drawer .site-drawer__sub li a::before { content: "—"; letter-spacing: 0; }
 .site-drawer .site-drawer__sub li:last-child a { padding-bottom: 0.8rem; }
@@ -562,7 +593,7 @@ a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .wordmark--hero *, .js .hero__inscription > * { animation: none !important; }
-  .site-drawer, .site-drawer li, .site-scrim, .site-head { transition: none !important; }
+  .site-drawer, .site-drawer li, .site-scrim, .site-head, .site-drawer__panel, .site-drawer__titulo, .site-drawer__titulo::after { transition: none !important; }
   .site-drawer { clip-path: none; }
   .site-drawer:not(.menu-open .site-drawer) { visibility: hidden; }
 }
