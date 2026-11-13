@@ -1,0 +1,102 @@
+/* Casa Siego — elige.css (v1.0.0)
+   «¿Para quién es?» dialog (js/elige.js): parchment card with a gold double frame,
+   Dama / Caballero side by side. Centered on desktop, a bottom sheet on phones. */
+.elige {
+  width: min(92vw, 30rem);
+  max-width: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: var(--beige-soft);
+  color: var(--wine-ink);
+  box-shadow: 0 24px 60px -20px color-mix(in srgb, var(--wine-ink) 55%, transparent);
+  animation: elige-entra 520ms var(--ease-out-expo) both;
+}
+.elige::backdrop {
+  background: color-mix(in srgb, var(--wine-ink) 45%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: elige-velo 420ms var(--ease-silk) both;
+}
+.elige.is-cerrando { animation: elige-sale 280ms var(--ease-silk) both; }
+.elige.is-cerrando::backdrop { animation: elige-velo 280ms var(--ease-silk) reverse both; }
+
+.elige__marco {
+  position: relative;
+  margin: 0.6rem;
+  padding: 2.4rem 1.75rem 2rem;
+  border: 1px solid color-mix(in srgb, var(--brass) 70%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--brass) 35%, transparent);
+  outline-offset: 4px;
+  text-align: center;
+}
+.elige__eyebrow { margin: 0 0 0.6rem; }
+.elige__titulo {
+  margin: 0;
+  font-family: var(--font-siego);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  line-height: 1.15;
+}
+.elige .rule--short { margin: 1.1rem auto 1.5rem; }
+.elige__cerrar {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  background: none;
+  color: var(--taupe);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 250ms var(--ease-silk), transform 350ms var(--ease-out-expo);
+}
+.elige__cerrar:hover, .elige__cerrar:focus-visible { color: var(--wine); transform: rotate(90deg); }
+.elige__cerrar:focus:not(:focus-visible) { outline: none; }
+
+.elige__opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.elige__opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.25rem 0.75rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--wine) 35%, transparent);
+  background-image: linear-gradient(var(--wine-deep), var(--wine-deep));
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  background-size: 100% 0%;
+  color: var(--wine-ink);
+  text-decoration: none;
+  animation: elige-opcion 600ms var(--ease-out-expo) both;
+  transition: scale 300ms var(--ease-out-expo), background-size 450ms var(--ease-out-expo), color 300ms var(--ease-silk), border-color 300ms var(--ease-silk);
+  -webkit-tap-highlight-color: transparent;
+}
+.elige__opcion:nth-child(1) { animation-delay: 140ms; }
+.elige__opcion:nth-child(2) { animation-delay: 220ms; }
+.elige__opcion:hover, .elige__opcion:focus-visible {
+  background-size: 100% 100%;
+  border-color: var(--wine-deep);
+  color: var(--beige-soft);
+}
+.elige__opcion:focus-visible { outline: 1px solid var(--brass); outline-offset: 3px; }
+.elige__opcion:active { scale: 0.97; }
+.elige__nombre { font-family: var(--font-display); font-size: 0.875rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.elige__nota { font-family: var(--font-meta); font-style: italic; font-size: 0.85rem; opacity: 0.75; }
+
+@keyframes elige-entra { from { opacity: 0; transform: translateY(1.25rem) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes elige-sale  { to { opacity: 0; transform: translateY(0.75rem) scale(0.98); } }
+@keyframes elige-velo  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes elige-opcion { from { opacity: 0; transform: translateY(0.6rem); } }
+
+@media (max-width: 600px) {
+  .elige { width: 100%; margin: auto 0 0; }
+  .elige__marco { padding: 2.2rem 1.25rem 1.75rem; }
+  @keyframes elige-entra { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: none; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elige, .elige::backdrop, .elige__opcion { animation: none !important; }
+}
