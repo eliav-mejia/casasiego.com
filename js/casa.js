@@ -1,4 +1,4 @@
-/* Casa Siego — casa.js (v1.3.0)
+/* Casa Siego — casa.js (v1.3.2)
    Shared chrome for the public pages (not the shop or the suit builder, which have their own):
    1. Header with the CASA Siego® wordmark: transparent over a dark hero, white once you scroll,
       tucked away while scrolling down and back on the way up.
@@ -9,8 +9,10 @@
    5. «Inicio» and the wordmark: with a saved member session they open index.html (js/acceso.js lets the member in);
       without one they go straight to visitante.html. The sign-in card only appears for the avatar link (#acceso);
       visitors without a session who type the address also land on visitante.html (see acceso.js).
-   6. «A medida» is a dropdown (v1.3.0): Caballero (Justo) and Dama (Atemporal). Desktop: opens on hover, click or keyboard;
+   6. «A medida» and «Ready to Wear» are dropdowns (v1.3.1): Dama (Atemporal) first, then Caballero (Justo). Desktop: opens on hover, click or keyboard;
       the drawer lists both under it.
+   7. Mobile drawer (v1.3.2): «A medida» and «Ready to Wear» are folded; a tap ripples, turns the chevron and unfolds
+      Dama / Caballero (one group open at a time). Groups fold again when the drawer closes.
    Links are built from this script's own URL, so the same file works at any folder depth. */
 (function () {
   'use strict';
@@ -32,10 +34,13 @@
   var LINKS = [
     ['Inicio', ROOT, '', '#4A1621'],
     ['A medida', ROOT + 'brands/justo/', 'sastrería', '#3B1A1F', [
-      ['Caballero', ROOT + 'brands/justo/'],
-      ['Dama', ROOT + 'brands/atemporal/']
+      ['Dama', ROOT + 'brands/atemporal/'],
+      ['Caballero', ROOT + 'brands/justo/']
     ]],
-    ['Ready to Wear', ROOT + 'brands/justo/tienda/', 'tienda', '#6B1E2C'],
+    ['Ready to Wear', ROOT + 'brands/justo/tienda/', 'tienda', '#6B1E2C', [
+      ['Dama', ROOT + 'brands/atemporal/tienda/'],
+      ['Caballero', ROOT + 'brands/justo/tienda/']
+    ]],
     ['Ayuda', ROOT + 'ayuda/', 'preguntas', '#4A1621']
   ];
 
@@ -83,12 +88,41 @@
       '<ul class="site-nav__sub">' + l[4].map(function (s) { return '<li>' + enlace(s[1], s[0]) + '</li>'; }).join('') + '</ul></li>';
   }
 
-  // Drawer item: numbered link, or «A medida» as a heading with its sub-links
+  // Drawer item: numbered link, or a folded group (heading button + Dama / Caballero), opened by a tap (v1.3.2)
   function drawerItem(l, i) {
     var note = l[2] ? '<span>' + l[2] + '</span>' : '';
     if (!l[4]) return '<li style="--i:' + i + '">' + enlace(l[1], l[0] + note, ' data-tone="' + l[3] + '"') + '</li>';
-    return '<li class="site-drawer__grupo" style="--i:' + i + '"><p class="site-drawer__titulo">' + l[0] + note + '</p>' +
-      '<ul class="site-drawer__sub">' + l[4].map(function (s) { return '<li>' + enlace(s[1], s[0], ' data-tone="' + l[3] + '"') + '</li>'; }).join('') + '</ul></li>';
+    return '<li class="site-drawer__grupo" style="--i:' + i + '">' +
+      '<button class="site-drawer__titulo" type="button" aria-expanded="false" aria-controls="site-drawer-' + i + '" data-tone="' + l[3] + '">' + l[0] + note + '</button>' +
+      '<div class="site-drawer__panel" id="site-drawer-' + i + '"><ul class="site-drawer__sub">' +
+        l[4].map(function (s, j) { return '<li style="--j:' + j + '">' + enlace(s[1], s[0], ' data-tone="' + l[3] + '"') + '</li>'; }).join('') +
+      '</ul></div></li>';
+  }
+
+  // Drawer groups: one open at a time; a brass ripple from the point touched
+  function acordeon(drawer) {
+    var grupos = Array.prototype.slice.call(drawer.querySelectorAll('.site-drawer__grupo'));
+    function set(g, open) {
+      g.classList.toggle('is-open', open);
+      g.querySelector('.site-drawer__titulo').setAttribute('aria-expanded', String(open));
+    }
+    grupos.forEach(function (g) {
+      var b = g.querySelector('.site-drawer__titulo');
+      b.addEventListener('click', function (e) {
+        var open = !g.classList.contains('is-open');
+        grupos.forEach(function (o) { if (o !== g) set(o, false); });
+        set(g, open);
+        if (reduce.matches) return;
+        var r = b.getBoundingClientRect();
+        var onda = document.createElement('span');
+        onda.className = 'site-drawer__onda';
+        onda.style.left = (e.clientX ? e.clientX - r.left : r.width / 2) + 'px';
+        onda.style.top = (e.clientY ? e.clientY - r.top : r.height / 2) + 'px';
+        onda.addEventListener('animationend', function () { onda.remove(); });
+        b.appendChild(onda);
+      });
+    });
+    return function () { grupos.forEach(function (g) { set(g, false); }); };
   }
 
   // Dropdown behaviour: hover (CSS), click/tap and keyboard (aria-expanded), Escape and outside click close it
@@ -172,14 +206,17 @@
         drawer.style.setProperty('--drawer-from', getComputedStyle(document.body).backgroundColor);
         drawer.style.removeProperty('--drawer-to');
         drawer.removeAttribute('inert');
+        clearTimeout(plegado);
       } else {
         drawer.setAttribute('inert', '');
+        plegado = setTimeout(plegar, 800);   // fold the groups once the circle has closed
       }
       root.classList.toggle('menu-open', open);
       burger.setAttribute('aria-expanded', String(open));
       if (open) setTimeout(function () { var f = drawer.querySelector('li a'); if (f) f.focus({ preventScroll: true }); }, 350);
       else burger.focus({ preventScroll: true });
     }
+    var plegar = acordeon(drawer), plegado;
     burger.addEventListener('click', function () { setOpen(!root.classList.contains('menu-open')); });
     scrim.addEventListener('click', function () { setOpen(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('menu-open')) setOpen(false); });
