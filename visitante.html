@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=GFS+Didot&family=Spectral:ital@1&family=Parisienne&display=swap">
 
   <link rel="stylesheet" href="css/site.css?v=1.2.1">
-  <link rel="stylesheet" href="css/layout.css?v=1.1.5">
+  <link rel="stylesheet" href="css/layout.css?v=1.1.6">
   <link rel="stylesheet" href="css/atelier.css?v=1.0.1">
   <link rel="stylesheet" href="css/elige.css?v=1.0.0">
   <script src="js/parallax.js?v=1.1.0" defer></script>
@@ -109,7 +109,11 @@
         <div class="folio__text">
           <h2 class="section-title" id="pets-title">Camisas personalizadas</h2>
           <p>Un servicio a la medida disponible en México y España. Solicita tu catálogo de telas, ingresa tus medidas al portal y manda tu pedido de camisas a la medida. Para personalizar detalles de la camisa, consulta con nuestros asesores.</p>
-          <a class="leaf__link" href="mailto:info@casasiego.com?subject=Casa%20Siego%20%C2%B7%20Cotizaci%C3%B3n">Cotizar personalizado &rarr;</a>
+          <!-- Citas: cita/ checks the saved session (js/solo-miembros.js) → sign in and come back → Stripe / e-mail -->
+          <div class="citas" data-prices>
+            <a class="cita" href="cita/virtual/"><span class="leaf__link">Cita virtual &rarr;</span><small class="cita__precio">Gratis</small></a>
+            <a class="cita" href="cita/"><span class="leaf__link">Cita a domicilio &rarr;</span><small class="cita__precio">$1,435 MXN</small></a>
+          </div>
         </div>
       </header>
 
