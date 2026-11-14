@@ -1,8 +1,14 @@
-/* Casa Siego — tienda.js 2.0.2 (v1.4.1) · catálogo de las tiendas de marca (Justo, Atemporal). Plain JS: no build, no React, no Babel.
+/* Casa Siego — tienda.js 2.2.0 (v1.4.1) · catálogo de las tiendas de marca (Justo, Atemporal). Plain JS: no build, no React, no Babel.
    One engine for every brands/<marca>/tienda/index.html. Each tienda folder is only its page + db/productos.json.
 
    1. Data: db/productos.json next to the page = { marca, marcaNombre, kinds{id: label}, filtros{id: plural label}, products[] }. No prices, sizes, stock or Stripe:
       every active product is shown, and every one is available («todo en existencia», v1.4.1).
+      2.1.0: destacados[] (slugs, in order) fill the «Destacado» grid (#destacados: every destacado, 2 columns on phones,
+      3 from 1024 px); the full catalogue (filtered by the chips) runs in a horizontal snap carousel
+      (#rejilla: 3 columns on phones, 5 from 1024 px) with ‹ › buttons and a progress line.
+      2.2.0: the carousel loops endlessly both ways: the list is laid out COPIAS times (copies aria-hidden, out of
+      the tab order) and, once a scroll settles, it jumps by whole copies back into the middle one (same frame, no flash).
+      A list that fits in one screen is shown once, without loop or arrows.
    2. One «Cotizar» per product (card and sheet):
         · visitor (no session) → registro.html (create the account first);
         · signed-in member     → WhatsApp with the product already written (WHATSAPP below);
@@ -11,8 +17,8 @@
       Supabase (auth.getUser) when js/supabase-config.js is filled in. Without Supabase configured nobody is signed in.
    3. Tracking (Google Tag Manager, through js/medicion.js → window.casaMedir; dataLayer directly if it isn't loaded yet).
       No personal data, only the product:
-        casa_tienda_ver       a product sheet opens: sku, producto, tipo, origen (tarjeta | enlace)
-        casa_tienda_cotizar   click on «Cotizar»: sku, producto, tipo, canal (registro | whatsapp | correo), sesion, origen (tarjeta | ficha)
+        casa_tienda_ver       a product sheet opens: sku, producto, tipo, origen (destacado | tarjeta | enlace)
+        casa_tienda_cotizar   click on «Cotizar»: sku, producto, tipo, canal (registro | whatsapp | correo), sesion, origen (destacado | tarjeta | ficha)
         casa_tienda_filtro    a filter chip: tipo (todo | saco | traje …)
       Documented in _interno/deployed/Marketing/Campaigns/tienda-cotizar-registro-v1.4.1.pdf and README «Medición». */
 (() => {
@@ -98,21 +104,108 @@
 
     // --- Grid ---
     const kindLabel = (p) => data.kinds[p.kind] || p.kind;
-    const card = (p) => {
+    const card = (p, origen = 'tarjeta') => {
         const img = el('img', { src: ROOT + p.image, alt: `${p.name}, ${data.marcaNombre || 'Casa Siego'}`, loading: 'lazy', decoding: 'async', draggable: false });
-        const open = el('button', { type: 'button', className: 'card-abrir', onclick: () => abrir(p, 'tarjeta') },
+        const open = el('button', { type: 'button', className: 'card-abrir', onclick: () => abrir(p, origen) },
             el('div', { className: 'crop', style: `--focus: ${p.focus || '50% 50%'}` }, img),
             el('p', { className: 'label text-gold mt-4', textContent: kindLabel(p) }),
-            el('h3', { className: 'text-lg md:text-xl mt-1 leading-snug', textContent: p.name }),
-            el('p', { className: 'text-ink-500 text-sm mt-1', textContent: p.short }));
-        return el('article', { className: 'card' }, open, cotizar(p, 'tarjeta'));
+            el('h3', { className: 'card-nombre text-lg md:text-xl mt-1 leading-snug', textContent: p.name }),
+            el('p', { className: 'card-corto text-ink-500 text-sm mt-1', textContent: p.short }));
+        return el('article', { className: 'card' }, open, cotizar(p, origen));
     };
     let filtro = '';
+    const destacados = () => {
+        const box = $('destacados');
+        if (!box) return;
+        const list = (data.destacados || []).map(s => data.products.find(p => p.slug === s)).filter(Boolean);
+        box.closest('[data-destacado]').hidden = !list.length;
+        box.replaceChildren(...list.map(p => card(p, 'destacado')));
+    };
+    // Carousel (2.2.0): endless loop. ‹ › scroll one screen of cards; the gold line shows where you are in the list.
+    const COPIAS = 5;
+    const carrusel = () => {
+        const track = $('rejilla'), prev = $('carrusel-prev'), next = $('carrusel-next'), bar = $('carrusel-barra');
+        if (!track) return;
+        const cols = () => parseInt(getComputedStyle(track).getPropertyValue('--cols'), 10) || 3;
+        const n = () => Number(track.dataset.n || 0);
+        const loops = () => track.dataset.loop === 'true';
+        // Width of one full copy of the list (card + gap, n times)
+        const setW = () => {
+            const k = track.children;
+            return loops() && k.length > n() ? k[n()].offsetLeft - k[0].offsetLeft : 0;
+        };
+        const centre = () => {   // jump, by whole copies, back into the middle copy
+            const w = setW();
+            if (!w) return;
+            const mid = Math.floor(COPIAS / 2) * w;
+            let x = track.scrollLeft;
+            while (x < mid - w / 2) x += w;
+            while (x >= mid + w / 2) x -= w;
+            if (Math.abs(x - track.scrollLeft) > 1) track.scrollTo({ left: x, behavior: 'instant' });
+        };
+        const update = () => {
+            const loop = loops(), total = n(), visible = Math.min(cols(), total || 1);
+            [prev, next].forEach(b => { if (b) { b.disabled = !loop; b.hidden = !loop; } });
+            if (!bar) return;
+            bar.parentElement.hidden = !loop;
+            if (!loop) return;
+            const w = setW(), frac = w ? (((track.scrollLeft % w) + w) % w) / w : 0;
+            const width = visible / total;
+            bar.style.width = `${width * 100}%`;
+            bar.style.transform = `translateX(${(frac / width) * 100}%)`;
+        };
+        let settle;
+        track.addEventListener('scroll', () => {
+            requestAnimationFrame(update);
+            clearTimeout(settle);
+            settle = setTimeout(() => { centre(); update(); }, 140);
+        }, { passive: true });
+        if ('onscrollend' in window) track.addEventListener('scrollend', () => { clearTimeout(settle); centre(); update(); });
+        const step = (dir) => {
+            centre();
+            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            track.scrollBy({ left: dir * (track.clientWidth + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        };
+        if (prev) prev.onclick = () => step(-1);
+        if (next) next.onclick = () => step(1);
+        window.addEventListener('resize', () => { centre(); update(); });
+        carrusel.update = update;
+        carrusel.inicio = () => {   // first card of the middle copy at the left edge
+            const w = setW();
+            track.scrollTo({ left: w ? Math.floor(COPIAS / 2) * w : 0, behavior: 'instant' });
+            update();
+        };
+    };
+    // Fill the carousel: the list once, or COPIAS times when it is longer than one screen
+    const llenarCarrusel = (shown) => {
+        const track = $('rejilla');
+        const cols = parseInt(getComputedStyle(track).getPropertyValue('--cols'), 10) || 3;
+        const loop = shown.length > cols;
+        track.dataset.n = String(shown.length);
+        track.dataset.loop = String(loop);
+        const cards = [];
+        for (let c = 0; c < (loop ? COPIAS : 1); c++) {
+            const copia = loop && c !== Math.floor(COPIAS / 2);
+            shown.forEach(p => {
+                const a = card(p);
+                if (copia) {
+                    a.setAttribute('aria-hidden', 'true');
+                    a.querySelectorAll('a, button').forEach(x => x.tabIndex = -1);
+                }
+                cards.push(a);
+            });
+        }
+        track.replaceChildren(...cards);
+        if (carrusel.inicio) requestAnimationFrame(carrusel.inicio);
+    };
     const render = () => {
         const shown = data.products.filter(p => !filtro || p.kind === filtro);
-        $('rejilla').replaceChildren(...shown.map(card));
+        destacados();
+        llenarCarrusel(shown);
         $('estado').textContent = `${shown.length} ${shown.length === 1 ? 'pieza' : 'piezas'}`;
     };
+    // The loop depends on how many columns fit: refill when crossing the 1024 px breakpoint
+    matchMedia('(min-width: 1024px)').addEventListener('change', () => { if (data.products.length) render(); });
     const filtros = () => {
         const box = $('filtros');
         const kinds = Object.keys(data.kinds).filter(k => data.products.some(p => p.kind === k));
@@ -172,7 +265,7 @@
         .then(json => {
             data = json;
             data.products = (json.products || []).filter(p => p.active !== false);
-            filtros(); render(); fromHash();
+            filtros(); carrusel(); render(); fromHash();
             return checkSession();
         })
         .then(ok => {

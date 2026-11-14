@@ -1,7 +1,7 @@
 {
-  "_schema": "v1.4.1 · catálogo limpio: products[] = id, slug, sku, kind (clave de kinds), name, short, description, image (desde la raíz del sitio), focus? (encuadre CSS), active, y detalles opcionales (fabric, lining, construction, collar, cuffs, pattern, care, features[]). Sin precios, tallas, existencias ni ligas de Stripe: todo producto activo se muestra y se cotiza (js/tienda.js).",
+  "_schema": "v1.4.1 · catálogo limpio: products[] = id, slug, sku, kind (clave de kinds), name, short, description, image (desde la raíz del sitio), focus? (encuadre CSS), active, y detalles opcionales (fabric, lining, construction, collar, cuffs, pattern, care, features[]). Sin precios, tallas, existencias ni ligas de Stripe: todo producto activo se muestra y se cotiza (js/tienda.js). destacados[] = slugs (en orden) de la fila Destacado (3 columnas); el carrusel muestra todo el catálogo (tienda.js 2.1.0).",
   "_note": "Justo by Casa Siego · Ready to Wear. Fotos en images/justo.esmx/ (carpeta en .gitignore: una foto nueva necesita git add -f).",
-  "updated_at": "2026-11-10",
+  "updated_at": "2026-11-13",
   "marca": "justo",
   "marcaNombre": "Justo by Casa Siego",
   "kinds": {
@@ -14,6 +14,11 @@
     "saco": "Sacos",
     "corbata": "Corbatas"
   },
+  "destacados": [
+    "camisa-azul-cielo",
+    "camisa-azul-indigo",
+    "camisa-blanca"
+  ],
   "products": [
     {
       "id": "ju-004",
@@ -82,7 +87,7 @@
         "Solapa con ojal Milanés hecho a mano",
         "Margen de costura para ajustar 4 cm de cintura"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ju-002",
@@ -102,7 +107,7 @@
         "Full canvas: la solapa toma la forma de tu pecho con el uso",
         "Ojal de solapa para pin o flor"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ju-003",
@@ -123,7 +128,7 @@
         "2 % elastano: se mueve contigo sin arrugar",
         "Cuello y solapa planchados a mano"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ju-007",
@@ -139,7 +144,7 @@
       "features": [
         "Se anuda igual con camisa de cuello italiano o clásico"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ju-008",
@@ -155,7 +160,7 @@
       "features": [
         "Se anuda igual con camisa de cuello italiano o clásico"
       ],
-      "active": false
+      "active": true
     },
     {
       "id": "ju-009",
@@ -171,7 +176,7 @@
       "features": [
         "Se anuda igual con camisa de cuello italiano o clásico"
       ],
-      "active": false
+      "active": true
     }
   ]
 }
