@@ -52,3 +52,22 @@ window.DRESSER = {
     }
   }
 };
+
+// Enviar · cotización por correo a la casa: tipo de prenda y tela (con miniatura). «color» = color del maniquí.
+window.DRESSER.envio = {
+  correo: 'info@casasiego.com',
+  prendas: [
+    { id: 'italiano',    nombre: 'Camisa cuello italiano', detalle: 'Puntas abiertas, sin botones', cuello: 'italiano' },
+    { id: 'ingles',      nombre: 'Camisa cuello inglés',   detalle: 'Puntas clásicas, más cerradas', cuello: 'ingles' },
+    { id: 'buttondown',  nombre: 'Camisa button-down',     detalle: 'Puntas abotonadas, casual', cuello: 'buttondown' },
+    { id: 'mao',         nombre: 'Camisa cuello mao',      detalle: 'Cuello alzado, sin puntas', cuello: 'mao' }
+  ],
+  telas: [
+    { id: 'popelina-blanca',  nombre: 'Popelina blanca',        detalle: 'Algodón 100 %, lisa y fresca', color: 'blanca',  muestra: 'popelina' },
+    { id: 'oxford-blanco',    nombre: 'Oxford blanco',          detalle: 'Tejido de canasta, más cuerpo', color: 'blanca',  muestra: 'oxford-blanco' },
+    { id: 'twill-blanco',     nombre: 'Twill blanco',           detalle: 'Diagonal suave, no se arruga', color: 'blanca',  muestra: 'twill' },
+    { id: 'oxford-celeste',   nombre: 'Oxford celeste',         detalle: 'Canasta en azul cielo',       color: 'celeste', muestra: 'oxford-celeste' },
+    { id: 'lino-celeste',     nombre: 'Lino-algodón celeste',   detalle: 'Ligera, para clima cálido',   color: 'celeste', foto: '../images/telas/lino-algodon-celeste.jpg' },
+    { id: 'rayas-finas',      nombre: 'Rayas finas azules',     detalle: 'Cuello y puños blancos',      color: 'rayas',   muestra: 'rayas' }
+  ]
+};

@@ -1,4 +1,4 @@
-/* Dresser · Casa Siego (v1.3.0 · galán de noche)
+/* Dresser · Casa Siego (v1.4.0 · camisa Dama a medida · Enviar)
    Silueta de maniquí (hombre / mujer) que se deforma en tiempo real con las medidas de confección,
    y probador de una camisa de cuello italiano (blanca, celeste o a rayas) con reporte de ajuste por zona.
    Sin dependencias: Canvas 2D. Unidades internas: cm (mundo con y hacia arriba, suelo en y = 0). */
@@ -38,6 +38,7 @@
       if (s.unidades === 'in') E.unidades = 'in';
       if (s.guias === false) E.guias = false;
       if (s.maniqui === 'cuerpo' || s.maniqui === 'galan') E.maniqui = s.maniqui;
+      if (s.envio && typeof s.envio === 'object') E.envio = s.envio;
       for (const k of ['h', 'm']) for (const id of IDS) {
         const v = +(s.medidas[k] || {})[id];
         if (Number.isFinite(v)) E.medidas[k][id] = clamp(v, DEF[id].min, DEF[id].max);
@@ -505,6 +506,7 @@
     const paso = E.sexo === 'm' ? 8.5 : 9.5, botones = [];
     for (let y = s.boton0 - 6; y > s.hemY + 5; y -= paso) botones.push(y);
     pliegues(g, s, botones, col);
+    { const yH = lerp(g.waY, s.hemY, 0.55); pinzas(g, { cW: s.cW, wW: s.wW, xH: Math.max(s.hipW, mitadEn(g, yH) + 0.6), yH, hW: s.hW }, col); }
     for (const y of botones) boton({ x: 0, y }, col);
 
     // Mangas (el brazo se redibuja encima del torso de la camisa y la manga encima del brazo)
@@ -625,13 +627,18 @@
   function dibujarCamisaGalan(g, G, col) {
     const s = camisaGeo(g, G, EV);
     const tela = col.tela === 'rayas' ? patronRayas() : col.tela;
+    // Caballero: corte recto. Dama: a medida, entallada — busto, cintura marcada, cadera y bajo curvo, con pinzas.
     const R = Math.max(s.cW, s.wW, s.hipW, s.hW) + 0.3;
-    s.cW = s.wW = s.hipW = s.hW = R;
-    const half = [
-      { x: s.nwC, y: g.nbY + 3.4 }, { x: lerp(s.nwC, s.sx, 0.5), y: lerp(g.nbY + 2.6, s.sy, 0.62) }, { x: s.sx, y: s.sy },
-      { x: R + 0.4, y: g.apY - 0.6 }, { x: R, y: g.chY }, { x: R, y: g.waY }, { x: R, y: lerp(g.waY, s.hemY, 0.5) },
-      { x: R, y: s.hemY + 2.2 }, { x: R - 0.9, y: s.hemY + 0.2 }, { x: 0, y: s.hemY }
-    ];
+    const yH = lerp(g.waY, s.hemY, 0.55), xH = Math.max(lerp(s.wW, s.hW, 0.65), mitadEn(g, yH) + 0.6);
+    const dama = { cW: s.cW, wW: s.wW, xH, yH, hW: s.hW };
+    const cab = [{ x: s.nwC, y: g.nbY + 3.4 }, { x: lerp(s.nwC, s.sx, 0.5), y: lerp(g.nbY + 2.6, s.sy, 0.62) }, { x: s.sx, y: s.sy }];
+    const recta = [...cab, { x: R + 0.4, y: g.apY - 0.6 }, { x: R, y: g.chY }, { x: R, y: g.waY }, { x: R, y: yH },
+                   { x: R, y: s.hemY + 2.2 }, { x: R - 0.9, y: s.hemY + 0.2 }, { x: 0, y: s.hemY }];
+    const entallada = [...cab, { x: s.cW + 0.4, y: g.apY - 0.6 }, { x: s.cW, y: g.chY }, { x: s.wW, y: g.waY }, { x: xH, y: yH },
+                   { x: s.hW, y: s.hemY + 5 }, { x: s.hW * 0.62, y: s.hemY + 1.4 }, { x: 0, y: s.hemY }];
+    const half = recta.map((q, i) => ({ x: lerp(q.x, entallada[i].x, fem), y: lerp(q.y, entallada[i].y, fem) }));
+    const Rm = lerp(R, Math.max(s.cW, xH), fem);          // costado donde cuelgan las mangas
+    s.cW = lerp(R, s.cW, fem); s.wW = lerp(R, s.wW, fem); s.hipW = lerp(R, xH, fem); s.hW = lerp(R, s.hW, fem);
     const torso = half.concat(half.slice(0, -1).map(espejo).reverse());
     const top = g.nbY + 12, corte = lerp(top, s.hemY - 8, vis < 1 ? 1 - Math.pow(1 - vis, 3) : 1);
     ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, P(0, corte).y); ctx.clip();
@@ -653,6 +660,7 @@
     const paso = E.sexo === 'm' ? 8.5 : 9.5, botones = [];
     for (let y = s.boton0 - 6; y > s.hemY + 5; y -= paso) botones.push(y);
     pliegues(g, s, botones, col);
+    pinzas(g, dama, col);
     for (const y of botones) boton({ x: 0, y }, col);
     // Mangas colgando a los costados
     const yA = g.apY - 0.6, yCuff = s.sy - G.manga * 0.97, yCt = yCuff + 6;
@@ -660,25 +668,37 @@
     const telaPuno = col.cuello === '#ffffff' ? '#ffffff' : col.tela === 'rayas' ? patronRayas() : col.cuello;
     for (const lado of [1, -1]) {
       const X = p => lado < 0 ? espejo(p) : p;
-      const m = [{ x: s.sx, y: s.sy }, { x: R + wT * 0.48, y: s.sy - 5 }, { x: R + wT * 0.6, y: lerp(s.sy, yCt, 0.45) },
-                 { x: R + cw + 0.9, y: yCt }, { x: R + 0.5, y: yCt }, { x: R - 0.4, y: lerp(yA, yCt, 0.5) }, { x: R + 0.3, y: yA }].map(X);
+      const m = [{ x: s.sx, y: s.sy }, { x: Rm + wT * 0.48, y: s.sy - 5 }, { x: Rm + wT * 0.6, y: lerp(s.sy, yCt, 0.45) },
+                 { x: Rm + cw + 0.9, y: yCt }, { x: Rm + 0.5, y: yCt }, { x: Rm - 0.4, y: lerp(yA, yCt, 0.5) }, { x: Rm + 0.3, y: yA }].map(X);
       ctx.strokeStyle = col.linea; ctx.lineWidth = 1.5;
       ctx.beginPath(); curva(m, true); ctx.fillStyle = tela; ctx.fill(); ctx.fillStyle = col.sombra; ctx.fill(); ctx.stroke();
       ctx.strokeStyle = 'rgba(74,22,33,.28)'; ctx.lineWidth = 1; ctx.beginPath();          // caída de la manga
-      linea(X({ x: R + wT * 0.42, y: s.sy - 9 }), X({ x: R + cw * 0.55 + 0.6, y: yCt + 5 }), X({ x: R + wT * 0.4, y: lerp(s.sy, yCt, 0.6) }));
-      linea(X({ x: R + 2, y: yA - 4 }), X({ x: R + 1.6, y: yCt + 9 }), X({ x: R + 1.2, y: lerp(yA, yCt, 0.5) }));
+      linea(X({ x: Rm + wT * 0.42, y: s.sy - 9 }), X({ x: Rm + cw * 0.55 + 0.6, y: yCt + 5 }), X({ x: Rm + wT * 0.4, y: lerp(s.sy, yCt, 0.6) }));
+      linea(X({ x: Rm + 2, y: yA - 4 }), X({ x: Rm + 1.6, y: yCt + 9 }), X({ x: Rm + 1.2, y: lerp(yA, yCt, 0.5) }));
       ctx.stroke();
-      const x0 = lado > 0 ? R + 0.5 : -(R + 0.5 + cw + 0.4), A = P(x0, yCt), w = (cw + 0.4) * S, h = 6 * S;
+      const x0 = lado > 0 ? Rm + 0.5 : -(Rm + 0.5 + cw + 0.4), A = P(x0, yCt), w = (cw + 0.4) * S, h = 6 * S;
       ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(A.x, A.y, w, h, 0.8 * S); else ctx.rect(A.x, A.y, w, h);
       ctx.fillStyle = telaPuno; ctx.fill(); ctx.strokeStyle = col.linea; ctx.lineWidth = 1.3; ctx.stroke();
-      boton(X({ x: R + 0.5 + cw * 0.72, y: yCuff + 3 }), col);
+      boton(X({ x: Rm + 0.5 + cw * 0.72, y: yCuff + 3 }), col);
     }
-    s.manguilla = { x: R + 0.5 + cw / 2, y: yCuff + 3 };
+    s.manguilla = { x: Rm + 0.5 + cw / 2, y: yCuff + 3 };
     cuello(g, s, col);
     ctx.restore();
     return s;
   }
 
+  // Pinzas de la camisa Dama a medida: dos verticales del busto a la cadera y una lateral de busto. Se ven según fem.
+  function pinzas(g, d, col) {
+    if (fem < 0.02) return;
+    ctx.save(); ctx.globalAlpha = fem * 0.55; ctx.strokeStyle = col.linea; ctx.lineWidth = 1; ctx.setLineDash([3, 2.5]);
+    for (const k of [1, -1]) {
+      ctx.beginPath();
+      curva([{ x: d.cW * 0.5 * k, y: g.chY - 2.5 }, { x: d.wW * 0.47 * k, y: g.waY }, { x: d.xH * 0.46 * k, y: d.yH + 1.5 }], false);
+      ctx.stroke();
+      ctx.beginPath(); linea({ x: (d.cW - 0.2) * k, y: g.chY - 3.5 }, { x: d.cW * 0.66 * k, y: g.chY - 1.8 }); ctx.stroke();
+    }
+    ctx.restore();
+  }
   function boton(p, col) {
     const c = P(p.x, p.y), r = Math.max(1.6, 0.6 * S);
     ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 2 * PI);
@@ -1133,16 +1153,199 @@
     E.medidas[E.sexo] = promedio(E.sexo); E.camisa.talla = null;
     pintarMedidas(); pintarPrenda(); guardar();
   });
-  $('bExportar').addEventListener('click', () => {
-    const G = prendaActual();
-    const datos = { formato: 'casasiego-dresser/1', fecha: new Date().toISOString(), sexo: E.sexo === 'h' ? 'caballero' : 'dama', unidades: 'cm',
-      medidas: { ...objetivo() }, tipo: tipoCuerpo(objetivo()),
-      camisa: { modelo: 'cuello italiano', color: E.camisa.color, ...G, recomendada: recomendar(E.sexo, objetivo(), E.camisa.corte) },
-      ajuste: EV.map(({ id, nombre, dif, st, txt }) => ({ id, nombre, holgura: +dif.toFixed(1), estado: st, texto: txt })) };
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' }));
-    a.download = `casasiego-dresser-${E.sexo === 'h' ? 'caballero' : 'dama'}.json`;
-    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  // ---------------------------------------------------------------- Enviar: cotización por correo con archivo de medidas
+  // Con sesión (Supabase del sitio, sb-*-auth-token): nombre y correo salen de la cuenta. Sin sesión: nombre y WhatsApp obligatorios.
+  // Un sitio estático no puede adjuntar a un mailto: se descarga el archivo y se abre el correo ya escrito; donde el
+  // navegador comparte archivos (móvil), «Compartir con archivo» lo manda adjunto a la app de correo.
+  const ENV = D.envio;
+  const porId = (lista, id) => lista.find(x => x.id === id) || lista[0];
+  {
+    const v = E.envio && typeof E.envio === 'object' ? E.envio : {};
+    E.envio = {
+      prenda: porId(ENV.prendas, v.prenda).id, tela: porId(ENV.telas, v.tela).id,
+      cantidad: clamp(Math.round(+v.cantidad || 1), 1, 20),
+      nombre: String(v.nombre || '').slice(0, 80), whatsapp: String(v.whatsapp || '').slice(0, 20)
+    };
+  }
+  function sesionSitio() {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (!/^sb-[a-z0-9]+-auth-token$/.test(k)) continue;
+        const v = JSON.parse(localStorage.getItem(k)) || {};
+        if (v.refresh_token && v.user) return v.user;
+      }
+    } catch { /* sin almacenamiento */ }
+    return null;
+  }
+  const soloDigitos = t => String(t).replace(/\D/g, '');
+  const whatsValido = t => { const n = soloDigitos(t).length; return n >= 10 && n <= 15; };
+
+  function miniPrenda(o) {
+    const cuello = {
+      italiano: '<path d="M18 9 11 15l8-1zM26 9l7 6-8-1z" class="c"/>',
+      ingles: '<path d="M18.5 9 16 18.5l4.6-4.6zM25.5 9 28 18.5l-4.6-4.6z" class="c"/>',
+      buttondown: '<path d="M18.5 9 16 18.5l4.6-4.6zM25.5 9 28 18.5l-4.6-4.6z" class="c"/><circle cx="16.9" cy="16.6" r=".9" class="b"/><circle cx="27.1" cy="16.6" r=".9" class="b"/>',
+      mao: '<path d="M17 8.5q5 3 10 0v3.2q-5 3-10 0z" class="c"/>'
+    }[o.cuello];
+    return `<svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" fill="#F7F2EA"/>
+      <path d="M17 9 9 13l-3.5 16 5 1.6L12 21v19h20V21l1.5 9.6 5-1.6L35 13l-8-4q-5 3.4-10 0z" fill="#fff" stroke="#6B1E2C" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M22 13v27" stroke="#6B1E2C" stroke-width=".8"/><g fill="#6B1E2C"><circle cx="22" cy="21" r=".8"/><circle cx="22" cy="27" r=".8"/><circle cx="22" cy="33" r=".8"/></g>
+      <g fill="#fff" stroke="#6B1E2C" stroke-width="1.1" stroke-linejoin="round">${cuello}</g></svg>`.replace('class="b"', 'fill="#6B1E2C"').replace('class="b"', 'fill="#6B1E2C"').replace(/ class="c"/g, '');
+  }
+  function miniTela(o) {
+    if (o.foto) return `<img src="${o.foto}" alt="" loading="lazy">`;
+    const id = 'm-' + o.id;
+    const pat = {
+      popelina: `<pattern id="${id}" width="2" height="2" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="#FCFBF8"/><rect width="1" height="1" fill="#F1EEE7"/></pattern>`,
+      'oxford-blanco': `<pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#F7F4EE"/><rect width="2" height="2" fill="#E9E3D8"/><rect x="2" y="2" width="2" height="2" fill="#E9E3D8"/></pattern>`,
+      twill: `<pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#FBFAF6"/><rect width="1.2" height="4" fill="#ECE7DD"/></pattern>`,
+      'oxford-celeste': `<pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#D7E6F7"/><rect width="2" height="2" fill="#F4F8FD"/><rect x="2" y="2" width="2" height="2" fill="#B9D0EC"/></pattern>`,
+      rayas: `<pattern id="${id}" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#fff"/><rect width="1.6" height="5" fill="#7FA5D6"/></pattern>`
+    }[o.muestra];
+    return `<svg viewBox="0 0 44 44" aria-hidden="true"><defs>${pat}<linearGradient id="${id}-l" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#6B1E2C" stop-opacity=".1"/></linearGradient></defs><rect width="44" height="44" fill="url(#${id})"/><rect width="44" height="44" fill="url(#${id}-l)"/></svg>`;
+  }
+  // Menú desplegable con miniatura (botón + lista en el flujo, para que no lo recorte la ventana)
+  function selectorMini(id, opciones, valor, mini, alCambiar) {
+    const raiz = $(id), btn = raiz.querySelector('.sel'), lista = raiz.querySelector('ul');
+    const fila = o => `<span class="miniatura">${mini(o)}</span><span class="txt"><b>${esc(o.nombre)}</b><small>${esc(o.detalle)}</small></span>`;
+    const pinta = () => {
+      btn.innerHTML = fila(porId(opciones, valor)) + '<span class="flecha" aria-hidden="true">▾</span>';
+      lista.innerHTML = opciones.map(o => `<li role="option" tabindex="-1" data-id="${o.id}" aria-selected="${o.id === valor}">${fila(o)}</li>`).join('');
+    };
+    const abrir = v => {
+      raiz.classList.toggle('abierto', v); btn.setAttribute('aria-expanded', String(v));
+      if (v) (lista.querySelector('[aria-selected="true"]') || lista.firstElementChild).focus();
+    };
+    btn.addEventListener('click', () => abrir(!raiz.classList.contains('abierto')));
+    lista.addEventListener('click', e => { const li = e.target.closest('li'); if (!li) return; valor = li.dataset.id; alCambiar(valor); pinta(); abrir(false); btn.focus(); });
+    lista.addEventListener('keydown', e => {
+      const items = [...lista.children], i = items.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') items[Math.min(i + 1, items.length - 1)].focus();
+      else if (e.key === 'ArrowUp') items[Math.max(i - 1, 0)].focus();
+      else if (e.key === 'Enter' || e.key === ' ') document.activeElement.click();
+      else if (e.key === 'Escape') { abrir(false); btn.focus(); e.stopPropagation(); }
+      else return;
+      e.preventDefault();
+    });
+    document.addEventListener('click', e => { if (!raiz.contains(e.target)) abrir(false); });
+    pinta();
+    return { poner: v => { valor = v; pinta(); } };
+  }
+
+  const dlg = $('dEnviar');
+  let usuario = null;
+  const selPrenda = selectorMini('selPrenda', ENV.prendas, E.envio.prenda, miniPrenda, v => { E.envio.prenda = v; guardar(); pintarEnvio(); });
+  const selTela = selectorMini('selTela', ENV.telas, E.envio.tela, miniTela, v => {
+    E.envio.tela = v; const c = porId(ENV.telas, v).color;
+    if (c && c !== E.camisa.color) { E.camisa.color = c; pintarPrenda(); }       // el maniquí viste la tela elegida
+    guardar(); pintarEnvio();
+  });
+
+  function datosEnvio() {
+    const m = objetivo(), G = prendaActual(), rec = recomendar(E.sexo, m, E.camisa.corte);
+    const pr = porId(ENV.prendas, E.envio.prenda), te = porId(ENV.telas, E.envio.tela), n = E.envio.cantidad;
+    const meta = (usuario && usuario.user_metadata) || {};
+    const nombre = E.envio.nombre.trim(), whats = E.envio.whatsapp.trim(), correo = (usuario && (usuario.email || meta.email)) || '';
+    const silueta = `${E.sexo === 'h' ? 'Caballero' : 'Dama'} · ${tipoCuerpo(m)}`;
+    const talla = `Talla ${G.talla}${E.camisa.talla == null ? ' (automática)' : ''} · corte ${G.corte === 'slim' ? 'Slim' : 'Regular'} · recomendada ${rec}${E.sexo === 'h' ? ' (cuello)' : ' (EU)'}`;
+    const cant = `${n} ${n === 1 ? 'camisa' : 'camisas'}`;
+    const hoy = new Date(), dd = x => String(x).padStart(2, '0');
+    const fecha = `${dd(hoy.getDate())}/${dd(hoy.getMonth() + 1)}/${hoy.getFullYear()} ${dd(hoy.getHours())}:${dd(hoy.getMinutes())}`;
+    const slug = (nombre || 'cliente').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30) || 'cliente';
+    const archivo = `medidas-casasiego-${slug}-${hoy.getFullYear()}${dd(hoy.getMonth() + 1)}${dd(hoy.getDate())}.txt`;
+    const cm = v => `${(Math.round(v * 2) / 2).toString()} cm`;
+    const pulg = v => `${(v / 2.54).toFixed(1)} in`;
+    const punto = (a, b, w = 26) => `${a} ${'.'.repeat(Math.max(2, w - a.length))} ${b}`;
+    const contacto = [nombre && `Nombre: ${nombre}`, whats && `WhatsApp: ${whats}`, correo && `Correo: ${correo}`].filter(Boolean);
+    const principales = ['cuello', 'hombros', 'pecho', 'cintura', 'cadera', 'brazo'].map(id => `${nombreDe(id).toLowerCase()} ${(Math.round(m[id] * 2) / 2)}`).join(', ');
+
+    const txt = [
+      'CASA SIEGO · SOLICITUD DE COTIZACIÓN', 'Camisería a medida', '',
+      punto('Fecha', fecha), punto('Cuenta', usuario ? `con sesión (${correo})` : 'sin cuenta · contacto por WhatsApp'),
+      ...contacto.map(l => punto(l.split(': ')[0], l.split(': ').slice(1).join(': '))), '',
+      'PEDIDO', punto('Prenda', pr.nombre), punto('Tela', te.nombre), punto('Cantidad', cant), punto('Silueta', silueta), punto('Talla', talla), '',
+      'MEDIDAS DEL CUERPO', ...IDS.map(id => punto(nombreDe(id), `${cm(m[id])}   (${pulg(m[id])})`)), '',
+      'MEDIDAS DE LA PRENDA (talla de referencia)',
+      ...[['Cuello', G.cuello], [nombreDe('pecho'), G.pecho], ['Cintura', G.cintura], ['Bajo', G.bajo], ['Hombros', G.hombros], ['Manga (desde costura)', G.manga], ['Largo (desde cuello)', G.largo], ['Puño', G.puno]]
+        .map(([a, v]) => punto(a, cm(v))), '',
+      'AJUSTE POR ZONA (holgura = prenda − cuerpo)',
+      ...EV.map(z => punto(z.nombre, `${z.dif >= 0 ? '+' : '−'}${Math.abs(z.dif).toFixed(1)} cm · ${z.txt}`)), '',
+      E.sexo === 'm' ? 'Nota: camisa Dama a medida, entallada con pinzas de busto y cintura, cadera y bajo curvo.' : 'Nota: camisa de corte recto.',
+      'Medidas tomadas en el Probador de casasiego.com/dresser/. Se confirman en la cita con un asesor.', ''
+    ].join('\r\n');
+
+    const asunto = `Cotización · ${cant} a medida · ${pr.nombre} · ${te.nombre}`;
+    const cuerpo = [
+      'Hola, Casa Siego:', '',
+      `Quiero cotizar ${cant} a medida.`, '',
+      `• Prenda: ${pr.nombre}`, `• Tela: ${te.nombre}`, `• Silueta: ${silueta}`, `• ${talla}`,
+      `• Medidas principales (cm): ${principales}`, '',
+      `Adjunto el archivo ${archivo} con todas mis medidas y el ajuste por zona.`, '',
+      ...contacto, '', 'Gracias.'
+    ].join('\n');
+    return { archivo, txt, asunto, cuerpo, silueta, talla, cant };
+  }
+
+  function pintarEnvio() {
+    usuario = sesionSitio();
+    const meta = (usuario && usuario.user_metadata) || {};
+    if (usuario && !E.envio.nombre) E.envio.nombre = String(meta.full_name || meta.name || meta.nombre || '').slice(0, 80);
+    if (usuario && !E.envio.whatsapp) E.envio.whatsapp = String(meta.whatsapp || meta.phone || usuario.phone || '').slice(0, 20);
+    const correo = usuario && (usuario.email || meta.email);
+    $('envSesion').className = 'envio__sesion' + (usuario ? ' si' : '');
+    $('envSesion').innerHTML = usuario
+      ? `Sesión iniciada · <b>${esc(correo || 'tu cuenta')}</b>. Te respondemos a este correo; el WhatsApp es opcional.`
+      : 'Sin sesión: escribe tu <b>nombre</b> y tu <b>WhatsApp</b> y te enviamos la cotización por ahí. ¿Tienes cuenta? <a href="../registro.html?modo=acceso&amp;volver=dresser/">Inicia sesión</a>.';
+    $('envWhatsEtq').textContent = usuario ? 'WhatsApp (opcional)' : 'WhatsApp';
+    if (document.activeElement !== $('envNombre')) $('envNombre').value = E.envio.nombre;
+    if (document.activeElement !== $('envWhats')) $('envWhats').value = E.envio.whatsapp;
+    $('envCant').textContent = E.envio.cantidad;
+    $('envMenos').disabled = E.envio.cantidad <= 1; $('envMas').disabled = E.envio.cantidad >= 20;
+    const d = datosEnvio();
+    $('envResumen').innerHTML =
+      `<span><b>${esc(d.cant)}</b> · ${esc(d.silueta)}</span><span>${esc(d.talla)}</span>` +
+      `<span class="adj"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m21 11-8.6 8.6a5 5 0 0 1-7-7L14 4a3.4 3.4 0 0 1 4.8 4.8l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4L15.5 7.3"/></svg>${esc(d.archivo)}</span>` +
+      `<span class="para">Para: <b>${esc(ENV.correo)}</b> · Asunto: ${esc(d.asunto)}</span>`;
+    $('envCuerpo').textContent = d.cuerpo;
+  }
+  function validar() {
+    const nOk = E.envio.nombre.trim().length >= 2, wOk = whatsValido(E.envio.whatsapp) || (usuario && !E.envio.whatsapp.trim());
+    $('envNombre').setAttribute('aria-invalid', String(!nOk)); $('envWhats').setAttribute('aria-invalid', String(!wOk));
+    if (!nOk) { avisar('Escribe tu nombre.', 'mal'); $('envNombre').focus(); return false; }
+    if (!wOk) { avisar('Escribe tu WhatsApp con lada (10 a 15 dígitos), por ejemplo +52 55 1234 5678.', 'mal'); $('envWhats').focus(); return false; }
+    return true;
+  }
+  const avisar = (t, c) => { $('envAviso').textContent = t; $('envAviso').className = 'envio__aviso' + (c ? ' ' + c : ''); };
+  const archivoTxt = d => new File(['﻿' + d.txt], d.archivo, { type: 'text/plain;charset=utf-8' });
+
+  $('bEnviar').addEventListener('click', () => {
+    pintarEnvio(); avisar('');
+    const t = porId(ENV.telas, E.envio.tela);
+    if (t.color !== E.camisa.color) { const o = ENV.telas.find(x => x.color === E.camisa.color); if (o) { E.envio.tela = o.id; selTela.poner(o.id); pintarEnvio(); } }
+    try { $('envCompartir').hidden = !(navigator.canShare && navigator.canShare({ files: [archivoTxt(datosEnvio())] })); } catch { $('envCompartir').hidden = true; }
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  });
+  $('envNombre').addEventListener('input', e => { E.envio.nombre = e.target.value.slice(0, 80); guardar(); pintarEnvio(); });
+  $('envWhats').addEventListener('input', e => { E.envio.whatsapp = e.target.value.replace(/[^\d+\s()-]/g, '').slice(0, 20); guardar(); pintarEnvio(); });
+  $('envMenos').addEventListener('click', () => { E.envio.cantidad = Math.max(1, E.envio.cantidad - 1); guardar(); pintarEnvio(); });
+  $('envMas').addEventListener('click', () => { E.envio.cantidad = Math.min(20, E.envio.cantidad + 1); guardar(); pintarEnvio(); });
+  $('envEnviar').addEventListener('click', () => {
+    if (!validar()) return;
+    const d = datosEnvio(), a = document.createElement('a');
+    a.href = URL.createObjectURL(archivoTxt(d)); a.download = d.archivo;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    const mailto = `mailto:${ENV.correo}?subject=${encodeURIComponent(d.asunto)}&body=${encodeURIComponent(d.cuerpo)}`;
+    setTimeout(() => { location.href = mailto; }, 350);
+    avisar(`Listo: se descargó «${d.archivo}» y se abrió tu correo para ${ENV.correo}. Adjunta el archivo antes de enviar.`, 'bien');
+  });
+  $('envCompartir').addEventListener('click', async () => {
+    if (!validar()) return;
+    const d = datosEnvio();
+    try {
+      await navigator.share({ files: [archivoTxt(d)], title: d.asunto, text: `Para: ${ENV.correo}\nAsunto: ${d.asunto}\n\n${d.cuerpo}` });
+      avisar(`Elige tu app de correo y envíalo a ${ENV.correo}.`, 'bien');
+    } catch (e) { if (e && e.name !== 'AbortError') avisar('No se pudo compartir. Usa «Enviar por correo».', 'mal'); }
   });
 
   // Vista: rueda, arrastre, doble clic, botones
@@ -1165,7 +1368,7 @@
   $('bMenos').addEventListener('click', () => zoomEn(W / 2, Hc / 2, 0.8));
 
   document.addEventListener('keydown', e => {
-    if (e.target.closest('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.target.closest('input, textarea, select, dialog') || document.querySelector('dialog[open]') || e.ctrlKey || e.metaKey || e.altKey) return;
     const k = e.key.toLowerCase();
     if (k === 'g') { const v = E.sexo === 'h' ? 'm' : 'h'; cambiarSexo(v); marcarSexo(v); }
     else if (k === 'c') ponerCamisa(!E.camisa.puesta);
