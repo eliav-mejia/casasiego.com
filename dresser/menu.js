@@ -40,7 +40,7 @@
   document.querySelectorAll('[data-cierra]').forEach(b => b.addEventListener('click', () => { abierto[b.dataset.cierra] = false; pintar(); }));
   movil.addEventListener('change', () => { abierto = porDefecto(); previo = null; pintar(); });
   document.addEventListener('keydown', e => {
-    if (e.target.closest('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.target.closest('input, textarea, select, dialog') || document.querySelector('dialog[open]') || e.ctrlKey || e.metaKey || e.altKey) return;
     const k = e.key.toLowerCase();
     if (k === 't') alternar('pMedidas');
     else if (k === 'p') alternar('pPrenda');

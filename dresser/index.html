@@ -33,7 +33,7 @@
                 <button role="radio" data-v="in">in</button>
             </div>
             <div class="acciones">
-                <button id="bExportar" title="Descargar medidas, camisa y ajuste como JSON">Exportar</button>
+                <button id="bEnviar" class="enviar" title="Enviar tus medidas a Casa Siego para cotizar">Enviar</button>
                 <button id="bReset" title="Volver a la silueta promedio">Restablecer</button>
             </div>
         </header>
@@ -106,6 +106,35 @@
             </details>
         </aside>
     </div>
+
+    <dialog id="dEnviar" class="envio" aria-labelledby="envTitulo">
+        <form method="dialog" class="envio__caja" novalidate>
+            <header class="envio__cab">
+                <div><div class="kicker">Camisería a medida</div><h2 id="envTitulo">Cotizar por correo</h2></div>
+                <button type="submit" value="cerrar" class="envio__x" aria-label="Cerrar">×</button>
+            </header>
+            <p class="envio__sesion" id="envSesion"></p>
+            <div class="envio__campos">
+                <label>Nombre<input id="envNombre" autocomplete="name" maxlength="80" placeholder="Nombre y apellido"></label>
+                <label><span id="envWhatsEtq">WhatsApp</span><input id="envWhats" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="+52 55 1234 5678"></label>
+            </div>
+            <div class="envio__fila">
+                <div class="campo"><div class="etq">Tipo de prenda</div>
+                    <div class="selmini" id="selPrenda"><button type="button" class="sel" aria-haspopup="listbox" aria-expanded="false" aria-label="Tipo de prenda"></button><ul role="listbox" aria-label="Tipo de prenda"></ul></div></div>
+                <div class="campo"><div class="etq">Tela</div>
+                    <div class="selmini" id="selTela"><button type="button" class="sel" aria-haspopup="listbox" aria-expanded="false" aria-label="Tela"></button><ul role="listbox" aria-label="Tela"></ul></div></div>
+            </div>
+            <div class="campo envio__cant"><div class="etq">Cantidad de camisas</div>
+                <div class="cantidad"><button type="button" id="envMenos" aria-label="Una camisa menos">−</button><output id="envCant" aria-live="polite">1</output><button type="button" id="envMas" aria-label="Una camisa más">+</button></div></div>
+            <div class="envio__resumen" id="envResumen"></div>
+            <details class="envio__correo"><summary>Ver el correo</summary><pre id="envCuerpo"></pre></details>
+            <p class="envio__aviso" id="envAviso" role="status"></p>
+            <footer class="envio__pie">
+                <button type="button" class="sec" id="envCompartir" hidden>Compartir con archivo</button>
+                <button type="button" class="pri" id="envEnviar">Enviar por correo</button>
+            </footer>
+        </form>
+    </dialog>
 
     <script src="datos.js"></script>
     <script src="dresser.js"></script>
