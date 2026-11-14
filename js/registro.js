@@ -398,7 +398,7 @@
     var d = readDraft();
     if (d) { form.nombre.value = d.nombre || ''; form.acepto.checked = Boolean(d.acepto); form.novedades.checked = Boolean(d.novedades); }
     setModo(state.modo);
-    if (volver && state.modo === 'acceso') setNota(volver.indexOf('cita/') === 0 ? 'Inicia sesión o crea tu cuenta para agendar tu cita.' : 'Equipo y Eventos son solo para miembros. Inicia sesión para continuar.', true);
+    if (volver && state.modo === 'acceso') setNota(volver.indexOf('cita/') === 0 || /agendar\/$/.test(volver) ? 'Inicia sesión o crea tu cuenta para agendar tu cita.' : 'Equipo y Eventos son solo para miembros. Inicia sesión para continuar.', true);
     iniciarCaptcha();
 
     var oauthError = params.get('error_description') || params.get('error');
