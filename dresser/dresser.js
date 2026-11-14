@@ -1,4 +1,4 @@
-/* Dresser · Casa Siego (v1.0.0)
+/* Dresser · Casa Siego (v1.1.0 · maniquí de alta costura)
    Silueta de maniquí (hombre / mujer) que se deforma en tiempo real con las medidas de confección,
    y probador de una camisa de cuello italiano (blanca, celeste o a rayas) con reporte de ajuste por zona.
    Sin dependencias: Canvas 2D. Unidades internas: cm (mundo con y hacia arriba, suelo en y = 0). */
@@ -15,6 +15,7 @@
   const off = (a, n, k) => ({ x: a.x + n.x * k, y: a.y + n.y * k });
   const espejo = p => ({ x: -p.x, y: p.y });
 
+  const TINTA = '#4A1621', LATON = '#B08D57';   // contorno a tinta y cinta de latón del maniquí
   const AZUL = '#6B1E2C', ROJO = '#e11d48', AMBAR = '#d97706';
   const COLOR_ST = { ok: AZUL, bajo: ROJO, alto: AMBAR };
   const CLAVE = 'casasiego-dresser/1';
@@ -126,8 +127,8 @@
   function cuerpo(m, f, t) {
     const H = m.altura, L = (a, b) => lerp(a, b, f);
     const g = { H, f, m };
-    g.headH = H * L(0.130, 0.128);
-    g.headW = g.headH * L(0.70, 0.68);
+    g.headH = H * L(0.118, 0.116);
+    g.headW = g.headH * L(0.66, 0.63);
     g.chinY = H - g.headH;
     g.nbY = H * nbFrac(f);
     g.shY = H * L(0.818, 0.810);
@@ -230,7 +231,7 @@
     for (let i = 0; i < 32; i++) {
       const th = i / 32 * 2 * PI, c = Math.cos(th);
       let x = Math.sin(th) * rx;
-      if (c < 0) x *= 1 - 0.24 * Math.pow(-c, 1.6);
+      if (c < 0) x *= 1 - 0.32 * Math.pow(-c, 1.5);
       pts.push({ x, y: cy + c * ry });
     }
     return pts;
@@ -332,8 +333,27 @@
   function pintarPiel(g) {
     const a = P(0, g.H), b = P(0, 0);
     piel = ctx.createLinearGradient(0, a.y, 0, b.y);
-    piel.addColorStop(0, 'rgba(247,242,234,.97)');
-    piel.addColorStop(1, 'rgba(238,228,211,.97)');
+    piel.addColorStop(0, '#FBF7F0');
+    piel.addColorStop(0.55, '#F4ECDF');
+    piel.addColorStop(1, '#EADFCB');
+  }
+  // Lino marfil con volumen: luz desde arriba a la izquierda y borde sombreado por dentro.
+  function relleno(pts, g) {
+    ctx.beginPath(); curva(pts, true); ctx.fillStyle = piel; ctx.fill();
+    ctx.save(); ctx.clip();
+    const a = P(-38, g.H), b = P(38, 0), luz = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+    luz.addColorStop(0, 'rgba(255,255,255,.6)'); luz.addColorStop(0.42, 'rgba(255,255,255,0)'); luz.addColorStop(1, 'rgba(107,30,44,.11)');
+    ctx.fillStyle = luz; ctx.fillRect(0, 0, W, Hc);
+    ctx.strokeStyle = 'rgba(107,30,44,.055)'; ctx.lineJoin = 'round';
+    for (const w of [3.4, 1.7]) { ctx.lineWidth = w * S; ctx.beginPath(); curva(pts, true); ctx.stroke(); }
+    ctx.restore();
+  }
+  // Contorno de ilustración: halo suave + trazo fino a tinta.
+  function contorno(pts, cerrar) {
+    ctx.save(); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(74,22,33,.09)'; ctx.lineWidth = 3.6; ctx.beginPath(); curva(pts, cerrar); ctx.stroke();
+    ctx.strokeStyle = TINTA; ctx.lineWidth = 1.2; ctx.beginPath(); curva(pts, cerrar); ctx.stroke();
+    ctx.restore();
   }
 
   // Tela a rayas: patrón que se rehace al cambiar la escala.
@@ -360,63 +380,78 @@
   let EV = [];                         // evaluación vigente (objetivo, no animada)
 
   function dibujarCuerpo(g) {
-    // Sombra de piso
-    const sp = P(0, 0), rx = (g.cA + 14) * S;
+    // Suelo: sombra suave y línea de pasarela en latón
+    const sp = P(0, 0), rx = (g.cA + 16) * S;
     const gr = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, rx);
-    gr.addColorStop(0, 'rgba(107,30,44,.16)'); gr.addColorStop(1, 'rgba(107,30,44,0)');
-    ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(sp.x, sp.y, rx, rx * 0.12, 0, 0, 2 * PI); ctx.fill();
+    gr.addColorStop(0, 'rgba(74,22,33,.2)'); gr.addColorStop(0.6, 'rgba(74,22,33,.06)'); gr.addColorStop(1, 'rgba(74,22,33,0)');
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(sp.x, sp.y, rx, rx * 0.1, 0, 0, 2 * PI); ctx.fill();
+    const l1 = P(-(g.cA + 32), 0), l2 = P(g.cA + 32, 0), gl = ctx.createLinearGradient(l1.x, 0, l2.x, 0);
+    gl.addColorStop(0, 'rgba(176,141,87,0)'); gl.addColorStop(0.5, 'rgba(176,141,87,.75)'); gl.addColorStop(1, 'rgba(176,141,87,0)');
+    ctx.strokeStyle = gl; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(l1.x, l1.y + 0.5); ctx.lineTo(l2.x, l2.y + 0.5); ctx.stroke();
 
+    const sil = siluetaPts(g);
+    relleno(sil, g);
+
+    // Costuras del maniquí, recortadas a la silueta
+    ctx.save(); ctx.beginPath(); curva(sil, true); ctx.clip();
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.fillStyle = piel; ctx.strokeStyle = AZUL; ctx.lineWidth = 1.6;
-    ctx.beginPath(); curva(siluetaPts(g), true); ctx.fill(); ctx.stroke();
-
-    // Líneas interiores del maniquí
-    ctx.strokeStyle = 'rgba(107,30,44,.32)'; ctx.lineWidth = 1;
-    ctx.beginPath();
+    // sombra del mentón sobre el cuello
+    const cb = P(0, g.chinY + 0.6), sr = g.nw * 1.5 * S, sg = ctx.createRadialGradient(cb.x, cb.y, 0, cb.x, cb.y, sr);
+    sg.addColorStop(0, 'rgba(74,22,33,.16)'); sg.addColorStop(1, 'rgba(74,22,33,0)');
+    ctx.fillStyle = sg; ctx.beginPath(); ctx.ellipse(cb.x, cb.y, sr, sr * 0.7, 0, 0, 2 * PI); ctx.fill();
+    ctx.strokeStyle = 'rgba(74,22,33,.2)'; ctx.lineWidth = 1;
+    ctx.beginPath(); linea({ x: 0, y: g.nbY - 1.5 }, { x: 0, y: g.crY + 3 }); ctx.stroke();          // centro frente
+    for (const k of [1, -1]) {                                                                        // costuras princesa
+      ctx.beginPath();
+      curva([{ x: lerp(g.nw, g.shX, 0.5) * k, y: lerp(g.nbY, g.shY, 0.7) }, { x: g.chW * 0.5 * k, y: g.chY + 1.5 },
+             { x: g.waW * 0.5 * k, y: g.waY }, { x: g.hiW * 0.56 * k, y: g.hiY - 4 }], false);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'rgba(74,22,33,.24)'; ctx.beginPath();
     for (const k of [1, -1]) {
       const x = v => v * k;
-      linea({ x: x(1.4), y: g.nbY - 1.2 }, { x: x(g.shX * 0.86), y: g.shY + 0.2 }, { x: x(g.shX * 0.45), y: g.nbY - 2.6 });   // clavícula
+      linea({ x: x(1.4), y: g.nbY - 1.2 }, { x: x(g.shX * 0.84), y: g.shY + 0.2 }, { x: x(g.shX * 0.45), y: g.nbY - 2.4 });    // clavícula
       linea({ x: x(g.hiW * 0.8), y: g.hiY + 3 }, { x: x(g.thIn + 1.5), y: g.crY + 2.5 }, { x: x(g.hiW * 0.42), y: g.hiY - 3 }); // ingle
-      linea({ x: x(g.cK - g.knD * 0.2), y: g.knY - 0.5 }, { x: x(g.cK + g.knD * 0.2), y: g.knY - 0.5 }, { x: x(g.cK), y: g.knY - 2.2 }); // rodilla
+      linea({ x: x(g.cK - g.knD * 0.18), y: g.knY - 0.5 }, { x: x(g.cK + g.knD * 0.18), y: g.knY - 0.5 }, { x: x(g.cK), y: g.knY - 1.8 }); // rodilla
     }
     ctx.stroke();
     // Pectoral (hombre) ↔ busto (mujer), mezclados por fem
-    ctx.save();
     ctx.globalAlpha = 1 - fem; ctx.beginPath();
-    for (const k of [1, -1]) linea({ x: 0.8 * k, y: g.chY - 2.5 }, { x: g.chW * 0.88 * k, y: g.chY - 0.6 }, { x: g.chW * 0.5 * k, y: g.chY - 4.6 });
+    for (const k of [1, -1]) linea({ x: 0.8 * k, y: g.chY - 2.5 }, { x: g.chW * 0.86 * k, y: g.chY - 0.6 }, { x: g.chW * 0.5 * k, y: g.chY - 4.4 });
     ctx.stroke();
     ctx.globalAlpha = fem; ctx.beginPath();
     const rb = (3.4 + clamp((g.m.pecho - g.m.cintura - 10) * 0.25, 0, 6)) * S;
     for (const k of [1, -1]) { const c = P(g.chW * 0.46 * k, g.chY + 0.8); ctx.moveTo(c.x + rb * Math.cos(0.12 * PI), c.y + rb * Math.sin(0.12 * PI)); ctx.arc(c.x, c.y, rb, 0.12 * PI, 0.88 * PI); }
     ctx.stroke();
+    ctx.globalAlpha = 1;
+    // Cinta de latón en la cintura, con su marca al centro
+    ctx.strokeStyle = 'rgba(176,141,87,.92)'; ctx.lineWidth = Math.max(1.4, 0.85 * S);
+    ctx.beginPath(); linea({ x: -g.waW - 0.5, y: g.waY + 0.5 }, { x: g.waW + 0.5, y: g.waY + 0.5 }, { x: 0, y: g.waY - 0.9 }); ctx.stroke();
+    const mk = P(0, g.waY - 0.2), mr = Math.max(2, 0.7 * S);
+    ctx.fillStyle = TINTA; ctx.beginPath(); ctx.moveTo(mk.x, mk.y - mr); ctx.lineTo(mk.x + mr * 0.7, mk.y); ctx.lineTo(mk.x, mk.y + mr); ctx.lineTo(mk.x - mr * 0.7, mk.y); ctx.closePath(); ctx.fill();
     ctx.restore();
-    // Ombligo y eje
-    const o = P(0, g.waY - 3);
-    ctx.beginPath(); ctx.ellipse(o.x, o.y, 0.5 * S, 0.7 * S, 0, 0, 2 * PI); ctx.stroke();
-    ctx.save(); ctx.setLineDash([3, 5]); ctx.strokeStyle = 'rgba(107,30,44,.14)';
-    ctx.beginPath(); linea({ x: 0, y: g.nbY - 3 }, { x: 0, y: g.crY + 5 }); ctx.stroke(); ctx.restore();
+    contorno(sil, true);
 
-    // Cabeza (y moño cuando es mujer)
-    ctx.strokeStyle = AZUL; ctx.lineWidth = 1.6; ctx.fillStyle = piel;
+    // Cabeza de maniquí sin rasgos (y chongo con aro de latón cuando es mujer)
     if (fem > 0.01) {
       ctx.save(); ctx.globalAlpha = fem;
-      const c = P(0, g.H - g.headH * 0.04);
-      ctx.beginPath(); ctx.arc(c.x, c.y, g.headW * 0.26 * S * fem, 0, 2 * PI); ctx.fill(); ctx.stroke();
+      const c = P(0, g.H - g.headH * 0.02), r = g.headW * 0.25 * S * fem;
+      ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 2 * PI); ctx.fillStyle = piel; ctx.fill();
+      ctx.strokeStyle = TINTA; ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.strokeStyle = LATON; ctx.lineWidth = Math.max(1.2, 0.5 * S);
+      ctx.beginPath(); ctx.ellipse(c.x, c.y + r * 0.92, r * 0.62, r * 0.2, 0, 0, 2 * PI); ctx.stroke();
       ctx.restore();
     }
-    ctx.beginPath(); curva(cabezaPts(g), true); ctx.fill(); ctx.stroke();
-    ctx.strokeStyle = 'rgba(107,30,44,.32)'; ctx.lineWidth = 1; ctx.beginPath();
-    for (const k of [1, -1]) { const e = P(g.headW / 2 * k * 0.98, g.H - g.headH * 0.52); ctx.moveTo(e.x, e.y - 1.6 * S); ctx.quadraticCurveTo(e.x + 1.1 * S * k, e.y, e.x, e.y + 1.8 * S); }
-    ctx.stroke();
+    const cab = cabezaPts(g);
+    relleno(cab, g); contorno(cab, true);
 
     dibujarBrazo(g, 1); dibujarBrazo(g, -1);
   }
   function dibujarBrazo(g, lado) {
     let pts = brazoPts(g);
     if (lado < 0) pts = pts.map(espejo);
-    ctx.fillStyle = piel; ctx.strokeStyle = AZUL; ctx.lineWidth = 1.6;
-    ctx.beginPath(); curva(pts, true); ctx.fill();
-    ctx.beginPath(); curva(pts, false); ctx.stroke();
+    relleno(pts, g);
+    contorno(pts, false);
   }
 
   function dibujarCamisa(g, G, col) {
