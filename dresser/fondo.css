@@ -1,0 +1,72 @@
+/* Dresser · Casa Siego — fondo y tokens.
+   Paleta de css/site.css: vino, beige antiguo, latón. La rejilla de circuito pasa a ser
+   una retícula de patronaje (líneas de latón sobre beige). */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Spectral:wght@400;600;700&display=swap');
+
+:root {
+    --bg: #F7F2EA;                      /* --beige-soft */
+    --ink: #3B1A1F;                     /* --wine-ink   */
+    --slate-300: #B5A69C;
+    --slate-400: #6F5E57;               /* --taupe      */
+    --slate-600: #5A4741;
+    --line: rgba(176, 144, 94, 0.40);   /* --brass      */
+    --soft: rgba(176, 144, 94, 0.08);
+    --glass: rgba(255, 255, 255, 0.78);
+    --accent: #6B1E2C;                  /* --wine       */
+    --brass: #B0905E;
+    --brass-light: #D6C09A;
+    --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+    --font-body: "EB Garamond", "Garamond", Georgia, serif;
+    --font-meta: "Spectral", "EB Garamond", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-meta);
+    overflow: hidden;
+}
+
+.circuit-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-color: var(--bg);
+    background-image:
+        linear-gradient(to right, rgba(176, 144, 94, 0.28) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(176, 144, 94, 0.28) 1px, transparent 1px),
+        linear-gradient(to right, rgba(176, 144, 94, 0.09) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(176, 144, 94, 0.09) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+    -webkit-mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
+    mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
+}
+/* Alfileres de latón en los cruces de la retícula mayor */
+.circuit-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(107, 30, 44, 0.45) 2px, transparent 2.5px);
+    background-size: 80px 80px;
+    background-position: -40px -40px;
+}
+
+.glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(176, 144, 94, 0.30);
+}
+
+.kicker {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--brass);
+}

@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Casa Siego — dresser.css  (v1.0.0 · 2026-11-13)
+   Animated dresser (armoire / vestidor): two doors that swing open in 3D,
+   a warm interior light, garments on hangers that slide in along the rail
+   and sway, drawers that pull out, and a scroll-reveal helper.
+
+   Load after site.css (uses its tokens only: --wine, --wine-deep, --brass,
+   --brass-light, --beige, --beige-soft, --taupe, --font-display).
+
+   Opening triggers (any one):
+     · .dresser--auto            opens by itself on load
+     · .dresser.is-open          toggled from JS
+     · <input class="dresser__toggle" type="checkbox"> inside .dresser
+       (CSS-only, via :has) — pair it with a <label> as the button
+     · [data-dresser-reveal].is-visible on an ancestor (IntersectionObserver)
+
+   Markup:
+   <div class="dresser dresser--auto">
+     <input class="dresser__toggle" type="checkbox" id="dr1">
+     <div class="dresser__body">
+       <div class="dresser__interior">
+         <span class="dresser__light"></span>
+         <div class="dresser__rail">
+           <figure class="dresser__hanger" style="--i:0">
+             <span class="dresser__hook"></span>
+             <img class="dresser__garment" src="…" alt="…">
+           </figure> …
+         </div>
+       </div>
+       <div class="dresser__door dresser__door--left"><span class="dresser__knob"></span></div>
+       <div class="dresser__door dresser__door--right"><span class="dresser__knob"></span></div>
+     </div>
+     <div class="dresser__drawers">
+       <button class="dresser__drawer" type="button"><span class="dresser__pull"></span></button> …
+     </div>
+     <label class="dresser__button" for="dr1">Abrir vestidor</label>
+   </div>
+   ========================================================================== */
+
+/* 1. Tokens ------------------------------------------------------------------ */
+.dresser {
+  --dresser-wood:      var(--wine-deep, #4A1621);
+  --dresser-wood-lite: color-mix(in srgb, var(--wine-deep, #4A1621) 80%, var(--brass, #B0905E));
+  --dresser-trim:      var(--brass, #B0905E);
+  --dresser-glow:      var(--brass-light, #D6C09A);
+  --dresser-inside:    var(--beige, #EEE4D3);
+
+  --dresser-ease:      cubic-bezier(0.65, 0, 0.35, 1);   /* doors      */
+  --dresser-ease-out:  cubic-bezier(0.22, 1, 0.36, 1);   /* garments   */
+  --dresser-door-time: 1.4s;
+  --dresser-delay:     0.4s;                              /* auto-open  */
+  --dresser-stagger:   0.12s;                             /* per hanger */
+  --dresser-swing:     -112deg;                           /* door angle */
+
+  position: relative;
+  width: min(100%, 34rem);
+  margin-inline: auto;
+  perspective: 1800px;
+  perspective-origin: 50% 40%;
+}
+
+/* 2. Carcass ----------------------------------------------------------------- */
+.dresser__body {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  padding: 0.75rem;
+  background: linear-gradient(180deg, var(--dresser-wood-lite), var(--dresser-wood));
+  border: 1px solid color-mix(in srgb, var(--dresser-trim) 60%, transparent);
+  box-shadow:
+    inset 0 0 0 0.25rem color-mix(in srgb, var(--dresser-trim) 25%, transparent),
+    0 40px 70px -45px color-mix(in srgb, var(--wine-ink, #3B1A1F) 70%, transparent);
+  transform-style: preserve-3d;
+}
+/* Cornice */
+.dresser__body::before {
+  content: "";
+  position: absolute;
+  inset: -0.9rem -0.6rem auto;
+  height: 0.9rem;
+  background: var(--dresser-wood);
+  border-bottom: 2px solid var(--dresser-trim);
+}
+
+/* 3. Interior + light -------------------------------------------------------- */
+.dresser__interior {
+  position: absolute;
+  inset: 0.75rem;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--dresser-glow) 35%, transparent), transparent 70%),
+    var(--dresser-inside);
+  box-shadow: inset 0 0 2.5rem color-mix(in srgb, var(--wine-ink, #3B1A1F) 45%, transparent);
+}
+.dresser__light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 45% at 50% 4%, color-mix(in srgb, #fff 70%, var(--dresser-glow)), transparent 70%);
+  opacity: 0;
+  mix-blend-mode: soft-light;
+  transition: opacity 1.2s ease calc(var(--dresser-door-time) * 0.5);
+}
+
+/* 4. Rail + hangers ---------------------------------------------------------- */
+.dresser__rail {
+  position: absolute;
+  inset: 9% 6% 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.25rem, 1.5vw, 0.75rem);
+  border-top: 3px solid var(--dresser-trim);
+}
+.dresser__hanger {
+  --i: 0;
+  position: relative;
+  flex: 1 1 0;
+  max-width: 7rem;
+  margin: 0;
+  padding-top: 1.1rem;
+  transform-origin: 50% 0;
+  opacity: 0;
+  transform: translateX(-140%) rotate(8deg);
+  transition:
+    opacity 0.5s ease,
+    transform 0.9s var(--dresser-ease-out);
+  transition-delay: calc(var(--dresser-door-time) * 0.6 + var(--i) * var(--dresser-stagger));
+}
+/* Hook — a brass question mark drawn with borders */
+.dresser__hook {
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  width: 0.7rem;
+  height: 1.2rem;
+  translate: -50% 0;
+  border: 2px solid var(--dresser-trim);
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+.dresser__garment {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 14px color-mix(in srgb, var(--wine-ink, #3B1A1F) 35%, transparent));
+}
+
+/* 5. Doors ------------------------------------------------------------------- */
+.dresser__door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background:
+    linear-gradient(90deg, transparent 0 8%, color-mix(in srgb, var(--dresser-trim) 30%, transparent) 8% calc(8% + 1px), transparent 0 92%, color-mix(in srgb, var(--dresser-trim) 30%, transparent) 92% calc(92% + 1px), transparent 0),
+    linear-gradient(180deg, transparent 0 6%, color-mix(in srgb, var(--dresser-trim) 30%, transparent) 6% calc(6% + 1px), transparent 0 94%, color-mix(in srgb, var(--dresser-trim) 30%, transparent) 94% calc(94% + 1px), transparent 0),
+    linear-gradient(160deg, var(--dresser-wood-lite), var(--dresser-wood));
+  border: 1px solid color-mix(in srgb, var(--dresser-trim) 55%, transparent);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform var(--dresser-door-time) var(--dresser-ease),
+              box-shadow var(--dresser-door-time) var(--dresser-ease);
+  will-change: transform;
+}
+.dresser__door--left  { left: 0;  transform-origin: 0 50%; }
+.dresser__door--right { right: 0; transform-origin: 100% 50%; }
+.dresser__knob {
+  position: absolute;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--dresser-glow), var(--dresser-trim) 60%, color-mix(in srgb, var(--dresser-trim) 50%, #000));
+}
+.dresser__door--left  .dresser__knob { right: 0.6rem; }
+.dresser__door--right .dresser__knob { left: 0.6rem; }
+
+/* 6. Drawers ----------------------------------------------------------------- */
+.dresser__drawers {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem 0.75rem;
+  background: var(--dresser-wood);
+  border: 1px solid color-mix(in srgb, var(--dresser-trim) 60%, transparent);
+  border-top: 0;
+  transform-style: preserve-3d;
+}
+.dresser__drawer {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+  padding: 0;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--dresser-wood-lite), var(--dresser-wood));
+  border: 1px solid color-mix(in srgb, var(--dresser-trim) 45%, transparent);
+  transition: transform 0.45s var(--dresser-ease-out), box-shadow 0.45s var(--dresser-ease-out);
+}
+.dresser__drawer:hover,
+.dresser__drawer:focus-visible,
+.dresser__drawer.is-open {
+  transform: translateZ(2.5rem) translateY(0.15rem);
+  box-shadow: 0 1rem 1.25rem -0.75rem color-mix(in srgb, #000 60%, transparent);
+}
+.dresser__drawer:focus-visible { outline: 1px solid var(--dresser-glow); outline-offset: 3px; }
+.dresser__pull {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.5rem;
+  height: 0.35rem;
+  translate: -50% -50%;
+  border-radius: 0.2rem;
+  background: linear-gradient(180deg, var(--dresser-glow), var(--dresser-trim));
+}
+
+/* 7. Button (label for the CSS-only toggle) ---------------------------------- */
+.dresser__toggle {           /* visually hidden but still keyboard-focusable */
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dresser__button {
+  display: block;
+  width: max-content;
+  margin: var(--space-4, 1.5rem) auto 0;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--wine, #6B1E2C);
+  border: 1px solid var(--dresser-trim);
+  transition: background-color 0.25s, color 0.25s;
+}
+.dresser__button:hover { background: var(--wine, #6B1E2C); color: var(--beige-soft, #F7F2EA); }
+.dresser:has(.dresser__toggle:focus-visible) .dresser__button { outline: 1px solid var(--wine, #6B1E2C); outline-offset: 3px; }
+
+/* 8. OPEN STATE — every trigger shares one rule set -------------------------- */
+.dresser.is-open,
+.dresser:has(.dresser__toggle:checked),
+[data-dresser-reveal].is-visible .dresser { --dresser-open: 1; }
+
+:is(.dresser.is-open, .dresser:has(.dresser__toggle:checked), [data-dresser-reveal].is-visible .dresser)
+  .dresser__door--left  { transform: rotateY(var(--dresser-swing)); box-shadow: -1.5rem 0 2rem -1.5rem #0008; }
+:is(.dresser.is-open, .dresser:has(.dresser__toggle:checked), [data-dresser-reveal].is-visible .dresser)
+  .dresser__door--right { transform: rotateY(calc(var(--dresser-swing) * -1)); box-shadow: 1.5rem 0 2rem -1.5rem #0008; }
+:is(.dresser.is-open, .dresser:has(.dresser__toggle:checked), [data-dresser-reveal].is-visible .dresser)
+  .dresser__light { opacity: 1; }
+:is(.dresser.is-open, .dresser:has(.dresser__toggle:checked), [data-dresser-reveal].is-visible .dresser)
+  .dresser__hanger { opacity: 1; transform: none; }
+
+/* Closing: garments leave first, then the doors shut */
+.dresser:not(.is-open, .dresser--auto):not(:has(.dresser__toggle:checked)) .dresser__hanger { transition-delay: calc(var(--i) * 0.05s); }
+.dresser:not(.is-open, .dresser--auto):not(:has(.dresser__toggle:checked)) .dresser__door  { transition-delay: 0.35s; }
+
+/* Idle sway once the garment has arrived; hover a garment to nudge it */
+:is(.dresser.is-open, .dresser--auto, .dresser:has(.dresser__toggle:checked), [data-dresser-reveal].is-visible .dresser)
+  .dresser__garment {
+  transform-origin: 50% -1.1rem;
+  animation: dresser-sway 5.5s ease-in-out calc(var(--dresser-door-time) + 1s + var(--i, 0) * 0.4s) infinite;
+}
+.dresser__hanger:hover .dresser__garment { animation: dresser-nudge 1.2s var(--dresser-ease-out) both; }
+
+/* 9. Auto-open on load (keyframes, no JS) ------------------------------------ */
+.dresser--auto .dresser__door--left  { animation: dresser-open-left  var(--dresser-door-time) var(--dresser-ease) var(--dresser-delay) both; }
+.dresser--auto .dresser__door--right { animation: dresser-open-right var(--dresser-door-time) var(--dresser-ease) var(--dresser-delay) both; }
+.dresser--auto .dresser__light       { animation: dresser-fade 1.2s ease calc(var(--dresser-delay) + var(--dresser-door-time) * 0.5) both; }
+.dresser--auto .dresser__hanger {
+  animation: dresser-arrive 0.9s var(--dresser-ease-out)
+             calc(var(--dresser-delay) + var(--dresser-door-time) * 0.6 + var(--i) * var(--dresser-stagger)) both;
+}
+
+@keyframes dresser-open-left  { from { transform: none; } to { transform: rotateY(var(--dresser-swing)); box-shadow: -1.5rem 0 2rem -1.5rem #0008; } }
+@keyframes dresser-open-right { from { transform: none; } to { transform: rotateY(calc(var(--dresser-swing) * -1)); box-shadow: 1.5rem 0 2rem -1.5rem #0008; } }
+@keyframes dresser-fade       { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dresser-arrive     { from { opacity: 0; transform: translateX(-140%) rotate(8deg); } 70% { transform: translateX(4%) rotate(-2deg); } to { opacity: 1; transform: none; } }
+@keyframes dresser-sway       { 0%, 100% { rotate: 0deg; } 30% { rotate: 1.2deg; } 70% { rotate: -1deg; } }
+@keyframes dresser-nudge      { 0% { rotate: 0deg; } 25% { rotate: 5deg; } 55% { rotate: -3deg; } 80% { rotate: 1.2deg; } 100% { rotate: 0deg; } }
+
+/* 10. Scroll reveal for surrounding copy ------------------------------------- */
+[data-dresser-reveal] .dresser-reveal {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.8s ease, transform 0.8s var(--dresser-ease-out);
+  transition-delay: calc(var(--i, 0) * 0.1s);
+}
+[data-dresser-reveal].is-visible .dresser-reveal { opacity: 1; transform: none; }
+
+/* 11. Small screens ---------------------------------------------------------- */
+@media (max-width: 40rem) {
+  .dresser { --dresser-swing: -100deg; perspective: 1200px; }
+  .dresser__drawer { height: 2.25rem; }
+}
+
+/* 12. Reduced motion: dresser shown open, no swinging ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .dresser *, .dresser *::before, .dresser *::after,
+  [data-dresser-reveal] .dresser-reveal {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+  .dresser--auto .dresser__door--left  { transform: rotateY(var(--dresser-swing)); }
+  .dresser--auto .dresser__door--right { transform: rotateY(calc(var(--dresser-swing) * -1)); }
+  .dresser--auto .dresser__light,
+  .dresser--auto .dresser__hanger { opacity: 1; transform: none; }
+}
