@@ -1,8 +1,11 @@
-/* Casa Siego — tienda.js 2.0.2 (v1.4.1) · catálogo de las tiendas de marca (Justo, Atemporal). Plain JS: no build, no React, no Babel.
+/* Casa Siego — tienda.js 2.1.0 (v1.4.1) · catálogo de las tiendas de marca (Justo, Atemporal). Plain JS: no build, no React, no Babel.
    One engine for every brands/<marca>/tienda/index.html. Each tienda folder is only its page + db/productos.json.
 
    1. Data: db/productos.json next to the page = { marca, marcaNombre, kinds{id: label}, filtros{id: plural label}, products[] }. No prices, sizes, stock or Stripe:
       every active product is shown, and every one is available («todo en existencia», v1.4.1).
+      2.1.0: destacados[] (slugs, in order) fill the «Destacado» row (#destacados, 3 columns); the full catalogue
+      (filtered by the chips) runs in a horizontal snap carousel (#rejilla: 3 columns on phones, 5 from 1024 px)
+      with ‹ › buttons and a progress line.
    2. One «Cotizar» per product (card and sheet):
         · visitor (no session) → registro.html (create the account first);
         · signed-in member     → WhatsApp with the product already written (WHATSAPP below);
@@ -11,8 +14,8 @@
       Supabase (auth.getUser) when js/supabase-config.js is filled in. Without Supabase configured nobody is signed in.
    3. Tracking (Google Tag Manager, through js/medicion.js → window.casaMedir; dataLayer directly if it isn't loaded yet).
       No personal data, only the product:
-        casa_tienda_ver       a product sheet opens: sku, producto, tipo, origen (tarjeta | enlace)
-        casa_tienda_cotizar   click on «Cotizar»: sku, producto, tipo, canal (registro | whatsapp | correo), sesion, origen (tarjeta | ficha)
+        casa_tienda_ver       a product sheet opens: sku, producto, tipo, origen (destacado | tarjeta | enlace)
+        casa_tienda_cotizar   click on «Cotizar»: sku, producto, tipo, canal (registro | whatsapp | correo), sesion, origen (destacado | tarjeta | ficha)
         casa_tienda_filtro    a filter chip: tipo (todo | saco | traje …)
       Documented in _interno/deployed/Marketing/Campaigns/tienda-cotizar-registro-v1.4.1.pdf and README «Medición». */
 (() => {
@@ -98,20 +101,53 @@
 
     // --- Grid ---
     const kindLabel = (p) => data.kinds[p.kind] || p.kind;
-    const card = (p) => {
+    const card = (p, origen = 'tarjeta') => {
         const img = el('img', { src: ROOT + p.image, alt: `${p.name}, ${data.marcaNombre || 'Casa Siego'}`, loading: 'lazy', decoding: 'async', draggable: false });
-        const open = el('button', { type: 'button', className: 'card-abrir', onclick: () => abrir(p, 'tarjeta') },
+        const open = el('button', { type: 'button', className: 'card-abrir', onclick: () => abrir(p, origen) },
             el('div', { className: 'crop', style: `--focus: ${p.focus || '50% 50%'}` }, img),
             el('p', { className: 'label text-gold mt-4', textContent: kindLabel(p) }),
-            el('h3', { className: 'text-lg md:text-xl mt-1 leading-snug', textContent: p.name }),
-            el('p', { className: 'text-ink-500 text-sm mt-1', textContent: p.short }));
-        return el('article', { className: 'card' }, open, cotizar(p, 'tarjeta'));
+            el('h3', { className: 'card-nombre text-lg md:text-xl mt-1 leading-snug', textContent: p.name }),
+            el('p', { className: 'card-corto text-ink-500 text-sm mt-1', textContent: p.short }));
+        return el('article', { className: 'card' }, open, cotizar(p, origen));
     };
     let filtro = '';
+    const destacados = () => {
+        const box = $('destacados');
+        if (!box) return;
+        const list = (data.destacados || []).map(s => data.products.find(p => p.slug === s)).filter(Boolean);
+        box.closest('[data-destacado]').hidden = !list.length;
+        box.replaceChildren(...list.map(p => card(p, 'destacado')));
+    };
+    // Carousel: ‹ › scroll one screen of cards; the gold line under it shows how far along you are
+    const carrusel = () => {
+        const track = $('rejilla'), prev = $('carrusel-prev'), next = $('carrusel-next'), bar = $('carrusel-barra');
+        if (!track) return;
+        const max = () => track.scrollWidth - track.clientWidth;
+        const update = () => {
+            const m = max(), x = Math.abs(track.scrollLeft);
+            if (prev) prev.disabled = x <= 2;
+            if (next) next.disabled = x >= m - 2;
+            if (bar) {
+                bar.parentElement.hidden = m <= 2;
+                bar.style.width = `${Math.min(100, (track.clientWidth / track.scrollWidth) * 100)}%`;
+                bar.style.transform = `translateX(${m > 0 ? (x / m) * ((track.scrollWidth - track.clientWidth) / track.clientWidth) * 100 : 0}%)`;
+            }
+        };
+        const step = (dir) => track.scrollBy({ left: dir * track.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        if (prev) prev.onclick = () => step(-1);
+        if (next) next.onclick = () => step(1);
+        track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+        window.addEventListener('resize', update);
+        carrusel.update = update;
+        update();
+    };
     const render = () => {
         const shown = data.products.filter(p => !filtro || p.kind === filtro);
-        $('rejilla').replaceChildren(...shown.map(card));
+        destacados();
+        $('rejilla').replaceChildren(...shown.map(p => card(p)));
+        $('rejilla').scrollLeft = 0;
         $('estado').textContent = `${shown.length} ${shown.length === 1 ? 'pieza' : 'piezas'}`;
+        if (carrusel.update) carrusel.update();
     };
     const filtros = () => {
         const box = $('filtros');
@@ -172,7 +208,7 @@
         .then(json => {
             data = json;
             data.products = (json.products || []).filter(p => p.active !== false);
-            filtros(); render(); fromHash();
+            filtros(); carrusel(); render(); fromHash();
             return checkSession();
         })
         .then(ok => {

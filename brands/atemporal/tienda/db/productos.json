@@ -1,7 +1,7 @@
 {
-  "_schema": "v1.4.1 · catálogo limpio: products[] = id, slug, sku, kind (clave de kinds), name, short, description, image (desde la raíz del sitio), focus? (encuadre CSS), active, y detalles opcionales (fabric, lining, construction, collar, cuffs, pattern, care, features[]). Sin precios, tallas, existencias ni ligas de Stripe: todo producto activo se muestra y se cotiza (js/tienda.js).",
+  "_schema": "v1.4.1 · catálogo limpio: products[] = id, slug, sku, kind (clave de kinds), name, short, description, image (desde la raíz del sitio), focus? (encuadre CSS), active, y detalles opcionales (fabric, lining, construction, collar, cuffs, pattern, care, features[]). Sin precios, tallas, existencias ni ligas de Stripe: todo producto activo se muestra y se cotiza (js/tienda.js). destacados[] = slugs (en orden) de la fila Destacado (3 columnas); el carrusel muestra todo el catálogo (tienda.js 2.1.0).",
   "_note": "Atemporal by Casa Siego · sacos para dama. Fotos web en images/atemporal/web/ (originales fuera del repo).",
-  "updated_at": "2026-11-10",
+  "updated_at": "2026-11-13",
   "marca": "atemporal",
   "marcaNombre": "Atemporal by Siego",
   "kinds": {
@@ -14,6 +14,11 @@
     "traje": "Trajes",
     "conjunto": "Con chaleco"
   },
+  "destacados": [
+    "saco-gris-con-chaleco",
+    "saco-marino-texturizado",
+    "saco-gris-tweed-espiga"
+  ],
   "products": [
     {
       "id": "at-001",

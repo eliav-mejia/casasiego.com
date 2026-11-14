@@ -1,4 +1,4 @@
-/* Casa Siego · tiendas de las marcas (Justo, Atemporal) · tienda.css 2.0.0 (v1.4.1)
+/* Casa Siego · tiendas de las marcas (Justo, Atemporal) · tienda.css 2.1.0 (v1.4.1)
    Shared by brands/<marca>/tienda/index.html with js/tienda.js. Everything else is Tailwind classes (theme in js/tienda-tailwind.js).
    Same identity as /css/site.css without loading it (its base styles would fight Tailwind's reset):
    Casa Siego: beige #F7F2EA · wine ink #3B1A1F · wine #6B1E2C (actions) · brass #B0905E (ornaments) · taupe #6F5E57 (secondary)
@@ -75,6 +75,47 @@ h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; fon
 .card .crop { aspect-ratio: 4 / 5; width: 92%; margin-inline: auto; }
 .card .btn { margin-top: 1rem; width: 100%; padding: 0 1rem; }
 #rejilla > * { min-width: 0; }
+
+/* 2.1.0 · «Destacado»: three pieces side by side, on every screen */
+.destacados { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem .75rem; }
+/* Same height cards: «Cotizar» lines up at the bottom even when a name wraps */
+.destacados .card-abrir, .carrusel .card-abrir { flex-grow: 1; }
+
+/* 2.1.0 · Full catalogue: horizontal snap carousel, 3 cards on phones, 5 from 1024 px */
+.carrusel {
+    --gap: .75rem; --cols: 3;
+    display: grid; grid-auto-flow: column;
+    grid-auto-columns: calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    gap: var(--gap);
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: 0;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    padding-bottom: .25rem;
+}
+.carrusel::-webkit-scrollbar { display: none; }
+.carrusel > * { scroll-snap-align: start; }
+.carrusel-flecha {
+    display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
+    transition: border-color .2s, background-color .2s, color .2s, opacity .2s;
+}
+.carrusel-flecha:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: var(--parchment); }
+.carrusel-flecha:disabled { opacity: .35; cursor: default; }
+.carrusel-flecha svg { width: 14px; height: 14px; }
+.carrusel-pista { position: relative; height: 1px; margin-top: 1.75rem; background: var(--line); overflow: hidden; }
+.carrusel-pista > span { position: absolute; inset: 0 auto 0 0; background: var(--gold); transition: transform .25s ease-out, width .25s ease-out; }
+
+/* Narrow columns (3 across on phones): tighter type, no short line, compact «Cotizar» */
+@media (max-width: 767px) {
+    .destacados .card-corto, .carrusel .card-corto { display: none; }
+    .destacados .card-nombre, .carrusel .card-nombre { font-size: 13px; line-height: 1.2; }
+    .destacados .label, .carrusel .label { font-size: 9px; letter-spacing: .1em; }
+    .destacados .card .crop, .carrusel .card .crop { width: 100%; }
+    .destacados .card .btn, .carrusel .card .btn { min-height: 36px; margin-top: .6rem; padding: .35rem .25rem; font-size: 9px; letter-spacing: .08em; line-height: 1.25; text-align: center; }
+    .destacados .card .btn svg, .carrusel .card .btn svg { display: none; }
+}
+@media (min-width: 768px) { .destacados { gap: 3rem 1.5rem; } .carrusel { --gap: 1.25rem; } }
+@media (min-width: 1024px) { .carrusel { --cols: 5; } }
 
 /* Signed-in / visitor strip above the grid */
 .aviso { border: 1px solid var(--line); padding: 1rem 1.25rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; }
