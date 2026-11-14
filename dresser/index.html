@@ -22,6 +22,11 @@
                 <button role="radio" data-v="h">Caballero</button>
                 <button role="radio" data-v="m">Dama</button>
             </div>
+            <div class="seg" id="maniqui" role="radiogroup" aria-label="Maniquí">
+                <span class="pildora" aria-hidden="true"></span>
+                <button role="radio" data-v="galan" title="Busto de sastre sobre galán de noche (V)">Galán<span class="largo"> de noche</span></button>
+                <button role="radio" data-v="cuerpo" title="Figura completa (V)">Cuerpo</button>
+            </div>
             <div class="seg mini" id="unidades" role="radiogroup" aria-label="Unidades">
                 <span class="pildora" aria-hidden="true"></span>
                 <button role="radio" data-v="cm">cm</button>
@@ -34,6 +39,7 @@
         </header>
 
         <aside class="panel glass" id="pMedidas" aria-label="Medidas">
+            <button class="asa" type="button" data-cierra="pMedidas" aria-label="Cerrar Toma de medidas"></button>
             <div class="ptitulo">
                 <div class="kicker">Toma de medidas</div>
                 <h2>Medidas</h2>
@@ -45,18 +51,32 @@
 
         <section class="escena" id="escena">
             <canvas id="lienzo" aria-label="Silueta según las medidas"></canvas>
-            <div class="barra glass">
+            <div class="barra glass" role="toolbar" aria-label="Menús y vista">
+
+                <button class="menu" id="bMenuMedidas" aria-controls="pMedidas" aria-expanded="true" title="Toma de medidas (T)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10.5 8v4.5M14.5 8v3M18.5 8v4.5"/></svg><span>Toma de medidas</span></button>
+
                 <button id="bGuias" aria-pressed="true" title="Mostrar medidas (M)">Medidas</button>
+
+                <button class="render" id="bRender" aria-pressed="false" title="Render: ocultar o mostrar los menús (R)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.6"/></svg><span>Render</span></button>
+
                 <button id="bCamisa" aria-pressed="true" title="Poner o quitar la camisa (C)">Camisa</button>
+
+                <button class="menu" id="bMenuPrenda" aria-controls="pPrenda" aria-expanded="true" title="Camisería a medida (P)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5 12 6l3-2.5 5.5 3L19 11l-2.5-1V20.5h-9V10L5 11 3.5 6.5z"/><path d="M12 6v14.5"/></svg><span>Camisería a medida</span></button>
+
                 <span class="sep"></span>
-                <button id="bMenos" title="Alejar">−</button>
+
+                <button id="bMenos" class="zoom" title="Alejar">−</button>
+
                 <button id="bEncuadre" title="Encuadrar (0)">⤢</button>
-                <button id="bMas" title="Acercar">+</button>
+
+                <button id="bMas" class="zoom" title="Acercar">+</button>
+
             </div>
-            <div class="pista">Rueda: acercar · arrastrar: mover · doble clic: encuadrar · G caballero/dama · C camisa · M medidas</div>
+            <div class="pista">Rueda: acercar · arrastrar: mover · doble clic: encuadrar · T medidas · P camisería · R render · V maniquí · G caballero/dama · C camisa · M medidas</div>
         </section>
 
         <aside class="panel glass" id="pPrenda" aria-label="Probador">
+            <button class="asa" type="button" data-cierra="pPrenda" aria-label="Cerrar Camisería a medida"></button>
             <div class="ptitulo">
                 <div class="kicker">Camisería a medida</div>
                 <h2>Camisa cuello italiano</h2>
@@ -89,5 +109,6 @@
 
     <script src="datos.js"></script>
     <script src="dresser.js"></script>
+    <script src="menu.js"></script>
 </body>
 </html>

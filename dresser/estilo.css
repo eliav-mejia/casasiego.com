@@ -80,7 +80,7 @@ input[type="range"]:focus-visible { outline: 2px solid rgba(107, 30, 44, .35); o
 
 /* --- Escena --- */
 .escena { grid-area: esc; position: relative; min-height: 0; border-radius: var(--radio); overflow: hidden; }
-#lienzo { position: absolute; inset: 0; display: block; cursor: grab; touch-action: none; }
+#lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
 #lienzo.arrastrando { cursor: grabbing; }
 .barra { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; }
 .barra button { padding: 6px 12px; border-color: transparent; background: none; }
@@ -133,18 +133,6 @@ input[type="range"]:focus-visible { outline: 2px solid rgba(107, 30, 44, .35); o
 .ficha td { padding: 4px 0; border-bottom: 1px solid rgba(148, 163, 184, .2); }
 .ficha td:last-child { text-align: right; font-weight: 700; }
 
-/* --- Ventanas angostas: escena arriba, paneles abajo, con scroll --- */
-@media (max-width: 1100px) {
-    html, body { overflow: auto; }
-    .app { grid-template-columns: 1fr 1fr; grid-template-areas: "cab cab" "esc esc" "med pre"; grid-template-rows: auto 72vh auto; height: auto; }
-    .cabecera h1 { flex-basis: 100%; order: -1; }
-    .panel { overflow: visible; }
-}
-@media (max-width: 700px) {
-    .app { grid-template-columns: 1fr; grid-template-areas: "cab" "esc" "med" "pre"; padding: 10px 16px; grid-template-rows: auto 68vh auto auto; }
-    .pista { display: none; }
-    .acciones { width: 100%; }
-}
 @media (prefers-reduced-motion: reduce) {
     .panel, .tipo.cambia { animation: none; }
     .seg .pildora, .zona .riel .marca { transition: none; }
@@ -162,3 +150,60 @@ input[type="range"]:focus-visible { outline: 2px solid rgba(107, 30, 44, .35); o
 .escena { border-radius: 4px; border: 1px solid rgba(176, 144, 94, .35); background: rgba(255, 255, 255, .35); }
 .seg .pildora { box-shadow: 0 4px 14px rgba(107, 30, 44, .30); }
 .acciones button:hover, .barra button:hover { background: #fff; }
+
+/* --- Una sola pantalla: menús que se abren y cierran desde la barra (sin scroll de página) --- */
+html, body { height: 100%; overflow: hidden; }
+@media (min-width: 1101px) {
+    .app { grid-template-columns: auto minmax(0, 1fr) auto; }
+    #pMedidas { width: 300px; } #pPrenda { width: 320px; }
+    .panel { position: relative; min-width: 0; overflow-x: hidden; }
+    .app.listo .panel { transition: width .42s cubic-bezier(.2, .8, .2, 1), padding .42s cubic-bezier(.2, .8, .2, 1), opacity .25s, visibility 0s; }
+    .app.sin-pMedidas #pMedidas, .app.sin-pPrenda #pPrenda { width: 0; opacity: 0; visibility: hidden; padding-left: 0; padding-right: 0; border-width: 0; }
+    .app.listo.sin-pMedidas #pMedidas, .app.listo.sin-pPrenda #pPrenda { transition: width .42s cubic-bezier(.2, .8, .2, 1), padding .42s cubic-bezier(.2, .8, .2, 1), opacity .2s, visibility 0s .42s; }
+    .app.sin-pMedidas { column-gap: 0; } .app.sin-pPrenda { column-gap: 0; }
+    .app.sin-pMedidas:not(.sin-pPrenda), .app.sin-pPrenda:not(.sin-pMedidas) { column-gap: 14px; }
+    .panel > * { min-width: 260px; }
+}
+.asa { display: none; }
+
+.escena { container-type: inline-size; }
+.barra { max-width: calc(100% - 16px); z-index: 5; }
+.barra button { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.barra svg { width: 15px; height: 15px; flex: none; }
+.barra .menu[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); background: #fff; }
+.barra .render { padding: 6px 13px; border: 1px solid var(--line); }
+.barra .render[aria-pressed="true"] { border-color: var(--accent); }
+@container (max-width: 860px) { .barra .menu span { display: none; } .barra .menu { padding: 6px 9px; } }
+@container (max-width: 520px) { .barra .render span, .barra .zoom { display: none; } .barra button { padding: 6px 9px; } .barra .sep { margin: 0 1px; } }
+
+/* Móvil y tableta: la figura ocupa la pantalla; los menús son hojas inferiores, una a la vez */
+@media (max-width: 1100px) {
+    .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "cab" "esc"; gap: 10px; padding: 10px; }
+    .cabecera { gap: 8px 10px; }
+    .cabecera h1 { display: none; }
+    .logo { flex: 1 1 auto; }
+    .pista { display: none; }
+    .panel {
+        position: fixed; width: auto; border-width: 0; border-top-width: 2px; z-index: 30; left: 8px; right: 8px; bottom: 8px; max-height: min(62dvh, 600px);
+        overflow-y: auto; overscroll-behavior: contain; animation: none; padding: 30px 18px 22px;
+        background: rgba(255, 255, 255, .97); box-shadow: 0 -12px 40px rgba(15, 23, 42, .18);
+        opacity: 1; visibility: hidden; transform: translateY(calc(100% + 16px));
+        transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s .38s;
+    }
+    .panel.abierto, .app.listo .panel.abierto { visibility: visible; transform: none; transition: transform .38s cubic-bezier(.2, .8, .2, 1); }
+    .panel > * { min-width: 0; }
+    .asa { display: block; position: absolute; top: 0; left: 0; right: 0; height: 26px; border: 0; background: none; cursor: pointer; }
+    .asa::before { content: ""; position: absolute; top: 10px; left: 50%; width: 44px; height: 4px; margin-left: -22px; border-radius: 4px; background: var(--accent); opacity: .3; }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+    .panel { left: auto; width: 420px; }
+    #pMedidas { left: 8px; right: auto; }
+}
+@media (max-width: 700px) {
+    .acciones button { padding: 6px 11px; }
+    .seg button { padding: 6px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .app.listo .panel, .panel, .panel.abierto { transition: none !important; }
+}
+@media (max-width: 1280px) { .seg .largo { display: none; } }
