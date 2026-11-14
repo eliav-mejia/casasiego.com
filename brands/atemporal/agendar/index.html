@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <!-- Solo con sesión: sin sesión guardada → registro.html?modo=acceso&volver=brands/atemporal/agendar/ (registro-config destinosVolver) -->
+  <script src="../../../js/solo-miembros.js?v=1.0.0" data-acceso="../../../registro.html" data-volver="brands/atemporal/agendar/"></script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHTQ77F9');</script>
+  <!-- End Google Tag Manager -->
+  <script src="../../../js/medicion.js?v=1.0.0" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agenda tu cita · Atemporal · Casa Siego®</title>
+  <meta name="description" content="Agenda una cita virtual o a domicilio con un asesor de Atemporal por Casa Siego: toma de medidas, telas y estilos.">
+  <meta name="keywords" content="trajes a medida, trajes personalizados, camisería, sastrería, trajes ejecutivos, Ciudad de México, Madrid">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#4A1621">
+  <meta name="copyright" content="© 2026 Casa Siego®. Todos los derechos reservados.">
+  <link rel="license" href="../../../terms.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&family=Spectral:ital@1&display=swap">
+
+  <link rel="stylesheet" href="../../../css/site.css?v=1.2.1">
+  <link rel="stylesheet" href="../../../css/layout.css?v=1.1.9">
+  <link rel="stylesheet" href="../../../css/brand.css?v=1.1.0">
+  <link rel="stylesheet" href="../../../css/agendar.css?v=1.0.0">
+  <script src="../../../js/protect.js" defer></script>
+  <script src="../../../js/region.js?v=1.4.0" defer></script>
+  <script src="../../../js/casa.js?v=1.3.2" defer></script>
+  <script src="../../../js/agendar.js?v=1.0.0" defer></script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHTQ77F9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <header class="agendar__cabeza" id="inicio">
+    <a class="agendar__volver" href="../">&larr; Atemporal</a>
+    <p class="eyebrow eyebrow--gold">Atemporal by Siego &middot; Cliente Priority</p>
+    <h1 class="section-title">Agenda tu cita</h1>
+    <hr class="rule rule--short">
+    <p>Una persona de la casa te acompaña desde este primer contacto hasta la entrega. Elige cita virtual o a domicilio, el día y la hora.</p>
+    <p class="agendar__hola" id="agendar-hola" hidden></p>
+  </header>
+
+  <main class="agendar__marco">
+    <!-- Agenda: cita/agenda.html = build de citas.lameyer.net solo con el tema y servicios de Casa Siego (SITIO=casasiego.com npm run build:sitio) -->
+    <iframe id="agenda" title="Agenda de citas de Casa Siego" data-src="../../../cita/agenda.html"></iframe>
+    <noscript><p><a href="mailto:info@casasiego.com?subject=Atemporal%20%C2%B7%20Agendar%20cita">Escríbenos para agendar tu cita &rarr;</a></p></noscript>
+  </main>
+
+  <!-- VI. Colofón -->
+  <footer class="colophon">
+    <div class="colophon__inner">
+      <p class="wordmark wordmark--colophon"><span class="wordmark__casa">CASA</span> <span class="wordmark__siego">Siego</span><sup class="wordmark__r">&reg;</sup></p>
+      <p class="colophon__title">Saco &amp; Traje a Medida México</p>
+      <hr class="rule rule--short rule--gold">
+      <p class="meta meta--gold">Todas las fotografías &copy; 2026 Casa Siego&reg;. Todos los derechos reservados. Prohibida su descarga, reproducción o uso para entrenar IA sin licencia escrita.</p>
+      <a class="clima" href="https://stripe.com/climate" rel="noopener" aria-label="1 % de cada pago para eliminar carbono, con Stripe Climate">
+        <svg class="clima__leaf" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4C11 4 5 8.5 5 15.5c0 1.6.4 3 1 4.5M20 4c0 9-4.5 15-11.5 15M20 4 6 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><strong>1&nbsp;% para el clima</strong> con Stripe Climate</span>
+      </a>
+      <nav class="colophon__nav" aria-label="Casa Siego">
+        <ul class="meta meta--gold inline-list">
+          <li><a href="../../../terms.html">Términos de uso</a></li>
+          <li><a href="../../../ayuda/">Centro de Ayuda</a></li>
+          <li><a href="../">Volver a Atemporal</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
