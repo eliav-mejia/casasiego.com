@@ -350,6 +350,12 @@ figure:hover .plate__frame img { transform: scale(1.08); filter: saturate(1) sep
   text-decoration: none;
 }
 .leaf__link:hover { text-decoration: underline; }
+/* Citas (visitante.html · Un servicio integral): two links, each with its price below */
+.citas { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-3); }
+.cita { display: inline-flex; flex-direction: column; gap: 0.35em; text-decoration: none; color: inherit; }
+.cita .leaf__link { margin-top: 0; }
+.cita:hover .leaf__link { text-decoration: underline; }
+.cita__precio { font-size: 0.8rem; letter-spacing: 0.04em; opacity: 0.75; }
 .chapter__sticky .button { margin-top: var(--space-3); }
 .chapter__sticky .club__list { margin: var(--space-1) 0 0; font-size: 0.95em; }  /* cross-sell list on the light page */
 

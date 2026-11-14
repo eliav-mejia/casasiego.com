@@ -10,7 +10,7 @@ window.CASASIEGO_REGISTRO = {
   bitacoraBorde: '/api/acceso/evento', // Worker acceso-borde (D1). '' = off (GitHub Pages without Cloudflare in front)
   proveedores: ['google', 'azure', 'linkedin_oidc', 'facebook'], // azure = Microsoft · linkedin_oidc = LinkedIn (OIDC)
   redirectOnSuccess: 'index.html?bienvenida=1', // v1.4.0: main index; js/medidas.js asks for current measurements
-  destinosVolver: ['membresia/equipo/', 'membresia/eventos/', 'cuenta/'], // v1.4.2 ?volver= whitelist (js/solo-miembros.js)
+  destinosVolver: ['membresia/equipo/', 'membresia/eventos/', 'cuenta/', 'cita/', 'cita/virtual/'], // v1.4.2 ?volver= whitelist (js/solo-miembros.js)
   emailRedirect: 'registro.html',  // confirmation link of the e-mail sign-up comes back here (in additional_redirect_urls)
   reglaContrasena: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,72}$', // mirror of config.toml (8, lower_upper_letters_digits)
   messageMs: 3200,
