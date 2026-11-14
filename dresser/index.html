@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Probador de Casa Siego: ajusta tus medidas y mira cómo te queda la camisa de cuello italiano, por zona y por talla.">
+    <link rel="canonical" href="https://casasiego.com/dresser/">
+    <title>Probador · Casa Siego</title>
+    <link rel="icon" href="../favicon-32.png">
+    <link rel="stylesheet" href="fondo.css">
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="circuit-bg"></div>
+
+    <div class="app">
+        <header class="cabecera">
+            <a class="logo" href="../index.html">CASA SIEGO<span>/probador</span></a>
+            <h1>Probador <span>· por medidas</span></h1>
+            <div class="seg" id="sexo" role="radiogroup" aria-label="Silueta">
+                <span class="pildora" aria-hidden="true"></span>
+                <button role="radio" data-v="h">Caballero</button>
+                <button role="radio" data-v="m">Dama</button>
+            </div>
+            <div class="seg mini" id="unidades" role="radiogroup" aria-label="Unidades">
+                <span class="pildora" aria-hidden="true"></span>
+                <button role="radio" data-v="cm">cm</button>
+                <button role="radio" data-v="in">in</button>
+            </div>
+            <div class="acciones">
+                <button id="bExportar" title="Descargar medidas, camisa y ajuste como JSON">Exportar</button>
+                <button id="bReset" title="Volver a la silueta promedio">Restablecer</button>
+            </div>
+        </header>
+
+        <aside class="panel glass" id="pMedidas" aria-label="Medidas">
+            <div class="ptitulo">
+                <div class="kicker">Toma de medidas</div>
+                <h2>Medidas</h2>
+                <span class="tipo" id="tipo" title="Silueta según pecho, cintura y cadera"></span>
+            </div>
+            <div class="presets" id="presets"></div>
+            <div id="grupos"></div>
+        </aside>
+
+        <section class="escena" id="escena">
+            <canvas id="lienzo" aria-label="Silueta según las medidas"></canvas>
+            <div class="barra glass">
+                <button id="bGuias" aria-pressed="true" title="Mostrar medidas (M)">Medidas</button>
+                <button id="bCamisa" aria-pressed="true" title="Poner o quitar la camisa (C)">Camisa</button>
+                <span class="sep"></span>
+                <button id="bMenos" title="Alejar">−</button>
+                <button id="bEncuadre" title="Encuadrar (0)">⤢</button>
+                <button id="bMas" title="Acercar">+</button>
+            </div>
+            <div class="pista">Rueda: acercar · arrastrar: mover · doble clic: encuadrar · G caballero/dama · C camisa · M medidas</div>
+        </section>
+
+        <aside class="panel glass" id="pPrenda" aria-label="Probador">
+            <div class="ptitulo">
+                <div class="kicker">Camisería a medida</div>
+                <h2>Camisa cuello italiano</h2>
+                <label class="interruptor"><input type="checkbox" id="cPuesta" checked><span></span>Puesta</label>
+            </div>
+            <div class="campo">
+                <div class="etq">Color</div>
+                <div class="colores" id="colores"></div>
+            </div>
+            <div class="campo">
+                <div class="etq">Corte</div>
+                <div class="seg" id="corte" role="radiogroup" aria-label="Corte">
+                    <span class="pildora" aria-hidden="true"></span>
+                    <button role="radio" data-v="slim">Slim</button>
+                    <button role="radio" data-v="regular">Regular</button>
+                </div>
+            </div>
+            <div class="campo">
+                <div class="etq">Talla <em id="tallaNota"></em></div>
+                <div class="tallas" id="tallas"></div>
+            </div>
+            <div class="veredicto" id="veredicto"></div>
+            <div class="ajuste" id="ajuste"></div>
+            <details class="ficha">
+                <summary>Ficha de la prenda</summary>
+                <div id="ficha"></div>
+            </details>
+        </aside>
+    </div>
+
+    <script src="datos.js"></script>
+    <script src="dresser.js"></script>
+</body>
+</html>

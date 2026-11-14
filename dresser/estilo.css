@@ -1,0 +1,164 @@
+/* Dresser · Casa Siego: beige antiguo, vino y latón, paneles de cristal. */
+:root {
+    --tight: #b4232f;
+    --loose: #a8742a;
+    --ok: var(--accent);
+    --radio: 18px;
+}
+
+.app {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr) 320px;
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas: "cab cab cab" "med esc pre";
+    gap: 14px;
+    height: 100vh;
+    height: 100dvh;
+    padding: 14px;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* --- Cabecera --- */
+.cabecera { grid-area: cab; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.logo { font-weight: 800; letter-spacing: .18em; font-size: 13px; color: var(--ink); text-decoration: none; }
+.logo span { color: var(--accent); font-weight: 600; letter-spacing: .04em; }
+.cabecera h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.03em; flex: 1; white-space: nowrap; }
+.cabecera h1 span { font-weight: 300; color: var(--slate-400); }
+.acciones { display: flex; gap: 6px; }
+.acciones button, .barra button {
+    border: 1px solid var(--line); background: rgba(255, 255, 255, .8); border-radius: 999px;
+    padding: 7px 14px; font-size: 12px; font-weight: 600; transition: border-color .2s, color .2s, background .2s;
+}
+.acciones button:hover, .barra button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Selector segmentado con píldora que se desliza */
+.seg { position: relative; display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(148, 163, 184, .14); border: 1px solid rgba(148, 163, 184, .25); }
+.seg button { position: relative; z-index: 1; border: 0; background: none; padding: 6px 16px; font-size: 12.5px; font-weight: 600; color: var(--slate-600); border-radius: 999px; transition: color .25s; }
+.seg button[aria-checked="true"] { color: #fff; }
+.seg .pildora { position: absolute; top: 3px; bottom: 3px; left: 0; width: 0; border-radius: 999px; background: var(--accent); box-shadow: 0 4px 14px rgba(107, 30, 44, .35); transition: transform .45s cubic-bezier(.2, .9, .2, 1.15), width .45s cubic-bezier(.2, .9, .2, 1.15); }
+.seg.mini button { padding: 5px 11px; font-size: 11.5px; }
+
+/* --- Paneles --- */
+.panel { border-radius: var(--radio); padding: 18px 18px 22px; overflow-y: auto; scrollbar-width: thin; animation: entra .7s cubic-bezier(.2, .8, .2, 1) both; }
+#pMedidas { grid-area: med; }
+#pPrenda { grid-area: pre; animation-delay: .12s; }
+@keyframes entra { from { opacity: 0; transform: translateY(14px); } }
+.ptitulo { position: relative; margin-bottom: 14px; }
+.ptitulo h2 { margin: 4px 0 0; font-size: 19px; letter-spacing: -.02em; }
+.tipo { display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(107, 30, 44, .08); border: 1px solid rgba(107, 30, 44, .2); }
+.tipo.cambia { animation: pulso .6s ease; }
+@keyframes pulso { 40% { transform: scale(1.08); background: rgba(107, 30, 44, .18); } }
+
+.presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.chip { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 5px 11px; font-size: 11.5px; font-weight: 600; color: var(--slate-600); transition: all .2s; }
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.grupo { margin-top: 16px; }
+.grupo > .kicker { margin-bottom: 4px; }
+
+/* Fila de medida: nombre + valor editable + deslizador */
+.medida { padding: 7px 8px 6px; margin: 0 -8px; border-radius: 10px; transition: background .2s; }
+.medida.activa { background: rgba(107, 30, 44, .06); }
+.medida label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 12.5px; font-weight: 600; }
+.medida .val { display: inline-flex; align-items: baseline; gap: 3px; color: var(--accent); }
+.medida .val input { width: 54px; border: 0; border-bottom: 1px dashed transparent; background: none; text-align: right; font: inherit; font-weight: 700; color: inherit; padding: 0; -moz-appearance: textfield; }
+.medida .val input::-webkit-inner-spin-button, .medida .val input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.medida .val input:hover, .medida .val input:focus { border-bottom-color: var(--accent); outline: none; }
+.medida .val em { font-style: normal; font-size: 10.5px; color: var(--slate-400); font-weight: 600; }
+
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 18px; margin: 4px 0 0; background: none; cursor: pointer; --p: 50%; }
+input[type="range"]::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: linear-gradient(to right, var(--accent) var(--p), rgba(148, 163, 184, .35) var(--p)); }
+input[type="range"]::-moz-range-track { height: 3px; border-radius: 3px; background: linear-gradient(to right, var(--accent) var(--p), rgba(148, 163, 184, .35) var(--p)); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; margin-top: -6px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 2px 8px rgba(107, 30, 44, .3); transition: transform .15s; }
+input[type="range"]::-moz-range-thumb { width: 11px; height: 11px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 2px 8px rgba(107, 30, 44, .3); }
+input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.25); }
+input[type="range"]:focus-visible { outline: 2px solid rgba(107, 30, 44, .35); outline-offset: 2px; border-radius: 4px; }
+
+/* --- Escena --- */
+.escena { grid-area: esc; position: relative; min-height: 0; border-radius: var(--radio); overflow: hidden; }
+#lienzo { position: absolute; inset: 0; display: block; cursor: grab; touch-action: none; }
+#lienzo.arrastrando { cursor: grabbing; }
+.barra { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; }
+.barra button { padding: 6px 12px; border-color: transparent; background: none; }
+.barra button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.barra button[aria-pressed="true"]:hover { color: #fff; }
+.barra .sep { width: 1px; height: 18px; background: var(--line); margin: 0 4px; }
+.pista { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 11px; color: var(--slate-300); pointer-events: none; }
+
+/* --- Probador --- */
+.interruptor { position: absolute; top: 0; right: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--slate-600); cursor: pointer; }
+.interruptor input { position: absolute; opacity: 0; pointer-events: none; }
+.interruptor span { width: 34px; height: 20px; border-radius: 999px; background: rgba(148, 163, 184, .4); position: relative; transition: background .25s; }
+.interruptor span::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .2); transition: transform .3s cubic-bezier(.2, .9, .2, 1.2); }
+.interruptor input:checked + span { background: var(--accent); }
+.interruptor input:checked + span::after { transform: translateX(14px); }
+.interruptor input:focus-visible + span { outline: 2px solid rgba(107, 30, 44, .4); outline-offset: 2px; }
+
+.campo { margin-bottom: 14px; }
+.etq { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; font-weight: 700; color: var(--slate-400); margin-bottom: 7px; }
+.etq em { font-style: normal; letter-spacing: .02em; text-transform: none; color: var(--accent); margin-left: 6px; }
+.colores { display: flex; gap: 8px; }
+.color { display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 4px 11px 4px 4px; font-size: 11.5px; font-weight: 600; color: var(--slate-600); transition: all .2s; }
+.color i { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--accent); }
+.color[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 3px rgba(107, 30, 44, .12); }
+.tallas { display: flex; flex-wrap: wrap; gap: 5px; }
+.tallas .chip { min-width: 38px; position: relative; }
+.tallas .chip.rec::after { content: ''; position: absolute; top: -2px; right: -2px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; }
+
+.veredicto { padding: 12px 14px; border-radius: 14px; font-size: 13px; font-weight: 600; margin: 4px 0 12px; border: 1px solid rgba(107, 30, 44, .25); background: rgba(107, 30, 44, .06); color: var(--accent); }
+.veredicto.mal { border-color: rgba(180, 35, 47, .25); background: rgba(180, 35, 47, .05); color: var(--tight); }
+.veredicto small { display: block; font-weight: 500; color: var(--slate-600); margin-top: 3px; }
+
+.zona { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 8px; margin: 0 -8px; border-radius: 10px; font-size: 12px; transition: background .2s; }
+.zona.activa { background: rgba(107, 30, 44, .06); }
+.zona b { font-weight: 700; }
+.zona .st { font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 999px; color: var(--ok); background: rgba(107, 30, 44, .08); }
+.zona .st.bajo { color: var(--tight); background: rgba(180, 35, 47, .08); }
+.zona .st.alto { color: var(--loose); background: rgba(168, 116, 42, .1); }
+.zona .num { grid-column: 1 / -1; color: var(--slate-400); font-size: 11px; }
+.zona .num strong { color: var(--ink); font-weight: 700; }
+.zona .riel { grid-column: 1 / -1; position: relative; height: 4px; border-radius: 4px; background: rgba(148, 163, 184, .25); margin-top: 4px; }
+.zona .riel .bien { position: absolute; top: 0; bottom: 0; background: rgba(107, 30, 44, .3); border-radius: 4px; }
+.zona .riel .marca { position: absolute; top: -3px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #fff; border: 2px solid var(--ok); transition: left .4s cubic-bezier(.2, .8, .2, 1); }
+.zona .riel .marca.bajo { border-color: var(--tight); }
+.zona .riel .marca.alto { border-color: var(--loose); }
+
+.ficha { margin-top: 12px; font-size: 12px; }
+.ficha summary { cursor: pointer; font-weight: 700; color: var(--slate-600); }
+.ficha table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.ficha td { padding: 4px 0; border-bottom: 1px solid rgba(148, 163, 184, .2); }
+.ficha td:last-child { text-align: right; font-weight: 700; }
+
+/* --- Ventanas angostas: escena arriba, paneles abajo, con scroll --- */
+@media (max-width: 1100px) {
+    html, body { overflow: auto; }
+    .app { grid-template-columns: 1fr 1fr; grid-template-areas: "cab cab" "esc esc" "med pre"; grid-template-rows: auto 72vh auto; height: auto; }
+    .cabecera h1 { flex-basis: 100%; order: -1; }
+    .panel { overflow: visible; }
+}
+@media (max-width: 700px) {
+    .app { grid-template-columns: 1fr; grid-template-areas: "cab" "esc" "med" "pre"; padding: 10px 16px; grid-template-rows: auto 68vh auto auto; }
+    .pista { display: none; }
+    .acciones { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .panel, .tipo.cambia { animation: none; }
+    .seg .pildora, .zona .riel .marca { transition: none; }
+}
+
+/* --- Casa Siego: tipografía y acabados ------------------------------------ */
+.logo { font-family: var(--font-display); font-weight: 700; letter-spacing: .3em; color: var(--accent); }
+.logo span { color: var(--brass); font-weight: 400; letter-spacing: .08em; }
+.cabecera h1 { font-family: var(--font-display); font-weight: 400; font-size: 20px; letter-spacing: .12em; text-transform: uppercase; }
+.cabecera h1 span { font-family: var(--font-body); font-style: italic; text-transform: none; letter-spacing: 0; color: var(--slate-400); }
+.ptitulo h2 { font-family: var(--font-body); font-weight: 600; font-size: 22px; letter-spacing: 0; }
+.etq { font-family: var(--font-display); color: var(--brass); }
+.veredicto { font-family: var(--font-body); font-size: 14.5px; }
+.panel { border-radius: 4px; border-top: 2px solid var(--accent); }
+.escena { border-radius: 4px; border: 1px solid rgba(176, 144, 94, .35); background: rgba(255, 255, 255, .35); }
+.seg .pildora { box-shadow: 0 4px 14px rgba(107, 30, 44, .30); }
+.acciones button:hover, .barra button:hover { background: #fff; }
