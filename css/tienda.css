@@ -1,4 +1,4 @@
-/* Casa Siego · tiendas de las marcas (Justo, Atemporal) · tienda.css 2.1.0 (v1.4.1)
+/* Casa Siego · tiendas de las marcas (Justo, Atemporal) · tienda.css 2.2.0 (v1.4.1)
    Shared by brands/<marca>/tienda/index.html with js/tienda.js. Everything else is Tailwind classes (theme in js/tienda-tailwind.js).
    Same identity as /css/site.css without loading it (its base styles would fight Tailwind's reset):
    Casa Siego: beige #F7F2EA · wine ink #3B1A1F · wine #6B1E2C (actions) · brass #B0905E (ornaments) · taupe #6F5E57 (secondary)
@@ -76,12 +76,16 @@ h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; fon
 .card .btn { margin-top: 1rem; width: 100%; padding: 0 1rem; }
 #rejilla > * { min-width: 0; }
 
-/* 2.1.0 · «Destacado»: three pieces side by side, on every screen */
-.destacados { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem .75rem; }
+/* «Destacado» (2.2.0): every destacado, 2 columns on phones and 3 from 1024 px; a lone last card is centred */
+.destacados { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem .75rem; }
+@media (max-width: 1023px) {
+    .destacados > :last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - .375rem); }
+}
+@media (min-width: 1024px) { .destacados { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 /* Same height cards: «Cotizar» lines up at the bottom even when a name wraps */
 .destacados .card-abrir, .carrusel .card-abrir { flex-grow: 1; }
 
-/* 2.1.0 · Full catalogue: horizontal snap carousel, 3 cards on phones, 5 from 1024 px */
+/* Full catalogue: horizontal snap carousel, 3 cards on phones, 5 from 1024 px; endless loop (tienda.js 2.2.0) */
 .carrusel {
     --gap: .75rem; --cols: 3;
     display: grid; grid-auto-flow: column;
@@ -101,18 +105,25 @@ h1, h2, h3 { font-family: 'Bodoni Moda', 'GFS Didot', Didot, Georgia, serif; fon
 }
 .carrusel-flecha:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: var(--parchment); }
 .carrusel-flecha:disabled { opacity: .35; cursor: default; }
+.carrusel-flecha[hidden] { display: none; }
+@media (max-width: 767px) { .carrusel-flecha { width: 40px; height: 40px; } }
 .carrusel-flecha svg { width: 14px; height: 14px; }
 .carrusel-pista { position: relative; height: 1px; margin-top: 1.75rem; background: var(--line); overflow: hidden; }
 .carrusel-pista > span { position: absolute; inset: 0 auto 0 0; background: var(--gold); transition: transform .25s ease-out, width .25s ease-out; }
 
 /* Narrow columns (3 across on phones): tighter type, no short line, compact «Cotizar» */
 @media (max-width: 767px) {
-    .destacados .card-corto, .carrusel .card-corto { display: none; }
-    .destacados .card-nombre, .carrusel .card-nombre { font-size: 13px; line-height: 1.2; }
-    .destacados .label, .carrusel .label { font-size: 9px; letter-spacing: .1em; }
-    .destacados .card .crop, .carrusel .card .crop { width: 100%; }
-    .destacados .card .btn, .carrusel .card .btn { min-height: 36px; margin-top: .6rem; padding: .35rem .25rem; font-size: 9px; letter-spacing: .08em; line-height: 1.25; text-align: center; }
-    .destacados .card .btn svg, .carrusel .card .btn svg { display: none; }
+    .carrusel .card-corto { display: none; }
+    .carrusel .card-nombre { font-size: 13px; line-height: 1.2; }
+    .carrusel .label { font-size: 9px; letter-spacing: .1em; }
+    .carrusel .card .crop { width: 100%; }
+    .carrusel .card .btn { min-height: 36px; margin-top: .6rem; padding: .35rem .25rem; font-size: 9px; letter-spacing: .08em; line-height: 1.25; text-align: center; }
+    .carrusel .card .btn svg { display: none; }
+    /* Destacado, 2 across: a little more room */
+    .destacados .card-corto { font-size: 13px; line-height: 1.35; }
+    .destacados .card-nombre { font-size: 16px; line-height: 1.2; }
+    .destacados .card .crop { width: 100%; }
+    .destacados .card .btn { min-height: 40px; padding: .4rem .5rem; font-size: 10px; letter-spacing: .12em; line-height: 1.25; text-align: center; }
 }
 @media (min-width: 768px) { .destacados { gap: 3rem 1.5rem; } .carrusel { --gap: 1.25rem; } }
 @media (min-width: 1024px) { .carrusel { --cols: 5; } }

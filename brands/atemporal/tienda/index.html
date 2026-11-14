@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ledger&family=Bodoni+Moda:opsz,wght@6..96,600&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Spectral:ital@1&display=swap">
-  <link rel="stylesheet" href="../../../css/tienda.css?v=2.1.0">
+  <link rel="stylesheet" href="../../../css/tienda.css?v=2.2.0">
 </head>
 <!-- Tienda v1.4.1: page + db/productos.json only; the engine is /js/tienda.js (shared with Justo). -->
 <body data-root="../../../" class="bg-parchment text-ink font-serif">
@@ -81,19 +81,17 @@
       </div>
 
       <div class="mt-20 md:mt-24">
-        <div class="flex flex-wrap justify-between items-end gap-4 mb-6">
+        <div class="flex justify-between items-end gap-4 mb-5">
           <div>
             <p class="label-strong">Catálogo completo</p>
             <p id="estado" class="note text-ink-500 mt-1" aria-live="polite">Cargando la colección…</p>
           </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Filtrar por tipo" id="filtros"></div>
-            <div class="hidden md:flex gap-2 ml-2">
-              <button type="button" class="carrusel-flecha" id="carrusel-prev" aria-label="Anteriores" aria-controls="rejilla"><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M10 2 4 8l6 6"/></svg></button>
-              <button type="button" class="carrusel-flecha" id="carrusel-next" aria-label="Siguientes" aria-controls="rejilla"><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m6 2 6 6-6 6"/></svg></button>
-            </div>
+          <div class="flex gap-2 shrink-0">
+            <button type="button" class="carrusel-flecha" id="carrusel-prev" aria-label="Anteriores" aria-controls="rejilla"><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M10 2 4 8l6 6"/></svg></button>
+            <button type="button" class="carrusel-flecha" id="carrusel-next" aria-label="Siguientes" aria-controls="rejilla"><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m6 2 6 6-6 6"/></svg></button>
           </div>
         </div>
+        <div class="flex flex-wrap gap-2 mb-6" role="radiogroup" aria-label="Filtrar por tipo" id="filtros"></div>
         <div id="rejilla" class="carrusel" role="region" aria-label="Catálogo completo" tabindex="0"></div>
         <div class="carrusel-pista" aria-hidden="true"><span id="carrusel-barra"></span></div>
       </div>
@@ -146,6 +144,6 @@
   <noscript><p style="padding:2rem;font-family:Georgia,serif">La tienda necesita JavaScript. Escríbenos a <a href="mailto:info@casasiego.com">info@casasiego.com</a> para cotizar.</p></noscript>
   <script src="../../../js/supabase-config.js?v=1.0.0"></script>
   <script src="../../../js/acceso-config.js"></script>
-  <script src="../../../js/tienda.js?v=2.1.0"></script>
+  <script src="../../../js/tienda.js?v=2.2.0"></script>
 </body>
 </html>
