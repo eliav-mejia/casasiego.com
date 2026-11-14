@@ -1,4 +1,4 @@
-/* Dresser · Casa Siego (v1.1.0 · maniquí de alta costura)
+/* Dresser · Casa Siego (v1.2.0 · maniquí de render)
    Silueta de maniquí (hombre / mujer) que se deforma en tiempo real con las medidas de confección,
    y probador de una camisa de cuello italiano (blanca, celeste o a rayas) con reporte de ajuste por zona.
    Sin dependencias: Canvas 2D. Unidades internas: cm (mundo con y hacia arriba, suelo en y = 0). */
@@ -15,7 +15,7 @@
   const off = (a, n, k) => ({ x: a.x + n.x * k, y: a.y + n.y * k });
   const espejo = p => ({ x: -p.x, y: p.y });
 
-  const TINTA = '#4A1621', LATON = '#B08D57';   // contorno a tinta y cinta de latón del maniquí
+  const FIG = { tinta: '#4A1621', tintaRGB: '74,22,33', sombra: '107,30,44', cinta: '176,141,87', piel: ['#FBF7F0', '#F4ECDF', '#EADFCB'] };   // maniquí: lino marfil, tinta vino, cinta de latón
   const AZUL = '#6B1E2C', ROJO = '#e11d48', AMBAR = '#d97706';
   const COLOR_ST = { ok: AZUL, bajo: ROJO, alto: AMBAR };
   const CLAVE = 'casasiego-dresser/1';
@@ -236,10 +236,11 @@
     }
     return pts;
   }
-  function manoPts(g) {
-    const l = g.handL, w = g.handW, wd = g.wD;
+  function manoPts(g) {   // mano de maniquí: palma estilizada, dedos juntos y pulgar separado hacia dentro
+    const l = g.handL, w = g.handW * 0.9, wd = g.wD;
     const p = (a, b) => ({ x: g.W.x + g.d2.x * l * a + g.n2.x * b, y: g.W.y + g.d2.y * l * a + g.n2.y * b });
-    return [p(0.3, w * 0.5), p(0.68, w * 0.44), p(0.93, w * 0.22), p(1.0, -w * 0.04), p(0.9, -w * 0.3), p(0.58, -w * 0.42), p(0.3, -w * 0.6), p(0.08, -wd * 0.56)];
+    return [p(0.22, w * 0.5), p(0.5, w * 0.48), p(0.78, w * 0.36), p(0.95, w * 0.16), p(1.0, -w * 0.06), p(0.92, -w * 0.26),
+            p(0.66, -w * 0.36), p(0.56, -w * 0.58), p(0.42, -w * 0.66), p(0.3, -w * 0.52), p(0.08, -wd * 0.55)];
   }
   function brazoPts(g) {
     const ua = g.ua, fa = g.fa, out = [{ x: g.shX - 0.4, y: g.shY + 1.5 }], inn = [];
@@ -304,7 +305,7 @@
   const vista = { zoom: 1, px: 0, py: 0 };
   function medir() {
     const r = cv.parentElement.getBoundingClientRect();
-    dpr = Math.min(2, window.devicePixelRatio || 1);
+    dpr = Math.min(3, window.devicePixelRatio || 1);
     W = r.width; Hc = r.height;
     cv.width = Math.round(W * dpr); cv.height = Math.round(Hc * dpr);
   }
@@ -333,26 +334,30 @@
   function pintarPiel(g) {
     const a = P(0, g.H), b = P(0, 0);
     piel = ctx.createLinearGradient(0, a.y, 0, b.y);
-    piel.addColorStop(0, '#FBF7F0');
-    piel.addColorStop(0.55, '#F4ECDF');
-    piel.addColorStop(1, '#EADFCB');
+    piel.addColorStop(0, FIG.piel[0]); piel.addColorStop(0.55, FIG.piel[1]); piel.addColorStop(1, FIG.piel[2]);
   }
-  // Lino marfil con volumen: luz desde arriba a la izquierda y borde sombreado por dentro.
+  // Volumen de render: luz cenital a la izquierda, luz de contorno (rim) en el lado iluminado y sombra en el opuesto.
   function relleno(pts, g) {
     ctx.beginPath(); curva(pts, true); ctx.fillStyle = piel; ctx.fill();
-    ctx.save(); ctx.clip();
-    const a = P(-38, g.H), b = P(38, 0), luz = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
-    luz.addColorStop(0, 'rgba(255,255,255,.6)'); luz.addColorStop(0.42, 'rgba(255,255,255,0)'); luz.addColorStop(1, 'rgba(107,30,44,.11)');
+    ctx.save(); ctx.clip(); ctx.lineJoin = 'round';
+    const a = P(-40, g.H), b = P(40, 0), luz = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+    luz.addColorStop(0, 'rgba(255,255,255,.65)'); luz.addColorStop(0.4, 'rgba(255,255,255,0)'); luz.addColorStop(1, `rgba(${FIG.sombra},.12)`);
     ctx.fillStyle = luz; ctx.fillRect(0, 0, W, Hc);
-    ctx.strokeStyle = 'rgba(107,30,44,.055)'; ctx.lineJoin = 'round';
-    for (const w of [3.4, 1.7]) { ctx.lineWidth = w * S; ctx.beginPath(); curva(pts, true); ctx.stroke(); }
+    const trazo = (dx, dy, color, ancho) => {
+      ctx.save(); ctx.translate(dx * S, -dy * S); ctx.strokeStyle = color; ctx.lineWidth = ancho * S;
+      ctx.beginPath(); curva(pts, true); ctx.stroke(); ctx.restore();
+    };
+    trazo(-1.1, 0.2, `rgba(${FIG.sombra},.10)`, 2.6);     // sombra del borde derecho
+    trazo(0.7, -0.3, 'rgba(255,255,255,.75)', 1.1);        // luz de contorno del borde izquierdo
+    ctx.strokeStyle = `rgba(${FIG.sombra},.05)`;
+    for (const w of [3.6, 1.8]) { ctx.lineWidth = w * S; ctx.beginPath(); curva(pts, true); ctx.stroke(); }
     ctx.restore();
   }
   // Contorno de ilustración: halo suave + trazo fino a tinta.
   function contorno(pts, cerrar) {
     ctx.save(); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.strokeStyle = 'rgba(74,22,33,.09)'; ctx.lineWidth = 3.6; ctx.beginPath(); curva(pts, cerrar); ctx.stroke();
-    ctx.strokeStyle = TINTA; ctx.lineWidth = 1.2; ctx.beginPath(); curva(pts, cerrar); ctx.stroke();
+    ctx.strokeStyle = `rgba(${FIG.tintaRGB},.08)`; ctx.lineWidth = 3.8; ctx.beginPath(); curva(pts, cerrar); ctx.stroke();
+    ctx.strokeStyle = FIG.tinta; ctx.lineWidth = 1.15; ctx.beginPath(); curva(pts, cerrar); ctx.stroke();
     ctx.restore();
   }
 
@@ -380,26 +385,30 @@
   let EV = [];                         // evaluación vigente (objetivo, no animada)
 
   function dibujarCuerpo(g) {
-    // Suelo: sombra suave y línea de pasarela en latón
+    // Suelo: sombra de contacto + sombra amplia, y línea de pasarela
     const sp = P(0, 0), rx = (g.cA + 16) * S;
     const gr = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, rx);
-    gr.addColorStop(0, 'rgba(74,22,33,.2)'); gr.addColorStop(0.6, 'rgba(74,22,33,.06)'); gr.addColorStop(1, 'rgba(74,22,33,0)');
+    gr.addColorStop(0, `rgba(${FIG.tintaRGB},.18)`); gr.addColorStop(0.6, `rgba(${FIG.tintaRGB},.05)`); gr.addColorStop(1, `rgba(${FIG.tintaRGB},0)`);
     ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(sp.x, sp.y, rx, rx * 0.1, 0, 0, 2 * PI); ctx.fill();
+    ctx.fillStyle = `rgba(${FIG.tintaRGB},.16)`;
+    for (const k of [1, -1]) { const f = P(g.cA * k, 0); ctx.beginPath(); ctx.ellipse(f.x, f.y, (g.anD + 3) * S, 0.9 * S, 0, 0, 2 * PI); ctx.fill(); }
     const l1 = P(-(g.cA + 32), 0), l2 = P(g.cA + 32, 0), gl = ctx.createLinearGradient(l1.x, 0, l2.x, 0);
-    gl.addColorStop(0, 'rgba(176,141,87,0)'); gl.addColorStop(0.5, 'rgba(176,141,87,.75)'); gl.addColorStop(1, 'rgba(176,141,87,0)');
+    gl.addColorStop(0, `rgba(${FIG.cinta},0)`); gl.addColorStop(0.5, `rgba(${FIG.cinta},.75)`); gl.addColorStop(1, `rgba(${FIG.cinta},0)`);
     ctx.strokeStyle = gl; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(l1.x, l1.y + 0.5); ctx.lineTo(l2.x, l2.y + 0.5); ctx.stroke();
 
     const sil = siluetaPts(g);
     relleno(sil, g);
 
-    // Costuras del maniquí, recortadas a la silueta
+    // Detalles del maniquí, recortados a la silueta
     ctx.save(); ctx.beginPath(); curva(sil, true); ctx.clip();
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    // sombra del mentón sobre el cuello
+    // sombra del mentón sobre el cuello y sombras de los brazos sobre el torso
     const cb = P(0, g.chinY + 0.6), sr = g.nw * 1.5 * S, sg = ctx.createRadialGradient(cb.x, cb.y, 0, cb.x, cb.y, sr);
-    sg.addColorStop(0, 'rgba(74,22,33,.16)'); sg.addColorStop(1, 'rgba(74,22,33,0)');
+    sg.addColorStop(0, `rgba(${FIG.tintaRGB},.16)`); sg.addColorStop(1, `rgba(${FIG.tintaRGB},0)`);
     ctx.fillStyle = sg; ctx.beginPath(); ctx.ellipse(cb.x, cb.y, sr, sr * 0.7, 0, 0, 2 * PI); ctx.fill();
-    ctx.strokeStyle = 'rgba(74,22,33,.2)'; ctx.lineWidth = 1;
+    ctx.fillStyle = `rgba(${FIG.sombra},.09)`;
+    for (const k of [1, -1]) { let pts = brazoPts(g).map(p => ({ x: p.x - 1.1, y: p.y - 0.6 })); if (k < 0) pts = pts.map(espejo); ctx.beginPath(); curva(pts, true); ctx.fill(); }
+    ctx.strokeStyle = `rgba(${FIG.tintaRGB},.2)`; ctx.lineWidth = 1;
     ctx.beginPath(); linea({ x: 0, y: g.nbY - 1.5 }, { x: 0, y: g.crY + 3 }); ctx.stroke();          // centro frente
     for (const k of [1, -1]) {                                                                        // costuras princesa
       ctx.beginPath();
@@ -407,7 +416,7 @@
              { x: g.waW * 0.5 * k, y: g.waY }, { x: g.hiW * 0.56 * k, y: g.hiY - 4 }], false);
       ctx.stroke();
     }
-    ctx.strokeStyle = 'rgba(74,22,33,.24)'; ctx.beginPath();
+    ctx.strokeStyle = `rgba(${FIG.tintaRGB},.24)`; ctx.beginPath();
     for (const k of [1, -1]) {
       const x = v => v * k;
       linea({ x: x(1.4), y: g.nbY - 1.2 }, { x: x(g.shX * 0.84), y: g.shY + 0.2 }, { x: x(g.shX * 0.45), y: g.nbY - 2.4 });    // clavícula
@@ -424,26 +433,30 @@
     for (const k of [1, -1]) { const c = P(g.chW * 0.46 * k, g.chY + 0.8); ctx.moveTo(c.x + rb * Math.cos(0.12 * PI), c.y + rb * Math.sin(0.12 * PI)); ctx.arc(c.x, c.y, rb, 0.12 * PI, 0.88 * PI); }
     ctx.stroke();
     ctx.globalAlpha = 1;
-    // Cinta de latón en la cintura, con su marca al centro
-    ctx.strokeStyle = 'rgba(176,141,87,.92)'; ctx.lineWidth = Math.max(1.4, 0.85 * S);
+    // Cinta de medir en la cintura, con su marca al centro
+    ctx.strokeStyle = `rgba(${FIG.cinta},.92)`; ctx.lineWidth = Math.max(1.4, 0.85 * S);
     ctx.beginPath(); linea({ x: -g.waW - 0.5, y: g.waY + 0.5 }, { x: g.waW + 0.5, y: g.waY + 0.5 }, { x: 0, y: g.waY - 0.9 }); ctx.stroke();
     const mk = P(0, g.waY - 0.2), mr = Math.max(2, 0.7 * S);
-    ctx.fillStyle = TINTA; ctx.beginPath(); ctx.moveTo(mk.x, mk.y - mr); ctx.lineTo(mk.x + mr * 0.7, mk.y); ctx.lineTo(mk.x, mk.y + mr); ctx.lineTo(mk.x - mr * 0.7, mk.y); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = FIG.tinta; ctx.beginPath(); ctx.moveTo(mk.x, mk.y - mr); ctx.lineTo(mk.x + mr * 0.7, mk.y); ctx.lineTo(mk.x, mk.y + mr); ctx.lineTo(mk.x - mr * 0.7, mk.y); ctx.closePath(); ctx.fill();
     ctx.restore();
     contorno(sil, true);
 
-    // Cabeza de maniquí sin rasgos (y chongo con aro de latón cuando es mujer)
+    // Cabeza de maniquí sin rasgos (y chongo con aro cuando es mujer)
     if (fem > 0.01) {
       ctx.save(); ctx.globalAlpha = fem;
       const c = P(0, g.H - g.headH * 0.02), r = g.headW * 0.25 * S * fem;
       ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 2 * PI); ctx.fillStyle = piel; ctx.fill();
-      ctx.strokeStyle = TINTA; ctx.lineWidth = 1.2; ctx.stroke();
-      ctx.strokeStyle = LATON; ctx.lineWidth = Math.max(1.2, 0.5 * S);
+      ctx.strokeStyle = FIG.tinta; ctx.lineWidth = 1.15; ctx.stroke();
+      ctx.strokeStyle = `rgb(${FIG.cinta})`; ctx.lineWidth = Math.max(1.2, 0.5 * S);
       ctx.beginPath(); ctx.ellipse(c.x, c.y + r * 0.92, r * 0.62, r * 0.2, 0, 0, 2 * PI); ctx.stroke();
       ctx.restore();
     }
     const cab = cabezaPts(g);
-    relleno(cab, g); contorno(cab, true);
+    relleno(cab, g);
+    const hc = P(-g.headW * 0.16, g.H - g.headH * 0.3), hr = g.headW * 0.3 * S, hl = ctx.createRadialGradient(hc.x, hc.y, 0, hc.x, hc.y, hr);
+    hl.addColorStop(0, 'rgba(255,255,255,.7)'); hl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.save(); ctx.beginPath(); curva(cab, true); ctx.clip(); ctx.fillStyle = hl; ctx.fillRect(hc.x - hr, hc.y - hr, hr * 2, hr * 2); ctx.restore();
+    contorno(cab, true);
 
     dibujarBrazo(g, 1); dibujarBrazo(g, -1);
   }
@@ -762,6 +775,8 @@
   }
 
   function dibujar(t) {
+    const caja = cv.parentElement;   // la escena cambia de tamaño al abrir o plegar los menús: volver a medir el lienzo
+    if (Math.abs(caja.clientWidth - W) > 1 || Math.abs(caja.clientHeight - Hc) > 1 || dpr !== Math.min(3, window.devicePixelRatio || 1)) medir();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, Hc);
     aplicarVista();
