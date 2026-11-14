@@ -55,7 +55,7 @@ window.DRESSER = {
 
 // Enviar · cotización por correo a la casa: tipo de prenda y tela (con miniatura). «color» = color del maniquí.
 window.DRESSER.envio = {
-  correo: 'info@casasiego.com',
+  correo: 'cotizacion@casasiego.com',
   prendas: [
     { id: 'italiano',    nombre: 'Camisa cuello italiano', detalle: 'Puntas abiertas, sin botones', cuello: 'italiano' },
     { id: 'ingles',      nombre: 'Camisa cuello inglés',   detalle: 'Puntas clásicas, más cerradas', cuello: 'ingles' },
