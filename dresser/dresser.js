@@ -1,4 +1,4 @@
-/* Dresser · Casa Siego (v1.2.0 · maniquí de render)
+/* Dresser · Casa Siego (v1.3.0 · galán de noche)
    Silueta de maniquí (hombre / mujer) que se deforma en tiempo real con las medidas de confección,
    y probador de una camisa de cuello italiano (blanca, celeste o a rayas) con reporte de ajuste por zona.
    Sin dependencias: Canvas 2D. Unidades internas: cm (mundo con y hacia arriba, suelo en y = 0). */
@@ -15,7 +15,7 @@
   const off = (a, n, k) => ({ x: a.x + n.x * k, y: a.y + n.y * k });
   const espejo = p => ({ x: -p.x, y: p.y });
 
-  const FIG = { tinta: '#4A1621', tintaRGB: '74,22,33', sombra: '107,30,44', cinta: '176,141,87', piel: ['#FBF7F0', '#F4ECDF', '#EADFCB'] };   // maniquí: lino marfil, tinta vino, cinta de latón
+  const FIG = { tinta: '#4A1621', tintaRGB: '74,22,33', sombra: '107,30,44', cinta: '176,141,87', piel: ['#FBF7F0', '#F4ECDF', '#EADFCB'], madera: ['#3E2717', '#6B4428', '#A3744C'] };   // maniquí: lino marfil, tinta vino, cinta de latón
   const AZUL = '#6B1E2C', ROJO = '#e11d48', AMBAR = '#d97706';
   const COLOR_ST = { ok: AZUL, bajo: ROJO, alto: AMBAR };
   const CLAVE = 'casasiego-dresser/1';
@@ -26,7 +26,7 @@
   // ---------------------------------------------------------------- Estado
   const promedio = s => ({ ...D.presets[s].find(p => p.id === 'promedio').v });
   const inicial = () => ({
-    sexo: 'h', unidades: 'cm', guias: true,
+    sexo: 'h', unidades: 'cm', guias: true, maniqui: 'galan',
     medidas: { h: promedio('h'), m: promedio('m') },
     camisa: { puesta: true, color: 'blanca', corte: 'slim', talla: null }   // talla null = automática
   });
@@ -37,6 +37,7 @@
       if (s.sexo === 'h' || s.sexo === 'm') E.sexo = s.sexo;
       if (s.unidades === 'in') E.unidades = 'in';
       if (s.guias === false) E.guias = false;
+      if (s.maniqui === 'cuerpo' || s.maniqui === 'galan') E.maniqui = s.maniqui;
       for (const k of ['h', 'm']) for (const id of IDS) {
         const v = +(s.medidas[k] || {})[id];
         if (Number.isFinite(v)) E.medidas[k][id] = clamp(v, DEF[id].min, DEF[id].max);
@@ -51,6 +52,7 @@
   // URL: ?sexo=m · ?color=rayas · ?talla=42 · ?corte=regular · ?t=5 (salta la intro: entra ya escaneado y vestido)
   const Q = new URLSearchParams(location.search);
   if (Q.get('sexo') === 'h' || Q.get('sexo') === 'm') E.sexo = Q.get('sexo');
+  if (Q.get('maniqui') === 'cuerpo' || Q.get('maniqui') === 'galan') E.maniqui = Q.get('maniqui');
   if (D.camisa.colores.some(x => x.id === Q.get('color'))) E.camisa.color = Q.get('color');
   if (Q.get('corte') === 'slim' || Q.get('corte') === 'regular') E.camisa.corte = Q.get('corte');
   if (Q.has('talla')) E.camisa.talla = D.camisa.tallas[E.sexo].includes(+Q.get('talla')) ? +Q.get('talla') : null;
@@ -519,6 +521,164 @@
     ctx.restore();
     return s;
   }
+  // ---------------------------------------------------------------- Galán de noche: busto de sastre sobre su mueble
+  // Sin piernas ni brazos. Cuello, hombros, pecho, cintura y cadera salen de las medidas (mismo modelo g que el cuerpo).
+  const galanBase = g => g.hiY - 5;                     // donde termina el busto y entra el poste
+  function galanPts(g) {
+    const yb = galanBase(g);
+    const R = [
+      { x: g.nw * 0.98, y: g.nbY + 7 },
+      { x: g.nw, y: g.nbY + 1.5 },
+      { x: lerp(g.nw, g.shX, 0.55), y: lerp(g.nbY, g.shY, 0.8) },
+      { x: g.shX - 0.6, y: g.shY + 0.2 },
+      { x: g.shX + 0.2, y: g.shY - 2.6 },               // cabeza del hombro, redondeada (sin brazo)
+      { x: Math.max(g.chW + 0.6, g.shX - 1.2), y: g.apY - 1 },
+      { x: g.chW, y: g.chY },
+      { x: lerp(g.chW, g.waW, 0.55), y: lerp(g.chY, g.waY, 0.5) },
+      { x: g.waW, y: g.waY },
+      { x: lerp(g.waW, g.hiW, 0.72), y: lerp(g.waY, g.hiY, 0.55) },
+      { x: g.hiW, y: g.hiY },
+      { x: g.hiW * 0.9, y: yb + 1.6 },
+      { x: 0, y: yb }
+    ];
+    return R.concat(R.slice(0, -1).map(espejo).reverse());
+  }
+  function veta(x1, x2) {                               // madera torneada: luz al centro izquierdo, sombra en los cantos
+    const a = P(x1, 0).x, b = P(x2, 0).x, gr = ctx.createLinearGradient(a, 0, b, 0);
+    gr.addColorStop(0, FIG.madera[0]); gr.addColorStop(0.32, FIG.madera[2]); gr.addColorStop(0.62, FIG.madera[1]); gr.addColorStop(1, FIG.madera[0]);
+    return gr;
+  }
+  function pieza(x, y, w, h, r, relleno) {              // rectángulo redondeado en mundo (x, y = esquina inferior izquierda)
+    const A = P(x, y + h);
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(A.x, A.y, w * S, h * S, Math.min(r * S, w * S / 2, h * S / 2)); else ctx.rect(A.x, A.y, w * S, h * S);
+    ctx.fillStyle = relleno || veta(x, x + w); ctx.fill();
+    ctx.strokeStyle = FIG.tinta; ctx.lineWidth = 1.05; ctx.stroke();
+  }
+  function dibujarGalan(g) {
+    const yb = galanBase(g), po = 1.7, bR = 23;
+    // Suelo
+    const sp = P(0, 0), rx = (bR + 12) * S, gr = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, rx);
+    gr.addColorStop(0, `rgba(${FIG.tintaRGB},.22)`); gr.addColorStop(0.65, `rgba(${FIG.tintaRGB},.05)`); gr.addColorStop(1, `rgba(${FIG.tintaRGB},0)`);
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(sp.x, sp.y, rx, rx * 0.09, 0, 0, 2 * PI); ctx.fill();
+    const l1 = P(-(bR + 30), 0), l2 = P(bR + 30, 0), gl = ctx.createLinearGradient(l1.x, 0, l2.x, 0);
+    gl.addColorStop(0, `rgba(${FIG.cinta},0)`); gl.addColorStop(0.5, `rgba(${FIG.cinta},.75)`); gl.addColorStop(1, `rgba(${FIG.cinta},0)`);
+    ctx.strokeStyle = gl; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(l1.x, l1.y + 0.5); ctx.lineTo(l2.x, l2.y + 0.5); ctx.stroke();
+
+    // Mueble: base de dos escalones con filo de latón, poste, vaciabolsillos y barra del pantalón
+    ctx.lineJoin = 'round';
+    pieza(-bR, 0, bR * 2, 3.2, 1.6);
+    pieza(-bR * 0.7, 3.2, bR * 1.4, 2.6, 1.2);
+    ctx.strokeStyle = `rgba(${FIG.cinta},.95)`; ctx.lineWidth = Math.max(1, 0.35 * S);
+    ctx.beginPath(); linea({ x: -bR + 1.4, y: 3.05 }, { x: bR - 1.4, y: 3.05 }); ctx.stroke();
+    pieza(-po, 5.6, po * 2, yb - 5.2, po);
+    const yt = 30;                                                       // vaciabolsillos
+    pieza(-po * 1.5, yt - 2.2, po * 3, 2.2, 0.6);
+    pieza(-12, yt, 24, 3.6, 1.1);
+    ctx.strokeStyle = `rgba(${FIG.tintaRGB},.35)`; ctx.lineWidth = 1; ctx.beginPath(); linea({ x: -10.6, y: yt + 2.9 }, { x: 10.6, y: yt + 2.9 }); ctx.stroke();
+    ctx.fillStyle = `rgb(${FIG.cinta})`; ctx.beginPath(); const ti = P(0, yt + 1.6); ctx.arc(ti.x, ti.y, Math.max(1.4, 0.45 * S), 0, 2 * PI); ctx.fill();
+    const yp = 56;                                                       // barra del pantalón
+    pieza(-17, yp, 34, 2.4, 1.2);
+    pieza(-po * 1.35, yp - 0.8, po * 2.7, 4, 0.8, `rgba(${FIG.cinta},.95)`);
+    pieza(-po * 1.7, yb - 1.4, po * 3.4, 2.4, 0.8, `rgba(${FIG.cinta},.95)`);   // collarín donde entra el poste
+
+    // Busto
+    const pts = galanPts(g);
+    relleno(pts, g);
+    ctx.save(); ctx.beginPath(); curva(pts, true); ctx.clip();
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = `rgba(${FIG.tintaRGB},.2)`; ctx.lineWidth = 1;
+    ctx.beginPath(); linea({ x: 0, y: g.nbY - 1.5 }, { x: 0, y: yb + 0.5 }); ctx.stroke();                   // centro frente
+    for (const k of [1, -1]) {                                                                                  // costuras princesa
+      ctx.beginPath();
+      curva([{ x: lerp(g.nw, g.shX, 0.5) * k, y: lerp(g.nbY, g.shY, 0.7) }, { x: g.chW * 0.5 * k, y: g.chY + 1.5 },
+             { x: g.waW * 0.5 * k, y: g.waY }, { x: g.hiW * 0.56 * k, y: yb + 0.5 }], false);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = `rgba(${FIG.tintaRGB},.24)`; ctx.beginPath();
+    for (const k of [1, -1]) linea({ x: 1.4 * k, y: g.nbY - 1.2 }, { x: g.shX * 0.84 * k, y: g.shY + 0.2 }, { x: g.shX * 0.45 * k, y: g.nbY - 2.4 });
+    ctx.stroke();
+    ctx.globalAlpha = fem; ctx.beginPath();
+    const rb = (3.4 + clamp((g.m.pecho - g.m.cintura - 10) * 0.25, 0, 6)) * S;
+    for (const k of [1, -1]) { const c = P(g.chW * 0.46 * k, g.chY + 0.8); ctx.moveTo(c.x + rb * Math.cos(0.12 * PI), c.y + rb * Math.sin(0.12 * PI)); ctx.arc(c.x, c.y, rb, 0.12 * PI, 0.88 * PI); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.strokeStyle = `rgba(${FIG.cinta},.92)`; ctx.lineWidth = Math.max(1.4, 0.85 * S);                        // cinta en la cintura
+    ctx.beginPath(); linea({ x: -g.waW - 0.5, y: g.waY + 0.5 }, { x: g.waW + 0.5, y: g.waY + 0.5 }, { x: 0, y: g.waY - 0.9 }); ctx.stroke();
+    ctx.restore();
+    // Tapas de sisa (madera) a los lados del hombro
+    for (const k of [1, -1]) {
+      const c = P((Math.max(g.chW, g.shX - 1.2) - 0.2) * k, lerp(g.shY, g.apY, 0.55)), ry = (g.shY - g.apY) * 0.42 * S, rxx = 1.15 * S;
+      ctx.beginPath(); ctx.ellipse(c.x, c.y, rxx, ry, 0, 0, 2 * PI); ctx.fillStyle = veta(-1.2, 1.2); ctx.fill();
+      ctx.strokeStyle = FIG.tinta; ctx.lineWidth = 1; ctx.stroke();
+    }
+    contorno(pts, true);
+    // Tapa del cuello y remate torneado
+    const yc = g.nbY + 7;
+    pieza(-g.nw * 1.04, yc - 0.5, g.nw * 2.08, 2.1, 1);
+    pieza(-0.55, yc + 1.6, 1.1, 1.4, 0.3);
+    const fi = P(0, yc + 4.1), fr = 1.35 * S, fg = ctx.createRadialGradient(fi.x - fr * 0.35, fi.y - fr * 0.35, 0, fi.x, fi.y, fr);
+    fg.addColorStop(0, FIG.madera[2]); fg.addColorStop(1, FIG.madera[0]);
+    ctx.beginPath(); ctx.arc(fi.x, fi.y, fr, 0, 2 * PI); ctx.fillStyle = fg; ctx.fill(); ctx.strokeStyle = FIG.tinta; ctx.lineWidth = 1; ctx.stroke();
+  }
+
+  // Camisa en el galán: corte recto (costados verticales del sobaco al bajo) y mangas que cuelgan con su puño.
+  function dibujarCamisaGalan(g, G, col) {
+    const s = camisaGeo(g, G, EV);
+    const tela = col.tela === 'rayas' ? patronRayas() : col.tela;
+    const R = Math.max(s.cW, s.wW, s.hipW, s.hW) + 0.3;
+    s.cW = s.wW = s.hipW = s.hW = R;
+    const half = [
+      { x: s.nwC, y: g.nbY + 3.4 }, { x: lerp(s.nwC, s.sx, 0.5), y: lerp(g.nbY + 2.6, s.sy, 0.62) }, { x: s.sx, y: s.sy },
+      { x: R + 0.4, y: g.apY - 0.6 }, { x: R, y: g.chY }, { x: R, y: g.waY }, { x: R, y: lerp(g.waY, s.hemY, 0.5) },
+      { x: R, y: s.hemY + 2.2 }, { x: R - 0.9, y: s.hemY + 0.2 }, { x: 0, y: s.hemY }
+    ];
+    const torso = half.concat(half.slice(0, -1).map(espejo).reverse());
+    const top = g.nbY + 12, corte = lerp(top, s.hemY - 8, vis < 1 ? 1 - Math.pow(1 - vis, 3) : 1);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, P(0, corte).y); ctx.clip();
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = col.linea; ctx.lineWidth = 1.5;
+    ctx.beginPath(); curva(torso, true); ctx.fillStyle = tela; ctx.fill();
+    const iz = P(-R, 0).x, de = P(R, 0).x, sh = ctx.createLinearGradient(iz, 0, de, 0);
+    sh.addColorStop(0, col.sombra); sh.addColorStop(0.2, 'rgba(255,255,255,0)'); sh.addColorStop(0.8, 'rgba(255,255,255,0)'); sh.addColorStop(1, col.sombra);
+    ctx.fillStyle = sh; ctx.fill(); ctx.stroke();
+    if (!s.cerrado) {
+      ctx.fillStyle = piel; ctx.beginPath();
+      poli([{ x: -s.nwC * 0.8, y: g.nbY + 3.4 }, { x: s.nwC * 0.8, y: g.nbY + 3.4 }, { x: 2.4, y: g.nbY - 2.2 }, { x: 0, y: g.nbY - 8 }, { x: -2.4, y: g.nbY - 2.2 }]);
+      ctx.fill();
+      ctx.beginPath(); linea({ x: 2.4, y: g.nbY - 2.2 }, { x: 0, y: g.nbY - 8 }); linea({ x: -2.4, y: g.nbY - 2.2 }, { x: 0, y: g.nbY - 8 }); ctx.stroke();
+    }
+    ctx.strokeStyle = col.linea; ctx.lineWidth = 1; ctx.beginPath();
+    for (const k of [1.5, -1.5]) linea({ x: k, y: s.boton0 }, { x: k, y: s.hemY + 0.3 });
+    ctx.stroke();
+    const paso = E.sexo === 'm' ? 8.5 : 9.5, botones = [];
+    for (let y = s.boton0 - 6; y > s.hemY + 5; y -= paso) botones.push(y);
+    pliegues(g, s, botones, col);
+    for (const y of botones) boton({ x: 0, y }, col);
+    // Mangas colgando a los costados
+    const yA = g.apY - 0.6, yCuff = s.sy - G.manga * 0.97, yCt = yCuff + 6;
+    const cw = clamp(G.puno / 2, 9, 15), wT = clamp(G.pecho * 0.17, 14, 22);
+    const telaPuno = col.cuello === '#ffffff' ? '#ffffff' : col.tela === 'rayas' ? patronRayas() : col.cuello;
+    for (const lado of [1, -1]) {
+      const X = p => lado < 0 ? espejo(p) : p;
+      const m = [{ x: s.sx, y: s.sy }, { x: R + wT * 0.48, y: s.sy - 5 }, { x: R + wT * 0.6, y: lerp(s.sy, yCt, 0.45) },
+                 { x: R + cw + 0.9, y: yCt }, { x: R + 0.5, y: yCt }, { x: R - 0.4, y: lerp(yA, yCt, 0.5) }, { x: R + 0.3, y: yA }].map(X);
+      ctx.strokeStyle = col.linea; ctx.lineWidth = 1.5;
+      ctx.beginPath(); curva(m, true); ctx.fillStyle = tela; ctx.fill(); ctx.fillStyle = col.sombra; ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = 'rgba(74,22,33,.28)'; ctx.lineWidth = 1; ctx.beginPath();          // caída de la manga
+      linea(X({ x: R + wT * 0.42, y: s.sy - 9 }), X({ x: R + cw * 0.55 + 0.6, y: yCt + 5 }), X({ x: R + wT * 0.4, y: lerp(s.sy, yCt, 0.6) }));
+      linea(X({ x: R + 2, y: yA - 4 }), X({ x: R + 1.6, y: yCt + 9 }), X({ x: R + 1.2, y: lerp(yA, yCt, 0.5) }));
+      ctx.stroke();
+      const x0 = lado > 0 ? R + 0.5 : -(R + 0.5 + cw + 0.4), A = P(x0, yCt), w = (cw + 0.4) * S, h = 6 * S;
+      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(A.x, A.y, w, h, 0.8 * S); else ctx.rect(A.x, A.y, w, h);
+      ctx.fillStyle = telaPuno; ctx.fill(); ctx.strokeStyle = col.linea; ctx.lineWidth = 1.3; ctx.stroke();
+      boton(X({ x: R + 0.5 + cw * 0.72, y: yCuff + 3 }), col);
+    }
+    s.manguilla = { x: R + 0.5 + cw / 2, y: yCuff + 3 };
+    cuello(g, s, col);
+    ctx.restore();
+    return s;
+  }
+
   function boton(p, col) {
     const c = P(p.x, p.y), r = Math.max(1.6, 0.6 * S);
     ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 2 * PI);
@@ -646,6 +806,7 @@
   }
   function guias(g, etq) {
     const m = objetivo(), col = id => (activo === id ? AZUL : '#B0905E'), f = id => activo === id;
+    const galan = E.maniqui === 'galan';
     const add = (id, lado, anc, txt) => etq.push({ id, lado, ax: anc.x, ay: anc.y, txt, color: AZUL, fuerte: f(id) });
     // Contornos
     const an = [
@@ -656,10 +817,11 @@
       ['muslo', g.cT, g.crY - 4, g.thD / 2 + 0.2, 0.3]
     ];
     for (const [id, cx, cy, rx, k] of an) {
+      if (galan && id === 'muslo') continue;
       anillo(cx, cy, rx, rx * k, 0, col(id), f(id));
       add(id, 1, P(cx + rx, cy), `${nombreDe(id)} ${fmt(m[id])}`);
     }
-    for (const [id, d] of [['biceps', g.ua * 0.58], ['muneca', g.brazo - 1]]) {
+    if (!galan) for (const [id, d] of [['biceps', g.ua * 0.58], ['muneca', g.brazo - 1]]) {
       const { c, n } = brazoEn(g, d), w = anchoBrazo(g, d) / 2 + 0.3;
       anillo(c.x, c.y, w, w * 0.3, -Math.atan2(n.y, n.x), col(id), f(id));
       add(id, 1, P(c.x + n.x * w, c.y + n.y * w), `${nombreDe(id)} ${fmt(m[id])}`);
@@ -670,6 +832,7 @@
     ctx.save(); ctx.setLineDash([2, 3]); ctx.strokeStyle = 'rgba(107,30,44,.35)'; ctx.lineWidth = 1; ctx.beginPath();
     for (const k of [1, -1]) linea({ x: g.shX * k, y: g.shY }, { x: g.shX * k, y: yh }); ctx.stroke(); ctx.restore();
     add('hombros', -1, P(-g.shX, yh), `${nombreDe('hombros')} ${fmt(m.hombros)}`);
+    if (galan) return;
     // Largo de brazo: cota paralela al brazo izquierdo
     const o1 = espejo(off(g.J, g.n1, g.bD * 0.8 + 3)), o2 = espejo(off(g.W, g.n2, g.wD + 3));
     cota(o1, o2, col('brazo'), f('brazo'));
@@ -745,7 +908,7 @@
       pecho: { x: -s.cW, y: g.chY },
       cintura: { x: -s.wW, y: g.waY },
       bajo: { x: -s.hW, y: s.hsY },
-      manga: espejo(brazoEn(g, s.dCuff).c),
+      manga: s.manguilla ? espejo(s.manguilla) : espejo(brazoEn(g, s.dCuff).c),
       largo: { x: -s.hW * 0.6, y: s.hemY + 1.4 }
     };
     for (const z of EV) {
@@ -789,10 +952,11 @@
     ctx.save();
     if (tIntro < 1) { ctx.beginPath(); ctx.rect(0, 0, W, ys); ctx.clip(); }
 
-    dibujarCuerpo(g);
+    const galan = E.maniqui === 'galan';
+    if (galan) dibujarGalan(g); else dibujarCuerpo(g);
     const col = D.camisa.colores.find(c => c.id === E.camisa.color);
     let s = null;
-    if (vis > 0.001) s = dibujarCamisa(g, GA, col);
+    if (vis > 0.001) s = galan ? dibujarCamisaGalan(g, GA, col) : dibujarCamisa(g, GA, col);
 
     const etq = [];
     if (E.guias) { ctx.save(); ctx.globalAlpha = vis > 0.5 ? 0.75 : 1; guias(g, etq); ctx.restore(); }
@@ -964,6 +1128,7 @@
   marcarSexo = segmentado('sexo', E.sexo, cambiarSexo);
   const marcarUnidades = segmentado('unidades', E.unidades, v => { E.unidades = v; pintarMedidas(); pintarPrenda(); guardar(); });
   const marcarCorte = segmentado('corte', E.camisa.corte, v => { E.camisa.corte = v; pintarPrenda(); guardar(); });
+  const marcarManiqui = segmentado('maniqui', E.maniqui, v => { E.maniqui = v; guardar(); });
   $('bReset').addEventListener('click', () => {
     E.medidas[E.sexo] = promedio(E.sexo); E.camisa.talla = null;
     pintarMedidas(); pintarPrenda(); guardar();
@@ -1005,11 +1170,12 @@
     if (k === 'g') { const v = E.sexo === 'h' ? 'm' : 'h'; cambiarSexo(v); marcarSexo(v); }
     else if (k === 'c') ponerCamisa(!E.camisa.puesta);
     else if (k === 'm') ponerGuias(!E.guias);
+    else if (k === 'v') { const v = E.maniqui === 'galan' ? 'cuerpo' : 'galan'; E.maniqui = v; marcarManiqui(v); guardar(); }
     else if (k === '0') encuadrar();
   });
 
-  window.addEventListener('resize', () => { medir(); ['sexo', 'unidades', 'corte'].forEach(id => moverPildora($(id))); });
-  if (document.fonts) document.fonts.ready.then(() => ['sexo', 'unidades', 'corte'].forEach(id => moverPildora($(id))));
+  window.addEventListener('resize', () => { medir(); ['sexo', 'maniqui', 'unidades', 'corte'].forEach(id => moverPildora($(id))); });
+  if (document.fonts) document.fonts.ready.then(() => ['sexo', 'maniqui', 'unidades', 'corte'].forEach(id => moverPildora($(id))));
 
   // ---------------------------------------------------------------- Arranque
   construirMedidas(); construirPresets(); construirColores();
