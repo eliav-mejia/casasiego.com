@@ -1,54 +1,37 @@
-/* Probador · menús (v1.0.0)
-   Toma de medidas y Camisería a medida se abren y cierran desde la barra central; la página nunca hace scroll.
-   Escritorio (> 1100 px): columnas laterales que se pliegan. Móvil / tableta: hojas inferiores, una a la vez.
-   Render (botón central): oculta los dos menús para ver la figura completa; otra pulsación los devuelve.
-   Teclas: T toma de medidas · P camisería · R render · Esc cierra la hoja abierta. */
+/* Probador · panel (v2.0.0)
+   Un solo panel (color, corte y talla, medidas, holgura, ficha técnica) que se abre y cierra desde la barra central;
+   la página nunca hace scroll. Escritorio (> 1100 px): columna derecha que se pliega. Móvil / tableta: hoja inferior.
+   Render (botón central): oculta el panel para ver la figura completa; otra pulsación lo devuelve.
+   Teclas: P (o T) panel · R render · Esc cierra la hoja abierta. */
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const app = document.querySelector('.app'), escena = $('escena');
-  const IDS = ['pMedidas', 'pPrenda'];
-  const boton = { pMedidas: $('bMenuMedidas'), pPrenda: $('bMenuPrenda') };
-  const bRender = $('bRender');
+  const app = document.querySelector('.app'), escena = $('escena'), panel = $('pPrenda');
+  const boton = $('bMenuPrenda'), bRender = $('bRender');
   const movil = matchMedia('(max-width: 1100px)');
-  const porDefecto = () => movil.matches ? { pMedidas: false, pPrenda: false } : { pMedidas: true, pPrenda: true };
-  let abierto = porDefecto(), previo = null;
+  let abierto = !movil.matches;
 
   function pintar() {
-    for (const id of IDS) {
-      const a = abierto[id], p = $(id);
-      app.classList.toggle('sin-' + id, !a);
-      p.classList.toggle('abierto', a);
-      p.inert = !a;
-      boton[id].setAttribute('aria-expanded', String(a));
-    }
-    bRender.setAttribute('aria-pressed', String(!abierto.pMedidas && !abierto.pPrenda));
+    app.classList.toggle('sin-pPrenda', !abierto);
+    panel.classList.toggle('abierto', abierto);
+    panel.inert = !abierto;
+    boton.setAttribute('aria-expanded', String(abierto));
+    bRender.setAttribute('aria-pressed', String(!abierto));
   }
-  function alternar(id) {
-    abierto[id] = !abierto[id];
-    if (movil.matches && abierto[id]) for (const o of IDS) if (o !== id) abierto[o] = false;   // una hoja a la vez
-    previo = null; pintar();
-  }
-  function render() {
-    if (abierto.pMedidas || abierto.pPrenda) { previo = { ...abierto }; abierto = { pMedidas: false, pPrenda: false }; }
-    else { abierto = previo || (movil.matches ? { pMedidas: true, pPrenda: false } : porDefecto()); previo = null; }
-    pintar();
-  }
+  const alternar = () => { abierto = !abierto; pintar(); };
 
-  for (const id of IDS) boton[id].addEventListener('click', () => alternar(id));
-  bRender.addEventListener('click', render);
-  document.querySelectorAll('[data-cierra]').forEach(b => b.addEventListener('click', () => { abierto[b.dataset.cierra] = false; pintar(); }));
-  movil.addEventListener('change', () => { abierto = porDefecto(); previo = null; pintar(); });
+  boton.addEventListener('click', alternar);
+  bRender.addEventListener('click', alternar);
+  document.querySelectorAll('[data-cierra]').forEach(b => b.addEventListener('click', () => { abierto = false; pintar(); }));
+  movil.addEventListener('change', () => { abierto = !movil.matches; pintar(); });
   document.addEventListener('keydown', e => {
     if (e.target.closest('input, textarea, select, dialog') || document.querySelector('dialog[open]') || e.ctrlKey || e.metaKey || e.altKey) return;
     const k = e.key.toLowerCase();
-    if (k === 't') alternar('pMedidas');
-    else if (k === 'p') alternar('pPrenda');
-    else if (k === 'r') render();
-    else if (k === 'escape' && movil.matches && (abierto.pMedidas || abierto.pPrenda)) { abierto = { pMedidas: false, pPrenda: false }; pintar(); }
+    if (k === 'p' || k === 't' || k === 'r') alternar();
+    else if (k === 'escape' && movil.matches && abierto) { abierto = false; pintar(); }
   });
 
-  // El lienzo se mide con el evento resize de la ventana: avisar también cuando la escena cambia de tamaño al plegar un menú.
+  // El lienzo se mide con el evento resize de la ventana: avisar también cuando la escena cambia de tamaño al plegar el panel.
   let pendiente = false;
   if ('ResizeObserver' in window) new ResizeObserver(() => {
     if (pendiente) return; pendiente = true;

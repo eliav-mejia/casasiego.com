@@ -35,8 +35,8 @@ window.DRESSER = {
   camisa: {
     colores: [
       { id: 'blanca',  nombre: 'Blanca',                  tela: '#ffffff', sombra: 'rgba(107,30,44,.10)', linea: '#6B1E2C', cuello: '#ffffff' },
-      { id: 'celeste', nombre: 'Celeste',                 tela: '#d4e6fb', sombra: 'rgba(74,22,33,.16)', linea: '#4A1621', cuello: '#d4e6fb' },
-      { id: 'rayas',   nombre: 'Rayas · cuello blanco', tela: 'rayas',   sombra: 'rgba(74,22,33,.12)', linea: '#4A1621', cuello: '#ffffff' }
+      { id: 'celeste', nombre: 'Azul celeste',            tela: '#d4e6fb', sombra: 'rgba(74,22,33,.16)', linea: '#4A1621', cuello: '#d4e6fb' },
+      { id: 'marino',  nombre: 'Azul marino', tela: '#2B3A57', sombra: 'rgba(0,0,0,.22)', linea: '#0E1628', cuello: '#2B3A57' }
     ],
     // Hombre: talla = cuello en cm (sistema italiano). Mujer: talla europea 34–46.
     tallas: { h: [37, 38, 39, 40, 41, 42, 43, 44, 45, 46], m: [34, 36, 38, 40, 42, 44, 46] },
@@ -53,7 +53,8 @@ window.DRESSER = {
   }
 };
 
-// Enviar · cotización por correo a la casa: tipo de prenda y tela (con miniatura). «color» = color del maniquí.
+// Enviar · cotización por correo a la casa: camisa (tipo y tela con miniatura) y, opcional, sastrería (saco, chaleco,
+// pantalón en una tela). «color» = color del maniquí. El .txt adjunto lo leen Patronaje y la Cortadora del taller.
 window.DRESSER.envio = {
   correo: 'cotizacion@casasiego.com',
   prendas: [
@@ -68,6 +69,18 @@ window.DRESSER.envio = {
     { id: 'twill-blanco',     nombre: 'Twill blanco',           detalle: 'Diagonal suave, no se arruga', color: 'blanca',  muestra: 'twill' },
     { id: 'oxford-celeste',   nombre: 'Oxford celeste',         detalle: 'Canasta en azul cielo',       color: 'celeste', muestra: 'oxford-celeste' },
     { id: 'lino-celeste',     nombre: 'Lino-algodón celeste',   detalle: 'Ligera, para clima cálido',   color: 'celeste', foto: '../images/telas/lino-algodon-celeste.jpg' },
-    { id: 'rayas-finas',      nombre: 'Rayas finas azules',     detalle: 'Cuello y puños blancos',      color: 'rayas',   muestra: 'rayas' }
+    { id: 'popelina-marino',  nombre: 'Popelina azul marino',   detalle: 'Algodón 100 %, oscura y sobria', color: 'marino', muestra: 'marino' }
+  ],
+  // Sastrería a medida (opcional en la misma cotización): saco, chaleco y pantalón en una sola tela.
+  sastreria: [
+    { id: 'saco',     nombre: 'Saco',     plural: 'sacos' },
+    { id: 'chaleco',  nombre: 'Chaleco',  plural: 'chalecos' },
+    { id: 'pantalon', nombre: 'Pantalón', plural: 'pantalones' }
+  ],
+  telasSastreria: [
+    { id: 'lana-gris',     nombre: 'Lana fría gris',        detalle: 'Super 110s, para todo el año',  muestra: 'lana-gris' },
+    { id: 'marino',        nombre: 'Azul marino texturizado', detalle: 'Lana con microtextura',       muestra: 'marino' },
+    { id: 'tweed-espiga',  nombre: 'Gris tweed espiga',     detalle: 'Espiga, más cuerpo',            muestra: 'espiga' },
+    { id: 'carbon',        nombre: 'Gris carbón',           detalle: 'Lana fría oscura, de noche',    muestra: 'carbon' }
   ]
 };

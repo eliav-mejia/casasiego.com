@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Probador de Casa Siego: ajusta tus medidas y mira cómo te queda la camisa de cuello italiano, por zona y por talla.">
+    <meta name="description" content="Probador de Casa Siego: ajusta tus medidas y mira cómo te queda la camisa de cuello italiano a medida y el traje de 2 o 3 piezas.">
     <link rel="canonical" href="https://casasiego.com/dresser/">
     <title>Probador · Casa Siego</title>
     <link rel="icon" href="../favicon-32.png">
@@ -38,30 +38,16 @@
             </div>
         </header>
 
-        <aside class="panel glass" id="pMedidas" aria-label="Medidas">
-            <button class="asa" type="button" data-cierra="pMedidas" aria-label="Cerrar Toma de medidas"></button>
-            <div class="ptitulo">
-                <div class="kicker">Toma de medidas</div>
-                <h2>Medidas</h2>
-                <span class="tipo" id="tipo" title="Silueta según pecho, cintura y cadera"></span>
-            </div>
-            <div class="presets" id="presets"></div>
-            <div id="grupos"></div>
-        </aside>
 
         <section class="escena" id="escena">
             <canvas id="lienzo" aria-label="Silueta según las medidas"></canvas>
             <div class="barra glass" role="toolbar" aria-label="Menús y vista">
 
-                <button class="menu" id="bMenuMedidas" aria-controls="pMedidas" aria-expanded="true" title="Toma de medidas (T)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10.5 8v4.5M14.5 8v3M18.5 8v4.5"/></svg><span>Toma de medidas</span></button>
-
                 <button id="bGuias" aria-pressed="true" title="Mostrar medidas (M)">Medidas</button>
 
                 <button class="render" id="bRender" aria-pressed="false" title="Render: ocultar o mostrar los menús (R)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.6"/></svg><span>Render</span></button>
 
-                <button id="bCamisa" aria-pressed="true" title="Poner o quitar la camisa (C)">Camisa</button>
-
-                <button class="menu" id="bMenuPrenda" aria-controls="pPrenda" aria-expanded="true" title="Camisería a medida (P)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5 12 6l3-2.5 5.5 3L19 11l-2.5-1V20.5h-9V10L5 11 3.5 6.5z"/><path d="M12 6v14.5"/></svg><span>Camisería a medida</span></button>
+                <button class="menu" id="bMenuPrenda" aria-controls="pPrenda" aria-expanded="true" title="Panel del probador (P)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5 12 6l3-2.5 5.5 3L19 11l-2.5-1V20.5h-9V10L5 11 3.5 6.5z"/><path d="M12 6v14.5"/></svg><span>Probador</span></button>
 
                 <span class="sep"></span>
 
@@ -72,45 +58,65 @@
                 <button id="bMas" class="zoom" title="Acercar">+</button>
 
             </div>
-            <div class="pista">Rueda: acercar · arrastrar: mover · doble clic: encuadrar · T medidas · P camisería · R render · V maniquí · G caballero/dama · C camisa · M medidas</div>
+            <div class="pista">Rueda: acercar · arrastrar: mover · doble clic: encuadrar · P panel · R render · V maniquí · G silueta · M medidas · C camisa · S saco · K chaleco · N pantalón</div>
         </section>
 
         <aside class="panel glass" id="pPrenda" aria-label="Probador">
-            <button class="asa" type="button" data-cierra="pPrenda" aria-label="Cerrar Camisería a medida"></button>
+            <button class="asa" type="button" data-cierra="pPrenda" aria-label="Cerrar el panel"></button>
             <div class="ptitulo">
-                <div class="kicker">Camisería a medida</div>
+                <div class="kicker">Camisería y sastrería a medida</div>
                 <h2>Camisa cuello italiano</h2>
-                <label class="interruptor"><input type="checkbox" id="cPuesta" checked><span></span>Puesta</label>
             </div>
-            <div class="campo">
-                <div class="etq">Color</div>
-                <div class="colores" id="colores"></div>
+            <div class="prendas-menu" id="prendasMenu">
+                <button type="button" class="prendas-btn" id="bPrendas" aria-expanded="false" aria-controls="sastrePrendas" title="Prendas en el maniquí">
+                    <span class="etq">En el maniquí</span><b id="prendasResumen"></b><span class="flecha" aria-hidden="true">▾</span></button>
+                <div class="prendas-lista" id="sastrePrendas"></div>
             </div>
-            <div class="campo">
-                <div class="etq">Corte</div>
-                <div class="seg" id="corte" role="radiogroup" aria-label="Corte">
-                    <span class="pildora" aria-hidden="true"></span>
-                    <button role="radio" data-v="slim">Slim</button>
-                    <button role="radio" data-v="regular">Regular</button>
+
+            <section class="seccion" aria-labelledby="sColor">
+                <h3 class="kicker" id="sColor">Color</h3>
+                <div class="campo"><div class="etq">Camisa</div><div class="colores" id="colores"></div></div>
+                <div class="campo"><div class="etq">Traje</div><div class="colores sastre-telas" id="sastreTelas"></div></div>
+            </section>
+
+            <section class="seccion" aria-labelledby="sCorte">
+                <h3 class="kicker" id="sCorte">Corte y talla</h3>
+                <div class="campo">
+                    <div class="seg" id="corte" role="radiogroup" aria-label="Corte">
+                        <span class="pildora" aria-hidden="true"></span>
+                        <button role="radio" data-v="slim">Slim</button>
+                        <button role="radio" data-v="regular">Regular</button>
+                    </div>
                 </div>
-            </div>
-            <div class="campo">
-                <div class="etq">Talla <em id="tallaNota"></em></div>
-                <div class="tallas" id="tallas"></div>
-            </div>
-            <div class="veredicto" id="veredicto"></div>
-            <div class="ajuste" id="ajuste"></div>
-            <details class="ficha">
-                <summary>Ficha de la prenda</summary>
-                <div id="ficha"></div>
-            </details>
+                <div class="campo">
+                    <div class="etq">Talla <em id="tallaNota"></em></div>
+                    <div class="tallas" id="tallas"></div>
+                </div>
+            </section>
+
+            <section class="seccion" aria-labelledby="sMedidas">
+                <h3 class="kicker" id="sMedidas">Medidas <span class="tipo" id="tipo" title="Silueta según pecho, cintura y cadera"></span></h3>
+                <div class="presets" id="presets"></div>
+                <div id="grupos"></div>
+            </section>
+
+            <section class="seccion" aria-labelledby="sHolgura">
+                <h3 class="kicker" id="sHolgura">Holgura</h3>
+                <div class="veredicto" id="veredicto"></div>
+                <div class="ajuste" id="ajuste"></div>
+            </section>
+
+            <section class="seccion" aria-labelledby="sFicha">
+                <h3 class="kicker" id="sFicha">Ficha técnica</h3>
+                <div class="ficha" id="ficha"></div>
+            </section>
         </aside>
     </div>
 
     <dialog id="dEnviar" class="envio" aria-labelledby="envTitulo">
         <form method="dialog" class="envio__caja" novalidate>
             <header class="envio__cab">
-                <div><div class="kicker">Camisería a medida</div><h2 id="envTitulo">Cotizar por correo</h2></div>
+                <div><div class="kicker">Camisería y sastrería a medida</div><h2 id="envTitulo">Cotizar por correo</h2></div>
                 <button type="submit" value="cerrar" class="envio__x" aria-label="Cerrar">×</button>
             </header>
             <p class="envio__sesion" id="envSesion"></p>
@@ -126,6 +132,12 @@
             </div>
             <div class="campo envio__cant"><div class="etq">Cantidad de camisas</div>
                 <div class="cantidad"><button type="button" id="envMenos" aria-label="Una camisa menos">−</button><output id="envCant" aria-live="polite">1</output><button type="button" id="envMas" aria-label="Una camisa más">+</button></div></div>
+            <fieldset class="envio__sastre">
+                <legend class="etq">Sastrería a medida <em>opcional</em></legend>
+                <div class="sastre__prendas" id="envSastre"></div>
+                <div class="campo" id="envTelaSastre"><div class="etq">Tela de sastrería</div>
+                    <div class="selmini" id="selTelaSastre"><button type="button" class="sel" aria-haspopup="listbox" aria-expanded="false" aria-label="Tela de sastrería"></button><ul role="listbox" aria-label="Tela de sastrería"></ul></div></div>
+            </fieldset>
             <div class="envio__resumen" id="envResumen"></div>
             <details class="envio__correo"><summary>Ver el correo</summary><pre id="envCuerpo"></pre></details>
             <p class="envio__aviso" id="envAviso" role="status"></p>
